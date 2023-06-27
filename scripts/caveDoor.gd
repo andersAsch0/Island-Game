@@ -1,23 +1,18 @@
 extends Area2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-export(String, FILE, "*.tscn") var ScenePath
+export(String, FILE, "*.tscn") var ScenePath #prevents cyclical reference error. RAAH
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+onready var Global = get_node("/root/Global") # get reference(?) to the global script #idk what onready does
 
-func _input(event):
-	if event.is_action_pressed("ui_accept"): #enter key (player has to press enter to go thru
-		if get_overlapping_bodies().size() > 0: #get num of things overlapping (looking for player)
-				next_level()
+
+
 			
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func _process(_delta):
+	if get_overlapping_bodies().size() > 0: #get num of things overlapping (looking for player)
+			next_level()
+
 
 func next_level():
-	var PTS = get_tree().change_scene(ScenePath) #takes packedScene
+	var _PTS = get_tree().change_scene(ScenePath) # change_scene takes path, change_scene_to takes PackedScene
+	Global.door_name = name #pass the door name to the global script so other scripts can access it and know what to do (where to spawn player)
