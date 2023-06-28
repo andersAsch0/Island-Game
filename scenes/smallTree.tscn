@@ -18,6 +18,7 @@ animations = [ {
 radius = 3.0
 
 [node name="smallTree" type="StaticBody2D"]
+collision_mask = 7
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -12 )
