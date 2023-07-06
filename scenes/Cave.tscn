@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://art/Forest-Tileset.png" type="Texture" id=1]
+[ext_resource path="res://art/map tiles/Forest-Tileset.png" type="Texture" id=1]
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/caveDoor.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/NPC.tscn" type="PackedScene" id=4]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Forest-Tileset.png 0"
@@ -248,3 +250,17 @@ tile_data = PoolIntArray( 196618, 536870912, 0 )
 [node name="caveDoor" parent="." instance=ExtResource( 3 )]
 position = Vector2( 168, 60 )
 ScenePath = "res://scenes/World.tscn"
+<<<<<<< HEAD
+=======
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 169, 72 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PoolVector2Array( 143, 47, 144, 63, 161, 63, 161, 48, 174, 49, 176, 62, 207, 61, 207, 33, 240, 32, 242, 33, 242, 163, 142, 162, 142, 52, 126, 60, 121, 176, 203, 201, 288, 146, 288, 51, 243, 3, 142, 9, 129, 47 )
+
+[node name="NPC" parent="." instance=ExtResource( 4 )]
+position = Vector2( 200, 111 )
+>>>>>>> master

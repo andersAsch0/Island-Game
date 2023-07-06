@@ -30,14 +30,13 @@ func _ready():
 	start_pos = position
 
 func move(delta):
-	position += directions[choice] * speed * delta
-	$AnimatedSprite.play(animations[choice])
-	if abs(position.x - start_pos.x) > bounds:
+	if (abs((position + directions[choice]*speed*delta).x - start_pos.x) > bounds) || (abs((position + directions[choice]*speed*delta).y - start_pos.y) > bounds):
+		#check if next step will take npc out of bounds, if so stop moving and idle
 		curr_state = IDLE
-		position.x = sign(position.x - start_pos.x) * bounds + start_pos.x
-	if abs(position.y - start_pos.y) > bounds:
-		curr_state = IDLE
-		position.y = sign(position.y - start_pos.y) * bounds + start_pos.y	
+		$AnimatedSprite.play(idle_animations[choice])
+	else:
+		position += directions[choice] * speed * delta
+		$AnimatedSprite.play(animations[choice])
 
 
 func choose(array): #choose random from array
