@@ -2,6 +2,11 @@ extends Node2D
 
 export var enemyScene : PackedScene
 var enemy
+var enemyAttackPatternJson #File object
+var attackPatternData = [] #string
+var currAttack = 1#int representing current line in json file
+var loopStart = 1
+var loopEnd = 2
 
 func _ready(): #this script sets up enemy, approach() function will handle the rest
 	enemy = enemyScene.instance()
@@ -17,4 +22,29 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 
 
 func _on_BattleModeEnemy_startFight():
-	print("starting fight")
+	attackPatternData = getAttackPatternData() #get the json file and get it as a string
+	loopStart = attackPatternData[0]['loopStart']
+	loopEnd = attackPatternData[0]['loopEnd']
+	currAttack = loopStart
+	attack()
+
+func attack():
+	$bulletSpawnTimer.wait_time = attackPatternData[currAttack]['waitTime']
+	$bulletSpawnTimer.start()
+	
+func _on_bulletSpawnTimer_timeout():
+	print("spawningg bullet at ", attackPatternData[currAttack]['spawnLocationX'], ", json line ", currAttack)
+	currAttack += 1
+	if currAttack > loopEnd:
+		currAttack = loopStart
+	attack()
+	
+	
+	
+func getAttackPatternData():
+	enemyAttackPatternJson = File.new() 
+	if enemyAttackPatternJson.file_exists($BattleModeEnemy.attackPatternFile): #get the attack pattern json file from the enemy node
+		enemyAttackPatternJson.open($BattleModeEnemy.attackPatternFile, enemyAttackPatternJson.READ)
+		return parse_json(enemyAttackPatternJson.get_as_text())
+	
+

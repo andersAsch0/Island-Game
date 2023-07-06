@@ -25,3 +25,10 @@ position = Vector2( 159, 116 )
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 160, 40 )
+
+[node name="bulletSpawnTimer" type="Timer" parent="."]
+
+[node name="bulletSpawnLocationY" type="Position2D" parent="."]
+position = Vector2( 160, -16 )
+
+[connection signal="timeout" from="bulletSpawnTimer" to="." method="_on_bulletSpawnTimer_timeout"]

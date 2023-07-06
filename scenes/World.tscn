@@ -684,4 +684,5 @@ position = Vector2( 156, 44 )
 position = Vector2( 88, 127 )
 
 [node name="caveDoor" parent="." instance=ExtResource( 5 )]
+visible = false
 position = Vector2( 216, 25 )
