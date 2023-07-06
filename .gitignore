@@ -1,0 +1,41 @@
+# Godot-specific ignores
+.import/
+export.cfg
+export_presets.cfg
+
+# Imported translations (automatically generated from CSV files)
+*.translation
+
+# Mono-specific ignores
+.mono/
+data_*/
+.gitattributes
+addons/godot-git-plugin/git_api.gdnlib
+addons/godot-git-plugin/git_api.gdns
+addons/godot-git-plugin/LICENSE
+addons/godot-git-plugin/linux/libgitapi.so
+addons/godot-git-plugin/osx/libgitapi.dylib
+addons/godot-git-plugin/plugin.cfg
+addons/godot-git-plugin/THIRDPARTY.md
+addons/godot-git-plugin/win64/libgitapi.dll
+addons/godot-git-plugin/win64/libgitapi.exp
+addons/godot-git-plugin/win64/libgitapi.lib
+godot-git-plugin/addons/godot-git-plugin/git_api.gdnlib
+godot-git-plugin/addons/godot-git-plugin/git_api.gdns
+godot-git-plugin/addons/godot-git-plugin/LICENSE
+godot-git-plugin/addons/godot-git-plugin/plugin.cfg
+godot-git-plugin/addons/godot-git-plugin/THIRDPARTY.md
+godot-git-plugin/addons/godot-git-plugin/win64/libgitapi.dll
+godot-git-plugin/addons/godot-git-plugin/win64/libgitapi.exp
+godot-git-plugin/addons/godot-git-plugin/win64/libgitapi.lib
+godot-git-plugin/git_api.gdnlib
+godot-git-plugin/git_api.gdns
+godot-git-plugin/LICENSE
+godot-git-plugin/linux/libgitapi.so
+godot-git-plugin/osx/libgitapi.dylib
+godot-git-plugin/plugin.cfg
+godot-git-plugin/THIRDPARTY.md
+godot-git-plugin/win64/libgitapi.dll
+godot-git-plugin/win64/libgitapi.exp
+godot-git-plugin/win64/libgitapi.lib
+Global.gd
