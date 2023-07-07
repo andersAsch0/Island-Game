@@ -4,7 +4,9 @@ export var enemyScene : PackedScene
 var enemy
 var enemyAttackPatternJson #File object
 var attackPatternData = [] #string
-var currAttack = 1#int representing current line in json file
+var currAttack = 1 #int representing current line in json file
+var enemyBulletScene #packed scene of the enemys chosen bullet
+var bullet
 var loopStart = 1
 var loopEnd = 2
 
@@ -17,6 +19,8 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	
 	 # connect the signal to start fight from the new node to this one
 	enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")
+	# get the bullet from the enemy so we can spawn it
+	enemyBulletScene = enemy.bulletScene
 	
 	enemy.approach()
 
@@ -33,7 +37,12 @@ func attack():
 	$bulletSpawnTimer.start()
 	
 func _on_bulletSpawnTimer_timeout():
-	print("spawningg bullet at ", attackPatternData[currAttack]['spawnLocationX'], ", json line ", currAttack)
+	bullet = enemyBulletScene.instance()
+	bullet.position.x = attackPatternData[currAttack]['spawnLocationX']
+	bullet.position.y = $bulletSpawnLocationY.position.y
+	add_child(bullet)
+	
+	
 	currAttack += 1
 	if currAttack > loopEnd:
 		currAttack = loopStart
@@ -48,3 +57,7 @@ func getAttackPatternData():
 		return parse_json(enemyAttackPatternJson.get_as_text())
 	
 
+
+
+func _on_BattleModePlayer_playerIsHit():
+	print("ouch!")

@@ -1,11 +1,16 @@
-extends KinematicBody2D
+extends Area2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+export var speed : int = 50
 
 
-# Called when the node enters the scene tree for the first time.
 func _process(delta):
+	if len(get_overlapping_bodies()) != 0:
+		#play animation
+		queue_free()
+		
+	position.y += speed * delta
 	
+
+func _on_VisibilityNotifier2D_screen_exited():
+	queue_free() #delete self when it leaves the screen

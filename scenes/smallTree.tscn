@@ -17,7 +17,7 @@ animations = [ {
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 2.5, 1 )
 
-[node name="smallTree" type="StaticBody2D"]
+[node name="smallTree" type="StaticBody2D" groups=["scenery"]]
 collision_mask = 7
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
