@@ -16,11 +16,11 @@ var walk_animations = ["horizontal", "horizontal", "vertical", "vertical"]
 var dash_animations = ["dash left", "dash right", "dash up", "dash down"]
 var direction = UP
 var velocity = Vector2.ZERO
-
+signal playerIsHit
 
 func _process(delta):
 	
-	
+	#movement
 	var input = Vector2.ZERO
 	input.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	input.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
@@ -57,3 +57,8 @@ func _input(event):
 	if(event.is_action_pressed("dash")):
 		isDashing = true
 		$DashTimer.start()
+
+
+
+func _on_Area2D_hit(): #this is stupid
+	emit_signal("playerIsHit")

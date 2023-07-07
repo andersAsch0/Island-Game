@@ -1,7 +1,9 @@
 extends KinematicBody2D
 
+export var bulletScene : PackedScene #packed scene of the bullet this enemy uses
 export var finalScale = 2
 export var approachTime = 2
+export(String, FILE, "*.json") var attackPatternFile
 var approaching = false
 var origScale
 signal startFight
