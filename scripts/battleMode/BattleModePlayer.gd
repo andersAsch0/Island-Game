@@ -16,7 +16,6 @@ var walk_animations = ["horizontal", "horizontal", "vertical", "vertical"]
 var dash_animations = ["dash left", "dash right", "dash up", "dash down"]
 var direction = UP
 var velocity = Vector2.ZERO
-signal playerIsHit
 
 
 func _process(delta):
@@ -65,8 +64,5 @@ func reverseTime():
 	get_tree().call_group("bulletTypes", "reverseTime") # reverse direction of ALREADY EXISTING bullets
 	get_tree().call_group("enemies", "reverseTime") # reverse direction of all future bullets spawned
 
-func getHit():
-	emit_signal("playerIsHit")
-#
-#func _on_Area2D_hit(): #this is stupid
-#	emit_signal("playerIsHit")
+func getHit(damage:int):
+	print("ouch")

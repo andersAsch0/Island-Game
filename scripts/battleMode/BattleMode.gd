@@ -55,8 +55,3 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 #		enemyAttackPatternJson.open($BattleModeEnemy.attackPatternFile, enemyAttackPatternJson.READ)
 #		return parse_json(enemyAttackPatternJson.get_as_text())
 #
-
-
-
-func _on_BattleModePlayer_playerIsHit():
-	print("ouch!")

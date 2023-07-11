@@ -13,9 +13,21 @@ _global_script_classes=[ {
 "class": "GitAPI",
 "language": "NativeScript",
 "path": "res://addons/godot-git-plugin/git_api.gdns"
+}, {
+"base": "Area2D",
+"class": "HitBox",
+"language": "GDScript",
+"path": "res://scripts/HitBox.gd"
+}, {
+"base": "Area2D",
+"class": "HurtBox",
+"language": "GDScript",
+"path": "res://scripts/HurtBox.gd"
 } ]
 _global_script_class_icons={
-"GitAPI": ""
+"GitAPI": "",
+"HitBox": "",
+"HurtBox": ""
 }
 
 [application]
@@ -96,6 +108,10 @@ dash={
 2d_physics/layer_2="player"
 2d_physics/layer_3="npc"
 2d_physics/layer_4="enemy"
+2d_physics/layer_5="HitBoxesEnemy"
+2d_physics/layer_6="HitBoxesPlayer"
+2d_physics/layer_7="HurtBoxesEnemy"
+2d_physics/layer_8="HurtBoxesPlayer"
 
 [physics]
 
