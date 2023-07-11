@@ -15,6 +15,7 @@ animations = [ {
 radius = 6.0
 
 [node name="Bullet" type="Area2D" groups=["bulletTypes"]]
+scale = Vector2( 0.5, 0.5 )
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 2 )
@@ -27,4 +28,9 @@ shape = SubResource( 2 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
 
+[node name="DespawnTimer" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="timeout" from="DespawnTimer" to="." method="_on_DespawnTimer_timeout"]

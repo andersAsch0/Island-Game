@@ -18,6 +18,7 @@ var direction = UP
 var velocity = Vector2.ZERO
 signal playerIsHit
 
+
 func _process(delta):
 	
 	#movement
@@ -57,8 +58,15 @@ func _input(event):
 	if(event.is_action_pressed("dash")):
 		isDashing = true
 		$DashTimer.start()
+	if(event.is_action_pressed("ui_accept")):
+		reverseTime()
 
+func reverseTime():
+	get_tree().call_group("bulletTypes", "reverseTime") # reverse direction of ALREADY EXISTING bullets
+	get_tree().call_group("enemies", "reverseTime") # reverse direction of all future bullets spawned
 
-
-func _on_Area2D_hit(): #this is stupid
+func getHit():
 	emit_signal("playerIsHit")
+#
+#func _on_Area2D_hit(): #this is stupid
+#	emit_signal("playerIsHit")
