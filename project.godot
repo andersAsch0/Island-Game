@@ -125,8 +125,7 @@ speedUpTime={
 2d_physics/layer_4="enemy"
 2d_physics/layer_5="HitBoxesEnemy"
 2d_physics/layer_6="HitBoxesPlayer"
-2d_physics/layer_7="HurtBoxesEnemy"
-2d_physics/layer_8="HurtBoxesPlayer"
+2d_physics/layer_7="HitBoxesBullets"
 
 [physics]
 

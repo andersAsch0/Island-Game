@@ -5,36 +5,44 @@ var bullet = null
 export var approachTime = 2 # how long in seconds enemy takes to approach
 export(String, FILE, "*.json") var attackPatternFile #imported json file
 var attackPatternData #json file in text form so I can use it
-var approaching = false
+var isAttackPhase = false # means that the player should be dodging, cant attack
 var origScale = 0.1 # starting size of sprite when enemy spawns
 export var finalScale = 1 #final size of the sprite once it has approached
 var loopStart = 1 #line of the json where the enemies continous attack loop starts
 var loopEnd = 2
-var bulletsPerDodgePhase = 20 #how many bullets they spawn during each dodge phase before approaching again
+var bulletsPerDodgePhase = 10 #how many bullets they spawn during each dodge phase before approaching again
 var currAttack = 1 #current line of json file
 var currBullets = 0
 var bulletTimeMultiplier = 1 #always multiplied onto bullets speed when they are spawned, when time is reversed, this is changed to -1
 var bulletTimeMultiplierNotZero = 1 # storage variable for bullet speed when resuming time
 
+signal attackPhaseStarting
+signal attackPhaseEnding
+
 #SETUP AND APPROACH
 
 func _ready():
 	$ApproachTimer.wait_time = approachTime
-func approach(): #when called (by outside battleMode script), enemy does whatever it needs to do at beginning of fight
+	attackPatternData = getAttackPatternData() #get the json file and get it as a string
+	if get_parent():
+		connect("attackPhaseStarting", get_parent(), "on_attack_phase_starting")
+		connect("attackPhaseEnding", get_parent(), "on_attack_phase_ending")
+func approach(): #stop attacking and slowly approach player
 	$ApproachTimer.start()
 	$AnimatedSprite.play("moving")
 	$AnimatedSprite.scale.x = origScale
 	$AnimatedSprite.scale.y = origScale
 	visible = true
-	approaching = true #usually, that will be to slowly approach
+	isAttackPhase = false 
+	emit_signal("attackPhaseEnding")
 func _physics_process(delta):
-	if approaching: #increase scale (grow bigger each frame)
+	if not isAttackPhase: #increase scale (grow bigger each frame)
 		$AnimatedSprite.scale.x += ((finalScale - origScale)/$ApproachTimer.wait_time) * delta 
 		$AnimatedSprite.scale.y += ((finalScale - origScale)/$ApproachTimer.wait_time) * delta
 func _on_ApproachTimer_timeout(): #when timer finishes, sprite is proper size
-	approaching = false #stop growing
+	isAttackPhase = true #stop growing
+	emit_signal("attackPhaseStarting")
 	$AnimatedSprite.play("idle")
-	introduction()
 	startFight()
 func introduction():
 	pass
@@ -44,26 +52,26 @@ func introduction():
 #FIGHT AND BULLET SPAWNING
 
 func startFight():
-	attackPatternData = getAttackPatternData() #get the json file and get it as a string
 	loopStart = attackPatternData[0]['loopStart'] #iterated through json file
 	loopEnd = attackPatternData[0]['loopEnd']
 	currAttack = loopStart
 	currBullets = 0
 	attack()
+	
 func attack():
 	$bulletSpawnTimer.wait_time = attackPatternData[currAttack]['waitTime'] / abs(bulletTimeMultiplier) #time in between bullets spawning
 	$bulletSpawnTimer.start()
 func _on_bulletSpawnTimer_timeout():
 	bullet = bulletScene.instance()
 	bullet.position.x = attackPatternData[currAttack]['spawnLocationX'] - position.x
-	bullet.position.y = $bulletSpawnLocationY.position.y - position.y
+	bullet.position.y = $bulletSpawnLocationY.position.y
 	bullet.speed *= bulletTimeMultiplier
 	add_child(bullet)
 	currAttack += 1
 	currBullets += 1
 	if currAttack > loopEnd:
 		currAttack = loopStart
-	if (currBullets <= bulletsPerDodgePhase):
+	if (currBullets < bulletsPerDodgePhase):
 		attack()
 	else:
 		$bulletSpawnTimer.stop()
@@ -73,6 +81,7 @@ func _on_bulletSpawnTimer_timeout():
 
 func reverseTime():
 	bulletTimeMultiplier *= -1 
+	$bulletSpawnTimer.paused = not $bulletSpawnTimer.paused
 func speedUpTime(multiplier : int = 2):
 	bulletTimeMultiplier = sign(bulletTimeMultiplier) * multiplier
 func stopTime():
@@ -85,6 +94,10 @@ func resumeTime():
 	$bulletSpawnTimer.paused = false
 	$AnimatedSprite.playing = true
 
+#TAKE DAMAGE
+
+func getHit(damage:int):
+	print("enemy: ouch")
 
 #HELPER
 

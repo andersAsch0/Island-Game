@@ -18,10 +18,10 @@ margin_right = 270.0
 margin_bottom = 100.0
 
 [node name="WallCollision" type="CollisionPolygon2D" parent="FightArea"]
-polygon = PoolVector2Array( 50, 100, 50, 69, 269, 68, 270, 100, 160, 100, 160, 107, 276, 106, 275, 59, 43, 60, 43, 107, 159, 107, 159, 100 )
+polygon = PoolVector2Array( 50, 100, 50, 80, 270, 80, 270, 100, 160, 100, 160, 107, 276, 106, 275, 73, 43, 74, 43, 107, 159, 107, 159, 100 )
 
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
 position = Vector2( 159, 116 )
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
-position = Vector2( 160, 40 )
+position = Vector2( 160, 25 )

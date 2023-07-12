@@ -41,14 +41,18 @@ func reverseTime():
 	get_tree().call_group("enemies", "reverseTime") # reverse direction of all future bullets spawned
 	currTimeMultiplier *= -1
 func stopTime():
-	get_tree().call_group("bulletTypes", "stopTime") # reverse direction of ALREADY EXISTING bullets
-	get_tree().call_group("enemies", "stopTime") # reverse direction of all future bullets spawned
+	get_tree().call_group("bulletTypes", "stopTime")
+	get_tree().call_group("enemies", "stopTime")
 	timeIsStopped = true
 func resumeTime():
-	get_tree().call_group("bulletTypes", "resumeTime") # reverse direction of ALREADY EXISTING bullets
-	get_tree().call_group("enemies", "resumeTime") # reverse direction of all future bullets spawned
+	get_tree().call_group("bulletTypes", "resumeTime")
+	get_tree().call_group("enemies", "resumeTime")
 	timeIsStopped = false
 func speedUpTime():
-	get_tree().call_group("bulletTypes", "speedUpTime", 2) # reverse direction of ALREADY EXISTING bullets
-	get_tree().call_group("enemies", "speedUpTime", 2) # reverse direction of all future bullets spawned
+	get_tree().call_group("bulletTypes", "speedUpTime", 2) 
+	get_tree().call_group("enemies", "speedUpTime", 2)
 
+func on_attack_phase_starting():
+	print("attack phase starting")
+func on_attack_phase_ending():
+	print("attack phase ending")
