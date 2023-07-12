@@ -9,6 +9,8 @@ var enemyBulletScene #packed scene of the enemys chosen bullet
 var bullet
 var loopStart = 1
 var loopEnd = 2
+var currTimeMultiplier = 1 # keeps track of current time rate, will NEVER BE 0 THO
+var timeIsStopped = false
 
 func _ready(): #this script sets up enemy, approach() function will handle the rest
 	enemy = enemyScene.instance()
@@ -23,35 +25,30 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	
 	enemy.approach()
 
-#
-#func _on_BattleModeEnemy_startFight():
-#	attackPatternData = getAttackPatternData() #get the json file and get it as a string
-#	loopStart = attackPatternData[0]['loopStart']
-#	loopEnd = attackPatternData[0]['loopEnd']
-#	currAttack = loopStart
-#	attack()
-#
-#func attack():
-#	$bulletSpawnTimer.wait_time = attackPatternData[currAttack]['waitTime']
-#	$bulletSpawnTimer.start()
-#
-#func _on_bulletSpawnTimer_timeout():
-#	bullet = enemyBulletScene.instance()
-#	bullet.position.x = attackPatternData[currAttack]['spawnLocationX']
-#	bullet.position.y = $bulletSpawnLocationY.position.y
-#	add_child(bullet)
-#
-#
-#	currAttack += 1
-#	if currAttack > loopEnd:
-#		currAttack = loopStart
-#	attack()
-#
-#
-#
-#func getAttackPatternData():
-#	enemyAttackPatternJson = File.new() 
-#	if enemyAttackPatternJson.file_exists($BattleModeEnemy.attackPatternFile): #get the attack pattern json file from the enemy node
-#		enemyAttackPatternJson.open($BattleModeEnemy.attackPatternFile, enemyAttackPatternJson.READ)
-#		return parse_json(enemyAttackPatternJson.get_as_text())
-#
+func _input(event):
+	if(event.is_action_pressed("reverseTime")):
+		reverseTime()
+	elif(event.is_action_pressed("stopTime")):
+		if not timeIsStopped:
+			stopTime()
+		else:
+			resumeTime()
+	elif(event.is_action_pressed("speedUpTime")):
+		speedUpTime()
+		
+func reverseTime():
+	get_tree().call_group("bulletTypes", "reverseTime") # reverse direction of ALREADY EXISTING bullets
+	get_tree().call_group("enemies", "reverseTime") # reverse direction of all future bullets spawned
+	currTimeMultiplier *= -1
+func stopTime():
+	get_tree().call_group("bulletTypes", "stopTime") # reverse direction of ALREADY EXISTING bullets
+	get_tree().call_group("enemies", "stopTime") # reverse direction of all future bullets spawned
+	timeIsStopped = true
+func resumeTime():
+	get_tree().call_group("bulletTypes", "resumeTime") # reverse direction of ALREADY EXISTING bullets
+	get_tree().call_group("enemies", "resumeTime") # reverse direction of all future bullets spawned
+	timeIsStopped = false
+func speedUpTime():
+	get_tree().call_group("bulletTypes", "speedUpTime", 2) # reverse direction of ALREADY EXISTING bullets
+	get_tree().call_group("enemies", "speedUpTime", 2) # reverse direction of all future bullets spawned
+

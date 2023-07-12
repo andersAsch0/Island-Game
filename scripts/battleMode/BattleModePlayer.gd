@@ -57,12 +57,22 @@ func _input(event):
 	if(event.is_action_pressed("dash")):
 		isDashing = true
 		$DashTimer.start()
-	if(event.is_action_pressed("ui_accept")):
-		reverseTime()
+#	elif(event.is_action_pressed("reverseTime")):
+#		reverseTime()
+#	elif(event.is_action_pressed("stopTime")):
+#		stopTime()
+#	elif(event.is_action_pressed("speedUpTime")):
+#		speedUpTime()
 
-func reverseTime():
-	get_tree().call_group("bulletTypes", "reverseTime") # reverse direction of ALREADY EXISTING bullets
-	get_tree().call_group("enemies", "reverseTime") # reverse direction of all future bullets spawned
 
+#func reverseTime():
+#	get_tree().call_group("bulletTypes", "reverseTime") # reverse direction of ALREADY EXISTING bullets
+#	get_tree().call_group("enemies", "reverseTime") # reverse direction of all future bullets spawned
+#func stopTime():
+#	get_tree().call_group("bulletTypes", "stopTime") # reverse direction of ALREADY EXISTING bullets
+#	get_tree().call_group("enemies", "stopTime") # reverse direction of all future bullets spawned
+#func speedUpTime():
+#	get_tree().call_group("bulletTypes", "speedUpTime", 2) # reverse direction of ALREADY EXISTING bullets
+#	get_tree().call_group("enemies", "speedUpTime", 2) # reverse direction of all future bullets spawned
 func getHit(damage:int):
 	print("ouch")
