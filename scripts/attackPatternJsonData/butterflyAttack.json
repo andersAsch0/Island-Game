@@ -1,6 +1,6 @@
 [
     {"loopStart": 1, "loopEnd": 5},
-	{"waitTime" : 0.5, "spawnLocationX": 32},
+	{"waitTime" : 0.5, "spawnLocationX": 0},
 	{"waitTime" : 0.5, "spawnLocationX": 64},
 	{"waitTime" : 0.5, "spawnLocationX": 96},
 	{"waitTime" : 0.5, "spawnLocationX": 128},
