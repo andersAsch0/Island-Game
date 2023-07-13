@@ -12,6 +12,12 @@ var loopEnd = 2
 var currTimeMultiplier = 1 # keeps track of current time rate, will NEVER BE 0 THO
 var timeIsStopped = false
 
+var maxTimeJuiceSeconds = 10
+var currTimeJuice = maxTimeJuiceSeconds
+
+
+
+
 func _ready(): #this script sets up enemy, approach() function will handle the rest
 	enemy = enemyScene.instance()
 	enemy.position = $enemySpawnLocation.position
@@ -24,6 +30,19 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemyBulletScene = enemy.bulletScene
 	
 	enemy.approach()
+
+var timerCount = 0
+func _process(delta):
+	timerCount += delta
+	if(timerCount >= 1):
+		timerCount = 0
+		incrementAbilityTimes()
+func incrementAbilityTimes(): #FINISH ME
+	if currTimeMultiplier < 0: # if time is reversed, decrease time juice
+		currTimeJuice -= 1
+	if abs(currTimeMultiplier) > 1: # if time is fast, decrease time juice
+		currTimeJuice -= 1
+	
 
 func _input(event):
 	if(event.is_action_pressed("reverseTime")):
@@ -52,7 +71,13 @@ func speedUpTime():
 	get_tree().call_group("bulletTypes", "speedUpTime", 2) 
 	get_tree().call_group("enemies", "speedUpTime", 2)
 
+#SIGNALS FROM ENEMY
+var overWorldPath = "res://scenes/World.tscn"
+
 func on_attack_phase_starting():
 	print("attack phase starting")
 func on_attack_phase_ending():
 	print("attack phase ending")
+func on_enemyDead():
+	print("RIP")
+	var _PTS = get_tree().change_scene(overWorldPath)

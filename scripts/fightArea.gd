@@ -8,4 +8,6 @@ func _input(event):
 		
 
 func enterFight():
+	Global.overWorldLocation = owner.position
+	Global.enemyName = owner.name
 	var _PTS = get_tree().change_scene(BattleModePath) # change_scene takes path, change_scene_to takes PackedScene

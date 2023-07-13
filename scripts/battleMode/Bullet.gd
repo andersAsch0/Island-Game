@@ -2,6 +2,8 @@ extends Area2D
 
 
 export var speed : int = 50
+export var angle : float = 0 #in radians
+var velocity = Vector2.DOWN
 var timeMultiplier = 1
 var timeMultiplierNotZero = 1 # storage for resuming time
 # depawn timer should be long enough that even if the player uses all their time reverse at once,
@@ -9,7 +11,7 @@ var timeMultiplierNotZero = 1 # storage for resuming time
 # maybe this can be adjusted by the player script when the player has little time reversal left, in order to optimize
 
 func _process(delta):
-	position.y += speed * delta * timeMultiplier
+	position += velocity.rotated(angle) * speed * delta * timeMultiplier
 func reverseTime():
 	timeMultiplier *= -1
 func speedUpTime(multiplier : int = 2): #can pass in number, if no number default is 2 (time is twice as fast)
