@@ -25,3 +25,18 @@ position = Vector2( 159, 116 )
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 160, 25 )
+
+[node name="AbilityCoolDownTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="VictoryButton" type="Button" parent="."]
+visible = false
+margin_left = 127.0
+margin_top = 36.0
+margin_right = 193.0
+margin_bottom = 56.0
+disabled = true
+text = "VICTORY"
+
+[connection signal="pressed" from="VictoryButton" to="." method="_on_VictoryButton_pressed"]

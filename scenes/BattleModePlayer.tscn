@@ -152,6 +152,7 @@ animation = "idle"
 
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.1
+one_shot = true
 
 [node name="wallHitBox" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 14 )
@@ -159,6 +160,7 @@ rotation = 1.57938
 shape = SubResource( 11 )
 
 [node name="DashCooldown" type="Timer" parent="."]
+one_shot = true
 
 [node name="HurtBox" type="Area2D" parent="."]
 visible = false

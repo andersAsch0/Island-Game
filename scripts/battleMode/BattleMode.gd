@@ -35,16 +35,21 @@ var timerCount = 0
 func _process(delta):
 	timerCount += delta
 	if(timerCount >= 1):
+		print("cooldown: ", $AbilityCoolDownTimer.time_left)
 		timerCount = 0
 		incrementAbilityTimes()
-func incrementAbilityTimes(): #FINISH ME
+func incrementAbilityTimes(): 
 	if currTimeMultiplier < 0: # if time is reversed, decrease time juice
 		currTimeJuice -= 1
 	if abs(currTimeMultiplier) > 1: # if time is fast, decrease time juice
 		currTimeJuice -= 1
+	if currTimeMultiplier == 1: # only regain the juice during normal time
+		currTimeJuice += 1
 	
 
 func _input(event):
+	if($AbilityCoolDownTimer.time_left > 0):
+		return
 	if(event.is_action_pressed("reverseTime")):
 		reverseTime()
 	elif(event.is_action_pressed("stopTime")):
@@ -58,26 +63,33 @@ func _input(event):
 func reverseTime():
 	get_tree().call_group("bulletTypes", "reverseTime") # reverse direction of ALREADY EXISTING bullets
 	get_tree().call_group("enemies", "reverseTime") # reverse direction of all future bullets spawned
+	$AbilityCoolDownTimer.start()
 	currTimeMultiplier *= -1
 func stopTime():
 	get_tree().call_group("bulletTypes", "stopTime")
 	get_tree().call_group("enemies", "stopTime")
+	$AbilityCoolDownTimer.start()
 	timeIsStopped = true
 func resumeTime():
 	get_tree().call_group("bulletTypes", "resumeTime")
 	get_tree().call_group("enemies", "resumeTime")
+	$AbilityCoolDownTimer.start()
 	timeIsStopped = false
 func speedUpTime():
 	get_tree().call_group("bulletTypes", "speedUpTime", 2) 
 	get_tree().call_group("enemies", "speedUpTime", 2)
+	$AbilityCoolDownTimer.start()
 
 #SIGNALS FROM ENEMY
 var overWorldPath = "res://scenes/World.tscn"
 
 func on_attack_phase_starting():
-	print("attack phase starting")
+	pass
 func on_attack_phase_ending():
-	print("attack phase ending")
+	pass
 func on_enemyDead():
-	print("RIP")
+	$VictoryButton.visible = true
+	$VictoryButton.disabled = false
+func _on_VictoryButton_pressed():
 	var _PTS = get_tree().change_scene(overWorldPath)
+

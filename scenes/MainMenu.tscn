@@ -31,7 +31,7 @@ margin_top = 10.0
 margin_right = 300.0
 margin_bottom = 40.0
 bbcode_enabled = true
-bbcode_text = "[center][color=black]I am an Island[/color][/center]"
-text = "I am an Island"
+bbcode_text = "[center][color=black]Island Game[/color][/center]"
+text = "Island Game"
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]

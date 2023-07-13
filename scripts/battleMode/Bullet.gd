@@ -26,6 +26,8 @@ func resumeTime():
 
 # DESPAWNING STUFF
 
+func getHit(_damage : int): #called when bullet hits player or enemy
+	die()
 func _on_VisibilityNotifier2D_screen_exited():
 	if not $DespawnTimer.paused: #dont call start when it gets deleted
 		$DespawnTimer.start() #if it exits the screen, start the timer, ignoring any past enters or exits
@@ -34,8 +36,17 @@ func _on_VisibilityNotifier2D_screen_entered():
 		$DespawnTimer.stop() #dont despawn on screen
 func _on_DespawnTimer_timeout():
 	queue_free()
-func getHit(_damage : int):
+func die(): #called by enemy when it dies
+	$AnimatedSprite.play("die")
+	#$HitBox.queue_free() # dont hit player during explosion animation
+	set_process(false) #stop moving
+	$DeathTimer.start() # give time for explosion to play
+func _on_DeathTimer_timeout():
 	queue_free()
+
+	
 
 func _on_Bullet_child_exiting_tree(_timer : Timer): # please stop 
 	$DespawnTimer.paused = true
+
+

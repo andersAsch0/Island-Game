@@ -113,8 +113,11 @@ func getHit(damage:int):
 	currentHP -= 1
 	print("enemy HP = ", currentHP)
 	if currentHP <= 0:
-		die()
-func die():
+		$enemyMovement.set_process(false)
+		$enemyMovement/PathFollow2D/AnimatedSprite.play("die")
+		$DeathTimer.start() #leave time to play death animation before showing win screen
+		get_tree().call_group("bulletTypes", "die")
+func _on_DeathTimer_timeout():
 	$bulletSpawnTimer.paused = true
 	$ApproachTimer.paused = true
 	emit_signal("enemyDead")
@@ -129,7 +132,6 @@ func getAttackPatternData():
 	if attackPatternData.file_exists(attackPatternFile): #get the attack pattern json file from the enemy node
 		attackPatternData.open(attackPatternFile, attackPatternData.READ)
 		return parse_json(attackPatternData.get_as_text())
-
 
 
 
