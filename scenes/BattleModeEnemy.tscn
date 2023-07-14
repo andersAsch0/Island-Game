@@ -13,7 +13,7 @@ radius = 16.0
 
 [sub_resource type="Curve2D" id=17]
 _data = {
-"points": PoolVector2Array( 0.471937, 0.707906, -0.471937, -0.707906, -34, -1, -9.43874, 4.01147, 9.43874, -4.01147, -25, -13, -11.7984, -7.31503, 11.7984, 7.31503, 24, -13, 12.0344, -5.89921, -12.0344, 5.89921, 23, 10, 9.43874, 4.71937, -9.43874, -4.71937, -24, 10, -0.0848745, 0.898732, 0.0848745, -0.898732, -34, -1 )
+"points": PoolVector2Array( -0.028628, 1.2919, 0.028628, -1.2919, 1, -11, -7.23254, -1.63555, 7.23254, 1.63555, 84, -9, 8.69353, -2.89041, -8.69353, 2.89041, 84, 0, 6.13217, 1.43296, -6.13217, -1.43296, -73, 1, -6.31385, 0.841847, 6.31385, -0.841847, -72, -8, -0.0848745, 0.898732, 0.0848745, -0.898732, 1, -11 )
 }
 
 [sub_resource type="CircleShape2D" id=15]
@@ -121,9 +121,9 @@ one_shot = true
 wait_time = 2.0
 
 [node name="bulletSpawnTimer" type="Timer" parent="."]
+one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource( 14 )
 
 [node name="bulletSpawnLocationY" type="Position2D" parent="."]
@@ -135,7 +135,7 @@ curve = SubResource( 17 )
 script = ExtResource( 6 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="enemyMovement"]
-position = Vector2( -34, -1 )
+position = Vector2( 1, -10 )
 rotation = -0.501648
 rotate = false
 

@@ -71,20 +71,20 @@ func attack():
 	bullet.angle = attackPatternData[currAttack]['angle']
 	bullet.speed *= bulletTimeMultiplier
 	add_child(bullet)
-	currAttack += 1
 	currBullets += 1
-	if currAttack > loopEnd:
-		currAttack = loopStart
-	#get time before next bullet and start timer
-	$bulletSpawnTimer.wait_time = attackPatternData[currAttack]['waitTime'] / abs(bulletTimeMultiplier) #time in between bullets spawning
-	$bulletSpawnTimer.start()
-func _on_bulletSpawnTimer_timeout():
-	if (currBullets < bulletsPerAttackPhase):
-		attack()
+	if currBullets <= bulletsPerAttackPhase:
+		#get time before next bullet and start timer
+		$bulletSpawnTimer.wait_time = attackPatternData[currAttack]['waitTime'] / abs(bulletTimeMultiplier) #time in between bullets spawning
+		$bulletSpawnTimer.start()
+		currAttack += 1
+		if currAttack > loopEnd:
+			currAttack = loopStart
 	else:
 		$bulletSpawnTimer.stop()
 		currBullets = 0
 		approach()
+func _on_bulletSpawnTimer_timeout():
+	attack()
 	
 #TIME FUNCTIONS
 

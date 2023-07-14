@@ -3,12 +3,23 @@ extends Area2D
 
 export var speed : int = 50
 export var angle : float = 0 #in radians
+export var warningAnimationTime = 1 #how long does the warning anim play before the bullet shoots
 var velocity = Vector2.DOWN
 var timeMultiplier = 1
 var timeMultiplierNotZero = 1 # storage for resuming time
 # depawn timer should be long enough that even if the player uses all their time reverse at once,
 # the bullets will not have despawned too early
 # maybe this can be adjusted by the player script when the player has little time reversal left, in order to optimize
+
+func _ready():
+	set_process(false) #dont move
+	$WarningTimer.wait_time = warningAnimationTime
+	$AnimatedSprite.play("warning")
+	$WarningTimer.start()
+func _on_WarningTimer_timeout(): #after warning animation is done playing, move
+	set_process(true)
+	$AnimatedSprite.play("default")
+
 
 func _process(delta):
 	position += velocity.rotated(angle) * speed * delta * timeMultiplier
@@ -48,5 +59,6 @@ func _on_DeathTimer_timeout():
 
 func _on_Bullet_child_exiting_tree(_timer : Timer): # please stop 
 	$DespawnTimer.paused = true
+
 
 

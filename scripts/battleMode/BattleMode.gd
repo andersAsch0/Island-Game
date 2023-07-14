@@ -35,9 +35,9 @@ var timerCount = 0
 func _process(delta):
 	timerCount += delta
 	if(timerCount >= 1):
-		print("cooldown: ", $AbilityCoolDownTimer.time_left)
 		timerCount = 0
 		incrementAbilityTimes()
+	$TimeJuiceBarOutline/TimeJuiceBar.rect_size.x = currTimeJuice/maxTimeJuiceSeconds * $TimeJuiceBarOutline.rect_size.x
 func incrementAbilityTimes(): 
 	if currTimeMultiplier < 0: # if time is reversed, decrease time juice
 		currTimeJuice -= 1
@@ -65,20 +65,24 @@ func reverseTime():
 	get_tree().call_group("enemies", "reverseTime") # reverse direction of all future bullets spawned
 	$AbilityCoolDownTimer.start()
 	currTimeMultiplier *= -1
+	currTimeJuice -= 5
 func stopTime():
 	get_tree().call_group("bulletTypes", "stopTime")
 	get_tree().call_group("enemies", "stopTime")
 	$AbilityCoolDownTimer.start()
 	timeIsStopped = true
+	currTimeJuice -= 5
 func resumeTime():
 	get_tree().call_group("bulletTypes", "resumeTime")
 	get_tree().call_group("enemies", "resumeTime")
 	$AbilityCoolDownTimer.start()
 	timeIsStopped = false
+	currTimeJuice -= 5
 func speedUpTime():
 	get_tree().call_group("bulletTypes", "speedUpTime", 2) 
 	get_tree().call_group("enemies", "speedUpTime", 2)
 	$AbilityCoolDownTimer.start()
+	currTimeJuice -= 5
 
 #SIGNALS FROM ENEMY
 var overWorldPath = "res://scenes/World.tscn"
