@@ -9,11 +9,12 @@ var enemyBulletScene #packed scene of the enemys chosen bullet
 var bullet
 var loopStart = 1
 var loopEnd = 2
-var currTimeMultiplier = 1 # keeps track of current time rate, will NEVER BE 0 THO
+var currTimeMultiplier : float = 1 # keeps track of current time rate, will NEVER BE 0 THO
 var timeIsStopped = false
 
 var maxTimeJuiceSeconds = 10
-var currTimeJuice = maxTimeJuiceSeconds
+var currTimeJuice = 0
+var timeJuiceCost = 5
 
 
 
@@ -37,13 +38,13 @@ func _process(delta):
 	if(timerCount >= 1):
 		timerCount = 0
 		incrementAbilityTimes()
-	$TimeJuiceBarOutline/TimeJuiceBar.rect_size.x = currTimeJuice/maxTimeJuiceSeconds * $TimeJuiceBarOutline.rect_size.x
 func incrementAbilityTimes(): 
+	$UI/ProgressBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
 	if currTimeMultiplier < 0: # if time is reversed, decrease time juice
 		currTimeJuice -= 1
 	if abs(currTimeMultiplier) > 1: # if time is fast, decrease time juice
 		currTimeJuice -= 1
-	if currTimeMultiplier == 1: # only regain the juice during normal time
+	if currTimeJuice < maxTimeJuiceSeconds and currTimeMultiplier == 1: # only regain the juice during normal time
 		currTimeJuice += 1
 	
 
@@ -58,31 +59,46 @@ func _input(event):
 		else:
 			resumeTime()
 	elif(event.is_action_pressed("speedUpTime")):
-		speedUpTime()
+		speedUpTime(currTimeMultiplier * 2)
+	elif(event.is_action_pressed("slowDownTime")):
+		speedUpTime(currTimeMultiplier/2)
 		
 func reverseTime():
 	get_tree().call_group("bulletTypes", "reverseTime") # reverse direction of ALREADY EXISTING bullets
 	get_tree().call_group("enemies", "reverseTime") # reverse direction of all future bullets spawned
 	$AbilityCoolDownTimer.start()
 	currTimeMultiplier *= -1
-	currTimeJuice -= 5
+	currTimeJuice -= timeJuiceCost
+	
+	$Clock.visible = true
+	$Clock.play("forward", currTimeMultiplier<0)
 func stopTime():
 	get_tree().call_group("bulletTypes", "stopTime")
 	get_tree().call_group("enemies", "stopTime")
 	$AbilityCoolDownTimer.start()
 	timeIsStopped = true
-	currTimeJuice -= 5
+	currTimeJuice -= timeJuiceCost
+	$Clock.visible = true
+	$Clock.stop()
 func resumeTime():
 	get_tree().call_group("bulletTypes", "resumeTime")
 	get_tree().call_group("enemies", "resumeTime")
 	$AbilityCoolDownTimer.start()
 	timeIsStopped = false
-	currTimeJuice -= 5
-func speedUpTime():
-	get_tree().call_group("bulletTypes", "speedUpTime", 2) 
-	get_tree().call_group("enemies", "speedUpTime", 2)
+	currTimeJuice -= timeJuiceCost
+	$Clock.visible = true
+	$Clock.play()
+func speedUpTime(newTimeSpeed : float):
+	currTimeMultiplier = sign(currTimeMultiplier) * newTimeSpeed
+	get_tree().call_group("bulletTypes", "speedUpTime", newTimeSpeed) 
+	get_tree().call_group("enemies", "speedUpTime", newTimeSpeed)
 	$AbilityCoolDownTimer.start()
-	currTimeJuice -= 5
+	currTimeJuice -= timeJuiceCost
+	$Clock.visible = true
+	$Clock.speed_scale = currTimeMultiplier
+func _on_AbilityCoolDownTimer_timeout():
+	$Clock.visible = false
+
 
 #SIGNALS FROM ENEMY
 var overWorldPath = "res://scenes/World.tscn"
@@ -96,4 +112,5 @@ func on_enemyDead():
 	$VictoryButton.disabled = false
 func _on_VictoryButton_pressed():
 	var _PTS = get_tree().change_scene(overWorldPath)
+
 

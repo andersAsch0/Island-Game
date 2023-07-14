@@ -135,7 +135,7 @@ curve = SubResource( 17 )
 script = ExtResource( 6 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="enemyMovement"]
-position = Vector2( 1, -10 )
+position = Vector2( 1, -11 )
 rotation = -0.501648
 rotate = false
 
@@ -166,6 +166,14 @@ frames = SubResource( 13 )
 animation = "die"
 frame = 10
 playing = true
+
+[node name="HPBar" type="ProgressBar" parent="."]
+margin_left = -20.0
+margin_top = -21.0
+margin_right = 60.0
+margin_bottom = -7.0
+rect_scale = Vector2( 0.5, 0.5 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
 
 [connection signal="timeout" from="ApproachTimer" to="." method="_on_ApproachTimer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]

@@ -16,8 +16,8 @@ var loopEnd = 2
 var bulletsPerAttackPhase = 30 #how many bullets they spawn during each attack phase before approaching again
 var currAttack = 1 #current line of json file
 var currBullets = 0
-var bulletTimeMultiplier = 1 #always multiplied onto bullets speed when they are spawned, when time is reversed, this is changed to -1
-var bulletTimeMultiplierNotZero = 1 # storage variable for bullet speed when resuming time
+var bulletTimeMultiplier : float = 1 #always multiplied onto bullets speed when they are spawned, when time is reversed, this is changed to -1
+var bulletTimeMultiplierNotZero : float = 1 # storage variable for bullet speed when resuming time
 
 signal attackPhaseStarting
 signal attackPhaseEnding
@@ -26,7 +26,6 @@ signal enemyDead
 #SETUP AND APPROACH
 
 func _ready():
-	$ApproachTimer.wait_time = approachTime
 	$enemyMovement.enemySpeed = enemySpeed
 	attackPatternData = getAttackPatternData() #get the json file and get it as a string
 	if get_parent():
@@ -34,6 +33,7 @@ func _ready():
 		connect("attackPhaseEnding", get_parent(), "on_attack_phase_ending")
 		connect("enemyDead", get_parent(), "on_enemyDead")
 func approach(): #stop attacking and slowly approach player
+	$ApproachTimer.wait_time = approachTime * bulletTimeMultiplierNotZero
 	$ApproachTimer.start()
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
 	$enemyMovement/PathFollow2D/AnimatedSprite.scale.x = origScale
@@ -45,6 +45,7 @@ func _physics_process(delta):
 	if not isAttackPhase and bulletTimeMultiplier != 0: #increase scale (grow bigger each frame)
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x += ((finalScale - origScale)/$ApproachTimer.wait_time) * delta 
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y += ((finalScale - origScale)/$ApproachTimer.wait_time) * delta
+	$HPBar.value = 1.0 * currentHP/maxHP * 100
 func _on_ApproachTimer_timeout(): #when timer finishes, sprite is proper size
 	isAttackPhase = true #stop growing
 	emit_signal("attackPhaseStarting")
@@ -91,7 +92,7 @@ func _on_bulletSpawnTimer_timeout():
 func reverseTime():
 	bulletTimeMultiplier *= -1 
 	$bulletSpawnTimer.paused = not $bulletSpawnTimer.paused
-func speedUpTime(multiplier : int = 2):
+func speedUpTime(multiplier : float = 2):
 	bulletTimeMultiplier = sign(bulletTimeMultiplier) * multiplier
 func stopTime():
 	bulletTimeMultiplierNotZero = bulletTimeMultiplier

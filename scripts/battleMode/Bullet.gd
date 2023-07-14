@@ -25,7 +25,7 @@ func _process(delta):
 	position += velocity.rotated(angle) * speed * delta * timeMultiplier
 func reverseTime():
 	timeMultiplier *= -1
-func speedUpTime(multiplier : int = 2): #can pass in number, if no number default is 2 (time is twice as fast)
+func speedUpTime(multiplier : float = 1): #can pass in number, if no number default is 1 (no change)
 	timeMultiplier = multiplier * sign(timeMultiplier)
 func stopTime():
 	timeMultiplierNotZero = timeMultiplier
