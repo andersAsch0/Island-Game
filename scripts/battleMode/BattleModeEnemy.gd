@@ -67,11 +67,14 @@ func startFight():
 func attack():
 	#spawn bullet, place in proper position w proper speed 
 	bullet = bulletScene.instance() 
-	bullet.position.x = attackPatternData[currAttack]['spawnLocationX'] - position.x
-	bullet.position.y = $bulletSpawnLocationY.position.y
-	bullet.angle = attackPatternData[currAttack]['angle']
+	$BulletSpawnPath/bulletSpawnLocation.unit_offset = 1.0 * attackPatternData[currAttack]['spawnLocationX'] / 100
+	bullet.position = $BulletSpawnPath/bulletSpawnLocation.position + $BulletSpawnPath.position
+#	bullet.position.x = attackPatternData[currAttack]['spawnLocationX'] - position.x
+#	bullet.position.y = $bulletSpawnLocationY.position.y
+#	bullet.angle = attackPatternData[currAttack]['angle']
 	bullet.speed *= bulletTimeMultiplier
 	add_child(bullet)
+	print(bullet.position.x, " ", bullet.position.y)
 	currBullets += 1
 	if currBullets <= bulletsPerAttackPhase:
 		#get time before next bullet and start timer
