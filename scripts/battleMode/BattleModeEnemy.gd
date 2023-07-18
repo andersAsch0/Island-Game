@@ -38,7 +38,7 @@ func _ready():
 		connect("attackPhaseEnding", get_parent(), "on_attack_phase_ending")
 		connect("enemyDead", get_parent(), "on_enemyDead")
 		Global.connect("timeMultiplierChanged", self, "changeAnimationSpeed")
-		Global.connect("timeFlowChanged", self, "stopOrStartAnimation")
+		Global.connect("timeFlowChanged", self, "startOrStopAnimation")
 	
 		
 func approach(): #stop attacking and slowly approach player
@@ -92,12 +92,15 @@ func attack():
 		approach()
 		
 func changeAnimationSpeed(): #called whenever the global time variable is changed, ugly but i cant find a better way
-	$enemyMovement/PathFollow2D/AnimatedSprite.speed_scale *= Global.currCombatTimeMultiplier
+	$enemyMovement/PathFollow2D/AnimatedSprite.set_speed_scale(abs(Global.currCombatTimeMultiplier))
+	if Global.currCombatTimeMultiplier < 0 and Global.timeIsNotStopped:
+		$enemyMovement/PathFollow2D/AnimatedSprite.play($enemyMovement/PathFollow2D/AnimatedSprite.animation, true)
 func startOrStopAnimation():
 	if Global.timeIsNotStopped:
-		$enemyMovement/PathFollow2D/AnimatedSprite.play()
+		$enemyMovement/PathFollow2D/AnimatedSprite.play($enemyMovement/PathFollow2D/AnimatedSprite.animation, Global.currCombatTimeMultiplier < 0)
 	else:
 		$enemyMovement/PathFollow2D/AnimatedSprite.stop()
+
 
 #TAKE DAMAGE
 

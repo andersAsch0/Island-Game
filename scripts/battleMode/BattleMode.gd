@@ -46,7 +46,6 @@ func incrementAbilityTimes(delta):
 	
 
 func _input(event):
-	print(Global.timeIsNotStopped as int)
 	if($AbilityCoolDownTimer.time_left > 0):
 		return
 	if(event.is_action_pressed("reverseTime")):

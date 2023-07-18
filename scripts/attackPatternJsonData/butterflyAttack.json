@@ -1,10 +1,10 @@
 [
     {"loopStart": 1, "loopEnd": 7},
 	{"waitTime" : 0.4, "spawnLocationX": 50, "angle": 0},
-	{"waitTime" : 0.001, "spawnLocationX": 40, "angle": -0.2},
-	{"waitTime" : 0.4, "spawnLocationX": 60, "angle": 0.2},
-	{"waitTime" : 0.001, "spawnLocationX": 20, "angle": -0.4},
-	{"waitTime" : 0.4, "spawnLocationX": 80, "angle": 0.4},
-	{"waitTime" : 0.001, "spawnLocationX": 10, "angle": -0.6},
-	{"waitTime" : 0.4, "spawnLocationX": 90, "angle": 0.6}
+	{"waitTime" : 0.001, "spawnLocationX": 40, "angle": 0},
+	{"waitTime" : 0.4, "spawnLocationX": 60, "angle": 0},
+	{"waitTime" : 0.001, "spawnLocationX": 20, "angle": 0},
+	{"waitTime" : 0.4, "spawnLocationX": 80, "angle": 0},
+	{"waitTime" : 0.001, "spawnLocationX": 10, "angle": 0},
+	{"waitTime" : 0.4, "spawnLocationX": 90, "angle": 0}
 ]
