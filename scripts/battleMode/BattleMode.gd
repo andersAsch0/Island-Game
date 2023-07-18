@@ -5,16 +5,16 @@ var enemy
 var enemyAttackPatternJson #File object
 var attackPatternData = [] #string
 var currAttack = 1 #int representing current line in json file
-var enemyBulletScene #packed scene of the enemys chosen bullet
-var bullet
 var loopStart = 1
 var loopEnd = 2
+var enemyBulletScene #packed scene of the enemys chosen bullet
+var bullet
 var currTimeMultiplier : float = 1 # keeps track of current time rate, will NEVER BE 0 THO
 var timeIsStopped = false
 
-var maxTimeJuiceSeconds = 10
-var currTimeJuice = 0
-var timeJuiceCost = 5
+var maxTimeJuiceSeconds : float = 10
+var currTimeJuice : float = 0
+var timeJuiceCost : float = 5
 
 
 
@@ -34,18 +34,15 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 
 var timerCount = 0
 func _process(delta):
-	timerCount += delta
-	if(timerCount >= 1):
-		timerCount = 0
-		incrementAbilityTimes()
-func incrementAbilityTimes(): 
+	pass
+func incrementAbilityTimes(delta): 
 	$UI/ProgressBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
 	if currTimeMultiplier < 0: # if time is reversed, decrease time juice
-		currTimeJuice -= 1
+		currTimeJuice -= delta
 	if abs(currTimeMultiplier) > 1: # if time is fast, decrease time juice
-		currTimeJuice -= 1
+		currTimeJuice -= delta
 	if currTimeJuice < maxTimeJuiceSeconds and currTimeMultiplier == 1: # only regain the juice during normal time
-		currTimeJuice += 1
+		currTimeJuice += delta
 	
 
 func _input(event):
@@ -54,44 +51,36 @@ func _input(event):
 	if(event.is_action_pressed("reverseTime")):
 		reverseTime()
 	elif(event.is_action_pressed("stopTime")):
-		if not timeIsStopped:
+		if Global.timeIsNotStopped:
 			stopTime()
 		else:
 			resumeTime()
 	elif(event.is_action_pressed("speedUpTime")):
-		speedUpTime(currTimeMultiplier * 2)
+		changeTimeScale(2)
 	elif(event.is_action_pressed("slowDownTime")):
-		speedUpTime(currTimeMultiplier/2)
+		changeTimeScale(1.0 * 1/2)
 		
 func reverseTime():
-	get_tree().call_group("bulletTypes", "reverseTime") # reverse direction of ALREADY EXISTING bullets
-	get_tree().call_group("enemies", "reverseTime") # reverse direction of all future bullets spawned
+	Global.set_timeMultiplier(-1)
 	$AbilityCoolDownTimer.start()
-	currTimeMultiplier *= -1
 	currTimeJuice -= timeJuiceCost
 	
 	$Clock.visible = true
 	$Clock.play("forward", currTimeMultiplier<0)
 func stopTime():
-	get_tree().call_group("bulletTypes", "stopTime")
-	get_tree().call_group("enemies", "stopTime")
 	$AbilityCoolDownTimer.start()
-	timeIsStopped = true
+	Global.set_timeFlow(false)
 	currTimeJuice -= timeJuiceCost
 	$Clock.visible = true
 	$Clock.stop()
 func resumeTime():
-	get_tree().call_group("bulletTypes", "resumeTime")
-	get_tree().call_group("enemies", "resumeTime")
 	$AbilityCoolDownTimer.start()
-	timeIsStopped = false
+	Global.set_timeFlow(true)
 	currTimeJuice -= timeJuiceCost
 	$Clock.visible = true
 	$Clock.play()
-func speedUpTime(newTimeSpeed : float):
-	currTimeMultiplier = sign(currTimeMultiplier) * newTimeSpeed
-	get_tree().call_group("bulletTypes", "speedUpTime", newTimeSpeed) 
-	get_tree().call_group("enemies", "speedUpTime", newTimeSpeed)
+func changeTimeScale(timeMultiplier : float):
+	Global.set_timeMultiplier(timeMultiplier)
 	$AbilityCoolDownTimer.start()
 	currTimeJuice -= timeJuiceCost
 	$Clock.visible = true

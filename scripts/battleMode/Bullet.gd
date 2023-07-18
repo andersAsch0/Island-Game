@@ -22,7 +22,7 @@ func _on_WarningTimer_timeout(): #after warning animation is done playing, move
 
 
 func _process(delta):
-	position += velocity.rotated(angle) * speed * delta * timeMultiplier
+	position += velocity.rotated(angle) * speed * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 func reverseTime():
 	timeMultiplier *= -1
 func speedUpTime(multiplier : float = 1): #can pass in number, if no number default is 1 (no change)
