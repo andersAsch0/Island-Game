@@ -19,6 +19,7 @@ var currBullets = 0
 var bulletTimeMultiplier : float = 1 #always multiplied onto bullets speed when they are spawned, when time is reversed, this is changed to -1
 var bulletTimeMultiplierNotZero : float = 1 # storage variable for bullet speed when resuming time
 var bulletSpawnTimeCounter : float = 0 #using this instead of a timer node because I need it to be effected by the time shenanigans
+var animationSpeedStorage = []
 
 signal attackPhaseStarting
 signal attackPhaseEnding
@@ -31,10 +32,15 @@ func _ready():
 	attackPatternData = getAttackPatternData() #get the json file and get it as a string
 	loopStart = attackPatternData[0]['loopStart'] #iterated through json file
 	loopEnd = attackPatternData[0]['loopEnd']
+	bulletSpawnTimeCounter = attackPatternData[loopStart]['waitTime']
 	if get_parent():
 		connect("attackPhaseStarting", get_parent(), "on_attack_phase_starting")
 		connect("attackPhaseEnding", get_parent(), "on_attack_phase_ending")
 		connect("enemyDead", get_parent(), "on_enemyDead")
+		Global.connect("timeMultiplierChanged", self, "changeAnimationSpeed")
+		Global.connect("timeFlowChanged", self, "stopOrStartAnimation")
+	
+		
 func approach(): #stop attacking and slowly approach player
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
 	$enemyMovement/PathFollow2D/AnimatedSprite.scale.x = origScale
@@ -43,6 +49,7 @@ func approach(): #stop attacking and slowly approach player
 	isAttackPhase = false 
 	emit_signal("attackPhaseEnding")
 func _physics_process(delta):
+#	$enemyMovement/PathFollow2D/AnimatedSprite.speed_scale = $enemyMovement/PathFollow2D/AnimatedSprite
 	if not isAttackPhase: #increase scale (grow bigger each frame)
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x += ((finalScale - origScale)/approachTime) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y += ((finalScale - origScale)/approachTime) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
@@ -63,6 +70,7 @@ func startAttackPhase():
 	isAttackPhase = true #stop growing
 	emit_signal("attackPhaseStarting")
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
+	currBullets = 0
 	currAttack = loopStart
 	attack()
 	
@@ -82,28 +90,15 @@ func attack():
 			currAttack = loopStart
 	else:
 		approach()
-	
-#TIME FUNCTIONS
+		
+func changeAnimationSpeed(): #called whenever the global time variable is changed, ugly but i cant find a better way
+	$enemyMovement/PathFollow2D/AnimatedSprite.speed_scale *= Global.currCombatTimeMultiplier
+func startOrStopAnimation():
+	if Global.timeIsNotStopped:
+		$enemyMovement/PathFollow2D/AnimatedSprite.play()
+	else:
+		$enemyMovement/PathFollow2D/AnimatedSprite.stop()
 
-func reverseTime():
-	bulletTimeMultiplier *= -1 
-	$bulletSpawnTimer.paused = not $bulletSpawnTimer.paused
-func speedUpTime(multiplier : float = 2):
-	bulletTimeMultiplier = sign(bulletTimeMultiplier) * multiplier
-func stopTime():
-	bulletTimeMultiplierNotZero = bulletTimeMultiplier
-	bulletTimeMultiplier = 0
-	$bulletSpawnTimer.paused = true
-	$ApproachTimer.paused = true
-	$enemyMovement/PathFollow2D/AnimatedSprite.playing = false
-	$enemyMovement.set_process(false)
-func resumeTime():
-	bulletTimeMultiplier = bulletTimeMultiplierNotZero
-	$bulletSpawnTimer.paused = false
-	$ApproachTimer.paused = false
-	$enemyMovement/PathFollow2D/AnimatedSprite.playing = true
-	$enemyMovement.set_process(true)
-	
 #TAKE DAMAGE
 
 func getHit(damage:int):

@@ -46,49 +46,42 @@ func incrementAbilityTimes(delta):
 	
 
 func _input(event):
+	print(Global.timeIsNotStopped as int)
 	if($AbilityCoolDownTimer.time_left > 0):
 		return
 	if(event.is_action_pressed("reverseTime")):
 		reverseTime()
 	elif(event.is_action_pressed("stopTime")):
-		if not Global.timeIsNotStopped:
+		if Global.timeIsNotStopped:
 			stopTime()
 		else:
 			resumeTime()
 	elif(event.is_action_pressed("speedUpTime")):
 		changeTimeScale(2)
 	elif(event.is_action_pressed("slowDownTime")):
-		changeTimeScale(1/2)
+		changeTimeScale(1.0 * 1/2)
 		
 func reverseTime():
-	Global.currCombatTimeMultiplier *= -1
-#	get_tree().call_group("bulletTypes", "reverseTime") # reverse direction of ALREADY EXISTING bullets
-#	get_tree().call_group("enemies", "reverseTime") # reverse direction of all future bullets spawned
+	Global.set_timeMultiplier(-1)
 	$AbilityCoolDownTimer.start()
 	currTimeJuice -= timeJuiceCost
 	
 	$Clock.visible = true
 	$Clock.play("forward", currTimeMultiplier<0)
 func stopTime():
-#	get_tree().call_group("bulletTypes", "stopTime")
-#	get_tree().call_group("enemies", "stopTime")
 	$AbilityCoolDownTimer.start()
-	Global.timeIsNotStopped = false
+	Global.set_timeFlow(false)
 	currTimeJuice -= timeJuiceCost
 	$Clock.visible = true
 	$Clock.stop()
 func resumeTime():
-#	get_tree().call_group("bulletTypes", "resumeTime")
-#	get_tree().call_group("enemies", "resumeTime")
 	$AbilityCoolDownTimer.start()
-	Global.timeIsNotStopped = true
+	Global.set_timeFlow(true)
 	currTimeJuice -= timeJuiceCost
 	$Clock.visible = true
 	$Clock.play()
 func changeTimeScale(timeMultiplier : float):
-	Global.currCombatTimeMultiplier *= timeMultiplier
-#	get_tree().call_group("bulletTypes", "speedUpTime", newTimeSpeed) 
-#	get_tree().call_group("enemies", "speedUpTime", newTimeSpeed)
+	Global.set_timeMultiplier(timeMultiplier)
 	$AbilityCoolDownTimer.start()
 	currTimeJuice -= timeJuiceCost
 	$Clock.visible = true
