@@ -1,10 +1,11 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://art/sprite base spritesheet.png" type="Texture" id=1]
 [ext_resource path="res://scripts/battleMode/BattleModePlayer.gd" type="Script" id=2]
 [ext_resource path="res://art/sprite base dash spritesheet.png" type="Texture" id=3]
 [ext_resource path="res://scripts/HurtBox.gd" type="Script" id=4]
 [ext_resource path="res://scripts/HitBox.gd" type="Script" id=5]
+[ext_resource path="res://art/battle jump spritesheet .png" type="Texture" id=6]
 
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 1 )
@@ -74,6 +75,22 @@ region = Rect2( 0, 64, 32, 32 )
 atlas = ExtResource( 1 )
 region = Rect2( 0, 64, 32, 32 )
 
+[sub_resource type="AtlasTexture" id=26]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=27]
+atlas = ExtResource( 6 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=28]
+atlas = ExtResource( 6 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=29]
+atlas = ExtResource( 6 )
+region = Rect2( 96, 0, 32, 32 )
+
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 1 )
 region = Rect2( 32, 64, 32, 32 )
@@ -122,6 +139,11 @@ animations = [ {
 "name": "idle",
 "speed": 5.0
 }, {
+"frames": [ SubResource( 26 ), SubResource( 27 ), SubResource( 28 ), SubResource( 27 ), SubResource( 29 ) ],
+"loop": false,
+"name": "jump",
+"speed": 7.0
+}, {
 "frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": true,
 "name": "vertical",
@@ -148,7 +170,7 @@ script = ExtResource( 2 )
 
 [node name="Animations" type="AnimatedSprite" parent="."]
 frames = SubResource( 10 )
-animation = "idle"
+animation = "jump"
 
 [node name="DashTimer" type="Timer" parent="."]
 wait_time = 0.1
@@ -160,7 +182,7 @@ rotation = 1.57938
 shape = SubResource( 11 )
 
 [node name="inputTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.3
 one_shot = true
 
 [node name="DashCooldown" type="Timer" parent="."]

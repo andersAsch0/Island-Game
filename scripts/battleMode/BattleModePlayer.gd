@@ -61,28 +61,28 @@ func _input(event):
 #		isDashing = true
 #		$DashTimer.start()
 	if(event.is_action_pressed("ui_up")):
-		updateInputTimer()
+		handleInput()
 		storagePos.y -= 20
 	elif(event.is_action_released("ui_up")):
-		updateInputTimer()
+		handleInput()
 		storagePos.y += 20
 	elif(event.is_action_pressed("ui_down")):
-		updateInputTimer()
+		handleInput()
 		storagePos.y += 20
 	elif(event.is_action_released("ui_down")):
-		updateInputTimer()
+		handleInput()
 		storagePos.y -= 20
 	elif(event.is_action_pressed("ui_right")):
-		updateInputTimer()
+		handleInput()
 		storagePos.x += 20
 	elif(event.is_action_released("ui_right")):
-		updateInputTimer()
+		handleInput()
 		storagePos.x -= 20
 	elif(event.is_action_pressed("ui_left")):
-		updateInputTimer()
+		handleInput()
 		storagePos.x -= 20
 	elif(event.is_action_released("ui_left")):
-		updateInputTimer()
+		handleInput()
 		storagePos.x += 20		
 		
 # new plan: when button is pressed, start moving immediately
@@ -90,7 +90,8 @@ func _input(event):
 # so during that animation, it will note any more inputs and redirect you mid jump
 # (bur doesnt restart jump time, so jumps are always the same length to avoid most cheesing)
 		
-func updateInputTimer():
+func handleInput():
+	$Animations.play("jump")
 	if $inputTimer.time_left == 0:
 		$inputTimer.start()
 	# on any of those 8 actions, start timer
@@ -98,6 +99,7 @@ func updateInputTimer():
 	# actions during timer cant restart it
 func _on_inputTimer_timeout():
 	position = storagePos
+	$Animations.play("idle")
 		
 func getHit(damage:int):
 	print("ouch")
