@@ -159,6 +159,10 @@ position = Vector2( 0, 14 )
 rotation = 1.57938
 shape = SubResource( 11 )
 
+[node name="inputTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
 [node name="DashCooldown" type="Timer" parent="."]
 one_shot = true
 
@@ -181,3 +185,4 @@ script = ExtResource( 5 )
 shape = SubResource( 25 )
 
 [connection signal="timeout" from="DashTimer" to="." method="_on_DashTimer_timeout"]
+[connection signal="timeout" from="inputTimer" to="." method="_on_inputTimer_timeout"]

@@ -131,15 +131,13 @@ margin_top = 68.0
 margin_right = 416.0
 margin_bottom = 218.0
 rect_scale = Vector2( 0.5, 0.6 )
-text = "R : Reverse Time
+text = "Controls
+R : Reverse Time
 T : Stop Time
 Y : Speed Up
 U : Slow Down
-Be careful,
-theres a cooldown!
-Whenever the clock
-is visible you can't
-change it"
+clock visible = 
+cooldown active"
 
 [node name="Clock" type="AnimatedSprite" parent="."]
 visible = false
