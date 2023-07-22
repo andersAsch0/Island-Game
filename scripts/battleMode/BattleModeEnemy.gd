@@ -3,10 +3,17 @@ extends KinematicBody2D
 export var bulletScene : PackedScene #packed scene of the bullet this enemy uses
 var bullet = null
 export var approachTime = 4 # how long in seconds enemy takes to approach
+enum {
+	ATTACKING
+	LEAVING
+	AWAY
+	APPROACHING
+}
+var currState = AWAY
 export(String, FILE, "*.json") var attackPatternFile #imported json file
 var attackPatternData #json file in text form so I can use it
 var isAttackPhase = false # means that the player should be dodging, cant attack
-var origScale = 0.1 # starting size of sprite when enemy spawns
+var origScale = 0.3 # starting size of sprite when enemy spawns
 export var finalScale = 1 #final size of the sprite once it has approached
 var loopStart = 1 #line of the json where the enemies continous attack loop starts
 export var enemySpeed = 50 #speed at which the enemy wanders around
@@ -28,6 +35,8 @@ signal enemyDead
 #SETUP AND APPROACH
 
 func _ready():
+	$enemyMovement/PathFollow2D/AnimatedSprite.scale.x = origScale
+	$enemyMovement/PathFollow2D/AnimatedSprite.scale.y = origScale
 	$enemyMovement.enemySpeed = enemySpeed
 	attackPatternData = getAttackPatternData() #get the json file and get it as a string
 	loopStart = attackPatternData[0]['loopStart'] #iterated through json file
@@ -40,25 +49,58 @@ func _ready():
 		Global.connect("timeMultiplierChanged", self, "changeAnimationSpeed")
 		Global.connect("timeFlowChanged", self, "startOrStopAnimation")
 	
-		
-func approach(): #stop attacking and slowly approach player
-	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
-	$enemyMovement/PathFollow2D/AnimatedSprite.scale.x = origScale
-	$enemyMovement/PathFollow2D/AnimatedSprite.scale.y = origScale
+	currState = AWAY
+	startAwayPhase()
 	visible = true
-	isAttackPhase = false 
-	emit_signal("attackPhaseEnding")
+		
+var awayTimeCounter
 func _physics_process(delta):
 #	$enemyMovement/PathFollow2D/AnimatedSprite.speed_scale = $enemyMovement/PathFollow2D/AnimatedSprite
-	if not isAttackPhase: #increase scale (grow bigger each frame)
-		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x += ((finalScale - origScale)/approachTime) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y += ((finalScale - origScale)/approachTime) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		if $enemyMovement/PathFollow2D/AnimatedSprite.scale.x >= finalScale: #when sprite reaches proper size
-			startAttackPhase()
-	else:
+	if currState == ATTACKING:
 		bulletSpawnTimeCounter -= delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		if bulletSpawnTimeCounter <= 0:
 			attack()
+	elif currState == APPROACHING: #increase scale (grow bigger each frame)
+		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x += ((finalScale - origScale)/approachTime) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y += ((finalScale - origScale)/approachTime) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		if $enemyMovement/PathFollow2D/AnimatedSprite.scale.x >= finalScale: #if sprite reaches full size
+			startAttackPhase()
+		elif $enemyMovement/PathFollow2D/AnimatedSprite.scale.x <= origScale: #if time reverses and enemy goes backwards
+			startAwayPhase()
+	elif currState == LEAVING:
+		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x -= ((finalScale - origScale)/approachTime) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y -= ((finalScale - origScale)/approachTime) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		if $enemyMovement/PathFollow2D/AnimatedSprite.scale.x <= origScale: #when sprite reaches proper small size
+			startAwayPhase()
+		elif $enemyMovement/PathFollow2D/AnimatedSprite.scale.x >= finalScale: #if time reverses and sprite comes back
+			startAttackPhase()
+	elif currState == AWAY:
+		awayTimeCounter -= delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		if awayTimeCounter <= 0:
+			startApproachPhase()
+		if awayTimeCounter > approachTime: #time reversed
+			startLeavePhase()
+func startAttackPhase():
+	currState = ATTACKING
+	isAttackPhase = true #stop growing
+	emit_signal("attackPhaseStarting")
+	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
+	currBullets = 0
+	currAttack = loopStart
+	attack()
+func startLeavePhase():
+	currState = LEAVING
+	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
+	isAttackPhase = false 
+	emit_signal("attackPhaseEnding")
+func startAwayPhase():
+	currState = AWAY
+	awayTimeCounter = approachTime
+	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
+func startApproachPhase():
+	currState = APPROACHING
+	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
+	
 func introduction():
 	pass
 	#dialouge? noise? pause? animation? something instead of fight instantly starting
@@ -66,13 +108,6 @@ func introduction():
 
 #FIGHT AND BULLET SPAWNING
 
-func startAttackPhase():
-	isAttackPhase = true #stop growing
-	emit_signal("attackPhaseStarting")
-	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
-	currBullets = 0
-	currAttack = loopStart
-	attack()
 	
 func attack():
 	#spawn bullet, place in proper position w proper speed 
@@ -89,7 +124,7 @@ func attack():
 		if currAttack > loopEnd:
 			currAttack = loopStart
 	else:
-		approach()
+		startLeavePhase()
 		
 func changeAnimationSpeed(): #called whenever the global time variable is changed, ugly but i cant find a better way
 	$enemyMovement/PathFollow2D/AnimatedSprite.set_speed_scale(abs(Global.currCombatTimeMultiplier))

@@ -30,7 +30,6 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	# get the bullet from the enemy so we can spawn it
 	enemyBulletScene = enemy.bulletScene
 	
-	enemy.approach()
 
 var timerCount = 0
 func _process(delta):
