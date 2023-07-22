@@ -86,9 +86,6 @@ margin_bottom = 147.0
 texture = ExtResource( 5 )
 expand = true
 
-[node name="leftGridPlayerLocation" type="Position2D" parent="Grid"]
-position = Vector2( 12, 35 )
-
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
 position = Vector2( 160, 110 )
 

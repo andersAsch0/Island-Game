@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 export var bulletScene : PackedScene #packed scene of the bullet this enemy uses
 var bullet = null
-export var approachTime = 4 # how long in seconds enemy takes to approach
+export var approachTime = 9 # how long in seconds enemy takes to approach
 export(String, FILE, "*.json") var attackPatternFile #imported json file
 var attackPatternData #json file in text form so I can use it
 var isAttackPhase = false # means that the player should be dodging, cant attack
@@ -13,7 +13,7 @@ export var enemySpeed = 50 #speed at which the enemy wanders around
 export var maxHP = 5
 var currentHP = maxHP
 var loopEnd = 2
-var bulletsPerAttackPhase = 30 #how many bullets they spawn during each attack phase before approaching again
+var bulletsPerAttackPhase = 10 #how many bullets they spawn during each attack phase before approaching again
 var currAttack = 1 #current line of json file
 var currBullets = 0
 var bulletTimeMultiplier : float = 1 #always multiplied onto bullets speed when they are spawned, when time is reversed, this is changed to -1
