@@ -58,9 +58,9 @@ var awayTimeCounter
 func _physics_process(delta):
 #	$enemyMovement/PathFollow2D/AnimatedSprite.speed_scale = $enemyMovement/PathFollow2D/AnimatedSprite
 	if currState == ATTACKING:
-		bulletSpawnTimeCounter -= delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		bulletSpawnTimeCounter -= delta * abs(Global.currCombatTimeMultiplier) * (Global.timeIsNotStopped as int)
 		print(bulletSpawnTimeCounter)
-		if bulletSpawnTimeCounter <= 0:
+		if bulletSpawnTimeCounter <= 0 and Global.currCombatTimeMultiplier > 0:
 			attack()
 	elif currState == APPROACHING: #increase scale (grow bigger each frame)
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x += ((finalScale - origScale)/approachTime) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
