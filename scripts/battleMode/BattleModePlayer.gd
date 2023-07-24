@@ -75,4 +75,4 @@ func _input(event):
 #	get_tree().call_group("bulletTypes", "speedUpTime", 2) # reverse direction of ALREADY EXISTING bullets
 #	get_tree().call_group("enemies", "speedUpTime", 2) # reverse direction of all future bullets spawned
 func getHit(damage:int):
-	print("ouch")
+	pass

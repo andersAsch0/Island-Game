@@ -52,12 +52,14 @@ func _ready():
 	currState = AWAY
 	startAwayPhase()
 	visible = true
+	$enemyMovement/PathFollow2D/HurtBox/CollisionShape2D.disabled = true
 		
 var awayTimeCounter
 func _physics_process(delta):
 #	$enemyMovement/PathFollow2D/AnimatedSprite.speed_scale = $enemyMovement/PathFollow2D/AnimatedSprite
 	if currState == ATTACKING:
 		bulletSpawnTimeCounter -= delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		print(bulletSpawnTimeCounter)
 		if bulletSpawnTimeCounter <= 0:
 			attack()
 	elif currState == APPROACHING: #increase scale (grow bigger each frame)
@@ -65,6 +67,7 @@ func _physics_process(delta):
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y += ((finalScale - origScale)/approachTime) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		if $enemyMovement/PathFollow2D/AnimatedSprite.scale.x >= finalScale: #if sprite reaches full size
 			startAttackPhase()
+			currBullets = 0
 		elif $enemyMovement/PathFollow2D/AnimatedSprite.scale.x <= origScale: #if time reverses and enemy goes backwards
 			startAwayPhase()
 	elif currState == LEAVING:
@@ -85,7 +88,6 @@ func startAttackPhase():
 	isAttackPhase = true #stop growing
 	emit_signal("attackPhaseStarting")
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
-	currBullets = 0
 	currAttack = loopStart
 	attack()
 func startLeavePhase():
@@ -116,8 +118,10 @@ func attack():
 	bullet.position = $BulletSpawnPath/bulletSpawnLocation.position + $BulletSpawnPath.position #global_position??
 	bullet.angle = attackPatternData[currAttack]['angle']
 	add_child(bullet)
-	currBullets += 1
-	if currBullets <= bulletsPerAttackPhase:
+	currBullets += 1 * sign(Global.currCombatTimeMultiplier)
+	if currBullets <= 0: #time is going backwards
+		startApproachPhase()
+	elif currBullets <= bulletsPerAttackPhase:
 		#get time before next bullet and start timer
 		bulletSpawnTimeCounter = attackPatternData[currAttack]['waitTime'] #time in between bullets spawning
 		currAttack += 1
