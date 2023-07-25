@@ -20,6 +20,8 @@ var timeJuiceCost : float = 5
 
 
 func _ready(): #this script sets up enemy, approach() function will handle the rest
+	$normalMusicLoop.play()
+	$reverseMusicLoop.play()
 	enemy = enemyScene.instance()
 	enemy.position = $enemySpawnLocation.position
 	enemy.visible = false
@@ -29,7 +31,6 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	# enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")
 	# get the bullet from the enemy so we can spawn it
 	enemyBulletScene = enemy.bulletScene
-	
 
 var timerCount = 0
 func _process(delta):
@@ -61,6 +62,8 @@ func _input(event):
 		
 func reverseTime():
 	Global.set_timeMultiplier(-1)
+	$normalMusicLoop.stream_paused = Global.currCombatTimeMultiplier < 0
+	$reverseMusicLoop.stream_paused = not Global.currCombatTimeMultiplier < 0
 	$AbilityCoolDownTimer.start()
 	currTimeJuice -= timeJuiceCost
 	
@@ -102,3 +105,9 @@ func _on_VictoryButton_pressed():
 	var _PTS = get_tree().change_scene(overWorldPath)
 
 
+
+
+func _on_normalMusicLoop_finished():
+	$normalMusicLoop.play(0)
+func _on_reverseAudioLoop_finished():
+	$reverseAudioLoop.play(0)

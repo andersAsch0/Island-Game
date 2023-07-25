@@ -1,9 +1,11 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://scenes/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
 [ext_resource path="res://scenes/BattleModeEnemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://art/clock.png" type="Texture" id=4]
+[ext_resource path="res://audio/IslandFight.wav" type="AudioStream" id=5]
+[ext_resource path="res://audio/IslandFightReverse.wav" type="AudioStream" id=6]
 
 [sub_resource type="AtlasTexture" id=16]
 atlas = ExtResource( 4 )
@@ -147,5 +149,14 @@ scale = Vector2( 2, 2 )
 frames = SubResource( 31 )
 animation = "forward"
 
+[node name="normalMusicLoop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="reverseMusicLoop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+stream_paused = true
+
 [connection signal="timeout" from="AbilityCoolDownTimer" to="." method="_on_AbilityCoolDownTimer_timeout"]
 [connection signal="pressed" from="VictoryButton" to="." method="_on_VictoryButton_pressed"]
+[connection signal="finished" from="normalMusicLoop" to="." method="_on_normalMusicLoop_finished"]
+[connection signal="finished" from="reverseMusicLoop" to="." method="_on_reverseAudioLoop_finished"]
