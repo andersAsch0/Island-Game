@@ -1,3 +1,4 @@
+
 [gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://scenes/BattleModePlayer.tscn" type="PackedScene" id=1]
@@ -79,20 +80,16 @@ animations = [ {
 script = ExtResource( 2 )
 enemyScene = ExtResource( 3 )
 
-[node name="FightArea" type="StaticBody2D" parent="."]
-position = Vector2( -1, 26 )
-
-[node name="Stage" type="ColorRect" parent="FightArea"]
-margin_left = 100.0
-margin_top = 80.0
-margin_right = 220.0
-margin_bottom = 95.0
-
-[node name="WallCollision" type="CollisionPolygon2D" parent="FightArea"]
-polygon = PoolVector2Array( 100, 95, 100, 80, 220, 80, 220, 95, 160, 95, 160, 102, 233, 102, 233, 73, 89, 74, 89, 101, 159, 102, 159, 95 )
+[node name="Grid" type="TextureRect" parent="."]
+margin_left = 126.0
+margin_top = 75.0
+margin_right = 196.0
+margin_bottom = 147.0
+texture = ExtResource( 5 )
+expand = true
 
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
-position = Vector2( 159, 116 )
+position = Vector2( 160, 110 )
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 160, 25 )
@@ -132,15 +129,13 @@ margin_top = 68.0
 margin_right = 416.0
 margin_bottom = 218.0
 rect_scale = Vector2( 0.5, 0.6 )
-text = "R : Reverse Time
+text = "Controls
+R : Reverse Time
 T : Stop Time
 Y : Speed Up
 U : Slow Down
-Be careful,
-theres a cooldown!
-Whenever the clock
-is visible you can't
-change it"
+clock visible = 
+cooldown active"
 
 [node name="Clock" type="AnimatedSprite" parent="."]
 visible = false
