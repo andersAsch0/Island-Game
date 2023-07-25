@@ -60,7 +60,7 @@ func _ready():
 		
 var awayTimeCounter
 func _physics_process(delta):
-	stateCounter += delta * sign(Global.currCombatTimeMultiplier) * (Global.timeIsNotStopped as int)
+	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	if stateCounter >= stateWaitTimes[currState]: #need to go to next state
 		stateCounter = 0
 		currState = getNextState()
@@ -76,8 +76,8 @@ func _physics_process(delta):
 		if bulletSpawnTimeCounter <= 0 or bulletSpawnTimeCounter >= attackPatternData[currAttack]['waitTime']: #wait time for ITSELF to spawm
 			attack()
 	elif currState == ABSCONDING:
-		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 func startAttackPhase():
 	currState = ATTACKING
 	emit_signal("attackPhaseStarting")
