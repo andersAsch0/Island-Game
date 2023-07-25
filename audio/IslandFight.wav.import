@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/IslandFight.wav-8412ba2649746d5db50066a3e764073c.sample"
+
+[deps]
+
+source_file="res://audio/IslandFight.wav"
+dest_files=[ "res://.import/IslandFight.wav-8412ba2649746d5db50066a3e764073c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0
