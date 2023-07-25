@@ -17,6 +17,8 @@ func _ready():
 	$AnimatedSprite.play("warning")
 	$WarningTimer.start()
 func _on_WarningTimer_timeout(): #after warning animation is done playing, move
+	if Global.currCombatTimeMultiplier < 0:
+		queue_free()
 	set_process(true)
 	$AnimatedSprite.play("default")
 
