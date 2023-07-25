@@ -96,7 +96,6 @@ position = Vector2( 159, 116 )
 position = Vector2( 160, 25 )
 
 [node name="AbilityCoolDownTimer" type="Timer" parent="."]
-wait_time = 5.0
 one_shot = true
 
 [node name="VictoryButton" type="Button" parent="."]
