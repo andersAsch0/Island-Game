@@ -105,9 +105,19 @@ func _on_VictoryButton_pressed():
 	var _PTS = get_tree().change_scene(overWorldPath)
 
 
+#SIGNALS FROM PLAYER
+func _on_BattleModePlayer_PlayerHit():
+	$PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
 
 
+
+#MUSIC
 func _on_normalMusicLoop_finished():
 	$normalMusicLoop.play(0)
 func _on_reverseAudioLoop_finished():
 	$reverseAudioLoop.play(0)
+
+
+
+func _on_DefeatButton_pressed():
+	pass # Replace with function body.

@@ -19,7 +19,10 @@ var gridSize = 20
 var velocity = Vector2.ZERO
 var storagePos = Vector2.ZERO #used as storage during input calculations for jumping
 var defaultPos = Vector2.ZERO #middle of the grid / where to go when no button is held
+export var maxHP : int = 4
+export var currentHP : int = maxHP
 
+signal PlayerHit
 
 func _ready():
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key when entering battle mode
@@ -125,4 +128,5 @@ func _on_inputTimer_timeout():
 	$ColorRect.visible = true
 	
 func getHit(damage:int):
-	pass
+	currentHP -= 1
+	emit_signal("PlayerHit")

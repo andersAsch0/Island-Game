@@ -151,6 +151,13 @@ stream = ExtResource( 5 )
 stream = ExtResource( 6 )
 stream_paused = true
 
+[node name="PlayerHPBar" type="ProgressBar" parent="."]
+margin_left = 126.0
+margin_top = 156.0
+margin_right = 196.0
+margin_bottom = 170.0
+
+[connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
 [connection signal="timeout" from="AbilityCoolDownTimer" to="." method="_on_AbilityCoolDownTimer_timeout"]
 [connection signal="pressed" from="VictoryButton" to="." method="_on_VictoryButton_pressed"]
 [connection signal="finished" from="normalMusicLoop" to="." method="_on_normalMusicLoop_finished"]

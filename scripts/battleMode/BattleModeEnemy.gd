@@ -48,9 +48,9 @@ func _ready():
 	currState = AWAY
 	startAwayPhase()
 	visible = true
-	$enemyMovement/PathFollow2D/HurtBox/CollisionShape2D.disabled = true
 		
 func _physics_process(delta):
+	$HPBar.value = 1.0 * currentHP/maxHP * 100
 	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	if stateCounter >= stateWaitTimes[currState]: #need to go to next state
 		stateCounter = 0
