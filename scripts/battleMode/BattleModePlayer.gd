@@ -42,6 +42,12 @@ func _process(delta):
 	if $inputTimer.time_left > 0: #if mid jump
 		position.x += (storagePos.x - position.x)/$inputTimer.time_left * delta
 		position.y += (storagePos.y - position.y)/$inputTimer.time_left * delta
+		if abs(storagePos.x - position.x) >= abs(storagePos.y - position.y):
+			$Animations.animation = "ball horizontal"
+			$Animations.flip_h = storagePos.x < position.x
+		else:
+			$Animations.animation = "ball vertical"
+			$Animations.flip_v = storagePos.y < position.y
 	
 #	#movement
 #	var input = Vector2.ZERO
@@ -116,13 +122,13 @@ func handleInput():
 		$HurtBox/CollisionShape2D.disabled = true
 		$HitBox/CollisionShape2D.disabled = true
 		$ColorRect.visible = false
-		$Animations.play("roll")
 		$inputTimer.start()
 	# on any of those 8 actions, start timer
 	# on timer end, update position
 	# actions during timer cant restart it
 func _on_inputTimer_timeout():
 	position = storagePos
+	$Animations.flip_v = false
 	$Animations.play("land")
 	$HurtBox/CollisionShape2D.disabled = false
 	$HitBox/CollisionShape2D.disabled = false

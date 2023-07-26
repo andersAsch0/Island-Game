@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/battle jump spritesheet .png-f4f4a7a2e8b1ca10d8f9fb469a52395e.stex"
+path="res://.import/battle player spritesheet.png-0a6fbf8d22ffdc82adced1e4db11fe02.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/battle jump spritesheet .png"
-dest_files=[ "res://.import/battle jump spritesheet .png-f4f4a7a2e8b1ca10d8f9fb469a52395e.stex" ]
+source_file="res://art/battle player spritesheet.png"
+dest_files=[ "res://.import/battle player spritesheet.png-0a6fbf8d22ffdc82adced1e4db11fe02.stex" ]
 
 [params]
 
