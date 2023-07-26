@@ -21,6 +21,7 @@ var storagePos = Vector2.ZERO #used as storage during input calculations for jum
 var defaultPos = Vector2.ZERO #middle of the grid / where to go when no button is held
 export var maxHP : int = 4
 export var currentHP : int = maxHP
+export var invincible : bool = true #for debugging
 
 signal PlayerHit
 
@@ -37,6 +38,9 @@ func _ready():
 	storagePos = position
 	defaultPos = position
 	gridSize = $rightGridLocation.position.x
+	if invincible:
+		$HurtBox/CollisionShape2D.set_deferred("disabled", true)
+		$HitBox/CollisionShape2D.set_deferred("disabled", true)
 
 func _process(delta):
 	if $inputTimer.time_left > 0: #if mid jump

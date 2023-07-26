@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://scenes/longGrass.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/smallTree.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/beeEnemy.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/caveDoor.tscn" type="PackedScene" id=5]
 [ext_resource path="res://scripts/World.gd" type="Script" id=6]
 [ext_resource path="res://art/map tiles/grass n dirt.png" type="Texture" id=7]
@@ -686,3 +687,6 @@ position = Vector2( 88, 127 )
 [node name="caveDoor" parent="." instance=ExtResource( 5 )]
 visible = false
 position = Vector2( 216, 25 )
+
+[node name="enemy" parent="." instance=ExtResource( 4 )]
+position = Vector2( 160, 83 )
