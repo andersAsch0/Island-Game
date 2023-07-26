@@ -25,14 +25,15 @@ export var currentHP : int = maxHP
 signal PlayerHit
 
 func _ready():
+	$Animations.play("idle")
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key when entering battle mode
-		position.x += 20
+		position.x += gridSize
 	if Input.get_action_strength("ui_left") > 0:
-		position.x -= 20
+		position.x -= gridSize
 	if Input.get_action_strength("ui_up") > 0:
-		position.y -= 20
+		position.y -= gridSize
 	if Input.get_action_strength("ui_down") > 0:
-		position.y += 20
+		position.y += gridSize
 	storagePos = position
 	defaultPos = position
 	gridSize = $rightGridLocation.position.x
@@ -41,6 +42,12 @@ func _process(delta):
 	if $inputTimer.time_left > 0: #if mid jump
 		position.x += (storagePos.x - position.x)/$inputTimer.time_left * delta
 		position.y += (storagePos.y - position.y)/$inputTimer.time_left * delta
+		if abs(storagePos.x - position.x) >= abs(storagePos.y - position.y):
+			$Animations.animation = "ball horizontal"
+			$Animations.flip_h = storagePos.x < position.x
+		else:
+			$Animations.animation = "ball vertical"
+			$Animations.flip_v = storagePos.y < position.y
 	
 #	#movement
 #	var input = Vector2.ZERO
@@ -115,13 +122,13 @@ func handleInput():
 		$HurtBox/CollisionShape2D.disabled = true
 		$HitBox/CollisionShape2D.disabled = true
 		$ColorRect.visible = false
-		$Animations.play("roll")
 		$inputTimer.start()
 	# on any of those 8 actions, start timer
 	# on timer end, update position
 	# actions during timer cant restart it
 func _on_inputTimer_timeout():
 	position = storagePos
+	$Animations.flip_v = false
 	$Animations.play("land")
 	$HurtBox/CollisionShape2D.disabled = false
 	$HitBox/CollisionShape2D.disabled = false
@@ -130,3 +137,10 @@ func _on_inputTimer_timeout():
 func getHit(damage:int):
 	currentHP -= 1
 	emit_signal("PlayerHit")
+	if currentHP <= 0:
+		die()
+func die():
+	set_process_input(false)
+	$HurtBox/CollisionShape2D.set_deferred("disabled", true)
+	$HitBox/CollisionShape2D.set_deferred("disabled", true)
+	$Animations.play("die")
