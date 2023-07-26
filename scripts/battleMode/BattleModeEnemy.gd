@@ -13,6 +13,7 @@ export var maxHP = 5
 var currentHP = maxHP
 var currAttack = 1 #current line of json file
 var currBullets = 0
+var bulletsStopped = false
 var bulletSpawnTimeCounter : float = 0 #using this instead of a timer node because I need it to be effected by the time shenanigans
 enum {
 	AWAY
@@ -119,7 +120,7 @@ func introduction():
 func attack():
 	bulletSpawnTimeCounter = 0 
 	
-	if Global.currCombatTimeMultiplier > 0:
+	if Global.currCombatTimeMultiplier > 0 and not bulletsStopped:
 	#spawn bullet, place in proper position w proper speed 
 		bullet = bulletScene.instance() 
 		$BulletSpawnPath/bulletSpawnLocation.unit_offset = 1.0 * attackPatternData[currAttack]['spawnLocationX'] / 100
@@ -143,6 +144,9 @@ func startOrStopAnimation():
 	else:
 		$enemyMovement/PathFollow2D/AnimatedSprite.stop()
 
+func stopBullets():
+	bulletsStopped = true
+	
 
 #TAKE DAMAGE
 

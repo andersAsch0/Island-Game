@@ -106,22 +106,14 @@ margin_bottom = 56.0
 disabled = true
 text = "VICTORY"
 
-[node name="UI" type="Control" parent="."]
+[node name="DefeatButton" type="Button" parent="."]
 visible = false
-margin_right = 40.0
-margin_bottom = 40.0
-
-[node name="ProgressBar" type="ProgressBar" parent="UI"]
-margin_left = 7.0
-margin_top = 108.0
-margin_right = 79.0
-margin_bottom = 122.0
-
-[node name="TextureProgress" type="TextureProgress" parent="UI"]
-margin_left = 8.0
-margin_top = 109.0
-margin_right = 48.0
-margin_bottom = 149.0
+margin_left = 127.0
+margin_top = 37.0
+margin_right = 193.0
+margin_bottom = 57.0
+disabled = true
+text = "DEFEAT"
 
 [node name="Menu\?" type="Label" parent="."]
 margin_left = 236.0
@@ -160,5 +152,6 @@ margin_bottom = 170.0
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
 [connection signal="timeout" from="AbilityCoolDownTimer" to="." method="_on_AbilityCoolDownTimer_timeout"]
 [connection signal="pressed" from="VictoryButton" to="." method="_on_VictoryButton_pressed"]
+[connection signal="pressed" from="DefeatButton" to="." method="_on_DefeatButton_pressed"]
 [connection signal="finished" from="normalMusicLoop" to="." method="_on_normalMusicLoop_finished"]
 [connection signal="finished" from="reverseMusicLoop" to="." method="_on_reverseAudioLoop_finished"]

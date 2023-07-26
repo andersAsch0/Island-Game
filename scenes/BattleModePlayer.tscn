@@ -1,105 +1,21 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=18 format=2]
 
-[ext_resource path="res://art/sprite base spritesheet.png" type="Texture" id=1]
 [ext_resource path="res://scripts/battleMode/BattleModePlayer.gd" type="Script" id=2]
-[ext_resource path="res://art/sprite base dash spritesheet.png" type="Texture" id=3]
 [ext_resource path="res://scripts/HurtBox.gd" type="Script" id=4]
 [ext_resource path="res://scripts/HitBox.gd" type="Script" id=5]
-[ext_resource path="res://art/battle jump spritesheet .png" type="Texture" id=6]
-[ext_resource path="res://art/battle roll spritesheet.png" type="Texture" id=7]
 [ext_resource path="res://art/battle roll spritesheet .png" type="Texture" id=8]
 
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 1 )
-region = Rect2( 32, 96, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 1 )
-region = Rect2( 64, 96, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 1 )
-region = Rect2( 96, 96, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 3 )
-region = Rect2( 32, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 3 )
-region = Rect2( 64, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 32, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 3 )
-region = Rect2( 32, 32, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 3 )
-region = Rect2( 64, 32, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 1 )
-region = Rect2( 32, 64, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 1 )
-region = Rect2( 64, 64, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=23]
-atlas = ExtResource( 1 )
-region = Rect2( 96, 64, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=37]
-atlas = ExtResource( 7 )
-region = Rect2( 128, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=38]
-atlas = ExtResource( 7 )
+[sub_resource type="AtlasTexture" id=52]
+atlas = ExtResource( 8 )
 region = Rect2( 160, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=39]
-atlas = ExtResource( 7 )
-region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 1 )
-region = Rect2( 32, 64, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 1 )
-region = Rect2( 64, 64, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 1 )
-region = Rect2( 96, 64, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 64, 32, 32 )
+[sub_resource type="AtlasTexture" id=53]
+atlas = ExtResource( 8 )
+region = Rect2( 64, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=49]
 atlas = ExtResource( 8 )
 region = Rect2( 0, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=27]
-atlas = ExtResource( 6 )
-region = Rect2( 32, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=29]
-atlas = ExtResource( 6 )
-region = Rect2( 96, 0, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=31]
-atlas = ExtResource( 6 )
-region = Rect2( 128, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=50]
 atlas = ExtResource( 8 )
@@ -125,63 +41,17 @@ region = Rect2( 64, 0, 32, 32 )
 atlas = ExtResource( 8 )
 region = Rect2( 96, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 1 )
-region = Rect2( 32, 64, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 1 )
-region = Rect2( 64, 64, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 1 )
-region = Rect2( 96, 64, 32, 32 )
-
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 64, 32, 32 )
-
 [sub_resource type="SpriteFrames" id=10]
 animations = [ {
-"frames": [ SubResource( 12 ), SubResource( 13 ), SubResource( 13 ), SubResource( 14 ) ],
-"loop": true,
-"name": "dash down",
-"speed": 20.0
-}, {
-"frames": [ SubResource( 15 ), SubResource( 16 ), SubResource( 16 ), SubResource( 17 ) ],
-"loop": true,
-"name": "dash left",
-"speed": 20.0
-}, {
-"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 19 ), SubResource( 20 ) ],
+"frames": [ SubResource( 52 ), SubResource( 53 ) ],
 "loop": false,
-"name": "dash right",
-"speed": 20.0
-}, {
-"frames": [ SubResource( 21 ), SubResource( 22 ), SubResource( 22 ), SubResource( 23 ) ],
-"loop": true,
-"name": "dash up",
-"speed": 20.0
-}, {
-"frames": [ SubResource( 37 ), SubResource( 38 ), SubResource( 39 ) ],
-"loop": false,
-"name": "finish roll",
-"speed": 15.0
-}, {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
-"loop": true,
-"name": "horizontal",
-"speed": 5.0
+"name": "die",
+"speed": 0.5
 }, {
 "frames": [ SubResource( 49 ) ],
 "loop": true,
 "name": "idle",
 "speed": 5.0
-}, {
-"frames": [ SubResource( 27 ), SubResource( 29 ), SubResource( 31 ) ],
-"loop": false,
-"name": "jump",
-"speed": 7.0
 }, {
 "frames": [ SubResource( 50 ), SubResource( 46 ), SubResource( 46 ), SubResource( 46 ), SubResource( 46 ), SubResource( 51 ) ],
 "loop": false,
@@ -192,11 +62,6 @@ animations = [ {
 "loop": false,
 "name": "roll",
 "speed": 11.0
-}, {
-"frames": [ SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
-"loop": true,
-"name": "vertical",
-"speed": 5.0
 } ]
 
 [sub_resource type="CapsuleShape2D" id=11]
@@ -229,7 +94,8 @@ color = Color( 0.498039, 0.254902, 0.254902, 1 )
 [node name="Animations" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 10 )
-animation = "idle"
+animation = "die"
+frame = 1
 playing = true
 
 [node name="DashTimer" type="Timer" parent="."]

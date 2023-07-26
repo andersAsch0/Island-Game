@@ -25,14 +25,15 @@ export var currentHP : int = maxHP
 signal PlayerHit
 
 func _ready():
+	$Animations.play("idle")
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key when entering battle mode
-		position.x += 20
+		position.x += gridSize
 	if Input.get_action_strength("ui_left") > 0:
-		position.x -= 20
+		position.x -= gridSize
 	if Input.get_action_strength("ui_up") > 0:
-		position.y -= 20
+		position.y -= gridSize
 	if Input.get_action_strength("ui_down") > 0:
-		position.y += 20
+		position.y += gridSize
 	storagePos = position
 	defaultPos = position
 	gridSize = $rightGridLocation.position.x
@@ -130,3 +131,10 @@ func _on_inputTimer_timeout():
 func getHit(damage:int):
 	currentHP -= 1
 	emit_signal("PlayerHit")
+	if currentHP <= 0:
+		die()
+func die():
+	set_process_input(false)
+	$HurtBox/CollisionShape2D.set_deferred("disabled", true)
+	$HitBox/CollisionShape2D.set_deferred("disabled", true)
+	$Animations.play("die")
