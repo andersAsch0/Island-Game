@@ -153,8 +153,7 @@ func getHit(damage:int):
 	currentHP -= 1
 	$HPBar.value = 1.0 * currentHP/maxHP * 100
 	if currentHP <= 0:
-		$bulletSpawnTimer.paused = true
-		$ApproachTimer.paused = true
+		set_process(false)
 		$enemyMovement.set_process(false)
 		$enemyMovement/PathFollow2D/AnimatedSprite.play("die")
 		$DeathTimer.start() #leave time to play death animation before showing win screen
