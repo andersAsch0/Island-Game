@@ -5,9 +5,8 @@ extends Node2D
 func _ready():
 	# this script only runs on World scene when it is loaded
 	$YSort/Player.position = Global.overWorldLocation	
-	if Global.overWorldShouldDespawnEnemy:
-		get_node(Global.overWorldEnemyPath).die()
-		Global.overWorldShouldDespawnEnemy = false
+	for deadEnemyPath in Global.overWorldDeadEnemiesList:
+		get_node(deadEnemyPath).die()
 		
 			
 

@@ -20,7 +20,9 @@ var velocity = Vector2.ZERO
 var storagePos = Vector2.ZERO #used as storage during input calculations for jumping
 export var maxHP : int = 4
 export var currentHP : int = maxHP
+#only works if you dont move
 export var invincible : bool = true #for debugging
+#only works if you dont move
 
 signal PlayerHit
 
@@ -37,9 +39,9 @@ func _ready():
 		position.y += gridSize
 	storagePos = position
 	if invincible:
-		$HurtBox/CollisionShape2D.set_deferred("disabled", true)
+		$HurtBox/CollisionShape2D.set_deferred("disabled", true) #only works if you dont move
 		$HitBox/CollisionShape2D.set_deferred("disabled", true)
-
+	
 func _process(delta):
 	if $inputTimer.time_left > 0: #if mid jump
 		position.x += (storagePos.x - position.x)/$inputTimer.time_left * delta

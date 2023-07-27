@@ -161,7 +161,7 @@ func getHit(damage:int):
 		get_tree().call_group("bulletTypes", "die")
 func _on_DeathTimer_timeout():
 	emit_signal("enemyDead")
-	Global.overWorldShouldDespawnEnemy = true
+	Global.updateDeadEnemyList(Global.overWorldDeadEnemiesList)
 	queue_free()
 
 
