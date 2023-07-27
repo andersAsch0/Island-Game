@@ -54,11 +54,9 @@ func _physics_process(delta):
 	$HPBar.value = 1.0 * currentHP/maxHP * 100
 	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	if stateCounter >= stateWaitTimes[currState]: #need to go to next state
-		stateCounter = 0
-		currState = getNextState()
+		goToNextState()
 	elif stateCounter <= 0: #time reversed, need to go to prev state
-		currState = getPrevState()
-		stateCounter = stateWaitTimes[currState]
+		goToPrevState()
 
 	if currState == APPROACHING: #increase scale (grow bigger each frame)
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
@@ -88,26 +86,27 @@ func startApproachPhase():
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
 	
 
-func getNextState():
+func goToNextState():
 	stateCounter = 0
 	if currState == AWAY:
-		return APPROACHING
+		startApproachPhase()
 	elif currState == APPROACHING:
-		return ATTACKING
+		startAttackPhase()
 	elif currState == ATTACKING:
-		return ABSCONDING
+		startLeavePhase()
 	else:
-		return AWAY
+		startAwayPhase()
 
-func getPrevState():
+func goToPrevState():
 	if currState == AWAY:
-		return ABSCONDING
+		startLeavePhase()
 	elif currState == APPROACHING:
-		return AWAY
+		startAwayPhase()
 	elif currState == ATTACKING:
-		return APPROACHING
+		startApproachPhase()
 	else:
-		return ATTACKING
+		startAttackPhase()
+	stateCounter = stateWaitTimes[currState]
 
 func introduction():
 	pass
@@ -162,7 +161,7 @@ func getHit(damage:int):
 		get_tree().call_group("bulletTypes", "die")
 func _on_DeathTimer_timeout():
 	emit_signal("enemyDead")
-	Global.overWorldShouldDespawnEnemy = true
+	Global.updateDeadEnemyList(Global.overWorldDeadEnemiesList)
 	queue_free()
 
 
