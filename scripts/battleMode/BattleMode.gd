@@ -20,6 +20,8 @@ var timeJuiceCost : float = 5
 
 
 func _ready(): #this script sets up enemy, approach() function will handle the rest
+	
+	enemyScene = load(Global.battleModeEnemyPath)
 	$normalMusicLoop.play()
 	$reverseMusicLoop.play()
 	$PlayerHPBar.value = $BattleModePlayer.currentHP

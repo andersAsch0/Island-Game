@@ -9,7 +9,8 @@ signal timeMultiplierChanged
 signal timeFlowChanged
 
 var overWorldLocation = Vector2(62, 43) #stored location for use when loading back into overworld from fight
-var enemyName = "" #name of enemy most recently fought 
+var battleModeEnemyPath : String = "" #path to battlemode version for fighting
+var overWorldEnemyPath : String = "" #path to overworld version to despawn after defeating ^
 var overWorldShouldDespawnEnemy = false #when loading into the overworld, this is used to know if it should despawn an enemy
 
 var currCombatTimeMultiplier : float = 1 #should NEVER be zero OK???
