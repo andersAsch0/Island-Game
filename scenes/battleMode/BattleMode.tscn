@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -7,6 +7,9 @@
 [ext_resource path="res://audio/IslandFight.wav" type="AudioStream" id=5]
 [ext_resource path="res://audio/IslandFightReverse.wav" type="AudioStream" id=6]
 [ext_resource path="res://art/battlegrid.png" type="Texture" id=7]
+[ext_resource path="res://audio/Ending_Rewind_FX.wav" type="AudioStream" id=8]
+[ext_resource path="res://audio/Begin_Rewind_FX.wav" type="AudioStream" id=9]
+[ext_resource path="res://audio/TickingClockFX.wav" type="AudioStream" id=10]
 
 [sub_resource type="AtlasTexture" id=16]
 atlas = ExtResource( 4 )
@@ -136,6 +139,12 @@ scale = Vector2( 2, 2 )
 frames = SubResource( 31 )
 animation = "forward"
 
+[node name="PlayerHPBar" type="ProgressBar" parent="."]
+margin_left = 126.0
+margin_top = 156.0
+margin_right = 196.0
+margin_bottom = 170.0
+
 [node name="normalMusicLoop" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 
@@ -143,11 +152,15 @@ stream = ExtResource( 5 )
 stream = ExtResource( 6 )
 stream_paused = true
 
-[node name="PlayerHPBar" type="ProgressBar" parent="."]
-margin_left = 126.0
-margin_top = 156.0
-margin_right = 196.0
-margin_bottom = 170.0
+[node name="reverseStartFX" type="AudioStreamPlayer" parent="reverseMusicLoop"]
+stream = ExtResource( 9 )
+
+[node name="tickingClockFX" type="AudioStreamPlayer" parent="reverseMusicLoop"]
+stream = ExtResource( 10 )
+stream_paused = true
+
+[node name="reverseEndFX" type="AudioStreamPlayer" parent="reverseMusicLoop"]
+stream = ExtResource( 8 )
 
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
 [connection signal="timeout" from="AbilityCoolDownTimer" to="." method="_on_AbilityCoolDownTimer_timeout"]
@@ -155,3 +168,4 @@ margin_bottom = 170.0
 [connection signal="pressed" from="DefeatButton" to="." method="_on_DefeatButton_pressed"]
 [connection signal="finished" from="normalMusicLoop" to="." method="_on_normalMusicLoop_finished"]
 [connection signal="finished" from="reverseMusicLoop" to="." method="_on_reverseAudioLoop_finished"]
+[connection signal="finished" from="reverseMusicLoop/tickingClockFX" to="." method="_on_tickingClockFX_finished"]

@@ -24,6 +24,7 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemyScene = load(Global.battleModeEnemyPath)
 	$normalMusicLoop.play()
 	$reverseMusicLoop.play()
+	$reverseMusicLoop/tickingClockFX.play()
 	$PlayerHPBar.value = $BattleModePlayer.currentHP
 	enemy = enemyScene.instance()
 	enemy.position = $enemySpawnLocation.position
@@ -65,20 +66,24 @@ func _input(event):
 		
 func reverseTime():
 	Global.set_timeMultiplier(-1)
+	$reverseMusicLoop/reverseStartFX.play()
 	$normalMusicLoop.stream_paused = Global.currCombatTimeMultiplier < 0
 	$reverseMusicLoop.stream_paused = not Global.currCombatTimeMultiplier < 0
+	$reverseMusicLoop/tickingClockFX.stream_paused = not Global.currCombatTimeMultiplier < 0
 	$AbilityCoolDownTimer.start()
 	currTimeJuice -= timeJuiceCost
 	
 	$Clock.visible = true
 	$Clock.play("forward", currTimeMultiplier<0)
 func stopTime():
+	toggleMusic()
 	$AbilityCoolDownTimer.start()
 	Global.set_timeFlow(false)
 	currTimeJuice -= timeJuiceCost
 	$Clock.visible = true
 	$Clock.stop()
 func resumeTime():
+	toggleMusic()
 	$AbilityCoolDownTimer.start()
 	Global.set_timeFlow(true)
 	currTimeJuice -= timeJuiceCost
@@ -90,6 +95,7 @@ func changeTimeScale(timeMultiplier : float):
 	currTimeJuice -= timeJuiceCost
 	$Clock.visible = true
 	$Clock.speed_scale = currTimeMultiplier
+	setMusicPitchScaleToGlobal()
 func _on_AbilityCoolDownTimer_timeout():
 	$Clock.visible = false
 
@@ -125,5 +131,15 @@ func _on_normalMusicLoop_finished():
 	$normalMusicLoop.play(0)
 func _on_reverseAudioLoop_finished():
 	$reverseAudioLoop.play(0)
-
-
+func _on_tickingClockFX_finished():
+	$reverseMusicLoop/tickingClockFX.play(0)
+func toggleMusic():
+	$normalMusicLoop.playing = not Global.timeIsNotStopped
+	$reverseMusicLoop.playing = not Global.timeIsNotStopped
+	$reverseMusicLoop/tickingClockFX.stop()
+	$reverseMusicLoop/reverseStartFX.stop()
+func setMusicPitchScaleToGlobal():
+	$normalMusicLoop.pitch_scale = abs(Global.currCombatTimeMultiplier)
+	$reverseMusicLoop.pitch_scale = abs(Global.currCombatTimeMultiplier)
+	$reverseMusicLoop/tickingClockFX.pitch_scale = abs(Global.currCombatTimeMultiplier)
+	$reverseMusicLoop/reverseStartFX.pitch_scale = abs(Global.currCombatTimeMultiplier)
