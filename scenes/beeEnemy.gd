@@ -6,7 +6,8 @@ func _ready():
 	$AnimatedSprite.play("idle")
 	
 func die():
-	queue_free()
+#	queue_free()
+	visible = false
 	#dont free, instead leave corpse???
 func get_battleModeVersionScenePath():
 	return battleModeVersionScenePath

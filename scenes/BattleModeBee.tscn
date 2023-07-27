@@ -89,7 +89,7 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, -86, 141, -7.937, 11.1118, 7.937, -11.1118, -74, 103, -18.652, 5.15905, 18.652, -5.15905, -34, 80, -15.874, -6.3496, 15.874, 6.3496, 34, 80, -9.52441, -11.5087, 9.52441, 11.5087, 70, 106, 0, 0, 0, 0, 83, 147 )
 }
 
-[node name="BattleModeEnemy" type="KinematicBody2D" groups=["enemies"]]
+[node name="BattleModeBee" type="KinematicBody2D" groups=["enemies"]]
 script = ExtResource( 2 )
 bulletScene = ExtResource( 3 )
 attackPatternFile = "res://scripts/attackPatternJsonData/butterflyAttack.json"

@@ -20,7 +20,7 @@ var timeJuiceCost : float = 5
 
 
 func _ready(): #this script sets up enemy, approach() function will handle the rest
-	
+	Global.currCombatTimeMultiplier = 1
 	enemyScene = load(Global.battleModeEnemyPath)
 	$normalMusicLoop.play()
 	$reverseMusicLoop.play()

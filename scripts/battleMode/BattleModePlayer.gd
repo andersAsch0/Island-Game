@@ -18,7 +18,6 @@ extends KinematicBody2D
 var gridSize = 20
 var velocity = Vector2.ZERO
 var storagePos = Vector2.ZERO #used as storage during input calculations for jumping
-var defaultPos = Vector2.ZERO #middle of the grid / where to go when no button is held
 export var maxHP : int = 4
 export var currentHP : int = maxHP
 export var invincible : bool = true #for debugging
@@ -27,6 +26,7 @@ signal PlayerHit
 
 func _ready():
 	$Animations.play("idle")
+	gridSize = $rightGridLocation.position.x
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key when entering battle mode
 		position.x += gridSize
 	if Input.get_action_strength("ui_left") > 0:
@@ -36,8 +36,6 @@ func _ready():
 	if Input.get_action_strength("ui_down") > 0:
 		position.y += gridSize
 	storagePos = position
-	defaultPos = position
-	gridSize = $rightGridLocation.position.x
 	if invincible:
 		$HurtBox/CollisionShape2D.set_deferred("disabled", true)
 		$HitBox/CollisionShape2D.set_deferred("disabled", true)
