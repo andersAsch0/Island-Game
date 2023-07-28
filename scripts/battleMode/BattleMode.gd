@@ -11,11 +11,10 @@ var enemyBulletScene #packed scene of the enemys chosen bullet
 var bullet
 var currTimeMultiplier : float = 1 # keeps track of current time rate, will NEVER BE 0 THO
 var timeIsStopped = false
-
 var maxTimeJuiceSeconds : float = 10
 var currTimeJuice : float = 0
 var timeJuiceCost : float = 5
-
+var isDefensePhase = false # referring to the player: enemy is attacking during defense phase
 
 
 
@@ -50,7 +49,7 @@ func incrementAbilityTimes(delta):
 	
 
 func _input(event):
-	if($AbilityCoolDownTimer.time_left > 0):
+	if($AbilityCoolDownTimer.time_left > 0 or not isDefensePhase):
 		return
 	if(event.is_action_pressed("reverseTime")):
 		reverseTime()
@@ -103,9 +102,9 @@ func _on_AbilityCoolDownTimer_timeout():
 #SIGNALS FROM ENEMY
 export var overWorldPath = "res://scenes/World.tscn"
 func on_attack_phase_starting():
-	pass
+	isDefensePhase = true
 func on_attack_phase_ending():
-	pass
+	isDefensePhase = false
 func on_enemyDead():
 	$VictoryButton.visible = true
 	$VictoryButton.disabled = false
@@ -134,7 +133,7 @@ func _on_reverseAudioLoop_finished():
 func _on_tickingClockFX_finished():
 	$reverseMusicLoop/tickingClockFX.play(0)
 func toggleMusic():
-	$normalMusicLoop.playing = not Global.timeIsNotStopped
+	$normalMusicLoop.playing = not Global.timeIsNotStopped #what thee heck
 	$reverseMusicLoop.playing = not Global.timeIsNotStopped
 	$reverseMusicLoop/tickingClockFX.stop()
 	$reverseMusicLoop/reverseStartFX.stop()

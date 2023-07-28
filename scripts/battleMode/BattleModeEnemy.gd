@@ -22,7 +22,7 @@ enum {
 	ABSCONDING
 }
 var currState = AWAY
-export var stateWaitTimes = [3, 4, 20, 2] # how long in seconds enemy stays in each state
+export var stateWaitTimes = [10, 2, 20, 2] # how long in seconds enemy stays in each state
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
 
 signal attackPhaseStarting
