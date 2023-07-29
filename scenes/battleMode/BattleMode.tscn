@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=42 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -10,6 +10,74 @@
 [ext_resource path="res://audio/Ending_Rewind_FX.wav" type="AudioStream" id=8]
 [ext_resource path="res://audio/Begin_Rewind_FX.wav" type="AudioStream" id=9]
 [ext_resource path="res://audio/TickingClockFX.wav" type="AudioStream" id=10]
+[ext_resource path="res://art/bigGrid.png" type="Texture" id=11]
+[ext_resource path="res://art/action menu.png" type="Texture" id=12]
+
+[sub_resource type="AtlasTexture" id=43]
+atlas = ExtResource( 12 )
+region = Rect2( 576, 0, 64, 192 )
+
+[sub_resource type="AtlasTexture" id=32]
+atlas = ExtResource( 12 )
+region = Rect2( 0, 0, 64, 192 )
+
+[sub_resource type="AtlasTexture" id=33]
+atlas = ExtResource( 12 )
+region = Rect2( 64, 0, 64, 192 )
+
+[sub_resource type="AtlasTexture" id=34]
+atlas = ExtResource( 12 )
+region = Rect2( 128, 0, 64, 192 )
+
+[sub_resource type="AtlasTexture" id=35]
+atlas = ExtResource( 12 )
+region = Rect2( 192, 0, 64, 192 )
+
+[sub_resource type="AtlasTexture" id=36]
+atlas = ExtResource( 12 )
+region = Rect2( 256, 0, 64, 192 )
+
+[sub_resource type="AtlasTexture" id=37]
+atlas = ExtResource( 12 )
+region = Rect2( 320, 0, 64, 192 )
+
+[sub_resource type="AtlasTexture" id=38]
+atlas = ExtResource( 12 )
+region = Rect2( 384, 0, 64, 192 )
+
+[sub_resource type="AtlasTexture" id=39]
+atlas = ExtResource( 12 )
+region = Rect2( 448, 0, 64, 192 )
+
+[sub_resource type="AtlasTexture" id=40]
+atlas = ExtResource( 12 )
+region = Rect2( 512, 0, 64, 192 )
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 12 )
+region = Rect2( 576, 0, 64, 192 )
+
+[sub_resource type="AtlasTexture" id=44]
+atlas = ExtResource( 12 )
+region = Rect2( 0, 0, 64, 192 )
+
+[sub_resource type="SpriteFrames" id=42]
+animations = [ {
+"frames": [ SubResource( 43 ) ],
+"loop": false,
+"name": "hidden",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 32 ), SubResource( 33 ), SubResource( 34 ), SubResource( 35 ), SubResource( 36 ), SubResource( 37 ), SubResource( 38 ), SubResource( 39 ), SubResource( 40 ), SubResource( 41 ) ],
+"loop": false,
+"name": "hide",
+"speed": 20.0
+}, {
+"frames": [ SubResource( 44 ) ],
+"loop": true,
+"name": "showing",
+"speed": 5.0
+} ]
 
 [sub_resource type="AtlasTexture" id=16]
 atlas = ExtResource( 4 )
@@ -83,7 +151,13 @@ animations = [ {
 script = ExtResource( 2 )
 enemyScene = ExtResource( 3 )
 
+[node name="bigGrid" type="Sprite" parent="."]
+position = Vector2( 160, 52 )
+scale = Vector2( 1.716, 1.363 )
+texture = ExtResource( 11 )
+
 [node name="Grid" type="TextureRect" parent="."]
+visible = false
 margin_left = 126.0
 margin_top = 75.0
 margin_right = 196.0
@@ -93,6 +167,53 @@ expand = true
 
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
 position = Vector2( 160, 110 )
+
+[node name="actionMenu" type="AnimatedSprite" parent="."]
+position = Vector2( 294, 87 )
+scale = Vector2( 1.355, 0.725 )
+frames = SubResource( 42 )
+animation = "showing"
+
+[node name="MoveButton" type="Button" parent="actionMenu"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = -22.8782
+margin_top = -81.3793
+margin_right = 12.1218
+margin_bottom = -61.3793
+rect_scale = Vector2( 0.748063, 1 )
+text = "MOVE"
+
+[node name="WindWatchButton" type="Button" parent="actionMenu"]
+margin_left = -22.1402
+margin_top = -45.5172
+margin_right = 27.8598
+margin_bottom = -25.5172
+rect_scale = Vector2( 0.748063, 1 )
+text = "WATCH"
+
+[node name="HealButton" type="Button" parent="actionMenu"]
+margin_left = -22.1402
+margin_top = -9.65517
+margin_right = 27.8598
+margin_bottom = 10.3448
+rect_scale = Vector2( 0.748063, 1 )
+text = "HEAL"
+
+[node name="AttackButton" type="Button" parent="actionMenu"]
+margin_left = -22.1402
+margin_top = 24.8276
+margin_right = 27.8598
+margin_bottom = 44.8276
+rect_scale = Vector2( 0.748063, 1 )
+text = "ATTACK"
+
+[node name="ShieldButton" type="Button" parent="actionMenu"]
+margin_left = -22.8782
+margin_top = 59.3103
+margin_right = 37.1218
+margin_bottom = 79.3103
+rect_scale = Vector2( 0.748063, 1 )
+text = "SHIELD"
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 160, 25 )
@@ -119,10 +240,10 @@ disabled = true
 text = "DEFEAT"
 
 [node name="Menu\?" type="Label" parent="."]
-margin_left = 236.0
-margin_top = 68.0
-margin_right = 416.0
-margin_bottom = 218.0
+margin_left = 3.0
+margin_top = 1.0
+margin_right = 183.0
+margin_bottom = 151.0
 rect_scale = Vector2( 0.5, 0.6 )
 text = "Controls
 R : Reverse Time
@@ -163,6 +284,7 @@ stream_paused = true
 stream = ExtResource( 8 )
 
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
+[connection signal="pressed" from="actionMenu/MoveButton" to="." method="_on_MoveButton_pressed"]
 [connection signal="timeout" from="AbilityCoolDownTimer" to="." method="_on_AbilityCoolDownTimer_timeout"]
 [connection signal="pressed" from="VictoryButton" to="." method="_on_VictoryButton_pressed"]
 [connection signal="pressed" from="DefeatButton" to="." method="_on_DefeatButton_pressed"]

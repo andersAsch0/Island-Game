@@ -52,7 +52,7 @@ func _ready():
 		
 func _physics_process(delta):
 	$HPBar.value = 1.0 * currentHP/maxHP * 100
-	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int) * ((Global.currCombatTimeMultiplier > 0) as int) # only inc if time is moving AND time isnt reversed
 	if stateCounter >= stateWaitTimes[currState]: #need to go to next state
 		goToNextState()
 	elif stateCounter <= 0: #time reversed, need to go to prev state
@@ -150,7 +150,7 @@ func stopBullets():
 #TAKE DAMAGE
 
 func getHit(damage:int):
-	currentHP -= 1
+	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
 	$HPBar.value = 1.0 * currentHP/maxHP * 100
 	if currentHP <= 0:
 		set_process(false)

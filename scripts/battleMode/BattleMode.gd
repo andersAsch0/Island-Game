@@ -24,7 +24,7 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	$normalMusicLoop.play()
 	$reverseMusicLoop.play()
 	$reverseMusicLoop/tickingClockFX.play()
-	$PlayerHPBar.value = $BattleModePlayer.currentHP
+	$PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
 	enemy = enemyScene.instance()
 	enemy.position = $enemySpawnLocation.position
 	enemy.visible = false
@@ -34,6 +34,7 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	# enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")
 	# get the bullet from the enemy so we can spawn it
 	enemyBulletScene = enemy.bulletScene
+	
 
 var timerCount = 0
 func _process(delta):
@@ -98,19 +99,23 @@ func changeTimeScale(timeMultiplier : float):
 func _on_AbilityCoolDownTimer_timeout():
 	$Clock.visible = false
 
-
 #SIGNALS FROM ENEMY
 export var overWorldPath = "res://scenes/World.tscn"
 func on_attack_phase_starting():
 	isDefensePhase = true
+	$Grid.visible = true
+	$bigGrid.visible = false
+	showActionMenu(false)
 func on_attack_phase_ending():
 	isDefensePhase = false
+	$Grid.visible = false
+	$bigGrid.visible = true
+	showActionMenu(true)
 func on_enemyDead():
 	$VictoryButton.visible = true
 	$VictoryButton.disabled = false
 func _on_VictoryButton_pressed():
 	var _PTS = get_tree().change_scene(overWorldPath)
-
 
 #SIGNALS FROM PLAYER
 func _on_BattleModePlayer_PlayerHit():
@@ -142,3 +147,15 @@ func setMusicPitchScaleToGlobal():
 	$reverseMusicLoop.pitch_scale = abs(Global.currCombatTimeMultiplier)
 	$reverseMusicLoop/tickingClockFX.pitch_scale = abs(Global.currCombatTimeMultiplier)
 	$reverseMusicLoop/reverseStartFX.pitch_scale = abs(Global.currCombatTimeMultiplier)
+
+
+#ACTIONS
+func showActionMenu(show : bool):
+	$actionMenu.play("hide", show)
+	$actionMenu/MoveButton.set_deferred("disabled", not show)
+	$actionMenu/WindWatchButton.set_deferred("disabled", not show)
+	$actionMenu/HealButton.set_deferred("disabled", not show)
+	$actionMenu/AttackButton.set_deferred("disabled", not show)
+	$actionMenu/ShieldButton.set_deferred("disabled", not show)
+func _on_MoveButton_pressed():
+	print("move")

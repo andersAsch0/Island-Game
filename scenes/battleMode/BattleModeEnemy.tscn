@@ -172,7 +172,6 @@ position = Vector2( 3.8147e-06, 0 )
 rotation = 0.501648
 frames = SubResource( 24 )
 animation = "idle"
-frame = 2
 playing = true
 
 [node name="HPBar" type="ProgressBar" parent="."]

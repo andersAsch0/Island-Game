@@ -137,7 +137,7 @@ func _on_inputTimer_timeout():
 	$ColorRect.visible = true
 	
 func getHit(damage:int):
-	currentHP -= 1
+	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
 	emit_signal("PlayerHit")
 	if currentHP <= 0:
 		die()

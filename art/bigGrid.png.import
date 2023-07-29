@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/sheild.png-c6f501f995ee504a23780b215b7eccce.stex"
+path="res://.import/bigGrid.png-1ba4ed6510c424e5925fbebe5b4891e2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/sheild.png"
-dest_files=[ "res://.import/sheild.png-c6f501f995ee504a23780b215b7eccce.stex" ]
+source_file="res://art/bigGrid.png"
+dest_files=[ "res://.import/bigGrid.png-1ba4ed6510c424e5925fbebe5b4891e2.stex" ]
 
 [params]
 
