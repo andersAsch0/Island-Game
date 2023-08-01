@@ -12,10 +12,12 @@ var bullet
 var currTimeMultiplier : float = 1 # keeps track of current time rate, will NEVER BE 0 THO
 var timeIsStopped = false
 var maxTimeJuiceSeconds : float = 10
-var currTimeJuice : float = 0
-var timeJuiceCost : float = 5
+var currTimeJuice : float = maxTimeJuiceSeconds
+var timeJuiceCost : float = 4
 var isDefensePhase = false # referring to the player: enemy is attacking during defense phase
 
+signal offensePhaseStarting
+signal offensePhaseEnding
 
 
 func _ready(): #this script sets up enemy, approach() function will handle the rest
@@ -24,7 +26,8 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	$normalMusicLoop.play()
 	$reverseMusicLoop.play()
 	$reverseMusicLoop/tickingClockFX.play()
-	$PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
+	$BattleModePlayer/PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
+	updateTimeJuiceBar()
 	enemy = enemyScene.instance()
 	enemy.position = $enemySpawnLocation.position
 	enemy.visible = false
@@ -36,32 +39,31 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemyBulletScene = enemy.bulletScene
 	
 
-var timerCount = 0
-func _process(delta):
+func _process(_delta):
 	pass
-func incrementAbilityTimes(delta): 
-	$UI/ProgressBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
-	if currTimeMultiplier < 0: # if time is reversed, decrease time juice
-		currTimeJuice -= delta
-	if abs(currTimeMultiplier) > 1: # if time is fast, decrease time juice
-		currTimeJuice -= delta
-	if currTimeJuice < maxTimeJuiceSeconds and currTimeMultiplier == 1: # only regain the juice during normal time
-		currTimeJuice += delta
-	
+func incrementAbilityTimes(_delta): 
+	updateTimeJuiceBar()
+#	if currTimeMultiplier < 0: # if time is reversed, decrease time juice
+#		currTimeJuice -= delta
+#	if abs(currTimeMultiplier) > 1: # if time is fast, decrease time juice
+#		currTimeJuice -= delta
+#	if currTimeJuice < maxTimeJuiceSeconds and currTimeMultiplier == 1: # only regain the juice during normal time
+#		currTimeJuice += delta
+#
 
 func _input(event):
 	if($AbilityCoolDownTimer.time_left > 0 or not isDefensePhase):
 		return
-	if(event.is_action_pressed("reverseTime")):
+	if(event.is_action_pressed("reverseTime") and currTimeJuice > timeJuiceCost):
 		reverseTime()
-	elif(event.is_action_pressed("stopTime")):
+	elif(event.is_action_pressed("stopTime") and currTimeJuice > timeJuiceCost):
 		if Global.timeIsNotStopped:
 			stopTime()
 		else:
 			resumeTime()
-	elif(event.is_action_pressed("speedUpTime")):
+	elif(event.is_action_pressed("speedUpTime") and currTimeJuice > timeJuiceCost):
 		changeTimeScale(2)
-	elif(event.is_action_pressed("slowDownTime")):
+	elif(event.is_action_pressed("slowDownTime") and currTimeJuice > timeJuiceCost):
 		changeTimeScale(1.0 * 1/2)
 		
 func reverseTime():
@@ -72,6 +74,7 @@ func reverseTime():
 	$reverseMusicLoop/tickingClockFX.stream_paused = not Global.currCombatTimeMultiplier < 0
 	$AbilityCoolDownTimer.start()
 	currTimeJuice -= timeJuiceCost
+	updateTimeJuiceBar()
 	
 	$Clock.visible = true
 	$Clock.play("forward", currTimeMultiplier<0)
@@ -80,6 +83,7 @@ func stopTime():
 	$AbilityCoolDownTimer.start()
 	Global.set_timeFlow(false)
 	currTimeJuice -= timeJuiceCost
+	updateTimeJuiceBar()
 	$Clock.visible = true
 	$Clock.stop()
 func resumeTime():
@@ -87,30 +91,37 @@ func resumeTime():
 	$AbilityCoolDownTimer.start()
 	Global.set_timeFlow(true)
 	currTimeJuice -= timeJuiceCost
+	updateTimeJuiceBar()
 	$Clock.visible = true
 	$Clock.play()
 func changeTimeScale(timeMultiplier : float):
 	Global.set_timeMultiplier(timeMultiplier)
 	$AbilityCoolDownTimer.start()
 	currTimeJuice -= timeJuiceCost
+	updateTimeJuiceBar()
 	$Clock.visible = true
 	$Clock.speed_scale = currTimeMultiplier
 	setMusicPitchScaleToGlobal()
 func _on_AbilityCoolDownTimer_timeout():
 	$Clock.visible = false
+	
 
 #SIGNALS FROM ENEMY
 export var overWorldPath = "res://scenes/World.tscn"
 func on_attack_phase_starting():
+	emit_signal("offensePhaseEnding")
 	isDefensePhase = true
 	$Grid.visible = true
 	$bigGrid.visible = false
 	showActionMenu(false)
+	$offenseModeCamera.setFollow(false)
 func on_attack_phase_ending():
+	emit_signal("offensePhaseStarting")
 	isDefensePhase = false
 	$Grid.visible = false
 	$bigGrid.visible = true
 	showActionMenu(true)
+	$offenseModeCamera.setFollow(true)
 func on_enemyDead():
 	$VictoryButton.visible = true
 	$VictoryButton.disabled = false
@@ -119,7 +130,7 @@ func _on_VictoryButton_pressed():
 
 #SIGNALS FROM PLAYER
 func _on_BattleModePlayer_PlayerHit():
-	$PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
+	$BattleModePlayer/PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
 	if $BattleModePlayer.currentHP <= 0:
 		playerDie()
 
@@ -134,7 +145,7 @@ func _on_DefeatButton_pressed():
 func _on_normalMusicLoop_finished():
 	$normalMusicLoop.play(0)
 func _on_reverseAudioLoop_finished():
-	$reverseAudioLoop.play(0)
+	$reverseMusicLoop.play(0)
 func _on_tickingClockFX_finished():
 	$reverseMusicLoop/tickingClockFX.play(0)
 func toggleMusic():
@@ -151,11 +162,23 @@ func setMusicPitchScaleToGlobal():
 
 #ACTIONS
 func showActionMenu(show : bool):
-	$actionMenu.play("hide", show)
-	$actionMenu/MoveButton.set_deferred("disabled", not show)
-	$actionMenu/WindWatchButton.set_deferred("disabled", not show)
-	$actionMenu/HealButton.set_deferred("disabled", not show)
-	$actionMenu/AttackButton.set_deferred("disabled", not show)
-	$actionMenu/ShieldButton.set_deferred("disabled", not show)
+	$BattleModePlayer/actionMenu.play("hide", show)
+	$BattleModePlayer/actionMenu/MoveButton.set_deferred("disabled", not show)
+	$BattleModePlayer/actionMenu/WindWatchButton.set_deferred("disabled", not show)
+	$BattleModePlayer/actionMenu/HealButton.set_deferred("disabled", not show)
+	$BattleModePlayer/actionMenu/AttackButton.set_deferred("disabled", not show)
+	$BattleModePlayer/actionMenu/ShieldButton.set_deferred("disabled", not show)
+func updateTimeJuiceBar():
+	$BattleModePlayer/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
+func _on_WindWatchButton_pressed():
+	$BattleModePlayer.startWindWatch()
+	currTimeJuice += timeJuiceCost * 2
+	$BattleModePlayer/watchWindTimer.start()
+func _on_watchWindTimer_timeout():
+	if currTimeJuice > maxTimeJuiceSeconds:
+		currTimeJuice = maxTimeJuiceSeconds
+	updateTimeJuiceBar()
+	$BattleModePlayer.finishWindWatch()
+enum { RIGHT, LEFT, UP, DOWN }
 func _on_MoveButton_pressed():
-	print("move")
+	$BattleModePlayer.move(LEFT)

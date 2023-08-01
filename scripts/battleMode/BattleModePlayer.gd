@@ -1,47 +1,52 @@
 extends KinematicBody2D
 
 
-#const acc  = 25
-#const max_speed = 50
-#const friction = 400
-#var dashMultiplier = 5
-#var isDashing = false
-#enum {
-#	LEFT, 
-#	RIGHT,
-#	UP,
-#	DOWN
-#}
-#var walk_animations = ["horizontal", "horizontal", "vertical", "vertical"]
-#var dash_animations = ["dash left", "dash right", "dash up", "dash down"]
-#var direction = UP
-var gridSize = 20
+
+export var smallGridSize = 20
+export var bigGridSize = 30
+var currGridSize = 20
 var velocity = Vector2.ZERO
 var storagePos = Vector2.ZERO #used as storage during input calculations for jumping
 export var maxHP : int = 4
 export var currentHP : int = maxHP
 export var invincible : bool = true #for debugging #only works if you dont move
+enum {
+	DEFENSE
+	IMOBILE # ex. while winding watch
+	MOVINGTILES # moving around the big tiles
+}
+var currState = DEFENSE
+enum { RIGHT, LEFT, UP, DOWN }
+var moveDirection = RIGHT
+var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
+var moveAnimations = ["move right", "move left", "move up", "move down"]
 
 signal PlayerHit
 
+# player script mostly deals with movement and animation, all other input is handled by BattleMode.gd
+
+
+
 func _ready():
 	$Animations.play("idle")
-	gridSize = $rightGridLocation.position.x
+	currGridSize = $rightGridLocation.position.x
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key when entering battle mode
-		position.x += gridSize
+		position.x += currGridSize
 	if Input.get_action_strength("ui_left") > 0:
-		position.x -= gridSize
+		position.x -= currGridSize
 	if Input.get_action_strength("ui_up") > 0:
-		position.y -= gridSize
+		position.y -= currGridSize
 	if Input.get_action_strength("ui_down") > 0:
-		position.y += gridSize
+		position.y += currGridSize
 	storagePos = position
 	if invincible:
 		$HurtBox/CollisionShape2D.set_deferred("disabled", true)
 		$HitBox/CollisionShape2D.set_deferred("disabled", true)
 	
+# DEFENSE MODE MOVEMENT
+	
 func _process(delta):
-	if $inputTimer.time_left > 0: #if mid jump
+	if $inputTimer.time_left > 0: #if mid jump (defense mode)
 		position.x += (storagePos.x - position.x)/$inputTimer.time_left * delta
 		position.y += (storagePos.y - position.y)/$inputTimer.time_left * delta
 		if abs(storagePos.x - position.x) >= abs(storagePos.y - position.y):
@@ -50,84 +55,41 @@ func _process(delta):
 		else:
 			$Animations.animation = "ball vertical"
 			$Animations.flip_v = storagePos.y < position.y
-	
-#	#movement
-#	var input = Vector2.ZERO
-#	input.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-#	input.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
-#	input = input.normalized() * max_speed
-#
-#	velocity = input * delta
-#
-#
-#	if input.length() > 0:
-#		if (input.y) > 0: #going down
-#			direction = DOWN
-#		elif input.y < 0: #going up
-#			direction = UP
-#		elif input.x > 0: #going right
-#			direction = RIGHT
-#		elif input.x < 0:
-#			direction = LEFT
-#
-#	if(input.length()==0):
-#		$Animations.play("idle")
-#	elif(isDashing):
-#		velocity *= dashMultiplier
-#		$Animations.play(dash_animations[direction])
-#	else:
-#		$Animations.play(walk_animations[direction])
-#
-#	move_and_collide(velocity)
-	pass
-
-#func _on_DashTimer_timeout():
-#	isDashing = false
-
+	elif currState == MOVINGTILES:
+		position.x += moveVectors[moveDirection].x * delta
+		position.y += moveVectors[moveDirection].y * delta
 func _input(event):
-#	if(event.is_action_pressed("dash")):
-#		isDashing = true
-#		$DashTimer.start()
-	if(event.is_action_pressed("ui_up")):
-		handleInput()
-		storagePos.y -= gridSize
-	elif(event.is_action_released("ui_up")):
-		handleInput()
-		storagePos.y += gridSize
-	elif(event.is_action_pressed("ui_down")):
-		handleInput()
-		storagePos.y += gridSize
-	elif(event.is_action_released("ui_down")):
-		handleInput()
-		storagePos.y -= gridSize
-	elif(event.is_action_pressed("ui_right")):
-		handleInput()
-		storagePos.x += gridSize
-	elif(event.is_action_released("ui_right")):
-		handleInput()
-		storagePos.x -= gridSize
-	elif(event.is_action_pressed("ui_left")):
-		handleInput()
-		storagePos.x -= gridSize
-	elif(event.is_action_released("ui_left")):
-		handleInput()
-		storagePos.x += gridSize		
-		
-# new plan: when button is pressed, start moving immediately
-# but the jump to another square takes a little time (animation w invuln)
-# so during that animation, it will note any more inputs and redirect you mid jump
-# (bur doesnt restart jump time, so jumps are always the same length to avoid most cheesing)
-
-		
+	if currState == DEFENSE:
+		if(event.is_action_pressed("ui_up")):
+			handleInput()
+			storagePos.y -= currGridSize
+		elif(event.is_action_released("ui_up")):
+			handleInput()
+			storagePos.y += currGridSize
+		elif(event.is_action_pressed("ui_down")):
+			handleInput()
+			storagePos.y += currGridSize
+		elif(event.is_action_released("ui_down")):
+			handleInput()
+			storagePos.y -= currGridSize
+		elif(event.is_action_pressed("ui_right")):
+			handleInput()
+			storagePos.x += currGridSize
+		elif(event.is_action_released("ui_right")):
+			handleInput()
+			storagePos.x -= currGridSize
+		elif(event.is_action_pressed("ui_left")):
+			handleInput()
+			storagePos.x -= currGridSize
+		elif(event.is_action_released("ui_left")):
+			handleInput()
+			storagePos.x += currGridSize		
 func handleInput():
 	if $inputTimer.time_left == 0:
 		$HurtBox/CollisionShape2D.disabled = true
 		$HitBox/CollisionShape2D.disabled = true
 		$ColorRect.visible = false
 		$inputTimer.start()
-	# on any of those 8 actions, start timer
-	# on timer end, update position
-	# actions during timer cant restart it
 func _on_inputTimer_timeout():
 	position = storagePos
 	$Animations.flip_v = false
@@ -135,7 +97,9 @@ func _on_inputTimer_timeout():
 	$HurtBox/CollisionShape2D.disabled = false
 	$HitBox/CollisionShape2D.disabled = false
 	$ColorRect.visible = true
-	
+
+# GET HIT 	
+
 func getHit(damage:int):
 	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
 	emit_signal("PlayerHit")
@@ -146,3 +110,23 @@ func die():
 	$HurtBox/CollisionShape2D.set_deferred("disabled", true)
 	$HitBox/CollisionShape2D.set_deferred("disabled", true)
 	$Animations.play("die")
+
+# OFFENSE MODE (called by BattleMode.gd)
+
+func _on_BattleMode_offensePhaseEnding():
+	currState = DEFENSE
+func _on_BattleMode_offensePhaseStarting():
+	currState = IMOBILE
+func startWindWatch():
+	$Animations.play("wind watch")
+	currState = IMOBILE
+func finishWindWatch():
+	$Animations.play("idle")
+func move(direction):
+	currState = MOVINGTILES
+	moveDirection = direction
+	$Animations.play(moveAnimations[direction])
+	$Animations/moveTilesTimer.start()
+func _on_moveTilesTimer_timeout():
+	currState = IMOBILE
+	$Animations.play("idle")

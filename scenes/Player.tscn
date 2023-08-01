@@ -206,7 +206,7 @@ visible = false
 position = Vector2( -0.5, -9 )
 frames = SubResource( 17 )
 animation = "idle"
-frame = 2
+frame = 4
 playing = true
 
 [node name="Animations" type="AnimatedSprite" parent="."]
