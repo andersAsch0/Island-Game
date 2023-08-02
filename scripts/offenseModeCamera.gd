@@ -11,7 +11,7 @@ func _ready():
 	battleModePlayerNode = get_node("../BattleModePlayer")
 func _process(_delta):
 	if shouldFollow:
-		position = battleModePlayerNode.position
+		position = battleModePlayerNode.position + Vector2(0,-20)
 
 func setFollow(enable : bool):
 	shouldFollow = enable

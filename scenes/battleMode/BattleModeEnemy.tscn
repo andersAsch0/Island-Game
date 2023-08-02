@@ -142,13 +142,19 @@ script = ExtResource( 6 )
 
 [node name="PathFollow2D" type="PathFollow2D" parent="enemyMovement"]
 position = Vector2( 1, -11 )
-rotation = -0.501648
 rotate = false
+
+[node name="HPBar" type="ProgressBar" parent="enemyMovement/PathFollow2D"]
+margin_left = -14.0
+margin_top = -19.0
+margin_right = 66.0
+margin_bottom = -5.0
+rect_scale = Vector2( 0.343495, 0.356986 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
 
 [node name="HurtBox" type="Area2D" parent="enemyMovement/PathFollow2D"]
 visible = false
 position = Vector2( 3.8147e-06, 0 )
-rotation = 0.501648
 collision_layer = 0
 collision_mask = 64
 script = ExtResource( 5 )
@@ -159,7 +165,6 @@ shape = SubResource( 15 )
 [node name="HitBox" type="Area2D" parent="enemyMovement/PathFollow2D"]
 visible = false
 position = Vector2( 3.8147e-06, 0 )
-rotation = 0.501648
 collision_layer = 16
 collision_mask = 0
 script = ExtResource( 4 )
@@ -169,18 +174,10 @@ shape = SubResource( 16 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="enemyMovement/PathFollow2D"]
 position = Vector2( 3.8147e-06, 0 )
-rotation = 0.501648
 frames = SubResource( 24 )
 animation = "idle"
+frame = 3
 playing = true
-
-[node name="HPBar" type="ProgressBar" parent="."]
-margin_left = -20.0
-margin_top = -21.0
-margin_right = 60.0
-margin_bottom = -7.0
-rect_scale = Vector2( 0.5, 0.5 )
-custom_colors/font_color = Color( 1, 0, 0, 1 )
 
 [node name="BulletSpawnPath" type="Path2D" parent="."]
 position = Vector2( 2, -45 )

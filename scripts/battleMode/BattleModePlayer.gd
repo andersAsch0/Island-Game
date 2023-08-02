@@ -20,6 +20,10 @@ enum { RIGHT, LEFT, UP, DOWN }
 var moveDirection = RIGHT
 var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
 var moveAnimations = ["move right", "move left", "move up", "move down"]
+var tileMoveSpeed = 50
+var bigGridLocationsx = [18, 90, 160, 230, 300 ]
+var bigGridLocationsy = [-30, 40, 110, 180, 250]
+var currentGridSquare = Vector2(2,2)
 
 signal PlayerHit
 
@@ -38,7 +42,7 @@ func _ready():
 		position.y -= currGridSize
 	if Input.get_action_strength("ui_down") > 0:
 		position.y += currGridSize
-	storagePos = position
+	
 	if invincible:
 		$HurtBox/CollisionShape2D.set_deferred("disabled", true)
 		$HitBox/CollisionShape2D.set_deferred("disabled", true)
@@ -56,8 +60,8 @@ func _process(delta):
 			$Animations.animation = "ball vertical"
 			$Animations.flip_v = storagePos.y < position.y
 	elif currState == MOVINGTILES:
-		position.x += moveVectors[moveDirection].x * delta
-		position.y += moveVectors[moveDirection].y * delta
+		position.x += ((1.0 * bigGridLocationsx[currentGridSquare.x]-position.x) / $Animations/moveTilesTimer.time_left) * delta
+		position.y += ((1.0 * bigGridLocationsy[currentGridSquare.y]-position.y) / $Animations/moveTilesTimer.time_left) * delta
 func _input(event):
 	if currState == DEFENSE:
 		if(event.is_action_pressed("ui_up")):
@@ -123,10 +127,33 @@ func startWindWatch():
 func finishWindWatch():
 	$Animations.play("idle")
 func move(direction):
-	currState = MOVINGTILES
-	moveDirection = direction
-	$Animations.play(moveAnimations[direction])
-	$Animations/moveTilesTimer.start()
+	if canMove(direction):
+		updateCurrGridSquare()
+		moveDirection = direction
+#		currentGridSquare += moveVectors[moveDirection]
+		$Animations/moveTilesTimer.start()
+		currState = MOVINGTILES
+		$Animations.play(moveAnimations[direction])
+func canMove(direction):
+	if direction == UP and currentGridSquare.y == 0:
+		return false
+	elif direction == DOWN and currentGridSquare.y == 4:
+		return false
+	elif direction == LEFT and currentGridSquare.x == 0:
+		return false
+	elif currentGridSquare.x == 4:
+		return false
+	else:
+		return true
+func updateCurrGridSquare():
+	if moveDirection == UP:
+		currentGridSquare.y -= 1
+	elif moveDirection == DOWN:
+		currentGridSquare.y += 1
+	elif moveDirection == LEFT:
+		currentGridSquare.x -= 1
+	else:
+		currentGridSquare.x += 1
 func _on_moveTilesTimer_timeout():
 	currState = IMOBILE
 	$Animations.play("idle")

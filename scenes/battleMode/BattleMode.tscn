@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=92 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -12,7 +12,13 @@
 [ext_resource path="res://audio/TickingClockFX.wav" type="AudioStream" id=10]
 [ext_resource path="res://art/bigGridFlat.png" type="Texture" id=11]
 [ext_resource path="res://art/action menu horiz.png" type="Texture" id=12]
-[ext_resource path="res://scenes/battleMode/offenseModeCamera.gd" type="Script" id=13]
+[ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
+[ext_resource path="res://art/arrow.png" type="Texture" id=14]
+[ext_resource path="res://scripts/downArrowButton.gd" type="Script" id=15]
+[ext_resource path="res://scenes/battleMode/rightArrow.gd" type="Script" id=16]
+[ext_resource path="res://scenes/battleMode/upArrow.gd" type="Script" id=17]
+[ext_resource path="res://scenes/battleMode/leftArrow.gd" type="Script" id=18]
+[ext_resource path="res://art/action menu.png" type="Texture" id=19]
 
 [sub_resource type="AtlasTexture" id=53]
 atlas = ExtResource( 12 )
@@ -70,6 +76,207 @@ animations = [ {
 "loop": true,
 "name": "showing",
 "speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=55]
+atlas = ExtResource( 14 )
+region = Rect2( 224, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=56]
+atlas = ExtResource( 14 )
+region = Rect2( 288, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=57]
+atlas = ExtResource( 14 )
+region = Rect2( 0, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=58]
+atlas = ExtResource( 14 )
+region = Rect2( 32, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=59]
+atlas = ExtResource( 14 )
+region = Rect2( 64, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=60]
+atlas = ExtResource( 14 )
+region = Rect2( 96, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=61]
+atlas = ExtResource( 14 )
+region = Rect2( 128, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=62]
+atlas = ExtResource( 14 )
+region = Rect2( 160, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=63]
+atlas = ExtResource( 14 )
+region = Rect2( 192, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=64]
+atlas = ExtResource( 14 )
+region = Rect2( 256, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=99]
+atlas = ExtResource( 19 )
+region = Rect2( 576, 0, 64, 48 )
+
+[sub_resource type="SpriteFrames" id=65]
+animations = [ {
+"frames": [ SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 99 ) ],
+"loop": true,
+"name": "hidden",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=66]
+atlas = ExtResource( 14 )
+region = Rect2( 256, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=67]
+atlas = ExtResource( 14 )
+region = Rect2( 288, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=68]
+atlas = ExtResource( 14 )
+region = Rect2( 32, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=69]
+atlas = ExtResource( 14 )
+region = Rect2( 64, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=70]
+atlas = ExtResource( 14 )
+region = Rect2( 96, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=71]
+atlas = ExtResource( 14 )
+region = Rect2( 128, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=72]
+atlas = ExtResource( 14 )
+region = Rect2( 160, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=73]
+atlas = ExtResource( 14 )
+region = Rect2( 192, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=74]
+atlas = ExtResource( 14 )
+region = Rect2( 224, 64, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=75]
+atlas = ExtResource( 14 )
+region = Rect2( 0, 64, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=76]
+animations = [ {
+"frames": [ SubResource( 66 ), SubResource( 67 ), SubResource( 68 ), SubResource( 69 ), SubResource( 70 ), SubResource( 71 ), SubResource( 72 ), SubResource( 73 ), SubResource( 74 ), SubResource( 75 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="AtlasTexture" id=77]
+atlas = ExtResource( 14 )
+region = Rect2( 224, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=78]
+atlas = ExtResource( 14 )
+region = Rect2( 288, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=79]
+atlas = ExtResource( 14 )
+region = Rect2( 0, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=80]
+atlas = ExtResource( 14 )
+region = Rect2( 32, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=81]
+atlas = ExtResource( 14 )
+region = Rect2( 64, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=82]
+atlas = ExtResource( 14 )
+region = Rect2( 96, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=83]
+atlas = ExtResource( 14 )
+region = Rect2( 128, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=84]
+atlas = ExtResource( 14 )
+region = Rect2( 160, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=85]
+atlas = ExtResource( 14 )
+region = Rect2( 192, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=86]
+atlas = ExtResource( 14 )
+region = Rect2( 256, 32, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=87]
+animations = [ {
+"frames": [ SubResource( 77 ), SubResource( 78 ), SubResource( 79 ), SubResource( 80 ), SubResource( 81 ), SubResource( 82 ), SubResource( 83 ), SubResource( 84 ), SubResource( 85 ), SubResource( 86 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+} ]
+
+[sub_resource type="AtlasTexture" id=88]
+atlas = ExtResource( 14 )
+region = Rect2( 288, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=89]
+atlas = ExtResource( 14 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=90]
+atlas = ExtResource( 14 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=91]
+atlas = ExtResource( 14 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=92]
+atlas = ExtResource( 14 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=93]
+atlas = ExtResource( 14 )
+region = Rect2( 160, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=94]
+atlas = ExtResource( 14 )
+region = Rect2( 192, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=95]
+atlas = ExtResource( 14 )
+region = Rect2( 224, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=96]
+atlas = ExtResource( 14 )
+region = Rect2( 256, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=97]
+atlas = ExtResource( 14 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=98]
+animations = [ {
+"frames": [ SubResource( 88 ), SubResource( 89 ), SubResource( 90 ), SubResource( 91 ), SubResource( 92 ), SubResource( 93 ), SubResource( 94 ), SubResource( 95 ), SubResource( 96 ), SubResource( 97 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
 } ]
 
 [sub_resource type="AtlasTexture" id=16]
@@ -144,18 +351,14 @@ animations = [ {
 script = ExtResource( 2 )
 enemyScene = ExtResource( 3 )
 
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 19, 253 )
+scale = Vector2( 2.1, 2.1 )
+
 [node name="bigGrid" type="Sprite" parent="."]
-position = Vector2( 161, 42 )
+position = Vector2( 162, 111 )
 scale = Vector2( 2.1, 2.1 )
 texture = ExtResource( 11 )
-
-[node name="Grid" type="TextureRect" parent="."]
-margin_left = 126.0
-margin_top = 75.0
-margin_right = 196.0
-margin_bottom = 147.0
-texture = ExtResource( 7 )
-expand = true
 
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
 position = Vector2( 160, 110 )
@@ -167,16 +370,7 @@ one_shot = true
 position = Vector2( 5.96046e-08, -87 )
 scale = Vector2( 1.272, 0.725 )
 frames = SubResource( 54 )
-animation = "hidden"
-
-[node name="MoveButton" type="Button" parent="BattleModePlayer/actionMenu"]
-self_modulate = Color( 1, 1, 1, 0 )
-margin_left = -117.138
-margin_top = -20.6897
-margin_right = -67.1384
-margin_bottom = -0.689655
-rect_scale = Vector2( 0.748063, 1 )
-text = "MOVE"
+animation = "showing"
 
 [node name="WindWatchButton" type="Button" parent="BattleModePlayer/actionMenu"]
 self_modulate = Color( 1, 1, 1, 0 )
@@ -214,18 +408,63 @@ margin_bottom = -0.689648
 rect_scale = Vector2( 0.748063, 1 )
 text = "SHIELD"
 
-[node name="PlayerHPBar" type="ProgressBar" parent="BattleModePlayer"]
-margin_left = -34.0
-margin_top = 46.0
-margin_right = 36.0
-margin_bottom = 60.0
+[node name="Arrows" type="Node2D" parent="BattleModePlayer"]
 
-[node name="TimeJuiceBar" type="ProgressBar" parent="BattleModePlayer"]
-margin_left = -59.0
-margin_top = 34.0
-margin_right = 5.0
-margin_bottom = 49.0
-rect_rotation = 270.0
+[node name="downArrow" type="AnimatedSprite" parent="BattleModePlayer/Arrows"]
+position = Vector2( 2, 57 )
+scale = Vector2( 1.9, 1 )
+frames = SubResource( 65 )
+animation = "hidden"
+script = ExtResource( 15 )
+
+[node name="downMoveButton" type="Button" parent="BattleModePlayer/Arrows/downArrow"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = -11.5789
+margin_top = -15.0
+margin_right = 0.421051
+margin_bottom = 5.0
+rect_scale = Vector2( 2.08763, 0.892941 )
+
+[node name="upArrow" type="AnimatedSprite" parent="BattleModePlayer/Arrows"]
+position = Vector2( 1, -54 )
+scale = Vector2( 1.9, 1 )
+frames = SubResource( 76 )
+script = ExtResource( 17 )
+
+[node name="upMoveButton" type="Button" parent="BattleModePlayer/Arrows/upArrow"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = -13.1579
+margin_right = -1.1579
+margin_bottom = 20.0
+rect_scale = Vector2( 2.28142, 0.817892 )
+
+[node name="rightArrow" type="AnimatedSprite" parent="BattleModePlayer/Arrows"]
+position = Vector2( 59, 2.00001 )
+scale = Vector2( 1, 1.9 )
+frames = SubResource( 87 )
+script = ExtResource( 16 )
+
+[node name="rightMoveButton" type="Button" parent="BattleModePlayer/Arrows/rightArrow"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = -15.0
+margin_top = -13.1579
+margin_right = -3.0
+margin_bottom = 6.8421
+rect_scale = Vector2( 1.40812, 1.38709 )
+
+[node name="leftArrow" type="AnimatedSprite" parent="BattleModePlayer/Arrows"]
+position = Vector2( -56, 2 )
+scale = Vector2( 1, 1.9 )
+frames = SubResource( 98 )
+script = ExtResource( 18 )
+
+[node name="leftMoveButton" type="Button" parent="BattleModePlayer/Arrows/leftArrow"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = -3.0
+margin_top = -13.1579
+margin_right = 9.0
+margin_bottom = 6.8421
+rect_scale = Vector2( 1.51093, 1.35423 )
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 160, 25 )
@@ -291,14 +530,48 @@ stream_paused = true
 stream = ExtResource( 8 )
 
 [node name="offenseModeCamera" type="Camera2D" parent="."]
+current = true
 script = ExtResource( 13 )
+
+[node name="HP&TJ" type="Label" parent="offenseModeCamera"]
+margin_left = 5.0
+margin_top = 31.0
+margin_right = 45.0
+margin_bottom = 45.0
+text = "HP TJ"
+
+[node name="PlayerHPBar" type="ProgressBar" parent="offenseModeCamera"]
+margin_left = 8.15959
+margin_top = 113.0
+margin_right = 78.1596
+margin_bottom = 127.0
+rect_rotation = -90.1426
+rect_scale = Vector2( 0.916312, 1.06207 )
+
+[node name="TimeJuiceBar" type="ProgressBar" parent="offenseModeCamera"]
+margin_left = 26.1596
+margin_top = 112.0
+margin_right = 90.1596
+margin_bottom = 127.0
+rect_rotation = 270.0
+
+[node name="Grid" type="TextureRect" parent="offenseModeCamera"]
+margin_left = 126.0
+margin_top = 75.0
+margin_right = 196.0
+margin_bottom = 147.0
+texture = ExtResource( 7 )
+expand = true
 
 [connection signal="offensePhaseEnding" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
 [connection signal="offensePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
 [connection signal="timeout" from="BattleModePlayer/watchWindTimer" to="." method="_on_watchWindTimer_timeout"]
-[connection signal="pressed" from="BattleModePlayer/actionMenu/MoveButton" to="." method="_on_MoveButton_pressed"]
 [connection signal="pressed" from="BattleModePlayer/actionMenu/WindWatchButton" to="." method="_on_WindWatchButton_pressed"]
+[connection signal="pressed" from="BattleModePlayer/Arrows/downArrow/downMoveButton" to="." method="_on_downMoveButton_pressed"]
+[connection signal="pressed" from="BattleModePlayer/Arrows/upArrow/upMoveButton" to="." method="_on_upMoveButton_pressed"]
+[connection signal="pressed" from="BattleModePlayer/Arrows/rightArrow/rightMoveButton" to="." method="_on_rightMoveButton_pressed"]
+[connection signal="pressed" from="BattleModePlayer/Arrows/leftArrow/leftMoveButton" to="." method="_on_leftMoveButton_pressed"]
 [connection signal="timeout" from="AbilityCoolDownTimer" to="." method="_on_AbilityCoolDownTimer_timeout"]
 [connection signal="pressed" from="VictoryButton" to="." method="_on_VictoryButton_pressed"]
 [connection signal="pressed" from="DefeatButton" to="." method="_on_DefeatButton_pressed"]

@@ -244,7 +244,6 @@ animation = "idle"
 playing = true
 
 [node name="moveTilesTimer" type="Timer" parent="Animations"]
-wait_time = 2.0
 one_shot = true
 
 [node name="DashTimer" type="Timer" parent="."]

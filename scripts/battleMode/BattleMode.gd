@@ -26,12 +26,13 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	$normalMusicLoop.play()
 	$reverseMusicLoop.play()
 	$reverseMusicLoop/tickingClockFX.play()
-	$BattleModePlayer/PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
+	$offenseModeCamera/PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
 	updateTimeJuiceBar()
 	enemy = enemyScene.instance()
 	enemy.position = $enemySpawnLocation.position
 	enemy.visible = false
 	add_child(enemy) # add node to scene
+	on_attack_phase_ending() #battles start in offense mode for the player
 	
 	 # connect the signal to start fight from the new node to this one
 	# enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")
@@ -111,14 +112,14 @@ export var overWorldPath = "res://scenes/World.tscn"
 func on_attack_phase_starting():
 	emit_signal("offensePhaseEnding")
 	isDefensePhase = true
-	$Grid.visible = true
+	$offenseModeCamera/Grid.visible = true
 	$bigGrid.visible = false
 	showActionMenu(false)
 	$offenseModeCamera.setFollow(false)
 func on_attack_phase_ending():
 	emit_signal("offensePhaseStarting")
 	isDefensePhase = false
-	$Grid.visible = false
+	$offenseModeCamera/Grid.visible = false
 	$bigGrid.visible = true
 	showActionMenu(true)
 	$offenseModeCamera.setFollow(true)
@@ -130,7 +131,7 @@ func _on_VictoryButton_pressed():
 
 #SIGNALS FROM PLAYER
 func _on_BattleModePlayer_PlayerHit():
-	$BattleModePlayer/PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
+	$offenseModeCamera/PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
 	if $BattleModePlayer.currentHP <= 0:
 		playerDie()
 
@@ -162,14 +163,18 @@ func setMusicPitchScaleToGlobal():
 
 #ACTIONS
 func showActionMenu(show : bool):
+	$BattleModePlayer/Arrows.visible = show
+	$BattleModePlayer/Arrows/downArrow/downMoveButton.set_deferred("disabled", not show)
+	$BattleModePlayer/Arrows/upArrow/upMoveButton.set_deferred("disabled", not show)
+	$BattleModePlayer/Arrows/leftArrow/leftMoveButton.set_deferred("disabled", not show)
+	$BattleModePlayer/Arrows/rightArrow/rightMoveButton.set_deferred("disabled", not show)
 	$BattleModePlayer/actionMenu.play("hide", show)
-	$BattleModePlayer/actionMenu/MoveButton.set_deferred("disabled", not show)
 	$BattleModePlayer/actionMenu/WindWatchButton.set_deferred("disabled", not show)
 	$BattleModePlayer/actionMenu/HealButton.set_deferred("disabled", not show)
 	$BattleModePlayer/actionMenu/AttackButton.set_deferred("disabled", not show)
 	$BattleModePlayer/actionMenu/ShieldButton.set_deferred("disabled", not show)
 func updateTimeJuiceBar():
-	$BattleModePlayer/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
+	$offenseModeCamera/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
 func _on_WindWatchButton_pressed():
 	$BattleModePlayer.startWindWatch()
 	currTimeJuice += timeJuiceCost * 2
@@ -180,5 +185,23 @@ func _on_watchWindTimer_timeout():
 	updateTimeJuiceBar()
 	$BattleModePlayer.finishWindWatch()
 enum { RIGHT, LEFT, UP, DOWN }
-func _on_MoveButton_pressed():
+func _on_downMoveButton_pressed():
+	$offenseModeCamera.setFollow(true)
+	$BattleModePlayer.move(DOWN)
+	$BattleModePlayer/Arrows/downArrow.updateSelf(true)
+	$BattleModePlayer/Arrows/upArrow.updateSelf(false)
+func _on_upMoveButton_pressed():
+	$offenseModeCamera.setFollow(true)
+	$BattleModePlayer.move(UP)
+	$BattleModePlayer/Arrows/downArrow.updateSelf(false)
+	$BattleModePlayer/Arrows/upArrow.updateSelf(true)
+func _on_rightMoveButton_pressed():
+	$offenseModeCamera.setFollow(true)
+	$BattleModePlayer.move(RIGHT)
+	$BattleModePlayer/Arrows/rightArrow.updateSelf(true)
+	$BattleModePlayer/Arrows/leftArrow.updateSelf(false)
+func _on_leftMoveButton_pressed():
+	$offenseModeCamera.setFollow(true)
 	$BattleModePlayer.move(LEFT)
+	$BattleModePlayer/Arrows/rightArrow.updateSelf(false)
+	$BattleModePlayer/Arrows/leftArrow.updateSelf(true)

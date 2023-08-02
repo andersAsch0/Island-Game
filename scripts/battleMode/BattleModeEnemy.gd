@@ -22,7 +22,7 @@ enum {
 	ABSCONDING
 }
 var currState = AWAY
-export var stateWaitTimes = [10, 2, 20, 2] # how long in seconds enemy stays in each state
+export var stateWaitTimes = [20, 2, 20, 2] # how long in seconds enemy stays in each state
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
 
 signal attackPhaseStarting
@@ -51,7 +51,7 @@ func _ready():
 	visible = true
 		
 func _physics_process(delta):
-	$HPBar.value = 1.0 * currentHP/maxHP * 100
+	$enemyMovement/PathFollow2D/HPBar.value = 1.0 * currentHP/maxHP * 100
 	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int) * ((Global.currCombatTimeMultiplier > 0) as int) # only inc if time is moving AND time isnt reversed
 	if stateCounter >= stateWaitTimes[currState]: #need to go to next state
 		goToNextState()
@@ -151,7 +151,7 @@ func stopBullets():
 
 func getHit(damage:int):
 	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
-	$HPBar.value = 1.0 * currentHP/maxHP * 100
+	$enemyMovement/PathFollow2D/HPBar.value = 1.0 * currentHP/maxHP * 100
 	if currentHP <= 0:
 		set_process(false)
 		$enemyMovement.set_process(false)
