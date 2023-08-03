@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=2]
+[gd_scene load_steps=90 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -18,7 +18,6 @@
 [ext_resource path="res://scenes/battleMode/rightArrow.gd" type="Script" id=16]
 [ext_resource path="res://scenes/battleMode/upArrow.gd" type="Script" id=17]
 [ext_resource path="res://scenes/battleMode/leftArrow.gd" type="Script" id=18]
-[ext_resource path="res://art/action menu.png" type="Texture" id=19]
 
 [sub_resource type="AtlasTexture" id=53]
 atlas = ExtResource( 12 )
@@ -118,21 +117,12 @@ region = Rect2( 192, 96, 32, 32 )
 atlas = ExtResource( 14 )
 region = Rect2( 256, 96, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=99]
-atlas = ExtResource( 19 )
-region = Rect2( 576, 0, 64, 48 )
-
 [sub_resource type="SpriteFrames" id=65]
 animations = [ {
 "frames": [ SubResource( 55 ), SubResource( 56 ), SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ), SubResource( 61 ), SubResource( 62 ), SubResource( 63 ), SubResource( 64 ) ],
 "loop": true,
 "name": "default",
 "speed": 10.0
-}, {
-"frames": [ SubResource( 99 ) ],
-"loop": true,
-"name": "hidden",
-"speed": 5.0
 } ]
 
 [sub_resource type="AtlasTexture" id=66]
@@ -414,7 +404,6 @@ text = "SHIELD"
 position = Vector2( 2, 57 )
 scale = Vector2( 1.9, 1 )
 frames = SubResource( 65 )
-animation = "hidden"
 script = ExtResource( 15 )
 
 [node name="downMoveButton" type="Button" parent="BattleModePlayer/Arrows/downArrow"]
@@ -530,36 +519,40 @@ stream_paused = true
 stream = ExtResource( 8 )
 
 [node name="offenseModeCamera" type="Camera2D" parent="."]
+position = Vector2( 160, 91 )
 current = true
 script = ExtResource( 13 )
 
 [node name="HP&TJ" type="Label" parent="offenseModeCamera"]
-margin_left = 5.0
-margin_top = 31.0
-margin_right = 45.0
-margin_bottom = 45.0
+margin_left = -154.0
+margin_top = -59.0
+margin_right = -114.0
+margin_bottom = -45.0
 text = "HP TJ"
 
 [node name="PlayerHPBar" type="ProgressBar" parent="offenseModeCamera"]
-margin_left = 8.15959
-margin_top = 113.0
-margin_right = 78.1596
-margin_bottom = 127.0
+margin_left = -150.84
+margin_top = 23.0
+margin_right = -80.8404
+margin_bottom = 37.0
 rect_rotation = -90.1426
 rect_scale = Vector2( 0.916312, 1.06207 )
+custom_colors/font_color = Color( 1, 0.74902, 0, 1 )
 
 [node name="TimeJuiceBar" type="ProgressBar" parent="offenseModeCamera"]
-margin_left = 26.1596
-margin_top = 112.0
-margin_right = 90.1596
-margin_bottom = 127.0
+margin_left = -132.84
+margin_top = 22.0
+margin_right = -68.8404
+margin_bottom = 37.0
 rect_rotation = 270.0
+custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.0941176, 0.321569, 0.854902, 1 )
 
 [node name="Grid" type="TextureRect" parent="offenseModeCamera"]
-margin_left = 126.0
-margin_top = 75.0
-margin_right = 196.0
-margin_bottom = 147.0
+margin_left = -33.0
+margin_top = -15.0
+margin_right = 37.0
+margin_bottom = 57.0
 texture = ExtResource( 7 )
 expand = true
 

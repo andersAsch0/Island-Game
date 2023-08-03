@@ -176,7 +176,7 @@ shape = SubResource( 16 )
 position = Vector2( 3.8147e-06, 0 )
 frames = SubResource( 24 )
 animation = "idle"
-frame = 3
+frame = 2
 playing = true
 
 [node name="BulletSpawnPath" type="Path2D" parent="."]
@@ -187,6 +187,9 @@ curve = SubResource( 23 )
 position = Vector2( -81.0412, 119.09 )
 rotation = -1.25845
 offset = 22.4759
+
+[node name="MovingPartsContainer" type="Node2D" parent="."]
+visible = false
 
 [connection signal="timeout" from="ApproachTimer" to="." method="_on_ApproachTimer_timeout"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
