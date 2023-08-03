@@ -353,6 +353,9 @@ texture = ExtResource( 11 )
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
 position = Vector2( 160, 110 )
 
+[node name="HealTimer" type="Timer" parent="BattleModePlayer"]
+one_shot = true
+
 [node name="watchWindTimer" type="Timer" parent="BattleModePlayer"]
 one_shot = true
 
@@ -559,8 +562,12 @@ expand = true
 [connection signal="offensePhaseEnding" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
 [connection signal="offensePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
+[connection signal="timeout" from="BattleModePlayer/HealTimer" to="BattleModePlayer" method="_on_HealTimer_timeout"]
 [connection signal="timeout" from="BattleModePlayer/watchWindTimer" to="." method="_on_watchWindTimer_timeout"]
 [connection signal="pressed" from="BattleModePlayer/actionMenu/WindWatchButton" to="." method="_on_WindWatchButton_pressed"]
+[connection signal="pressed" from="BattleModePlayer/actionMenu/HealButton" to="." method="_on_HealButton_pressed"]
+[connection signal="pressed" from="BattleModePlayer/actionMenu/AttackButton" to="." method="_on_AttackButton_pressed"]
+[connection signal="pressed" from="BattleModePlayer/actionMenu/ShieldButton" to="." method="_on_ShieldButton_pressed"]
 [connection signal="pressed" from="BattleModePlayer/Arrows/downArrow/downMoveButton" to="." method="_on_downMoveButton_pressed"]
 [connection signal="pressed" from="BattleModePlayer/Arrows/upArrow/upMoveButton" to="." method="_on_upMoveButton_pressed"]
 [connection signal="pressed" from="BattleModePlayer/Arrows/rightArrow/rightMoveButton" to="." method="_on_rightMoveButton_pressed"]

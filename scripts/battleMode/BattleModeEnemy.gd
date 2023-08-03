@@ -80,10 +80,10 @@ func startAttackPhase():
 func startLeavePhase():
 	currState = ABSCONDING
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
-	emit_signal("attackPhaseEnding")
 func startAwayPhase():
 	currState = AWAY
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
+	emit_signal("attackPhaseEnding")
 func startApproachPhase(): 
 	prevLocation = position
 	findNewTile()

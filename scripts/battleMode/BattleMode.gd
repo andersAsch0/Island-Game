@@ -173,17 +173,6 @@ func showActionMenu(show : bool):
 	$BattleModePlayer/actionMenu/HealButton.set_deferred("disabled", not show)
 	$BattleModePlayer/actionMenu/AttackButton.set_deferred("disabled", not show)
 	$BattleModePlayer/actionMenu/ShieldButton.set_deferred("disabled", not show)
-func updateTimeJuiceBar():
-	$offenseModeCamera/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
-func _on_WindWatchButton_pressed():
-	$BattleModePlayer.startWindWatch()
-	currTimeJuice += timeJuiceCost * 2
-	$BattleModePlayer/watchWindTimer.start()
-func _on_watchWindTimer_timeout():
-	if currTimeJuice > maxTimeJuiceSeconds:
-		currTimeJuice = maxTimeJuiceSeconds
-	updateTimeJuiceBar()
-	$BattleModePlayer.finishWindWatch()
 enum { RIGHT, LEFT, UP, DOWN }
 func _on_downMoveButton_pressed():
 	$offenseModeCamera.setFollow(true)
@@ -205,3 +194,23 @@ func _on_leftMoveButton_pressed():
 	$BattleModePlayer.move(LEFT)
 	$BattleModePlayer/Arrows/rightArrow.updateSelf(false)
 	$BattleModePlayer/Arrows/leftArrow.updateSelf(true)
+func updateTimeJuiceBar():
+	$offenseModeCamera/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
+func _on_WindWatchButton_pressed():
+	$BattleModePlayer.startWindWatch()
+	currTimeJuice += timeJuiceCost * 2
+	$BattleModePlayer/watchWindTimer.start()
+func _on_watchWindTimer_timeout():
+	if currTimeJuice > maxTimeJuiceSeconds:
+		currTimeJuice = maxTimeJuiceSeconds
+	updateTimeJuiceBar()
+	$BattleModePlayer.finishWindWatch()
+func _on_HealButton_pressed():
+	$BattleModePlayer.startHeal()
+	$BattleModePlayer/HealTimer.start()
+func _on_HealTimer_timeout():
+	$BattleModePlayer.finishHeal(1)
+func _on_AttackButton_pressed():
+	$BattleModePlayer.attack(1)
+func _on_ShieldButton_pressed():
+	$BattleModePlayer.shield()

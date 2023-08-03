@@ -14,6 +14,7 @@ enum {
 	IMOBILE # ex. while winding watch
 	MOVINGTILES # moving around the big tiles
 }
+var isShielded = false
 var currState = DEFENSE
 enum { RIGHT, LEFT, UP, DOWN }
 var moveDirection = RIGHT
@@ -106,6 +107,10 @@ func _on_inputTimer_timeout():
 # GET HIT 	
 
 func getHit(damage:int):
+	if isShielded:
+		isShielded = false
+		$Shield.visible = false
+		return
 	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
 	emit_signal("PlayerHit")
 	if currentHP <= 0:
@@ -123,10 +128,34 @@ func _on_BattleMode_offensePhaseEnding():
 func _on_BattleMode_offensePhaseStarting():
 	currState = IMOBILE
 func startWindWatch():
+	if isShielded:
+		return
 	$Animations.play("wind watch")
 	currState = IMOBILE
 func finishWindWatch():
+	if isShielded:
+		return
 	$Animations.play("idle")
+func startHeal():
+	if isShielded:
+		return
+	$Animations.play("wind watch")
+	currState = IMOBILE
+func finishHeal(hpHealed : int):
+	if isShielded:
+		return
+	currentHP += hpHealed
+	if currentHP > maxHP:
+		currentHP = maxHP
+	emit_signal("PlayerHit") #update HP bar in parent node
+	$Animations.play("idle")
+func attack(damage : int):
+	if isShielded:
+		return
+	get_tree().call_group("enemies", "getHit", damage)
+func shield():
+	$Shield.visible = true
+	isShielded = true
 func move(direction):
 	if currState == IMOBILE and canMove(direction):
 		moveDirection = direction
