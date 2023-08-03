@@ -84,14 +84,14 @@ func startLeavePhase():
 func startAwayPhase():
 	currState = AWAY
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
-func startApproachPhase():
+func startApproachPhase(): 
 	prevLocation = position
 	findNewTile()
 	approachVector = Vector2(bigGridLocationsx[currentGridSquare.x] - prevLocation.x, bigGridLocationsy[currentGridSquare.y] - prevLocation.y).normalized()
-	stateWaitTimes[APPROACHING] = prevLocation.distance_to( Vector2(bigGridLocationsx[currentGridSquare.x] - prevLocation.x, bigGridLocationsy[currentGridSquare.y] - prevLocation.y)) / approachSpeed
+	stateWaitTimes[APPROACHING] = prevLocation.distance_to( Vector2(bigGridLocationsx[currentGridSquare.x], bigGridLocationsy[currentGridSquare.y])) / approachSpeed
 	currState = APPROACHING
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
-	
+
 
 func goToNextState():
 	stateCounter = 0
