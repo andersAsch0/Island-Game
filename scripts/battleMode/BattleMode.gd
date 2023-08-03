@@ -124,21 +124,21 @@ func on_attack_phase_ending():
 	showActionMenu(true)
 	$offenseModeCamera.setFollow(true)
 func on_enemyDead():
-	$VictoryButton.visible = true
-	$VictoryButton.disabled = false
+	$offenseModeCamera/VictoryButton.visible = true
+	$offenseModeCamera/VictoryButton.disabled = false
 func _on_VictoryButton_pressed():
 	var _PTS = get_tree().change_scene(overWorldPath)
 
 #SIGNALS FROM PLAYER
 func _on_BattleModePlayer_PlayerHit():
 	$offenseModeCamera/PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
-	if $BattleModePlayer.currentHP <= 0:
-		playerDie()
 
-func playerDie():
-	$DefeatButton.visible = true
-	$DefeatButton.disabled = false
-	get_tree().call_group("enemies", "stopBullets")
+func _on_BattleModePlayer_PlayerDie():
+	$offenseModeCamera/DefeatButton.visible = true
+	$offenseModeCamera/DefeatButton.disabled = false
+	set_block_signals(true)
+	get_tree().call_group("enemies", "playerDie")
+	
 func _on_DefeatButton_pressed():
 	var _PTS = get_tree().change_scene(overWorldPath)
 
@@ -198,19 +198,20 @@ func updateTimeJuiceBar():
 	$offenseModeCamera/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
 func _on_WindWatchButton_pressed():
 	$BattleModePlayer.startWindWatch()
-	currTimeJuice += timeJuiceCost * 2
 	$BattleModePlayer/watchWindTimer.start()
 func _on_watchWindTimer_timeout():
-	if currTimeJuice > maxTimeJuiceSeconds:
-		currTimeJuice = maxTimeJuiceSeconds
-	updateTimeJuiceBar()
-	$BattleModePlayer.finishWindWatch()
+	if $BattleModePlayer.finishWindWatch():
+		currTimeJuice += timeJuiceCost
+		if currTimeJuice > maxTimeJuiceSeconds:
+			currTimeJuice = maxTimeJuiceSeconds
+		updateTimeJuiceBar()
 func _on_HealButton_pressed():
 	$BattleModePlayer.startHeal()
 	$BattleModePlayer/HealTimer.start()
 func _on_HealTimer_timeout():
 	$BattleModePlayer.finishHeal(1)
 func _on_AttackButton_pressed():
-	$BattleModePlayer.attack(1)
+	$BattleModePlayer.startAttack(1)
 func _on_ShieldButton_pressed():
 	$BattleModePlayer.shield()
+

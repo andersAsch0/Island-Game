@@ -13,6 +13,7 @@ enum {
 	DEFENSE
 	IMOBILE # ex. while winding watch
 	MOVINGTILES # moving around the big tiles
+	IDLE # normal state during offense
 }
 var isShielded = false
 var currState = DEFENSE
@@ -27,6 +28,7 @@ var prevLocation = Vector2.ZERO
 var currentGridSquare = Vector2(2,2)
 
 signal PlayerHit
+signal PlayerDie
 
 # player script mostly deals with movement and animation, all other input is handled by BattleMode.gd
 
@@ -119,6 +121,7 @@ func die():
 	set_process_input(false)
 	$HurtBox/CollisionShape2D.set_deferred("disabled", true)
 	$HitBox/CollisionShape2D.set_deferred("disabled", true)
+	emit_signal("PlayerDie")
 	$Animations.play("die")
 
 # OFFENSE MODE (called by BattleMode.gd)
@@ -126,21 +129,20 @@ func die():
 func _on_BattleMode_offensePhaseEnding():
 	currState = DEFENSE
 func _on_BattleMode_offensePhaseStarting():
-	currState = IMOBILE
+	currState = IDLE
 func startWindWatch():
 	if isShielded:
 		return
 	$Animations.play("wind watch")
-	currState = IMOBILE
 func finishWindWatch():
-	if isShielded:
-		return
+	if isShielded: 
+		return false #return whether it actually happended
 	$Animations.play("idle")
+	return true
 func startHeal():
 	if isShielded:
 		return
 	$Animations.play("wind watch")
-	currState = IMOBILE
 func finishHeal(hpHealed : int):
 	if isShielded:
 		return
@@ -149,15 +151,17 @@ func finishHeal(hpHealed : int):
 		currentHP = maxHP
 	emit_signal("PlayerHit") #update HP bar in parent node
 	$Animations.play("idle")
-func attack(damage : int):
+func startAttack(damage : int):
 	if isShielded:
 		return
 	get_tree().call_group("enemies", "getHit", damage)
+func finishAttack():
+	pass
 func shield():
 	$Shield.visible = true
 	isShielded = true
 func move(direction):
-	if currState == IMOBILE and canMove(direction):
+	if canMove(direction):
 		moveDirection = direction
 		prevLocation = position
 		updateCurrGridSquare()
@@ -187,6 +191,6 @@ func updateCurrGridSquare():
 		currentGridSquare.x += 1
 	get_tree().call_group("enemies", "updatePlayerStatus", currentGridSquare)
 func _on_moveTilesTimer_timeout():
-	currState = IMOBILE
+	currState = IDLE
 	storagePos = position
 	$Animations.play("idle")

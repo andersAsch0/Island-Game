@@ -479,24 +479,6 @@ cooldown active"
 [node name="AbilityCoolDownTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="VictoryButton" type="Button" parent="."]
-visible = false
-margin_left = 127.0
-margin_top = 36.0
-margin_right = 193.0
-margin_bottom = 56.0
-disabled = true
-text = "VICTORY"
-
-[node name="DefeatButton" type="Button" parent="."]
-visible = false
-margin_left = 127.0
-margin_top = 37.0
-margin_right = 193.0
-margin_bottom = 57.0
-disabled = true
-text = "DEFEAT"
-
 [node name="Clock" type="AnimatedSprite" parent="."]
 visible = false
 position = Vector2( 41, 75 )
@@ -559,10 +541,29 @@ margin_bottom = 57.0
 texture = ExtResource( 7 )
 expand = true
 
+[node name="VictoryButton" type="Button" parent="offenseModeCamera"]
+visible = false
+margin_left = -33.0
+margin_top = -55.0
+margin_right = 33.0
+margin_bottom = -35.0
+disabled = true
+text = "VICTORY"
+
+[node name="DefeatButton" type="Button" parent="offenseModeCamera"]
+visible = false
+margin_left = -33.0
+margin_top = -54.0
+margin_right = 33.0
+margin_bottom = -34.0
+disabled = true
+text = "DEFEAT"
+
 [connection signal="offensePhaseEnding" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
 [connection signal="offensePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
+[connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
-[connection signal="timeout" from="BattleModePlayer/HealTimer" to="BattleModePlayer" method="_on_HealTimer_timeout"]
+[connection signal="timeout" from="BattleModePlayer/HealTimer" to="." method="_on_HealTimer_timeout"]
 [connection signal="timeout" from="BattleModePlayer/watchWindTimer" to="." method="_on_watchWindTimer_timeout"]
 [connection signal="pressed" from="BattleModePlayer/actionMenu/WindWatchButton" to="." method="_on_WindWatchButton_pressed"]
 [connection signal="pressed" from="BattleModePlayer/actionMenu/HealButton" to="." method="_on_HealButton_pressed"]
@@ -573,8 +574,8 @@ expand = true
 [connection signal="pressed" from="BattleModePlayer/Arrows/rightArrow/rightMoveButton" to="." method="_on_rightMoveButton_pressed"]
 [connection signal="pressed" from="BattleModePlayer/Arrows/leftArrow/leftMoveButton" to="." method="_on_leftMoveButton_pressed"]
 [connection signal="timeout" from="AbilityCoolDownTimer" to="." method="_on_AbilityCoolDownTimer_timeout"]
-[connection signal="pressed" from="VictoryButton" to="." method="_on_VictoryButton_pressed"]
-[connection signal="pressed" from="DefeatButton" to="." method="_on_DefeatButton_pressed"]
 [connection signal="finished" from="normalMusicLoop" to="." method="_on_normalMusicLoop_finished"]
 [connection signal="finished" from="reverseMusicLoop" to="." method="_on_reverseAudioLoop_finished"]
 [connection signal="finished" from="reverseMusicLoop/tickingClockFX" to="." method="_on_tickingClockFX_finished"]
+[connection signal="pressed" from="offenseModeCamera/VictoryButton" to="." method="_on_VictoryButton_pressed"]
+[connection signal="pressed" from="offenseModeCamera/DefeatButton" to="." method="_on_DefeatButton_pressed"]

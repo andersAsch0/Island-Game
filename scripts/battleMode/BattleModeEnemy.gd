@@ -150,8 +150,9 @@ func startOrStopAnimation():
 	else:
 		$enemyMovement/PathFollow2D/AnimatedSprite.stop()
 
-func stopBullets():
+func playerDie():
 	bulletsStopped = true
+	set_physics_process(false)
 	
 
 #TAKE DAMAGE
