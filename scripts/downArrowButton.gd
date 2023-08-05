@@ -1,18 +1,14 @@
 extends AnimatedSprite
 
-var currYGridLocation = 2
-
 func _ready():
 	play()
 
-func updateSelf(goingMyDirection : bool):
-	if goingMyDirection:
-		currYGridLocation += 1
-	else:
-		currYGridLocation -= 1
-	if currYGridLocation >= 4:
-		visible = false
-		$downMoveButton.set_deferred("disabled", true)
-	else:
+var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
+
+func updateSelf(myDirection):
+	if get_node("/root/BattleMode").canMoveTo(get_node("/root/BattleMode/BattleModePlayer").currentGridSquare + moveVectors[myDirection]):
 		visible = true
-		$downMoveButton.set_deferred("disabled", false)
+		$moveButton.set_deferred("disabled", false)
+	else:
+		visible = false
+		$moveButton.set_deferred("disabled", true)

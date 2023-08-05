@@ -37,14 +37,14 @@ signal PlayerDie
 func _ready():
 	$Animations.play("idle")
 	currGridSize = $rightGridLocation.position.x
-	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key when entering battle mode
-		position.x += currGridSize
-	if Input.get_action_strength("ui_left") > 0:
-		position.x -= currGridSize
-	if Input.get_action_strength("ui_up") > 0:
-		position.y -= currGridSize
-	if Input.get_action_strength("ui_down") > 0:
-		position.y += currGridSize
+#	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key when entering battle mode
+#		position.x += currGridSize
+#	if Input.get_action_strength("ui_left") > 0:
+#		position.x -= currGridSize
+#	if Input.get_action_strength("ui_up") > 0:
+#		position.y -= currGridSize
+#	if Input.get_action_strength("ui_down") > 0:
+#		position.y += currGridSize
 	storagePos = position
 	
 	if invincible:
@@ -127,8 +127,18 @@ func die():
 # OFFENSE MODE (called by BattleMode.gd)
 
 func _on_BattleMode_offensePhaseEnding():
+	storagePos = position
+	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
+		storagePos.x += currGridSize
+	if Input.get_action_strength("ui_left") > 0:
+		storagePos.x -= currGridSize
+	if Input.get_action_strength("ui_up") > 0:
+		storagePos.y -= currGridSize
+	if Input.get_action_strength("ui_down") > 0:
+		storagePos.y += currGridSize
 	currState = DEFENSE
 func _on_BattleMode_offensePhaseStarting():
+	position = Vector2(bigGridLocationsx[currentGridSquare.x], bigGridLocationsy[currentGridSquare.y])
 	currState = IDLE
 func startWindWatch():
 	if isShielded:
@@ -161,7 +171,7 @@ func shield():
 	$Shield.visible = true
 	isShielded = true
 func move(direction):
-	if canMove(direction):
+	if currState != MOVINGTILES:
 		moveDirection = direction
 		prevLocation = position
 		updateCurrGridSquare()
@@ -170,6 +180,8 @@ func move(direction):
 		currState = MOVINGTILES
 		$Animations.play(moveAnimations[direction])
 func canMove(direction):
+	var enemy = get_tree().get_nodes_in_group("enemies")
+	var enemySquare = enemy[0].getCurrGridSquare()
 	if direction == UP and currentGridSquare.y == 0:
 		return false
 	elif direction == DOWN and currentGridSquare.y == 4:
@@ -177,6 +189,8 @@ func canMove(direction):
 	elif direction == LEFT and currentGridSquare.x == 0:
 		return false
 	elif direction == RIGHT and currentGridSquare.x == 4:
+		return false
+	elif (currentGridSquare + moveVectors[direction]) == enemySquare:
 		return false
 	else:
 		return true

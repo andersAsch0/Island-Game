@@ -189,6 +189,8 @@ var bigGridLocationsy = [-30, 40, 110, 180, 250]
 
 func updatePlayerStatus(gridSquare : Vector2): #called by player script to pass info
 	playerGridSquare = gridSquare
+func getCurrGridSquare(): # send info 
+	return currentGridSquare
 
 func findNewTile(): #finds closest valid tile near the player to move to
 	var squareAbove = (playerGridSquare + Vector2(0, -1))

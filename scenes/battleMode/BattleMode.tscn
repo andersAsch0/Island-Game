@@ -1,4 +1,4 @@
-[gd_scene load_steps=90 format=2]
+[gd_scene load_steps=87 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -15,9 +15,6 @@
 [ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
 [ext_resource path="res://art/arrow.png" type="Texture" id=14]
 [ext_resource path="res://scripts/downArrowButton.gd" type="Script" id=15]
-[ext_resource path="res://scenes/battleMode/rightArrow.gd" type="Script" id=16]
-[ext_resource path="res://scenes/battleMode/upArrow.gd" type="Script" id=17]
-[ext_resource path="res://scenes/battleMode/leftArrow.gd" type="Script" id=18]
 
 [sub_resource type="AtlasTexture" id=53]
 atlas = ExtResource( 12 )
@@ -362,6 +359,7 @@ one_shot = true
 [node name="actionMenu" type="AnimatedSprite" parent="BattleModePlayer"]
 position = Vector2( 5.96046e-08, -87 )
 scale = Vector2( 1.272, 0.725 )
+z_index = 1
 frames = SubResource( 54 )
 animation = "showing"
 
@@ -402,6 +400,7 @@ rect_scale = Vector2( 0.748063, 1 )
 text = "SHIELD"
 
 [node name="Arrows" type="Node2D" parent="BattleModePlayer"]
+z_index = 1
 
 [node name="downArrow" type="AnimatedSprite" parent="BattleModePlayer/Arrows"]
 position = Vector2( 2, 57 )
@@ -409,7 +408,7 @@ scale = Vector2( 1.9, 1 )
 frames = SubResource( 65 )
 script = ExtResource( 15 )
 
-[node name="downMoveButton" type="Button" parent="BattleModePlayer/Arrows/downArrow"]
+[node name="moveButton" type="Button" parent="BattleModePlayer/Arrows/downArrow"]
 self_modulate = Color( 1, 1, 1, 0 )
 margin_left = -11.5789
 margin_top = -15.0
@@ -421,9 +420,9 @@ rect_scale = Vector2( 2.08763, 0.892941 )
 position = Vector2( 1, -54 )
 scale = Vector2( 1.9, 1 )
 frames = SubResource( 76 )
-script = ExtResource( 17 )
+script = ExtResource( 15 )
 
-[node name="upMoveButton" type="Button" parent="BattleModePlayer/Arrows/upArrow"]
+[node name="moveButton" type="Button" parent="BattleModePlayer/Arrows/upArrow"]
 self_modulate = Color( 1, 1, 1, 0 )
 margin_left = -13.1579
 margin_right = -1.1579
@@ -434,9 +433,9 @@ rect_scale = Vector2( 2.28142, 0.817892 )
 position = Vector2( 59, 2.00001 )
 scale = Vector2( 1, 1.9 )
 frames = SubResource( 87 )
-script = ExtResource( 16 )
+script = ExtResource( 15 )
 
-[node name="rightMoveButton" type="Button" parent="BattleModePlayer/Arrows/rightArrow"]
+[node name="moveButton" type="Button" parent="BattleModePlayer/Arrows/rightArrow"]
 self_modulate = Color( 1, 1, 1, 0 )
 margin_left = -15.0
 margin_top = -13.1579
@@ -448,9 +447,9 @@ rect_scale = Vector2( 1.40812, 1.38709 )
 position = Vector2( -56, 2 )
 scale = Vector2( 1, 1.9 )
 frames = SubResource( 98 )
-script = ExtResource( 18 )
+script = ExtResource( 15 )
 
-[node name="leftMoveButton" type="Button" parent="BattleModePlayer/Arrows/leftArrow"]
+[node name="moveButton" type="Button" parent="BattleModePlayer/Arrows/leftArrow"]
 self_modulate = Color( 1, 1, 1, 0 )
 margin_left = -3.0
 margin_top = -13.1579
@@ -459,7 +458,7 @@ margin_bottom = 6.8421
 rect_scale = Vector2( 1.51093, 1.35423 )
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
-position = Vector2( 160, 25 )
+position = Vector2( 162, 39 )
 
 [node name="Menu\?" type="Label" parent="."]
 visible = false
@@ -505,6 +504,7 @@ stream = ExtResource( 8 )
 
 [node name="offenseModeCamera" type="Camera2D" parent="."]
 position = Vector2( 160, 91 )
+z_index = 1
 current = true
 script = ExtResource( 13 )
 
@@ -533,13 +533,11 @@ rect_rotation = 270.0
 custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
 custom_colors/font_color_shadow = Color( 0.0941176, 0.321569, 0.854902, 1 )
 
-[node name="Grid" type="TextureRect" parent="offenseModeCamera"]
-margin_left = -33.0
-margin_top = -15.0
-margin_right = 37.0
-margin_bottom = 57.0
+[node name="Grid" type="Sprite" parent="offenseModeCamera"]
+position = Vector2( 2.00003, 20 )
+scale = Vector2( 1.9, 1.9 )
+z_as_relative = false
 texture = ExtResource( 7 )
-expand = true
 
 [node name="VictoryButton" type="Button" parent="offenseModeCamera"]
 visible = false
@@ -569,10 +567,10 @@ text = "DEFEAT"
 [connection signal="pressed" from="BattleModePlayer/actionMenu/HealButton" to="." method="_on_HealButton_pressed"]
 [connection signal="pressed" from="BattleModePlayer/actionMenu/AttackButton" to="." method="_on_AttackButton_pressed"]
 [connection signal="pressed" from="BattleModePlayer/actionMenu/ShieldButton" to="." method="_on_ShieldButton_pressed"]
-[connection signal="pressed" from="BattleModePlayer/Arrows/downArrow/downMoveButton" to="." method="_on_downMoveButton_pressed"]
-[connection signal="pressed" from="BattleModePlayer/Arrows/upArrow/upMoveButton" to="." method="_on_upMoveButton_pressed"]
-[connection signal="pressed" from="BattleModePlayer/Arrows/rightArrow/rightMoveButton" to="." method="_on_rightMoveButton_pressed"]
-[connection signal="pressed" from="BattleModePlayer/Arrows/leftArrow/leftMoveButton" to="." method="_on_leftMoveButton_pressed"]
+[connection signal="pressed" from="BattleModePlayer/Arrows/downArrow/moveButton" to="." method="_on_downMoveButton_pressed"]
+[connection signal="pressed" from="BattleModePlayer/Arrows/upArrow/moveButton" to="." method="_on_upMoveButton_pressed"]
+[connection signal="pressed" from="BattleModePlayer/Arrows/rightArrow/moveButton" to="." method="_on_rightMoveButton_pressed"]
+[connection signal="pressed" from="BattleModePlayer/Arrows/leftArrow/moveButton" to="." method="_on_leftMoveButton_pressed"]
 [connection signal="timeout" from="AbilityCoolDownTimer" to="." method="_on_AbilityCoolDownTimer_timeout"]
 [connection signal="finished" from="normalMusicLoop" to="." method="_on_normalMusicLoop_finished"]
 [connection signal="finished" from="reverseMusicLoop" to="." method="_on_reverseAudioLoop_finished"]
