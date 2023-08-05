@@ -22,7 +22,9 @@ enum {
 	ABSCONDING
 }
 var currState = AWAY
-export var stateWaitTimes = [3, 4, 20, 2] # how long in seconds enemy stays in each state
+export var stateWaitTimes = [20, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+var approachSpeed = 30
+var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
 
 signal attackPhaseStarting
@@ -51,14 +53,15 @@ func _ready():
 	visible = true
 		
 func _physics_process(delta):
-	$HPBar.value = 1.0 * currentHP/maxHP * 100
-	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+	$enemyMovement/PathFollow2D/HPBar.value = 1.0 * currentHP/maxHP * 100
+	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int) * ((Global.currCombatTimeMultiplier > 0) as int) # only inc if time is moving AND time isnt reversed
 	if stateCounter >= stateWaitTimes[currState]: #need to go to next state
 		goToNextState()
 	elif stateCounter <= 0: #time reversed, need to go to prev state
 		goToPrevState()
 
 	if currState == APPROACHING: #increase scale (grow bigger each frame)
+		position += approachVector * delta * approachSpeed
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	elif currState == ATTACKING:
@@ -77,14 +80,18 @@ func startAttackPhase():
 func startLeavePhase():
 	currState = ABSCONDING
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
-	emit_signal("attackPhaseEnding")
 func startAwayPhase():
 	currState = AWAY
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
-func startApproachPhase():
+	emit_signal("attackPhaseEnding")
+func startApproachPhase(): 
+	prevLocation = position
+	findNewTile()
+	approachVector = Vector2(bigGridLocationsx[currentGridSquare.x] - prevLocation.x, bigGridLocationsy[currentGridSquare.y] - prevLocation.y).normalized()
+	stateWaitTimes[APPROACHING] = prevLocation.distance_to( Vector2(bigGridLocationsx[currentGridSquare.x], bigGridLocationsy[currentGridSquare.y])) / approachSpeed
 	currState = APPROACHING
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
-	
+
 
 func goToNextState():
 	stateCounter = 0
@@ -143,18 +150,18 @@ func startOrStopAnimation():
 	else:
 		$enemyMovement/PathFollow2D/AnimatedSprite.stop()
 
-func stopBullets():
+func playerDie():
 	bulletsStopped = true
+	set_physics_process(false)
 	
 
 #TAKE DAMAGE
 
 func getHit(damage:int):
-	currentHP -= 1
-	$HPBar.value = 1.0 * currentHP/maxHP * 100
+	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
+	$enemyMovement/PathFollow2D/HPBar.value = 1.0 * currentHP/maxHP * 100
 	if currentHP <= 0:
-		$bulletSpawnTimer.paused = true
-		$ApproachTimer.paused = true
+		set_process(false)
 		$enemyMovement.set_process(false)
 		$enemyMovement/PathFollow2D/AnimatedSprite.play("die")
 		$DeathTimer.start() #leave time to play death animation before showing win screen
@@ -173,6 +180,40 @@ func getAttackPatternData():
 		attackPatternData.open(attackPatternFile, attackPatternData.READ)
 		return parse_json(attackPatternData.get_as_text())
 
+#GRID MOVEMENT
+var playerGridSquare = Vector2(2, 2)
+var currentGridSquare = Vector2(2, 1)
+var prevLocation = Vector2.ZERO
+var bigGridLocationsx = [18, 90, 160, 230, 300 ]
+var bigGridLocationsy = [-30, 40, 110, 180, 250]
+
+func updatePlayerStatus(gridSquare : Vector2): #called by player script to pass info
+	playerGridSquare = gridSquare
+func getCurrGridSquare(): # send info 
+	return currentGridSquare
+
+func findNewTile(): #finds closest valid tile near the player to move to
+	var squareAbove = (playerGridSquare + Vector2(0, -1))
+	var squareBelow = (playerGridSquare + Vector2(0, 1))
+	var squareLeft = (playerGridSquare + Vector2(-1, 0))
+	var squareRight = (playerGridSquare + Vector2(1, 0))
+	var closestSquare = squareAbove
+	
+	if calculateTileDistance(closestSquare) > calculateTileDistance(squareBelow):
+		closestSquare = squareBelow
+	if calculateTileDistance(closestSquare) > calculateTileDistance(squareRight):
+		closestSquare = squareRight
+	if calculateTileDistance(closestSquare) > calculateTileDistance(squareLeft):
+		closestSquare = squareLeft
+	
+	currentGridSquare = closestSquare
+		
+func calculateTileDistance(playerAdjacentTile : Vector2):
+	if playerAdjacentTile.x < 0 or playerAdjacentTile.x > 4 or playerAdjacentTile.y < 0 or playerAdjacentTile.y > 4: 
+		return 10000 #impossible tile to reach, impossibly big number so it wont go there
+	else: 
+		return abs(currentGridSquare.x - playerGridSquare.x) + abs(currentGridSquare.y - playerGridSquare.y)
+	
 
 
 

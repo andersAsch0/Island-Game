@@ -1,6 +1,6 @@
 extends Area2D
 
-var BattleModePath = "res://scenes/BattleMode.tscn"
+var BattleModePath = "res://scenes/battleMode/BattleMode.tscn"
 
 func _input(event):
 	if len(get_overlapping_bodies()) != 0 and event.is_action_pressed("enter_fight"):

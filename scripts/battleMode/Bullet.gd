@@ -31,7 +31,7 @@ func _process(delta):
 		position += velocity.rotated(angle) * speed * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 func reverseTime():
 	pass
-func speedUpTime(multiplier : float = 1): #can pass in number, if no number default is 1 (no change)
+func speedUpTime(_multiplier : float = 1): #can pass in number, if no number default is 1 (no change)
 	pass
 func stopTime():
 	pass
