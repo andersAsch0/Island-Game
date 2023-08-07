@@ -29,3 +29,26 @@ func set_timeFlow(timeIsNotStoppedBool: bool):
 
 func updateDeadEnemyList(list : Array):
 	list.append(overWorldEnemyPath)
+	
+	
+# BattleMode Grid Tracking
+
+var gridCoordsY = []
+var gridCoordsX = [[2, 1], [3, 4]]
+
+var playerGridLocation = Vector2(2,2)
+var enemyGridLocation = Vector2(2,1)
+func setPlayerGridLocation( newLocation : Vector2):
+	playerGridLocation = newLocation
+func setEnemyGridLocation( newLocation : Vector2):
+	enemyGridLocation = newLocation
+
+func canMoveTo(gridLocation : Vector2):
+	if gridLocation.x > 4 or gridLocation.x < 0:
+		return false
+	if gridLocation.y > 4 or gridLocation.y < 0:
+		return false
+	elif gridLocation == enemyGridLocation:
+		return false
+	else:
+		return true

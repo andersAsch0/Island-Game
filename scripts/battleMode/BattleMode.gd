@@ -54,19 +54,30 @@ func incrementAbilityTimes(_delta):
 #
 
 func _input(event):
-	if($AbilityCoolDownTimer.time_left > 0 or not isDefensePhase):
-		return
-	if(event.is_action_pressed("reverseTime") and currTimeJuice > timeJuiceCost):
-		reverseTime()
-	elif(event.is_action_pressed("stopTime") and currTimeJuice > timeJuiceCost):
-		if Global.timeIsNotStopped:
-			stopTime()
-		else:
-			resumeTime()
-	elif(event.is_action_pressed("speedUpTime") and currTimeJuice > timeJuiceCost):
-		changeTimeScale(2)
-	elif(event.is_action_pressed("slowDownTime") and currTimeJuice > timeJuiceCost):
-		changeTimeScale(1.0 * 1/2)
+	if isDefensePhase:
+		if($AbilityCoolDownTimer.time_left > 0):
+			return
+		if(event.is_action_pressed("reverseTime") and currTimeJuice > timeJuiceCost):
+			reverseTime()
+		elif(event.is_action_pressed("stopTime") and currTimeJuice > timeJuiceCost):
+			if Global.timeIsNotStopped:
+				stopTime()
+			else:
+				resumeTime()
+		elif(event.is_action_pressed("speedUpTime") and currTimeJuice > timeJuiceCost):
+			changeTimeScale(2)
+		elif(event.is_action_pressed("slowDownTime") and currTimeJuice > timeJuiceCost):
+			changeTimeScale(1.0 * 1/2)
+	else: #is offense phase
+		if(event.is_action_pressed("windWatch")):
+			_on_WindWatchButton_pressed()
+		elif(event.is_action_pressed("heal")):
+			_on_HealButton_pressed()
+		elif(event.is_action_pressed("attack")):
+			_on_AttackButton_pressed()
+		elif(event.is_action_pressed("shield")):
+			_on_ShieldButton_pressed()
+		
 		
 func reverseTime():
 	Global.set_timeMultiplier(-1)
@@ -123,7 +134,6 @@ func on_attack_phase_ending():
 	$offenseModeCamera/Grid.visible = false
 	$bigGrid.visible = true
 	showActionMenu(true)
-	$offenseModeCamera.setFollow(true)
 func on_enemyDead():
 	$offenseModeCamera/VictoryButton.visible = true
 	$offenseModeCamera/VictoryButton.disabled = false
@@ -170,10 +180,6 @@ func showActionMenu(show : bool):
 	$BattleModePlayer/Arrows/leftArrow/moveButton.set_deferred("disabled", not show)
 	$BattleModePlayer/Arrows/rightArrow/moveButton.set_deferred("disabled", not show)
 	$BattleModePlayer/actionMenu.play("hide", show)
-	$BattleModePlayer/actionMenu/WindWatchButton.set_deferred("disabled", not show)
-	$BattleModePlayer/actionMenu/HealButton.set_deferred("disabled", not show)
-	$BattleModePlayer/actionMenu/AttackButton.set_deferred("disabled", not show)
-	$BattleModePlayer/actionMenu/ShieldButton.set_deferred("disabled", not show)
 enum { RIGHT, LEFT, UP, DOWN }
 var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
 func _on_downMoveButton_pressed():

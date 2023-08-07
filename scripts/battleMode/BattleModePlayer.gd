@@ -29,6 +29,7 @@ var currentGridSquare = Vector2(2,2)
 
 signal PlayerHit
 signal PlayerDie
+signal playerMovedOffense(direction)
 
 # player script mostly deals with movement and animation, all other input is handled by BattleMode.gd
 
@@ -67,31 +68,46 @@ func _process(delta):
 		position.x += ((1.0 * bigGridLocationsx[currentGridSquare.x]-prevLocation.x) / $Animations/moveTilesTimer.wait_time) * delta
 		position.y += ((1.0 * bigGridLocationsy[currentGridSquare.y]-prevLocation.y) / $Animations/moveTilesTimer.wait_time) * delta
 func _input(event):
-	if currState == DEFENSE:
-		if(event.is_action_pressed("ui_up")):
+	if(event.is_action_pressed("ui_up")):
+		if currState == DEFENSE:
 			handleInput()
 			storagePos.y -= currGridSize
-		elif(event.is_action_released("ui_up")):
+		elif currState == IDLE:
+			move(UP)
+			emit_signal("playerMovedOffense", UP)
+	elif(event.is_action_pressed("ui_down")):
+		if currState == DEFENSE:
 			handleInput()
 			storagePos.y += currGridSize
-		elif(event.is_action_pressed("ui_down")):
-			handleInput()
-			storagePos.y += currGridSize
-		elif(event.is_action_released("ui_down")):
-			handleInput()
-			storagePos.y -= currGridSize
-		elif(event.is_action_pressed("ui_right")):
+		elif currState == IDLE:
+			move(DOWN)
+			emit_signal("playerMovedOffense", DOWN)
+	elif(event.is_action_pressed("ui_right")):
+		if currState == DEFENSE:
 			handleInput()
 			storagePos.x += currGridSize
-		elif(event.is_action_released("ui_right")):
+		elif currState == IDLE:
+			move(RIGHT)
+			emit_signal("playerMovedOffense", RIGHT)
+	elif(event.is_action_pressed("ui_left")):
+		if currState == DEFENSE:
 			handleInput()
 			storagePos.x -= currGridSize
-		elif(event.is_action_pressed("ui_left")):
-			handleInput()
-			storagePos.x -= currGridSize
-		elif(event.is_action_released("ui_left")):
-			handleInput()
-			storagePos.x += currGridSize		
+		elif currState == IDLE:
+			move(LEFT)
+			emit_signal("playerMovedOffense", LEFT)
+	elif(event.is_action_released("ui_up")):
+		handleInput()
+		storagePos.y += currGridSize
+	elif(event.is_action_released("ui_down")):
+		handleInput()
+		storagePos.y -= currGridSize
+	elif(event.is_action_released("ui_right")):
+		handleInput()
+		storagePos.x -= currGridSize
+	elif(event.is_action_released("ui_left")):
+		handleInput()
+		storagePos.x += currGridSize		
 func handleInput():
 	if $inputTimer.time_left == 0:
 		$HurtBox/CollisionShape2D.disabled = true
@@ -170,7 +186,7 @@ func finishAttack():
 func shield():
 	$Shield.visible = true
 	isShielded = true
-func move(direction):
+func move(direction): # add checks for movement
 	if currState != MOVINGTILES:
 		moveDirection = direction
 		prevLocation = position
@@ -203,6 +219,7 @@ func updateCurrGridSquare():
 		currentGridSquare.x -= 1
 	else:
 		currentGridSquare.x += 1
+	Global.setPlayerGridLocation(currentGridSquare)
 	get_tree().call_group("enemies", "updatePlayerStatus", currentGridSquare)
 func _on_moveTilesTimer_timeout():
 	currState = IDLE

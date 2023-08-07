@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=2]
+[gd_scene load_steps=88 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
 [ext_resource path="res://art/arrow.png" type="Texture" id=14]
 [ext_resource path="res://scripts/downArrowButton.gd" type="Script" id=15]
+[ext_resource path="res://scenes/battleMode/Arrows.gd" type="Script" id=16]
 
 [sub_resource type="AtlasTexture" id=53]
 atlas = ExtResource( 12 )
@@ -357,50 +358,15 @@ one_shot = true
 one_shot = true
 
 [node name="actionMenu" type="AnimatedSprite" parent="BattleModePlayer"]
-position = Vector2( 5.96046e-08, -87 )
-scale = Vector2( 1.272, 0.725 )
+position = Vector2( 0, -88 )
+scale = Vector2( 0.747551, 0.46531 )
 z_index = 1
 frames = SubResource( 54 )
 animation = "showing"
 
-[node name="WindWatchButton" type="Button" parent="BattleModePlayer/actionMenu"]
-self_modulate = Color( 1, 1, 1, 0 )
-margin_left = -72.327
-margin_top = -20.6897
-margin_right = -13.327
-margin_bottom = -0.689659
-rect_scale = Vector2( 0.748063, 1 )
-text = "WATCH"
-
-[node name="HealButton" type="Button" parent="BattleModePlayer/actionMenu"]
-self_modulate = Color( 1, 1, 1, 0 )
-margin_left = -18.8679
-margin_top = -20.6897
-margin_right = 31.1321
-margin_bottom = -0.689655
-rect_scale = Vector2( 0.748063, 1 )
-text = "HEAL"
-
-[node name="AttackButton" type="Button" parent="BattleModePlayer/actionMenu"]
-self_modulate = Color( 1, 1, 1, 0 )
-margin_left = 27.5157
-margin_top = -20.6897
-margin_right = 87.5157
-margin_bottom = -0.689651
-rect_scale = Vector2( 0.748063, 1 )
-text = "ATTACK"
-
-[node name="ShieldButton" type="Button" parent="BattleModePlayer/actionMenu"]
-self_modulate = Color( 1, 1, 1, 0 )
-margin_left = 78.6163
-margin_top = -20.6897
-margin_right = 138.616
-margin_bottom = -0.689648
-rect_scale = Vector2( 0.748063, 1 )
-text = "SHIELD"
-
 [node name="Arrows" type="Node2D" parent="BattleModePlayer"]
 z_index = 1
+script = ExtResource( 16 )
 
 [node name="downArrow" type="AnimatedSprite" parent="BattleModePlayer/Arrows"]
 position = Vector2( 2, 57 )
@@ -509,27 +475,29 @@ current = true
 script = ExtResource( 13 )
 
 [node name="HP&TJ" type="Label" parent="offenseModeCamera"]
-margin_left = -154.0
-margin_top = -59.0
-margin_right = -114.0
-margin_bottom = -45.0
+margin_left = -153.834
+margin_top = -35.0
+margin_right = -113.834
+margin_bottom = -21.0
+rect_scale = Vector2( 0.632878, 0.87013 )
 text = "HP TJ"
 
 [node name="PlayerHPBar" type="ProgressBar" parent="offenseModeCamera"]
-margin_left = -150.84
-margin_top = 23.0
-margin_right = -80.8404
-margin_bottom = 37.0
+margin_left = -153.834
+margin_top = 46.0
+margin_right = -83.834
+margin_bottom = 60.0
 rect_rotation = -90.1426
-rect_scale = Vector2( 0.916312, 1.06207 )
+rect_scale = Vector2( 0.955148, 0.51705 )
 custom_colors/font_color = Color( 1, 0.74902, 0, 1 )
 
 [node name="TimeJuiceBar" type="ProgressBar" parent="offenseModeCamera"]
-margin_left = -132.84
-margin_top = 22.0
-margin_right = -68.8404
-margin_bottom = 37.0
+margin_left = -142.834
+margin_top = 46.0
+margin_right = -77.8336
+margin_bottom = 61.0
 rect_rotation = 270.0
+rect_scale = Vector2( 1.03451, 0.511248 )
 custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
 custom_colors/font_color_shadow = Color( 0.0941176, 0.321569, 0.854902, 1 )
 
@@ -561,12 +529,9 @@ text = "DEFEAT"
 [connection signal="offensePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
 [connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
+[connection signal="playerMovedOffense" from="BattleModePlayer" to="BattleModePlayer/Arrows" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="timeout" from="BattleModePlayer/HealTimer" to="." method="_on_HealTimer_timeout"]
 [connection signal="timeout" from="BattleModePlayer/watchWindTimer" to="." method="_on_watchWindTimer_timeout"]
-[connection signal="pressed" from="BattleModePlayer/actionMenu/WindWatchButton" to="." method="_on_WindWatchButton_pressed"]
-[connection signal="pressed" from="BattleModePlayer/actionMenu/HealButton" to="." method="_on_HealButton_pressed"]
-[connection signal="pressed" from="BattleModePlayer/actionMenu/AttackButton" to="." method="_on_AttackButton_pressed"]
-[connection signal="pressed" from="BattleModePlayer/actionMenu/ShieldButton" to="." method="_on_ShieldButton_pressed"]
 [connection signal="pressed" from="BattleModePlayer/Arrows/downArrow/moveButton" to="." method="_on_downMoveButton_pressed"]
 [connection signal="pressed" from="BattleModePlayer/Arrows/upArrow/moveButton" to="." method="_on_upMoveButton_pressed"]
 [connection signal="pressed" from="BattleModePlayer/Arrows/rightArrow/moveButton" to="." method="_on_rightMoveButton_pressed"]
