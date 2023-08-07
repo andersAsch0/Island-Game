@@ -23,4 +23,4 @@ func setFollow(enable : bool):
 
 
 func _on_BattleModePlayer_playerMovedOffense(direction):
-	pass # Replace with function body.
+	setFollow(true)

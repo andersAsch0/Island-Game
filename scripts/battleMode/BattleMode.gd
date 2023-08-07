@@ -32,8 +32,9 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemy.position = $enemySpawnLocation.position
 	enemy.visible = false
 	add_child(enemy) # add node to scene
+	enemy.connect("enemyMoved", $enemyGridHighlight, "on_enemyMoved")
+	enemy.connect("enemyMoved", $BattleModePlayer/Arrows, "on_enemyMoved")
 	on_attack_phase_ending() #battles start in offense mode for the player
-	updateAllArrows()
 	
 	 # connect the signal to start fight from the new node to this one
 	# enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")
@@ -75,7 +76,7 @@ func _input(event):
 			_on_HealButton_pressed()
 		elif(event.is_action_pressed("attack")):
 			_on_AttackButton_pressed()
-		elif(event.is_action_pressed("shield")):
+		elif(event.is_action_pressed("sheild")):
 			_on_ShieldButton_pressed()
 		
 		
@@ -175,33 +176,10 @@ func setMusicPitchScaleToGlobal():
 #ACTIONS
 func showActionMenu(show : bool):
 	$BattleModePlayer/Arrows.visible = show
-	$BattleModePlayer/Arrows/downArrow/moveButton.set_deferred("disabled", not show)
-	$BattleModePlayer/Arrows/upArrow/moveButton.set_deferred("disabled", not show)
-	$BattleModePlayer/Arrows/leftArrow/moveButton.set_deferred("disabled", not show)
-	$BattleModePlayer/Arrows/rightArrow/moveButton.set_deferred("disabled", not show)
 	$BattleModePlayer/actionMenu.play("hide", show)
 enum { RIGHT, LEFT, UP, DOWN }
 var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
-func _on_downMoveButton_pressed():
-	$offenseModeCamera.setFollow(true)
-	if canMoveTo($BattleModePlayer.currentGridSquare + moveVectors[DOWN]):
-		$BattleModePlayer.move(DOWN)	
-	updateAllArrows()
-func _on_upMoveButton_pressed():
-	$offenseModeCamera.setFollow(true)
-	if canMoveTo($BattleModePlayer.currentGridSquare + moveVectors[UP]):
-		$BattleModePlayer.move(UP)	
-	updateAllArrows()
-func _on_rightMoveButton_pressed():
-	$offenseModeCamera.setFollow(true)
-	if canMoveTo($BattleModePlayer.currentGridSquare + moveVectors[RIGHT]):
-		$BattleModePlayer.move(RIGHT)	
-	updateAllArrows()
-func _on_leftMoveButton_pressed():
-	$offenseModeCamera.setFollow(true)
-	if canMoveTo($BattleModePlayer.currentGridSquare + moveVectors[LEFT]):
-		$BattleModePlayer.move(LEFT)	
-	updateAllArrows()
+
 func updateTimeJuiceBar():
 	$offenseModeCamera/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
 func _on_WindWatchButton_pressed():
@@ -223,20 +201,4 @@ func _on_AttackButton_pressed():
 func _on_ShieldButton_pressed():
 	$BattleModePlayer.shield()
 
-func canMoveTo(gridLocation : Vector2):
-	var enemy = get_tree().get_nodes_in_group("enemies")
-	var enemySquare = enemy[0].getCurrGridSquare()
-	if gridLocation.x > 4 or gridLocation.x < 0:
-		return false
-	if gridLocation.y > 4 or gridLocation.y < 0:
-		return false
-	elif gridLocation == enemySquare:
-		return false
-	else:
-		return true
-func updateAllArrows():
-	$BattleModePlayer/Arrows/upArrow.updateSelf(UP)
-	$BattleModePlayer/Arrows/downArrow.updateSelf(DOWN)
-	$BattleModePlayer/Arrows/leftArrow.updateSelf(LEFT)
-	$BattleModePlayer/Arrows/rightArrow.updateSelf(RIGHT)
 

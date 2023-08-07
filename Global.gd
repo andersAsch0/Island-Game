@@ -35,6 +35,8 @@ func updateDeadEnemyList(list : Array):
 
 var gridCoordsY = []
 var gridCoordsX = [[2, 1], [3, 4]]
+var bigGridLocationsx = [18, 90, 160, 230, 300 ]
+var bigGridLocationsy = [-30, 40, 110, 180, 250]
 
 var playerGridLocation = Vector2(2,2)
 var enemyGridLocation = Vector2(2,1)
@@ -42,6 +44,11 @@ func setPlayerGridLocation( newLocation : Vector2):
 	playerGridLocation = newLocation
 func setEnemyGridLocation( newLocation : Vector2):
 	enemyGridLocation = newLocation
+
+func getEnemyCoords():
+	return Vector2(bigGridLocationsx[enemyGridLocation.x], bigGridLocationsy[enemyGridLocation.y])
+func getPlayerCoords():
+	return Vector2(bigGridLocationsx[playerGridLocation.x], bigGridLocationsy[playerGridLocation.y])
 
 func canMoveTo(gridLocation : Vector2):
 	if gridLocation.x > 4 or gridLocation.x < 0:

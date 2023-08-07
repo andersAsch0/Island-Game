@@ -30,6 +30,7 @@ var stateCounter = 0 #used to count for a state according to above times and kno
 signal attackPhaseStarting
 signal attackPhaseEnding
 signal enemyDead
+signal enemyMoved
 
 #SETUP AND APPROACH
 
@@ -87,8 +88,9 @@ func startAwayPhase():
 func startApproachPhase(): 
 	prevLocation = position
 	findNewTile()
-	approachVector = Vector2(bigGridLocationsx[currentGridSquare.x] - prevLocation.x, bigGridLocationsy[currentGridSquare.y] - prevLocation.y).normalized()
-	stateWaitTimes[APPROACHING] = prevLocation.distance_to( Vector2(bigGridLocationsx[currentGridSquare.x], bigGridLocationsy[currentGridSquare.y])) / approachSpeed
+	emit_signal("enemyMoved")
+	approachVector = Vector2(Global.getEnemyCoords().x - prevLocation.x, Global.getEnemyCoords().y - prevLocation.y).normalized()
+	stateWaitTimes[APPROACHING] = prevLocation.distance_to(Global.getEnemyCoords()) / approachSpeed
 	currState = APPROACHING
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
 
@@ -187,16 +189,12 @@ var prevLocation = Vector2.ZERO
 var bigGridLocationsx = [18, 90, 160, 230, 300 ]
 var bigGridLocationsy = [-30, 40, 110, 180, 250]
 
-func updatePlayerStatus(gridSquare : Vector2): #called by player script to pass info
-	playerGridSquare = gridSquare
-func getCurrGridSquare(): # send info 
-	return currentGridSquare
 
 func findNewTile(): #finds closest valid tile near the player to move to
-	var squareAbove = (playerGridSquare + Vector2(0, -1))
-	var squareBelow = (playerGridSquare + Vector2(0, 1))
-	var squareLeft = (playerGridSquare + Vector2(-1, 0))
-	var squareRight = (playerGridSquare + Vector2(1, 0))
+	var squareAbove = (Global.playerGridLocation + Vector2(0, -1))
+	var squareBelow = (Global.playerGridLocation + Vector2(0, 1))
+	var squareLeft = (Global.playerGridLocation + Vector2(-1, 0))
+	var squareRight = (Global.playerGridLocation + Vector2(1, 0))
 	var closestSquare = squareAbove
 	
 	if calculateTileDistance(closestSquare) > calculateTileDistance(squareBelow):
@@ -206,13 +204,13 @@ func findNewTile(): #finds closest valid tile near the player to move to
 	if calculateTileDistance(closestSquare) > calculateTileDistance(squareLeft):
 		closestSquare = squareLeft
 	
-	currentGridSquare = closestSquare
+	Global.enemyGridLocation = closestSquare
 		
 func calculateTileDistance(playerAdjacentTile : Vector2):
 	if playerAdjacentTile.x < 0 or playerAdjacentTile.x > 4 or playerAdjacentTile.y < 0 or playerAdjacentTile.y > 4: 
 		return 10000 #impossible tile to reach, impossibly big number so it wont go there
 	else: 
-		return abs(currentGridSquare.x - playerGridSquare.x) + abs(currentGridSquare.y - playerGridSquare.y)
+		return abs(Global.enemyGridLocation.x - playerAdjacentTile.x) + abs(Global.enemyGridLocation.y - playerAdjacentTile.y)
 	
 
 
