@@ -66,8 +66,7 @@ func _process(delta):
 			$Animations.flip_v = storagePos.y < position.y
 	elif currState == MOVINGTILES:
 		position +=( Global.getPlayerCoords() - prevLocation) / $Animations/moveTilesTimer.wait_time * delta
-#		position.x += ((1.0 * Global.getPlayerCoords().x-prevLocation.x) / $Animations/moveTilesTimer.wait_time) * delta
-#		position.y += ((1.0 * bigGridLocationsy[Global.playerGridLocation.y]-prevLocation.y) / $Animations/moveTilesTimer.wait_time) * delta
+
 func _input(event):
 	if(event.is_action_pressed("ui_up")):
 		if currState == DEFENSE:

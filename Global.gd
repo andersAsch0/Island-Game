@@ -33,8 +33,8 @@ func updateDeadEnemyList(list : Array):
 	
 # BattleMode Grid Tracking
 
-var gridCoordsY = []
-var gridCoordsX = [[2, 1], [3, 4]]
+var gridCoordsY = [-30, 33, 110, 205, 330]
+var gridCoordsX = [[-9, 76, 160, 248, 335], [-31, 66, 162, 256, 355], [-48, 57, 162, 268, 374], [-80, 41, 159, 280, 407], [-115, 21, 161, 295, 436]]
 var bigGridLocationsx = [18, 90, 160, 230, 300 ]
 var bigGridLocationsy = [-30, 40, 110, 180, 250]
 
@@ -46,9 +46,11 @@ func setEnemyGridLocation( newLocation : Vector2):
 	enemyGridLocation = newLocation
 
 func getEnemyCoords():
-	return Vector2(bigGridLocationsx[enemyGridLocation.x], bigGridLocationsy[enemyGridLocation.y])
+	return Vector2(gridCoordsX[enemyGridLocation.y][enemyGridLocation.x], gridCoordsY[enemyGridLocation.y])
 func getPlayerCoords():
-	return Vector2(bigGridLocationsx[playerGridLocation.x], bigGridLocationsy[playerGridLocation.y])
+	return Vector2(gridCoordsX[playerGridLocation.y][playerGridLocation.x], gridCoordsY[playerGridLocation.y])
+func getEnemyDisplacementFromPlayer():
+	return enemyGridLocation - playerGridLocation
 
 func canMoveTo(gridLocation : Vector2):
 	if gridLocation.x > 4 or gridLocation.x < 0:

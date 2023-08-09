@@ -126,14 +126,14 @@ func on_attack_phase_starting():
 	emit_signal("offensePhaseEnding")
 	isDefensePhase = true
 	$offenseModeCamera/Grid.visible = true
-	$bigGrid.visible = false
+	$BigGridPerspective.visible = false
 	showActionMenu(false)
 	$offenseModeCamera.setFollow(false)
 func on_attack_phase_ending():
 	emit_signal("offensePhaseStarting")
 	isDefensePhase = false
 	$offenseModeCamera/Grid.visible = false
-	$bigGrid.visible = true
+	$BigGridPerspective.visible = true
 	showActionMenu(true)
 func on_enemyDead():
 	$offenseModeCamera/VictoryButton.visible = true

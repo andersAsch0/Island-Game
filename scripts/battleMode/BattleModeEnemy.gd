@@ -8,7 +8,7 @@ var origScale = 0.3 # starting size of sprite when enemy spawns
 export var finalScale = 1 #final size of the sprite once it has approached
 var loopStart = 1 #line of the json where the enemies continous attack loop starts
 var loopEnd = 2
-export var enemySpeed = 50 #speed at which the enemy wanders around
+export var enemySpeed = 5 #speed at which the enemy wanders around
 export var maxHP = 5
 var currentHP = maxHP
 var currAttack = 1 #current line of json file
@@ -22,7 +22,7 @@ enum {
 	ABSCONDING
 }
 var currState = AWAY
-export var stateWaitTimes = [20, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [5, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
@@ -76,6 +76,7 @@ func startAttackPhase():
 	currState = ATTACKING
 	emit_signal("attackPhaseStarting")
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
+	$BulletSpawnPath.rotateBulletSpawnPath()
 	currAttack = loopStart
 	attack()
 func startLeavePhase():
@@ -129,23 +130,23 @@ func attack():
 	bulletSpawnTimeCounter = 0 
 	
 	if Global.currCombatTimeMultiplier > 0 and not bulletsStopped:
-	#spawn bullet, place in proper position w proper speed 
-		bullet = bulletScene.instance() 
-		$BulletSpawnPath/bulletSpawnLocation.unit_offset = 1.0 * attackPatternData[currAttack]['spawnLocationX'] / 100
-		bullet.position = $BulletSpawnPath/bulletSpawnLocation.position + $BulletSpawnPath.position #global_position??
-		bullet.angle = attackPatternData[currAttack]['angle']
-		add_child(bullet)
+		$BulletSpawnPath.spawnBullet(attackPatternData[currAttack]['spawnLocationX'], attackPatternData[currAttack]['angle'])
 	
 	currAttack += 1 * sign(Global.currCombatTimeMultiplier)
 	if currAttack > loopEnd:
 		currAttack = loopStart
 	elif currAttack < loopStart:
 		currAttack = loopEnd
-		
 func changeAnimationSpeed(): #called whenever the global time variable is changed, ugly but i cant find a better way
 	$enemyMovement/PathFollow2D/AnimatedSprite.set_speed_scale(abs(Global.currCombatTimeMultiplier))
-	if Global.currCombatTimeMultiplier < 0 and Global.timeIsNotStopped:
-		$enemyMovement/PathFollow2D/AnimatedSprite.play($enemyMovement/PathFollow2D/AnimatedSprite.animation, true)
+	if Global.currCombatTimeMultiplier < 0:
+		$enemyMovement/PathFollow2D/HurtBox/CollisionShape2D.set_deferred("disabled", false)
+		$enemyMovement/PathFollow2D/HitBox/CollisionShape2D.set_deferred("disabled", false)
+		if Global.timeIsNotStopped:
+			$enemyMovement/PathFollow2D/AnimatedSprite.play($enemyMovement/PathFollow2D/AnimatedSprite.animation, true)
+	else:
+		$enemyMovement/PathFollow2D/HurtBox/CollisionShape2D.set_deferred("disabled", true)
+		$enemyMovement/PathFollow2D/HitBox/CollisionShape2D.set_deferred("disabled", true)
 func startOrStopAnimation():
 	if Global.timeIsNotStopped:
 		$enemyMovement/PathFollow2D/AnimatedSprite.play($enemyMovement/PathFollow2D/AnimatedSprite.animation, Global.currCombatTimeMultiplier < 0)

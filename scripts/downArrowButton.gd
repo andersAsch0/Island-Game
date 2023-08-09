@@ -9,7 +9,5 @@ var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 
 func updateSelf(myDirection):
 	if Global.canMoveTo(Global.playerGridLocation + moveVectors[myDirection]):
 		visible = true
-		$moveButton.set_deferred("disabled", false)
 	else:
 		visible = false
-		$moveButton.set_deferred("disabled", true)
