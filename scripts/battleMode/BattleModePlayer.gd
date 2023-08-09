@@ -25,11 +25,11 @@ var tileMoveSpeed = 50
 var bigGridLocationsx = [18, 90, 160, 230, 300 ]
 var bigGridLocationsy = [-30, 40, 110, 180, 250]
 var prevLocation = Vector2.ZERO
-var currentGridSquare = Vector2(2,2)
 
 signal PlayerHit
 signal PlayerDie
-signal playerMovedOffense(direction)
+signal playerMovedOffense(direction, newTile, timeToMoveThere)
+signal playerFinishedMoving(newTile)
 
 # player script mostly deals with movement and animation, all other input is handled by BattleMode.gd
 
@@ -191,10 +191,11 @@ func move(direction): # add checks for movement
 		$Animations/moveTilesTimer.start()
 		currState = MOVINGTILES
 		$Animations.play(moveAnimations[direction])
-		emit_signal("playerMovedOffense", direction)
+		emit_signal("playerMovedOffense", direction, Global.playerGridLocation, $Animations/moveTilesTimer.wait_time)
 func updateCurrGridSquare():
 	Global.setPlayerGridLocation(Global.playerGridLocation + moveVectors[moveDirection])
 func _on_moveTilesTimer_timeout():
+	emit_signal("playerFinishedMoving", Global.playerGridLocation)
 	currState = IDLE
 	storagePos = position
 	$Animations.play("idle")

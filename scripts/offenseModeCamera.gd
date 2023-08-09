@@ -22,5 +22,5 @@ func setFollow(enable : bool):
 #	pass
 
 
-func _on_BattleModePlayer_playerMovedOffense(direction):
+func _on_BattleModePlayer_playerMovedOffense(_direction, _newTile, _timeToMove):
 	setFollow(true)

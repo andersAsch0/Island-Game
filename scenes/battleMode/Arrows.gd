@@ -6,7 +6,7 @@ enum { RIGHT, LEFT, UP, DOWN }
 func _ready():
 	on_enemyMoved() #update once at beginning
 
-func _on_BattleModePlayer_playerMovedOffense(direction):
+func _on_BattleModePlayer_playerMovedOffense(_direction, _newTile, _timeToMove):
 	on_enemyMoved()
 
 func on_enemyMoved():
