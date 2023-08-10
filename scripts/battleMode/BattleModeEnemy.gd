@@ -8,7 +8,7 @@ var origScale = 0.3 # starting size of sprite when enemy spawns
 export var finalScale = 1 #final size of the sprite once it has approached
 var loopStart = 1 #line of the json where the enemies continous attack loop starts
 var loopEnd = 2
-export var enemySpeed = 50 #speed at which the enemy wanders around
+export var enemySpeed = 10 #speed at which the enemy wanders around
 export var maxHP = 5
 var currentHP = maxHP
 var currAttack = 1 #current line of json file
@@ -22,7 +22,7 @@ enum {
 	ABSCONDING
 }
 var currState = AWAY
-export var stateWaitTimes = [20, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [10, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
@@ -30,6 +30,7 @@ var stateCounter = 0 #used to count for a state according to above times and kno
 signal attackPhaseStarting
 signal attackPhaseEnding
 signal enemyDead
+signal enemyMoved
 
 #SETUP AND APPROACH
 
@@ -73,8 +74,8 @@ func _physics_process(delta):
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 func startAttackPhase():
 	currState = ATTACKING
-	emit_signal("attackPhaseStarting")
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
+	$BulletSpawnPath.rotateBulletSpawnPath()
 	currAttack = loopStart
 	attack()
 func startLeavePhase():
@@ -87,10 +88,12 @@ func startAwayPhase():
 func startApproachPhase(): 
 	prevLocation = position
 	findNewTile()
-	approachVector = Vector2(bigGridLocationsx[currentGridSquare.x] - prevLocation.x, bigGridLocationsy[currentGridSquare.y] - prevLocation.y).normalized()
-	stateWaitTimes[APPROACHING] = prevLocation.distance_to( Vector2(bigGridLocationsx[currentGridSquare.x], bigGridLocationsy[currentGridSquare.y])) / approachSpeed
+	emit_signal("enemyMoved")
+	approachVector = Vector2(Global.getEnemyCoords().x - prevLocation.x, Global.getEnemyCoords().y - prevLocation.y).normalized()
+	stateWaitTimes[APPROACHING] = (prevLocation.distance_to(Global.getEnemyCoords()) / approachSpeed ) + 0.1
 	currState = APPROACHING
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
+	emit_signal("attackPhaseStarting")
 
 
 func goToNextState():
@@ -127,23 +130,23 @@ func attack():
 	bulletSpawnTimeCounter = 0 
 	
 	if Global.currCombatTimeMultiplier > 0 and not bulletsStopped:
-	#spawn bullet, place in proper position w proper speed 
-		bullet = bulletScene.instance() 
-		$BulletSpawnPath/bulletSpawnLocation.unit_offset = 1.0 * attackPatternData[currAttack]['spawnLocationX'] / 100
-		bullet.position = $BulletSpawnPath/bulletSpawnLocation.position + $BulletSpawnPath.position #global_position??
-		bullet.angle = attackPatternData[currAttack]['angle']
-		add_child(bullet)
+		$BulletSpawnPath.spawnBullet(attackPatternData[currAttack]['spawnLocationX'], attackPatternData[currAttack]['angle'])
 	
 	currAttack += 1 * sign(Global.currCombatTimeMultiplier)
 	if currAttack > loopEnd:
 		currAttack = loopStart
 	elif currAttack < loopStart:
 		currAttack = loopEnd
-		
 func changeAnimationSpeed(): #called whenever the global time variable is changed, ugly but i cant find a better way
 	$enemyMovement/PathFollow2D/AnimatedSprite.set_speed_scale(abs(Global.currCombatTimeMultiplier))
-	if Global.currCombatTimeMultiplier < 0 and Global.timeIsNotStopped:
-		$enemyMovement/PathFollow2D/AnimatedSprite.play($enemyMovement/PathFollow2D/AnimatedSprite.animation, true)
+	if Global.currCombatTimeMultiplier < 0:
+		$enemyMovement/PathFollow2D/HurtBox/CollisionShape2D.set_deferred("disabled", false)
+		$enemyMovement/PathFollow2D/HitBox/CollisionShape2D.set_deferred("disabled", false)
+		if Global.timeIsNotStopped:
+			$enemyMovement/PathFollow2D/AnimatedSprite.play($enemyMovement/PathFollow2D/AnimatedSprite.animation, true)
+	else:
+		$enemyMovement/PathFollow2D/HurtBox/CollisionShape2D.set_deferred("disabled", true)
+		$enemyMovement/PathFollow2D/HitBox/CollisionShape2D.set_deferred("disabled", true)
 func startOrStopAnimation():
 	if Global.timeIsNotStopped:
 		$enemyMovement/PathFollow2D/AnimatedSprite.play($enemyMovement/PathFollow2D/AnimatedSprite.animation, Global.currCombatTimeMultiplier < 0)
@@ -187,16 +190,12 @@ var prevLocation = Vector2.ZERO
 var bigGridLocationsx = [18, 90, 160, 230, 300 ]
 var bigGridLocationsy = [-30, 40, 110, 180, 250]
 
-func updatePlayerStatus(gridSquare : Vector2): #called by player script to pass info
-	playerGridSquare = gridSquare
-func getCurrGridSquare(): # send info 
-	return currentGridSquare
 
 func findNewTile(): #finds closest valid tile near the player to move to
-	var squareAbove = (playerGridSquare + Vector2(0, -1))
-	var squareBelow = (playerGridSquare + Vector2(0, 1))
-	var squareLeft = (playerGridSquare + Vector2(-1, 0))
-	var squareRight = (playerGridSquare + Vector2(1, 0))
+	var squareAbove = (Global.playerGridLocation + Vector2(0, -1))
+	var squareBelow = (Global.playerGridLocation + Vector2(0, 1))
+	var squareLeft = (Global.playerGridLocation + Vector2(-1, 0))
+	var squareRight = (Global.playerGridLocation + Vector2(1, 0))
 	var closestSquare = squareAbove
 	
 	if calculateTileDistance(closestSquare) > calculateTileDistance(squareBelow):
@@ -206,13 +205,13 @@ func findNewTile(): #finds closest valid tile near the player to move to
 	if calculateTileDistance(closestSquare) > calculateTileDistance(squareLeft):
 		closestSquare = squareLeft
 	
-	currentGridSquare = closestSquare
+	Global.enemyGridLocation = closestSquare
 		
 func calculateTileDistance(playerAdjacentTile : Vector2):
 	if playerAdjacentTile.x < 0 or playerAdjacentTile.x > 4 or playerAdjacentTile.y < 0 or playerAdjacentTile.y > 4: 
 		return 10000 #impossible tile to reach, impossibly big number so it wont go there
 	else: 
-		return abs(currentGridSquare.x - playerGridSquare.x) + abs(currentGridSquare.y - playerGridSquare.y)
+		return abs(Global.enemyGridLocation.x - playerAdjacentTile.x) + abs(Global.enemyGridLocation.y - playerAdjacentTile.y)
 	
 
 

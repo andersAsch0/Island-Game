@@ -25,10 +25,11 @@ var tileMoveSpeed = 50
 var bigGridLocationsx = [18, 90, 160, 230, 300 ]
 var bigGridLocationsy = [-30, 40, 110, 180, 250]
 var prevLocation = Vector2.ZERO
-var currentGridSquare = Vector2(2,2)
 
 signal PlayerHit
 signal PlayerDie
+signal playerMovedOffense(direction, newTile, timeToMoveThere)
+signal playerFinishedMoving(newTile)
 
 # player script mostly deals with movement and animation, all other input is handled by BattleMode.gd
 
@@ -64,29 +65,41 @@ func _process(delta):
 			$Animations.animation = "ball vertical"
 			$Animations.flip_v = storagePos.y < position.y
 	elif currState == MOVINGTILES:
-		position.x += ((1.0 * bigGridLocationsx[currentGridSquare.x]-prevLocation.x) / $Animations/moveTilesTimer.wait_time) * delta
-		position.y += ((1.0 * bigGridLocationsy[currentGridSquare.y]-prevLocation.y) / $Animations/moveTilesTimer.wait_time) * delta
+		position +=( Global.getPlayerCoords() - prevLocation) / $Animations/moveTilesTimer.wait_time * delta
+
 func _input(event):
-	if currState == DEFENSE:
-		if(event.is_action_pressed("ui_up")):
+	if(event.is_action_pressed("ui_up")):
+		if currState == DEFENSE:
 			handleInput()
 			storagePos.y -= currGridSize
-		elif(event.is_action_released("ui_up")):
+		elif currState == IDLE:
+			move(UP)
+	elif(event.is_action_pressed("ui_down")):
+		if currState == DEFENSE:
 			handleInput()
 			storagePos.y += currGridSize
-		elif(event.is_action_pressed("ui_down")):
+		elif currState == IDLE:
+			move(DOWN)
+	elif(event.is_action_pressed("ui_right")):
+		if currState == DEFENSE:
+			handleInput()
+			storagePos.x += currGridSize
+		elif currState == IDLE:
+			move(RIGHT)
+	elif(event.is_action_pressed("ui_left")):
+		if currState == DEFENSE:
+			handleInput()
+			storagePos.x -= currGridSize
+		elif currState == IDLE:
+			move(LEFT)
+	elif currState == DEFENSE:
+		if(event.is_action_released("ui_up")):
 			handleInput()
 			storagePos.y += currGridSize
 		elif(event.is_action_released("ui_down")):
 			handleInput()
 			storagePos.y -= currGridSize
-		elif(event.is_action_pressed("ui_right")):
-			handleInput()
-			storagePos.x += currGridSize
 		elif(event.is_action_released("ui_right")):
-			handleInput()
-			storagePos.x -= currGridSize
-		elif(event.is_action_pressed("ui_left")):
 			handleInput()
 			storagePos.x -= currGridSize
 		elif(event.is_action_released("ui_left")):
@@ -96,7 +109,6 @@ func handleInput():
 	if $inputTimer.time_left == 0:
 		$HurtBox/CollisionShape2D.disabled = true
 		$HitBox/CollisionShape2D.disabled = true
-		$ColorRect.visible = false
 		$inputTimer.start()
 func _on_inputTimer_timeout():
 	position = storagePos
@@ -104,7 +116,6 @@ func _on_inputTimer_timeout():
 	$Animations.play("land")
 	$HurtBox/CollisionShape2D.disabled = false
 	$HitBox/CollisionShape2D.disabled = false
-	$ColorRect.visible = true
 
 # GET HIT 	
 
@@ -127,6 +138,8 @@ func die():
 # OFFENSE MODE (called by BattleMode.gd)
 
 func _on_BattleMode_offensePhaseEnding():
+	currState = DEFENSE
+	position = Global.getPlayerCoords() #snap to correct grid location (shouldnt be able to see the sudden movement bc grid is hidden)
 	storagePos = position
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
 		storagePos.x += currGridSize
@@ -136,9 +149,8 @@ func _on_BattleMode_offensePhaseEnding():
 		storagePos.y -= currGridSize
 	if Input.get_action_strength("ui_down") > 0:
 		storagePos.y += currGridSize
-	currState = DEFENSE
 func _on_BattleMode_offensePhaseStarting():
-	position = Vector2(bigGridLocationsx[currentGridSquare.x], bigGridLocationsy[currentGridSquare.y])
+	position = Global.getPlayerCoords()
 	currState = IDLE
 func startWindWatch():
 	if isShielded:
@@ -171,40 +183,20 @@ func shield():
 	$Shield.visible = true
 	isShielded = true
 func move(direction):
-	if currState != MOVINGTILES:
+	if currState != MOVINGTILES and Global.canMoveTo(Global.playerGridLocation + moveVectors[direction]):
 		moveDirection = direction
 		prevLocation = position
 		updateCurrGridSquare()
-#		currentGridSquare += moveVectors[moveDirection]
 		$Animations/moveTilesTimer.start()
 		currState = MOVINGTILES
 		$Animations.play(moveAnimations[direction])
-func canMove(direction):
-	var enemy = get_tree().get_nodes_in_group("enemies")
-	var enemySquare = enemy[0].getCurrGridSquare()
-	if direction == UP and currentGridSquare.y == 0:
-		return false
-	elif direction == DOWN and currentGridSquare.y == 4:
-		return false
-	elif direction == LEFT and currentGridSquare.x == 0:
-		return false
-	elif direction == RIGHT and currentGridSquare.x == 4:
-		return false
-	elif (currentGridSquare + moveVectors[direction]) == enemySquare:
-		return false
-	else:
-		return true
+		emit_signal("playerMovedOffense", direction, Global.playerGridLocation, $Animations/moveTilesTimer.wait_time)
 func updateCurrGridSquare():
-	if moveDirection == UP:
-		currentGridSquare.y -= 1
-	elif moveDirection == DOWN:
-		currentGridSquare.y += 1
-	elif moveDirection == LEFT:
-		currentGridSquare.x -= 1
-	else:
-		currentGridSquare.x += 1
-	get_tree().call_group("enemies", "updatePlayerStatus", currentGridSquare)
+	Global.setPlayerGridLocation(Global.playerGridLocation + moveVectors[moveDirection])
 func _on_moveTilesTimer_timeout():
+	emit_signal("playerFinishedMoving", Global.playerGridLocation)
+	$Animations.play("idle")
+	if currState == DEFENSE:
+		return
 	currState = IDLE
 	storagePos = position
-	$Animations.play("idle")

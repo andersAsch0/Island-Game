@@ -14,7 +14,13 @@ var timeIsStopped = false
 var maxTimeJuiceSeconds : float = 10
 var currTimeJuice : float = maxTimeJuiceSeconds
 var timeJuiceCost : float = 4
-var isDefensePhase = false # referring to the player: enemy is attacking during defense phase
+var timeScalingFactor = 2 # ratio by which time speeds or slows
+enum{
+	DEFENSE
+	OFFENSE
+	STOPPEDTIME
+}
+var currState = OFFENSE
 
 signal offensePhaseStarting
 signal offensePhaseEnding
@@ -31,9 +37,10 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemy = enemyScene.instance()
 	enemy.position = $enemySpawnLocation.position
 	enemy.visible = false
+	enemy.connect("enemyMoved", $BigGridPerspective/enemyGridHighlight, "on_enemyMoved")
+	enemy.connect("enemyMoved", $offenseModeCamera/Arrows, "on_enemyMoved")
 	add_child(enemy) # add node to scene
 	on_attack_phase_ending() #battles start in offense mode for the player
-	updateAllArrows()
 	
 	 # connect the signal to start fight from the new node to this one
 	# enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")
@@ -54,19 +61,35 @@ func incrementAbilityTimes(_delta):
 #
 
 func _input(event):
-	if($AbilityCoolDownTimer.time_left > 0 or not isDefensePhase):
-		return
-	if(event.is_action_pressed("reverseTime") and currTimeJuice > timeJuiceCost):
-		reverseTime()
-	elif(event.is_action_pressed("stopTime") and currTimeJuice > timeJuiceCost):
-		if Global.timeIsNotStopped:
+	if currState == DEFENSE:
+		if(currTimeJuice < timeJuiceCost):
+			return
+		if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == 0):
+			$reverseTimeDuration.start()
+			currTimeJuice -= timeJuiceCost
+			reverseTime()
+		elif(event.is_action_pressed("stopTime") and $stopTimeDuration.time_left == 0):
+			$stopTimeDuration.start()
+			currTimeJuice -= timeJuiceCost
 			stopTime()
-		else:
-			resumeTime()
-	elif(event.is_action_pressed("speedUpTime") and currTimeJuice > timeJuiceCost):
-		changeTimeScale(2)
-	elif(event.is_action_pressed("slowDownTime") and currTimeJuice > timeJuiceCost):
-		changeTimeScale(1.0 * 1/2)
+		elif(event.is_action_pressed("speedUpTime") and $speedTimeDuration.time_left == 0):
+			$speedTimeDuration.start()
+			currTimeJuice -= timeJuiceCost
+			changeTimeScale(timeScalingFactor)
+		elif(event.is_action_pressed("slowDownTime") and $slowTimeDuration.time_left == 0):
+			$slowTimeDuration.start()
+			currTimeJuice -= timeJuiceCost
+			changeTimeScale(1.0 * 1/timeScalingFactor)
+	else: #is offense phase or time stopped
+		if(event.is_action_pressed("windWatch")):
+			_on_WindWatchButton_pressed()
+		elif(event.is_action_pressed("heal")):
+			_on_HealButton_pressed()
+		elif(event.is_action_pressed("attack")):
+			_on_AttackButton_pressed()
+		elif(event.is_action_pressed("sheild")):
+			_on_ShieldButton_pressed()
+		
 		
 func reverseTime():
 	Global.set_timeMultiplier(-1)
@@ -74,56 +97,53 @@ func reverseTime():
 	$normalMusicLoop.stream_paused = Global.currCombatTimeMultiplier < 0
 	$reverseMusicLoop.stream_paused = not Global.currCombatTimeMultiplier < 0
 	$reverseMusicLoop/tickingClockFX.stream_paused = not Global.currCombatTimeMultiplier < 0
-	$AbilityCoolDownTimer.start()
-	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
-	
-	$Clock.visible = true
-	$Clock.play("forward", currTimeMultiplier<0)
+func _on_reverseTimeDuration_timeout():
+	reverseTime()
+
 func stopTime():
 	toggleMusic()
-	$AbilityCoolDownTimer.start()
 	Global.set_timeFlow(false)
-	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
-	$Clock.visible = true
-	$Clock.stop()
+	currState = STOPPEDTIME
+	showActionMenu(true, false)
+func _on_stopTimeDuration_timeout():
+	resumeTime()
 func resumeTime():
 	toggleMusic()
-	$AbilityCoolDownTimer.start()
 	Global.set_timeFlow(true)
-	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
-	$Clock.visible = true
-	$Clock.play()
+	currState = DEFENSE
+	showActionMenu(false, false)
+	
 func changeTimeScale(timeMultiplier : float):
 	Global.set_timeMultiplier(timeMultiplier)
-	$AbilityCoolDownTimer.start()
-	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
-	$Clock.visible = true
-	$Clock.speed_scale = currTimeMultiplier
 	setMusicPitchScaleToGlobal()
-func _on_AbilityCoolDownTimer_timeout():
-	$Clock.visible = false
+func _on_speedTimeDuration_timeout():
+	changeTimeScale(1.0 * 1/timeScalingFactor)
+func _on_slowTimeDuration_timeout():
+	changeTimeScale(timeScalingFactor)
+
+
 	
 
 #SIGNALS FROM ENEMY
 export var overWorldPath = "res://scenes/World.tscn"
 func on_attack_phase_starting():
 	emit_signal("offensePhaseEnding")
-	isDefensePhase = true
+	currState = DEFENSE
 	$offenseModeCamera/Grid.visible = true
-	$bigGrid.visible = false
-	showActionMenu(false)
+	$BigGridPerspective.visible = false
+	showActionMenu(false, false)
 	$offenseModeCamera.setFollow(false)
+	$offenseModeCamera.snapToPlayer()
 func on_attack_phase_ending():
 	emit_signal("offensePhaseStarting")
-	isDefensePhase = false
+	currState = OFFENSE
 	$offenseModeCamera/Grid.visible = false
-	$bigGrid.visible = true
-	showActionMenu(true)
-	$offenseModeCamera.setFollow(true)
+	$BigGridPerspective.visible = true
+	showActionMenu(true, true)
 func on_enemyDead():
 	$offenseModeCamera/VictoryButton.visible = true
 	$offenseModeCamera/VictoryButton.disabled = false
@@ -163,39 +183,12 @@ func setMusicPitchScaleToGlobal():
 
 
 #ACTIONS
-func showActionMenu(show : bool):
-	$BattleModePlayer/Arrows.visible = show
-	$BattleModePlayer/Arrows/downArrow/moveButton.set_deferred("disabled", not show)
-	$BattleModePlayer/Arrows/upArrow/moveButton.set_deferred("disabled", not show)
-	$BattleModePlayer/Arrows/leftArrow/moveButton.set_deferred("disabled", not show)
-	$BattleModePlayer/Arrows/rightArrow/moveButton.set_deferred("disabled", not show)
-	$BattleModePlayer/actionMenu.play("hide", show)
-	$BattleModePlayer/actionMenu/WindWatchButton.set_deferred("disabled", not show)
-	$BattleModePlayer/actionMenu/HealButton.set_deferred("disabled", not show)
-	$BattleModePlayer/actionMenu/AttackButton.set_deferred("disabled", not show)
-	$BattleModePlayer/actionMenu/ShieldButton.set_deferred("disabled", not show)
+func showActionMenu(showMenu : bool, showArrows : bool):
+	$offenseModeCamera/Arrows.visible = showArrows
+	$offenseModeCamera/actionMenu.play("hide", showMenu)
 enum { RIGHT, LEFT, UP, DOWN }
 var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
-func _on_downMoveButton_pressed():
-	$offenseModeCamera.setFollow(true)
-	if canMoveTo($BattleModePlayer.currentGridSquare + moveVectors[DOWN]):
-		$BattleModePlayer.move(DOWN)	
-	updateAllArrows()
-func _on_upMoveButton_pressed():
-	$offenseModeCamera.setFollow(true)
-	if canMoveTo($BattleModePlayer.currentGridSquare + moveVectors[UP]):
-		$BattleModePlayer.move(UP)	
-	updateAllArrows()
-func _on_rightMoveButton_pressed():
-	$offenseModeCamera.setFollow(true)
-	if canMoveTo($BattleModePlayer.currentGridSquare + moveVectors[RIGHT]):
-		$BattleModePlayer.move(RIGHT)	
-	updateAllArrows()
-func _on_leftMoveButton_pressed():
-	$offenseModeCamera.setFollow(true)
-	if canMoveTo($BattleModePlayer.currentGridSquare + moveVectors[LEFT]):
-		$BattleModePlayer.move(LEFT)	
-	updateAllArrows()
+
 func updateTimeJuiceBar():
 	$offenseModeCamera/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
 func _on_WindWatchButton_pressed():
@@ -216,21 +209,4 @@ func _on_AttackButton_pressed():
 	$BattleModePlayer.startAttack(1)
 func _on_ShieldButton_pressed():
 	$BattleModePlayer.shield()
-
-func canMoveTo(gridLocation : Vector2):
-	var enemy = get_tree().get_nodes_in_group("enemies")
-	var enemySquare = enemy[0].getCurrGridSquare()
-	if gridLocation.x > 4 or gridLocation.x < 0:
-		return false
-	if gridLocation.y > 4 or gridLocation.y < 0:
-		return false
-	elif gridLocation == enemySquare:
-		return false
-	else:
-		return true
-func updateAllArrows():
-	$BattleModePlayer/Arrows/upArrow.updateSelf(UP)
-	$BattleModePlayer/Arrows/downArrow.updateSelf(DOWN)
-	$BattleModePlayer/Arrows/leftArrow.updateSelf(LEFT)
-	$BattleModePlayer/Arrows/rightArrow.updateSelf(RIGHT)
 

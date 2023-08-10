@@ -1,9 +1,7 @@
 extends Camera2D
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+
 var battleModePlayerNode
 var shouldFollow = true
 
@@ -15,8 +13,13 @@ func _process(_delta):
 
 func setFollow(enable : bool):
 	shouldFollow = enable
-
+func snapToPlayer():
+	position = battleModePlayerNode.position + Vector2(0,-20)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _on_BattleModePlayer_playerMovedOffense(_direction, _newTile, _timeToMove):
+	setFollow(true)
