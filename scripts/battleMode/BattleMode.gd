@@ -14,6 +14,7 @@ var timeIsStopped = false
 var maxTimeJuiceSeconds : float = 10
 var currTimeJuice : float = maxTimeJuiceSeconds
 var timeJuiceCost : float = 4
+var timeScalingFactor = 2 # ratio by which time speeds or slows
 var isDefensePhase = false # referring to the player: enemy is attacking during defense phase
 
 signal offensePhaseStarting
@@ -56,19 +57,16 @@ func incrementAbilityTimes(_delta):
 
 func _input(event):
 	if isDefensePhase:
-		if($AbilityCoolDownTimer.time_left > 0):
+		if(currTimeJuice > timeJuiceCost):
 			return
-		if(event.is_action_pressed("reverseTime") and currTimeJuice > timeJuiceCost):
+		if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == $reverseTimeDuration.wait_time):
 			reverseTime()
-		elif(event.is_action_pressed("stopTime") and currTimeJuice > timeJuiceCost):
-			if Global.timeIsNotStopped:
-				stopTime()
-			else:
-				resumeTime()
-		elif(event.is_action_pressed("speedUpTime") and currTimeJuice > timeJuiceCost):
-			changeTimeScale(2)
-		elif(event.is_action_pressed("slowDownTime") and currTimeJuice > timeJuiceCost):
-			changeTimeScale(1.0 * 1/2)
+		elif(event.is_action_pressed("stopTime") and $stopTimeDuration.time_left == 0):
+			stopTime()
+		elif(event.is_action_pressed("speedUpTime") and $speedTimeDuration.time_left == 0):
+			changeTimeScale(timeScalingFactor)
+		elif(event.is_action_pressed("slowDownTime") and $slowTimeDuration.time_left == 0):
+			changeTimeScale(1.0 * 1/timeScalingFactor)
 	else: #is offense phase
 		if(event.is_action_pressed("windWatch")):
 			_on_WindWatchButton_pressed()
@@ -86,38 +84,42 @@ func reverseTime():
 	$normalMusicLoop.stream_paused = Global.currCombatTimeMultiplier < 0
 	$reverseMusicLoop.stream_paused = not Global.currCombatTimeMultiplier < 0
 	$reverseMusicLoop/tickingClockFX.stream_paused = not Global.currCombatTimeMultiplier < 0
-	$AbilityCoolDownTimer.start()
+	$reverseTimeDuration.start()
 	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
-	
-	$Clock.visible = true
-	$Clock.play("forward", currTimeMultiplier<0)
+func _on_reverseTimeDuration_timeout():
+	reverseTime()
+
+
 func stopTime():
 	toggleMusic()
-	$AbilityCoolDownTimer.start()
+	$stopTimeDuration.start()
 	Global.set_timeFlow(false)
 	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
-	$Clock.visible = true
-	$Clock.stop()
+func _on_stopTimeDuration_timeout():
+	resumeTime()
 func resumeTime():
 	toggleMusic()
-	$AbilityCoolDownTimer.start()
 	Global.set_timeFlow(true)
 	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
-	$Clock.visible = true
-	$Clock.play()
+	
 func changeTimeScale(timeMultiplier : float):
 	Global.set_timeMultiplier(timeMultiplier)
-	$AbilityCoolDownTimer.start()
+	if timeMultiplier > 1:
+		$speedTimeDuration.start()
+	elif timeMultiplier < 1:
+		$slowTimeDuration.start()
 	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
-	$Clock.visible = true
-	$Clock.speed_scale = currTimeMultiplier
 	setMusicPitchScaleToGlobal()
-func _on_AbilityCoolDownTimer_timeout():
-	$Clock.visible = false
+func _on_speedTimeDuration_timeout():
+	changeTimeScale(1.0 * 1/timeScalingFactor)
+func _on_slowTimeDuration_timeout():
+	changeTimeScale(timeScalingFactor)
+
+
 	
 
 #SIGNALS FROM ENEMY
@@ -200,5 +202,4 @@ func _on_AttackButton_pressed():
 	$BattleModePlayer.startAttack(1)
 func _on_ShieldButton_pressed():
 	$BattleModePlayer.shield()
-
 

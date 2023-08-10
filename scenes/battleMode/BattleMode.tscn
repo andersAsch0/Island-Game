@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=2]
+[gd_scene load_steps=91 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -10,7 +10,6 @@
 [ext_resource path="res://audio/Ending_Rewind_FX.wav" type="AudioStream" id=8]
 [ext_resource path="res://audio/Begin_Rewind_FX.wav" type="AudioStream" id=9]
 [ext_resource path="res://audio/TickingClockFX.wav" type="AudioStream" id=10]
-[ext_resource path="res://art/bigGridFlat.png" type="Texture" id=11]
 [ext_resource path="res://art/action menu horiz.png" type="Texture" id=12]
 [ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
 [ext_resource path="res://art/arrow.png" type="Texture" id=14]
@@ -366,12 +365,6 @@ position = Vector2( 162, 45 )
 scale = Vector2( 4.844, 4.844 )
 texture = ExtResource( 19 )
 
-[node name="bigGrid" type="Sprite" parent="."]
-visible = false
-position = Vector2( 162, 111 )
-scale = Vector2( 2.1, 2.1 )
-texture = ExtResource( 11 )
-
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
 position = Vector2( 160, 110 )
 scale = Vector2( 1.13792, 1.13792 )
@@ -422,22 +415,20 @@ script = ExtResource( 15 )
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 162, 39 )
 
-[node name="Menu\?" type="Label" parent="."]
-visible = false
-margin_left = 3.0
-margin_top = 1.0
-margin_right = 183.0
-margin_bottom = 151.0
-rect_scale = Vector2( 0.5, 0.6 )
-text = "Controls
-R : Reverse Time
-T : Stop Time
-Y : Speed Up
-U : Slow Down
-clock visible = 
-cooldown active"
+[node name="reverseTimeDuration" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
 
-[node name="AbilityCoolDownTimer" type="Timer" parent="."]
+[node name="stopTimeDuration" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="speedTimeDuration" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="slowTimeDuration" type="Timer" parent="."]
+wait_time = 5.0
 one_shot = true
 
 [node name="Clock" type="AnimatedSprite" parent="."]
@@ -521,13 +512,6 @@ margin_bottom = -34.0
 disabled = true
 text = "DEFEAT"
 
-[node name="ColorRect" type="ColorRect" parent="."]
-visible = false
-margin_left = 122.0
-margin_top = -56.0
-margin_right = 205.0
-margin_bottom = 5.0
-
 [connection signal="offensePhaseEnding" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
 [connection signal="offensePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
 [connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
@@ -538,7 +522,10 @@ margin_bottom = 5.0
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="timeout" from="BattleModePlayer/HealTimer" to="." method="_on_HealTimer_timeout"]
 [connection signal="timeout" from="BattleModePlayer/watchWindTimer" to="." method="_on_watchWindTimer_timeout"]
-[connection signal="timeout" from="AbilityCoolDownTimer" to="." method="_on_AbilityCoolDownTimer_timeout"]
+[connection signal="timeout" from="reverseTimeDuration" to="." method="_on_reverseTimeDuration_timeout"]
+[connection signal="timeout" from="stopTimeDuration" to="." method="_on_stopTimeDuration_timeout"]
+[connection signal="timeout" from="speedTimeDuration" to="." method="_on_speedTimeDuration_timeout"]
+[connection signal="timeout" from="slowTimeDuration" to="." method="_on_slowTimeDuration_timeout"]
 [connection signal="finished" from="normalMusicLoop" to="." method="_on_normalMusicLoop_finished"]
 [connection signal="finished" from="reverseMusicLoop" to="." method="_on_reverseAudioLoop_finished"]
 [connection signal="finished" from="reverseMusicLoop/tickingClockFX" to="." method="_on_tickingClockFX_finished"]

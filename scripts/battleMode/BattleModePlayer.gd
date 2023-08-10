@@ -149,6 +149,9 @@ func _on_BattleMode_offensePhaseEnding():
 		storagePos.y -= currGridSize
 	if Input.get_action_strength("ui_down") > 0:
 		storagePos.y += currGridSize
+	if currState == MOVINGTILES:
+		position = Global.getPlayerCoords()
+		storagePos = position
 	currState = DEFENSE
 func _on_BattleMode_offensePhaseStarting():
 	position = Global.getPlayerCoords()
@@ -196,7 +199,8 @@ func updateCurrGridSquare():
 	Global.setPlayerGridLocation(Global.playerGridLocation + moveVectors[moveDirection])
 func _on_moveTilesTimer_timeout():
 	emit_signal("playerFinishedMoving", Global.playerGridLocation)
+	$Animations.play("idle")
+	if currState == DEFENSE:
+		return
 	currState = IDLE
 	storagePos = position
-	$Animations.play("idle")
-

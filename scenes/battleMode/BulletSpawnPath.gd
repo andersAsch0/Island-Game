@@ -23,4 +23,3 @@ func rotateBulletSpawnPath():
 	else: # on same x column
 		rotation_degrees = 180 * ((enemyDisplacement.y > 1) as int)
 		global_position.x = Global.getPlayerCoords().x
-	print(enemyDisplacement, " roation: ", rotation)
