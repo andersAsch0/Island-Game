@@ -140,6 +140,8 @@ func die():
 # OFFENSE MODE (called by BattleMode.gd)
 
 func _on_BattleMode_offensePhaseEnding():
+	currState = DEFENSE
+	position = Global.getPlayerCoords() #snap to correct grid location (shouldnt be able to see the sudden movement bc grid is hidden)
 	storagePos = position
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
 		storagePos.x += currGridSize
@@ -149,10 +151,6 @@ func _on_BattleMode_offensePhaseEnding():
 		storagePos.y -= currGridSize
 	if Input.get_action_strength("ui_down") > 0:
 		storagePos.y += currGridSize
-	if currState == MOVINGTILES:
-		position = Global.getPlayerCoords()
-		storagePos = position
-	currState = DEFENSE
 func _on_BattleMode_offensePhaseStarting():
 	position = Global.getPlayerCoords()
 	currState = IDLE

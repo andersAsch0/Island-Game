@@ -57,15 +57,19 @@ func incrementAbilityTimes(_delta):
 
 func _input(event):
 	if isDefensePhase:
-		if(currTimeJuice > timeJuiceCost):
+		if(currTimeJuice < timeJuiceCost):
 			return
-		if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == $reverseTimeDuration.wait_time):
+		if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == 0):
+			$reverseTimeDuration.start()
 			reverseTime()
 		elif(event.is_action_pressed("stopTime") and $stopTimeDuration.time_left == 0):
+			$stopTimeDuration.start()
 			stopTime()
 		elif(event.is_action_pressed("speedUpTime") and $speedTimeDuration.time_left == 0):
+			$speedTimeDuration.start()
 			changeTimeScale(timeScalingFactor)
 		elif(event.is_action_pressed("slowDownTime") and $slowTimeDuration.time_left == 0):
+			$slowTimeDuration.start()
 			changeTimeScale(1.0 * 1/timeScalingFactor)
 	else: #is offense phase
 		if(event.is_action_pressed("windWatch")):
@@ -84,16 +88,13 @@ func reverseTime():
 	$normalMusicLoop.stream_paused = Global.currCombatTimeMultiplier < 0
 	$reverseMusicLoop.stream_paused = not Global.currCombatTimeMultiplier < 0
 	$reverseMusicLoop/tickingClockFX.stream_paused = not Global.currCombatTimeMultiplier < 0
-	$reverseTimeDuration.start()
 	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
 func _on_reverseTimeDuration_timeout():
 	reverseTime()
 
-
 func stopTime():
 	toggleMusic()
-	$stopTimeDuration.start()
 	Global.set_timeFlow(false)
 	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
@@ -107,10 +108,6 @@ func resumeTime():
 	
 func changeTimeScale(timeMultiplier : float):
 	Global.set_timeMultiplier(timeMultiplier)
-	if timeMultiplier > 1:
-		$speedTimeDuration.start()
-	elif timeMultiplier < 1:
-		$slowTimeDuration.start()
 	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
 	setMusicPitchScaleToGlobal()
@@ -131,6 +128,7 @@ func on_attack_phase_starting():
 	$BigGridPerspective.visible = false
 	showActionMenu(false)
 	$offenseModeCamera.setFollow(false)
+	$offenseModeCamera.snapToPlayer()
 func on_attack_phase_ending():
 	emit_signal("offensePhaseStarting")
 	isDefensePhase = false

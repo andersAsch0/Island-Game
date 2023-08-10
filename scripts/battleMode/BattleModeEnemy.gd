@@ -90,7 +90,7 @@ func startApproachPhase():
 	findNewTile()
 	emit_signal("enemyMoved")
 	approachVector = Vector2(Global.getEnemyCoords().x - prevLocation.x, Global.getEnemyCoords().y - prevLocation.y).normalized()
-	stateWaitTimes[APPROACHING] = prevLocation.distance_to(Global.getEnemyCoords()) / approachSpeed
+	stateWaitTimes[APPROACHING] = (prevLocation.distance_to(Global.getEnemyCoords()) / approachSpeed ) + 0.01
 	currState = APPROACHING
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
 	emit_signal("attackPhaseStarting")
