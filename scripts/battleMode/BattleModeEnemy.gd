@@ -8,7 +8,7 @@ var origScale = 0.3 # starting size of sprite when enemy spawns
 export var finalScale = 1 #final size of the sprite once it has approached
 var loopStart = 1 #line of the json where the enemies continous attack loop starts
 var loopEnd = 2
-export var enemySpeed = 5 #speed at which the enemy wanders around
+export var enemySpeed = 10 #speed at which the enemy wanders around
 export var maxHP = 5
 var currentHP = maxHP
 var currAttack = 1 #current line of json file
@@ -22,7 +22,7 @@ enum {
 	ABSCONDING
 }
 var currState = AWAY
-export var stateWaitTimes = [5, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [10, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
@@ -90,7 +90,7 @@ func startApproachPhase():
 	findNewTile()
 	emit_signal("enemyMoved")
 	approachVector = Vector2(Global.getEnemyCoords().x - prevLocation.x, Global.getEnemyCoords().y - prevLocation.y).normalized()
-	stateWaitTimes[APPROACHING] = (prevLocation.distance_to(Global.getEnemyCoords()) / approachSpeed ) + 0.01
+	stateWaitTimes[APPROACHING] = (prevLocation.distance_to(Global.getEnemyCoords()) / approachSpeed ) + 0.1
 	currState = APPROACHING
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
 	emit_signal("attackPhaseStarting")

@@ -15,7 +15,12 @@ var maxTimeJuiceSeconds : float = 10
 var currTimeJuice : float = maxTimeJuiceSeconds
 var timeJuiceCost : float = 4
 var timeScalingFactor = 2 # ratio by which time speeds or slows
-var isDefensePhase = false # referring to the player: enemy is attacking during defense phase
+enum{
+	DEFENSE
+	OFFENSE
+	STOPPEDTIME
+}
+var currState = OFFENSE
 
 signal offensePhaseStarting
 signal offensePhaseEnding
@@ -34,7 +39,7 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemy.visible = false
 	add_child(enemy) # add node to scene
 	enemy.connect("enemyMoved", $BigGridPerspective/enemyGridHighlight, "on_enemyMoved")
-	enemy.connect("enemyMoved", $BattleModePlayer/Arrows, "on_enemyMoved")
+	enemy.connect("enemyMoved", $offenseModeCamera/Arrows, "on_enemyMoved")
 	on_attack_phase_ending() #battles start in offense mode for the player
 	
 	 # connect the signal to start fight from the new node to this one
@@ -56,22 +61,26 @@ func incrementAbilityTimes(_delta):
 #
 
 func _input(event):
-	if isDefensePhase:
+	if currState == DEFENSE:
 		if(currTimeJuice < timeJuiceCost):
 			return
 		if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == 0):
 			$reverseTimeDuration.start()
+			currTimeJuice -= timeJuiceCost
 			reverseTime()
 		elif(event.is_action_pressed("stopTime") and $stopTimeDuration.time_left == 0):
 			$stopTimeDuration.start()
+			currTimeJuice -= timeJuiceCost
 			stopTime()
 		elif(event.is_action_pressed("speedUpTime") and $speedTimeDuration.time_left == 0):
 			$speedTimeDuration.start()
+			currTimeJuice -= timeJuiceCost
 			changeTimeScale(timeScalingFactor)
 		elif(event.is_action_pressed("slowDownTime") and $slowTimeDuration.time_left == 0):
 			$slowTimeDuration.start()
+			currTimeJuice -= timeJuiceCost
 			changeTimeScale(1.0 * 1/timeScalingFactor)
-	else: #is offense phase
+	else: #is offense phase or time stopped
 		if(event.is_action_pressed("windWatch")):
 			_on_WindWatchButton_pressed()
 		elif(event.is_action_pressed("heal")):
@@ -88,7 +97,6 @@ func reverseTime():
 	$normalMusicLoop.stream_paused = Global.currCombatTimeMultiplier < 0
 	$reverseMusicLoop.stream_paused = not Global.currCombatTimeMultiplier < 0
 	$reverseMusicLoop/tickingClockFX.stream_paused = not Global.currCombatTimeMultiplier < 0
-	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
 func _on_reverseTimeDuration_timeout():
 	reverseTime()
@@ -96,19 +104,20 @@ func _on_reverseTimeDuration_timeout():
 func stopTime():
 	toggleMusic()
 	Global.set_timeFlow(false)
-	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
+	currState = STOPPEDTIME
+	showActionMenu(true, false)
 func _on_stopTimeDuration_timeout():
 	resumeTime()
 func resumeTime():
 	toggleMusic()
 	Global.set_timeFlow(true)
-	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
+	currState = DEFENSE
+	showActionMenu(false, false)
 	
 func changeTimeScale(timeMultiplier : float):
 	Global.set_timeMultiplier(timeMultiplier)
-	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
 	setMusicPitchScaleToGlobal()
 func _on_speedTimeDuration_timeout():
@@ -123,18 +132,18 @@ func _on_slowTimeDuration_timeout():
 export var overWorldPath = "res://scenes/World.tscn"
 func on_attack_phase_starting():
 	emit_signal("offensePhaseEnding")
-	isDefensePhase = true
+	currState = DEFENSE
 	$offenseModeCamera/Grid.visible = true
 	$BigGridPerspective.visible = false
-	showActionMenu(false)
+	showActionMenu(false, false)
 	$offenseModeCamera.setFollow(false)
 	$offenseModeCamera.snapToPlayer()
 func on_attack_phase_ending():
 	emit_signal("offensePhaseStarting")
-	isDefensePhase = false
+	currState = OFFENSE
 	$offenseModeCamera/Grid.visible = false
 	$BigGridPerspective.visible = true
-	showActionMenu(true)
+	showActionMenu(true, true)
 func on_enemyDead():
 	$offenseModeCamera/VictoryButton.visible = true
 	$offenseModeCamera/VictoryButton.disabled = false
@@ -174,9 +183,9 @@ func setMusicPitchScaleToGlobal():
 
 
 #ACTIONS
-func showActionMenu(show : bool):
-	$BattleModePlayer/Arrows.visible = show
-	$BattleModePlayer/actionMenu.play("hide", show)
+func showActionMenu(showMenu : bool, showArrows : bool):
+	$offenseModeCamera/Arrows.visible = showArrows
+	$offenseModeCamera/actionMenu.play("hide", showMenu)
 enum { RIGHT, LEFT, UP, DOWN }
 var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
 
