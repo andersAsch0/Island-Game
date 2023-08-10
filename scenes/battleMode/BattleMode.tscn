@@ -343,7 +343,7 @@ script = ExtResource( 2 )
 enemyScene = ExtResource( 3 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( -115, 335 )
+position = Vector2( 280, 205 )
 scale = Vector2( 2.1, 2.1 )
 
 [node name="BigGridPerspective" type="Sprite" parent="."]
@@ -353,6 +353,7 @@ texture = ExtResource( 19 )
 script = ExtResource( 20 )
 
 [node name="enemyGridHighlight" type="Sprite" parent="BigGridPerspective"]
+self_modulate = Color( 1, 1, 1, 0.0745098 )
 position = Vector2( 0, -0.795455 )
 scale = Vector2( 0.497159, 0.490057 )
 texture = ExtResource( 17 )
@@ -453,7 +454,7 @@ custom_colors/font_color_shadow = Color( 0.0941176, 0.321569, 0.854902, 1 )
 
 [node name="Grid" type="Sprite" parent="offenseModeCamera"]
 position = Vector2( 3.05176e-05, 20 )
-scale = Vector2( 2.06607, 2.06607 )
+scale = Vector2( 2.1, 2.1 )
 z_as_relative = false
 texture = ExtResource( 7 )
 
@@ -524,8 +525,8 @@ script = ExtResource( 15 )
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
 [connection signal="playerFinishedMoving" from="BattleModePlayer" to="BigGridPerspective" method="_on_BattleModePlayer_playerFinishedMoving"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="BigGridPerspective" method="_on_BattleModePlayer_playerMovedOffense"]
-[connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera/Arrows" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera" method="_on_BattleModePlayer_playerMovedOffense"]
+[connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera/Arrows" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="timeout" from="BattleModePlayer/HealTimer" to="." method="_on_HealTimer_timeout"]
 [connection signal="timeout" from="BattleModePlayer/watchWindTimer" to="." method="_on_watchWindTimer_timeout"]
 [connection signal="timeout" from="reverseTimeDuration" to="." method="_on_reverseTimeDuration_timeout"]
