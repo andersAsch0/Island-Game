@@ -4,7 +4,7 @@ var scaleValues = [5.289, 4.844, 4.4, 3.956, 3.511]
 func getScaleVector(gridYLocation):
 	return Vector2(scaleValues[gridYLocation], scaleValues[gridYLocation])
 	
-var perspectiveCoordsX = [[196, 179, 162, 144, 125], [1811, 171, 162, 152, 142], [162, 162, 162, 162, 162], [136, 150, 162, 174, 188], [104, 133, 162, 190, 218]]
+var perspectiveCoordsX = [[196, 179, 162, 144, 125], [181, 171, 162, 152, 142], [162, 162, 162, 162, 162], [136, 150, 162, 174, 188], [104, 133, 162, 190, 218]]
 var perspectiveCoordsY = [58, 45, 44, 78, 105]
 func getCoords(gridLocation : Vector2):
 	return Vector2(perspectiveCoordsX[gridLocation.y][gridLocation.x], perspectiveCoordsY[gridLocation.y])

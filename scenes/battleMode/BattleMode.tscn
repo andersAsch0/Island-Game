@@ -353,18 +353,18 @@ scale = Vector2( 4.4, 4.4 )
 texture = ExtResource( 19 )
 script = ExtResource( 20 )
 
+[node name="enemyGridHighlight" type="Sprite" parent="BigGridPerspective"]
+position = Vector2( 0, -0.795455 )
+scale = Vector2( 0.497159, 0.490057 )
+texture = ExtResource( 17 )
+script = ExtResource( 18 )
+
 [node name="BigGridPerspective2" type="Sprite" parent="."]
 visible = false
 self_modulate = Color( 1, 1, 1, 0.478431 )
 position = Vector2( 162, 45 )
 scale = Vector2( 4.844, 4.844 )
 texture = ExtResource( 19 )
-
-[node name="enemyGridHighlight" type="Sprite" parent="."]
-position = Vector2( 162, 40.5 )
-scale = Vector2( 2.1875, 2.15625 )
-texture = ExtResource( 17 )
-script = ExtResource( 18 )
 
 [node name="bigGrid" type="Sprite" parent="."]
 visible = false
@@ -391,7 +391,7 @@ frames = SubResource( 54 )
 animation = "showing"
 
 [node name="Arrows" type="Node2D" parent="BattleModePlayer"]
-visible = false
+self_modulate = Color( 1, 1, 1, 0 )
 z_index = 1
 script = ExtResource( 16 )
 

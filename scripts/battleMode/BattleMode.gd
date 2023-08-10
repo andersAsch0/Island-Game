@@ -32,7 +32,7 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemy.position = $enemySpawnLocation.position
 	enemy.visible = false
 	add_child(enemy) # add node to scene
-	enemy.connect("enemyMoved", $enemyGridHighlight, "on_enemyMoved")
+	enemy.connect("enemyMoved", $BigGridPerspective/enemyGridHighlight, "on_enemyMoved")
 	enemy.connect("enemyMoved", $BattleModePlayer/Arrows, "on_enemyMoved")
 	on_attack_phase_ending() #battles start in offense mode for the player
 	

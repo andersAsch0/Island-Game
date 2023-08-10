@@ -183,7 +183,7 @@ func finishAttack():
 func shield():
 	$Shield.visible = true
 	isShielded = true
-func move(direction): # add checks for movement
+func move(direction):
 	if currState != MOVINGTILES and Global.canMoveTo(Global.playerGridLocation + moveVectors[direction]):
 		moveDirection = direction
 		prevLocation = position
@@ -199,3 +199,4 @@ func _on_moveTilesTimer_timeout():
 	currState = IDLE
 	storagePos = position
 	$Animations.play("idle")
+
