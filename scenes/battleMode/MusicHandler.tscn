@@ -1,0 +1,34 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://audio/IslandFightReverse.wav" type="AudioStream" id=1]
+[ext_resource path="res://audio/TickingClockFX.wav" type="AudioStream" id=2]
+[ext_resource path="res://audio/Begin_Rewind_FX.wav" type="AudioStream" id=3]
+[ext_resource path="res://audio/IslandFight.wav" type="AudioStream" id=4]
+[ext_resource path="res://audio/Ending_Rewind_FX.wav" type="AudioStream" id=5]
+[ext_resource path="res://scripts/MusicHandler.gd" type="Script" id=6]
+
+[node name="MusicHandler" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="normalMusicLoop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="reverseMusicLoop" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+stream_paused = true
+
+[node name="tickingClockFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+stream_paused = true
+
+[node name="reverseStartFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="reverseEndFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[connection signal="finished" from="normalMusicLoop" to="." method="_on_normalMusicLoop_finished"]
+[connection signal="finished" from="reverseMusicLoop" to="." method="_on_reverseMusicLoop_finished"]
+[connection signal="finished" from="tickingClockFX" to="." method="_on_tickingClockFX_finished"]
+[connection signal="finished" from="reverseStartFX" to="." method="_on_reverseStartFX_finished"]
+[connection signal="finished" from="reverseEndFX" to="." method="_on_reverseEndFX_finished"]
