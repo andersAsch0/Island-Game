@@ -3,7 +3,7 @@ extends Node2D
 
 # Declare member variables here. Examples:
 var bpm = 30
-var subdivisionsPerBeat = 30
+var subdivisionsPerBeat = 2
 enum {
 	NORMALMUSIC
 	REVERSEMUSIC
@@ -11,45 +11,51 @@ enum {
 	REVERSESTARTFX
 	REVERSEENDFX
 }
-var trackNodes = [get_node("normalMusicLoop"), get_node("reverseMusicLoop"), get_node("tickingClockFX"), get_node("reverseStartFX"), get_node("reverseEndFX")]
+var trackNodes = []
 var trackIsActive = [true, false, false, false, false] #does NOT change when time is stopped
 var trackProgressions = [0.0, 0.0, 0.0, 0.0, 0.0]
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	trackNodes = [get_node("normalMusicLoop"), get_node("reverseMusicLoop"), get_node("tickingClockFX"), get_node("reverseStartFX"), get_node("reverseEndFX")]
 	play(NORMALMUSIC)
 
 func _process(delta):
 	for track in range(4):
 		if trackIsActive[track]:
-			trackProgressions[track] += delta
+			trackProgressions[track] += delta * abs(Global.currCombatTimeMultiplier) * (Global.timeIsNotStopped as int)
+#	print("NORMAL: " , trackProgressions[NORMALMUSIC], " REVERSE : ", trackProgressions[REVERSEMUSIC])
 
 func syncPitchWithGlobal():
-	setAllPitchScales(Global.currCombatTimeMultiplier)
+	setAllPitchScales(abs(Global.currCombatTimeMultiplier))
 func timeHasReversed():
 	pause(NORMALMUSIC)
-	$reverseMusicLoop.play($reverseMusicLoop.stream.get_length() - trackProgressions[NORMALMUSIC])
+	$reverseMusicLoop.stream_paused = false
+	trackProgressions[REVERSEMUSIC] = $reverseMusicLoop.stream.get_length() - trackProgressions[NORMALMUSIC]
+	$reverseMusicLoop.play((1.0 * $reverseMusicLoop.stream.get_length() - trackProgressions[NORMALMUSIC]))
 	trackIsActive[REVERSEMUSIC] = true
 	play(REVERSESTARTFX)
 	play(TICKING)
 func timeHasReversedBack():
 	pause(REVERSEMUSIC)
-	$normalMusicLoop.play($normalMusicLoop.stream.get_length() - trackProgressions[REVERSEMUSIC])
+	$normalMusicLoop.stream_paused = false
+	trackProgressions[NORMALMUSIC] = $normalMusicLoop.stream.get_length() - trackProgressions[REVERSEMUSIC]
+	$normalMusicLoop.play((1.0 * $normalMusicLoop.stream.get_length() - trackProgressions[REVERSEMUSIC]))
 	trackIsActive[NORMALMUSIC] = true
 	pause(TICKING)
 	
 func timeHasStopped():
-	$normalMusicLoop.stop() #replace w trackNodes[]
-	$reverseMusicLoop.stop()
-	$reverseStartFX.stop()
-	$reverseEndFX.stop()
-	$tickingClockFX.stop()
+	$normalMusicLoop.stream_paused=true #replace w trackNodes[]
+	$reverseMusicLoop.stream_paused=true
+	$reverseStartFX.stream_paused=true
+	$reverseEndFX.stream_paused=true
+	$tickingClockFX.stream_paused=true
 func timeHasResumed():
 	for track in range(4):
 		if trackIsActive[track]:
 			play(track)
 
-func setAllPitchScales(newScale):
+func setAllPitchScales(newScale : float):
 	$normalMusicLoop.pitch_scale = newScale
 	$reverseEndFX.pitch_scale = newScale
 	$reverseMusicLoop.pitch_scale = newScale
@@ -57,10 +63,11 @@ func setAllPitchScales(newScale):
 	$tickingClockFX.pitch_scale = newScale
 
 func play(trackEnum):
+	trackNodes[trackEnum].stream_paused = false
 	trackNodes[trackEnum].play(trackProgressions[trackEnum])
 	trackIsActive[trackEnum] = true
 func pause(trackEnum):
-	trackNodes[trackEnum].stop()
+	trackNodes[trackEnum].stream_paused = true
 	trackIsActive[trackEnum] = false
 
 func _on_normalMusicLoop_finished():

@@ -30,7 +30,6 @@ func set_timeFlow(timeIsNotStoppedBool: bool):
 func updateDeadEnemyList(list : Array):
 	list.append(overWorldEnemyPath)
 	
-	
 # BattleMode Grid Tracking
 
 var gridCoordsY = [-30, 33, 110, 205, 330]
