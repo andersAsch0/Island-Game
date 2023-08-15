@@ -1,9 +1,16 @@
 extends Node2D
 
 
-# Declare member variables here. Examples:
-var bpm = 30
-var subdivisionsPerBeat = 2
+var attackPatternData
+export(String, FILE, "*.json") var attackPatternFile #imported json file
+var currJsonLine = 0
+var JsonLength = 63
+export var bpm = 207
+var subdivisionsPerBeat = 8
+var secondsPerSubdivision : float = (1 / (1.0 * bpm / 60)) / subdivisionsPerBeat
+var trackNodes = []
+var trackIsActive = [true, false, false, false, false] #does NOT change when time is stopped
+var trackProgressions = [0.0, 0.0, 0.0, 0.0, 0.0]
 enum {
 	NORMALMUSIC
 	REVERSEMUSIC
@@ -11,20 +18,33 @@ enum {
 	REVERSESTARTFX
 	REVERSEENDFX
 }
-var trackNodes = []
-var trackIsActive = [true, false, false, false, false] #does NOT change when time is stopped
-var trackProgressions = [0.0, 0.0, 0.0, 0.0, 0.0]
+signal melodyNote
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	trackNodes = [get_node("normalMusicLoop"), get_node("reverseMusicLoop"), get_node("tickingClockFX"), get_node("reverseStartFX"), get_node("reverseEndFX")]
 	play(NORMALMUSIC)
+	attackPatternData = getAttackPatternData()
+	handleMelodyNote()
 
+var beatCounter : float = 0
 func _process(delta):
 	for track in range(4):
 		if trackIsActive[track]:
 			trackProgressions[track] += delta * abs(Global.currCombatTimeMultiplier) * (Global.timeIsNotStopped as int)
+	beatCounter += delta
+	if beatCounter >= secondsPerSubdivision:
+		handleMelodyNote()
+		beatCounter -= secondsPerSubdivision
+		currJsonLine += 1
+		if currJsonLine > JsonLength:
+			set_process(false)
 #	print("NORMAL: " , trackProgressions[NORMALMUSIC], " REVERSE : ", trackProgressions[REVERSEMUSIC])
+
+func handleMelodyNote():
+	if (attackPatternData[currJsonLine]['melody'] as bool):
+			emit_signal("melodyNote")
+#			print("doo ", currJsonLine)
 
 func syncPitchWithGlobal():
 	setAllPitchScales(abs(Global.currCombatTimeMultiplier))
@@ -85,3 +105,9 @@ func _on_reverseStartFX_finished():
 func _on_reverseEndFX_finished():
 	trackProgressions[REVERSEENDFX] = 0
 	trackIsActive[REVERSEENDFX] = false
+
+func getAttackPatternData():
+	attackPatternData = File.new() 
+	if attackPatternData.file_exists(attackPatternFile): #get the attack pattern json file from the enemy node
+		attackPatternData.open(attackPatternFile, attackPatternData.READ)
+		return parse_json(attackPatternData.get_as_text())

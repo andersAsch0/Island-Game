@@ -1,7 +1,11 @@
-[gd_scene load_steps=42 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://audio/SandFootsteps4.wav" type="AudioStream" id=2]
 [ext_resource path="res://art/sprite base spritesheet.png" type="Texture" id=3]
+[ext_resource path="res://scripts/playerFootstepMaker.gd" type="Script" id=4]
+[ext_resource path="res://audio/GrassFootsteps3.wav" type="AudioStream" id=5]
+[ext_resource path="res://audio/SandFootsteps2.wav" type="AudioStream" id=6]
 
 [sub_resource type="AtlasTexture" id=1]
 region = Rect2( 0, 0, 17, 20 )
@@ -206,7 +210,7 @@ visible = false
 position = Vector2( -0.5, -9 )
 frames = SubResource( 17 )
 animation = "idle"
-frame = 4
+frame = 6
 playing = true
 
 [node name="Animations" type="AnimatedSprite" parent="."]
@@ -229,3 +233,26 @@ limit_top = -20
 limit_right = 340
 limit_bottom = 239
 limit_smoothed = true
+
+[node name="playerFootstepMaker" type="Node2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="sandFootstep" type="AudioStreamPlayer2D" parent="playerFootstepMaker"]
+stream = ExtResource( 2 )
+volume_db = -10.0
+
+[node name="woodFootstep" type="AudioStreamPlayer2D" parent="playerFootstepMaker"]
+stream = ExtResource( 6 )
+volume_db = -20.0
+
+[node name="grassFootstep" type="AudioStreamPlayer2D" parent="playerFootstepMaker"]
+stream = ExtResource( 5 )
+volume_db = -5.0
+
+[node name="footstepTimer" type="Timer" parent="playerFootstepMaker"]
+wait_time = 0.3
+one_shot = true
+
+[node name="Listener2D" type="Listener2D" parent="."]
+
+[connection signal="timeout" from="playerFootstepMaker/footstepTimer" to="playerFootstepMaker" method="_on_footstepTimer_timeout"]
