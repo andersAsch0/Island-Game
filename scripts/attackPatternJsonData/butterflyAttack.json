@@ -1,12 +1,12 @@
 [
     {"loopStart": 1, "loopEnd": 9},
-	{"waitTime" : 0.4, "spawnLocationX": 40, "angle": 0},
-	{"waitTime" : 0.4, "spawnLocationX": 40, "angle": 0},
-	{"waitTime" : 0.4, "spawnLocationX": 40, "angle": 0},
+	{"waitTime" : 0.4, "spawnLocationX": 38, "angle": 0},
+	{"waitTime" : 0.4, "spawnLocationX": 38, "angle": 0},
+	{"waitTime" : 0.4, "spawnLocationX": 38, "angle": 0},
 	{"waitTime" : 0.4, "spawnLocationX": 50, "angle": 0},
 	{"waitTime" : 0.4, "spawnLocationX": 50, "angle": 0},
 	{"waitTime" : 0.4, "spawnLocationX": 50, "angle": 0},
-	{"waitTime" : 0.4, "spawnLocationX": 60, "angle": 0},
-	{"waitTime" : 0.4, "spawnLocationX": 60, "angle": 0},
-	{"waitTime" : 0.4, "spawnLocationX": 60, "angle": 0}
+	{"waitTime" : 0.4, "spawnLocationX": 62, "angle": 0},
+	{"waitTime" : 0.4, "spawnLocationX": 62, "angle": 0},
+	{"waitTime" : 0.4, "spawnLocationX": 62, "angle": 0}
 ]

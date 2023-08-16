@@ -109,7 +109,6 @@ func handleInput():
 	if $inputTimer.time_left == 0:
 		$HurtBox/CollisionShape2D.disabled = true
 		$HitBox/CollisionShape2D.disabled = true
-		$ColorRect.visible = false
 		$inputTimer.start()
 func _on_inputTimer_timeout():
 	position = storagePos
@@ -117,7 +116,6 @@ func _on_inputTimer_timeout():
 	$Animations.play("land")
 	$HurtBox/CollisionShape2D.disabled = false
 	$HitBox/CollisionShape2D.disabled = false
-	$ColorRect.visible = true
 
 # GET HIT 	
 
