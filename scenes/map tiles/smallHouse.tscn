@@ -1,18 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://art/map tiles/small house spritesheet.png" type="Texture" id=1]
-
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 64, 64 )
-
-[sub_resource type="SpriteFrames" id=2]
-animations = [ {
-"frames": [ SubResource( 5 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 14, 3.5 )
@@ -20,10 +8,60 @@ extents = Vector2( 14, 3.5 )
 [node name="smallHouse" type="StaticBody2D" groups=["scenery"]]
 collision_mask = 7
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="variant" type="Sprite" parent="."]
 position = Vector2( 0, -16 )
 scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 2 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 64, 64 )
+
+[node name="variant2" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -16 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 384, 0, 64, 64 )
+
+[node name="variant3" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -16 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 320, 0, 64, 64 )
+
+[node name="variant4" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -16 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 256, 0, 64, 64 )
+
+[node name="variant5" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -16 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 192, 0, 64, 64 )
+
+[node name="variant6" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -16 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 128, 0, 64, 64 )
+
+[node name="variant7" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -16 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 64, 0, 64, 64 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -3.5 )
