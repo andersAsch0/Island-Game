@@ -20,7 +20,7 @@ enum {
 	REVERSESTARTFX
 	REVERSEENDFX
 }
-signal melodyNote
+signal melodyNote(pitch)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -46,7 +46,7 @@ func _process(delta):
 
 func handleMelodyNote():
 	if (attackPatternData[currEighthNote / 8]['melody'][currEighthNote % 8] as bool):
-			emit_signal("melodyNote")
+			emit_signal("melodyNote", attackPatternData[currEighthNote / 8]['pitch'][currEighthNote % 8])
 
 func syncPitchWithGlobal():
 	setAllPitchScales(abs(Global.currCombatTimeMultiplier))

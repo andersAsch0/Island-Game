@@ -6,7 +6,7 @@ export var smallGridSize = 20
 var currGridSize = 20
 var velocity = Vector2.ZERO
 var storagePos = Vector2.ZERO #used as storage during input calculations for jumping
-export var maxHP : int = 4
+export var maxHP : int = 20
 export var currentHP : int = maxHP
 export var invincible : bool = true #for debugging #only works if you dont move
 enum {

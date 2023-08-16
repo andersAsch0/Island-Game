@@ -22,7 +22,7 @@ enum {
 	ABSCONDING
 }
 var currState = AWAY
-export var stateWaitTimes = [1, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [10, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
@@ -118,11 +118,11 @@ func introduction():
 
 #FIGHT AND BULLET SPAWNING
 
-	
-func attack():
+var gridSizeByBulletPathPerc = 17
+func attack(musicNotePitch):
 	
 	if not bulletsStopped and currState == ATTACKING:
-		$BulletSpawnPath.spawnBullet(0, 0)
+		$BulletSpawnPath.spawnBullet(50 + musicNotePitch * gridSizeByBulletPathPerc, 0)
 	
 func changeAnimationSpeed(): #called whenever the global time variable is changed, ugly but i cant find a better way
 	$enemyMovement/PathFollow2D/AnimatedSprite.set_speed_scale(abs(Global.currCombatTimeMultiplier))
