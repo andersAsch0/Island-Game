@@ -1,24 +1,20 @@
-[gd_scene load_steps=91 format=2]
+[gd_scene load_steps=87 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
 [ext_resource path="res://scenes/battleMode/BattleModeEnemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://art/clock.png" type="Texture" id=4]
-[ext_resource path="res://audio/IslandFight.wav" type="AudioStream" id=5]
-[ext_resource path="res://audio/IslandFightReverse.wav" type="AudioStream" id=6]
 [ext_resource path="res://art/battlegrid.png" type="Texture" id=7]
-[ext_resource path="res://audio/Ending_Rewind_FX.wav" type="AudioStream" id=8]
-[ext_resource path="res://audio/Begin_Rewind_FX.wav" type="AudioStream" id=9]
-[ext_resource path="res://audio/TickingClockFX.wav" type="AudioStream" id=10]
+[ext_resource path="res://scenes/battleMode/MusicHandler.tscn" type="PackedScene" id=11]
 [ext_resource path="res://art/action menu horiz.png" type="Texture" id=12]
 [ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
 [ext_resource path="res://art/arrow.png" type="Texture" id=14]
 [ext_resource path="res://scripts/downArrowButton.gd" type="Script" id=15]
-[ext_resource path="res://scenes/battleMode/Arrows.gd" type="Script" id=16]
+[ext_resource path="res://scripts/battleMode/Arrows.gd" type="Script" id=16]
 [ext_resource path="res://art/enemy circle highlight.png" type="Texture" id=17]
-[ext_resource path="res://scenes/battleMode/enemyGridHighlight.gd" type="Script" id=18]
+[ext_resource path="res://scripts/battleMode/enemyGridHighlight.gd" type="Script" id=18]
 [ext_resource path="res://art/bigGrid.png" type="Texture" id=19]
-[ext_resource path="res://scenes/battleMode/BigGridPerspective.gd" type="Script" id=20]
+[ext_resource path="res://scripts/battleMode/BigGridPerspective.gd" type="Script" id=20]
 
 [sub_resource type="AtlasTexture" id=16]
 atlas = ExtResource( 4 )
@@ -402,23 +398,6 @@ scale = Vector2( 2, 2 )
 frames = SubResource( 31 )
 animation = "forward"
 
-[node name="normalMusicLoop" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
-
-[node name="reverseMusicLoop" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 6 )
-stream_paused = true
-
-[node name="reverseStartFX" type="AudioStreamPlayer" parent="reverseMusicLoop"]
-stream = ExtResource( 9 )
-
-[node name="tickingClockFX" type="AudioStreamPlayer" parent="reverseMusicLoop"]
-stream = ExtResource( 10 )
-stream_paused = true
-
-[node name="reverseEndFX" type="AudioStreamPlayer" parent="reverseMusicLoop"]
-stream = ExtResource( 8 )
-
 [node name="offenseModeCamera" type="Camera2D" parent="."]
 position = Vector2( 160, 91 )
 z_index = 1
@@ -519,6 +498,8 @@ scale = Vector2( 1.2, 0.7 )
 frames = SubResource( 98 )
 script = ExtResource( 15 )
 
+[node name="MusicHandler" parent="." instance=ExtResource( 11 )]
+
 [connection signal="offensePhaseEnding" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
 [connection signal="offensePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
 [connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
@@ -533,8 +514,5 @@ script = ExtResource( 15 )
 [connection signal="timeout" from="stopTimeDuration" to="." method="_on_stopTimeDuration_timeout"]
 [connection signal="timeout" from="speedTimeDuration" to="." method="_on_speedTimeDuration_timeout"]
 [connection signal="timeout" from="slowTimeDuration" to="." method="_on_slowTimeDuration_timeout"]
-[connection signal="finished" from="normalMusicLoop" to="." method="_on_normalMusicLoop_finished"]
-[connection signal="finished" from="reverseMusicLoop" to="." method="_on_reverseAudioLoop_finished"]
-[connection signal="finished" from="reverseMusicLoop/tickingClockFX" to="." method="_on_tickingClockFX_finished"]
 [connection signal="pressed" from="offenseModeCamera/VictoryButton" to="." method="_on_VictoryButton_pressed"]
 [connection signal="pressed" from="offenseModeCamera/DefeatButton" to="." method="_on_DefeatButton_pressed"]

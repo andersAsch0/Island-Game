@@ -17,9 +17,10 @@ var currDirection = DOWN
 var velocity = Vector2.ZERO
 
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$Listener2D.make_current()
 
 func _process(delta):
 	var input = Vector2.ZERO

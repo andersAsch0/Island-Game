@@ -217,11 +217,11 @@ height = 6.05128
 
 [sub_resource type="CapsuleShape2D" id=24]
 radius = 3.0
-height = 6.0
+height = 0.0
 
 [sub_resource type="CapsuleShape2D" id=25]
 radius = 3.0
-height = 6.0
+height = 0.0
 
 [node name="BattleModePlayer" type="KinematicBody2D" groups=["player"]]
 collision_layer = 2

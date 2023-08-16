@@ -60,15 +60,10 @@ func _physics_process(delta):
 		goToNextState()
 	elif stateCounter <= 0: #time reversed, need to go to prev state
 		goToPrevState()
-
 	if currState == APPROACHING: #increase scale (grow bigger each frame)
 		position += approachVector * delta * approachSpeed
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-	elif currState == ATTACKING:
-		bulletSpawnTimeCounter += delta * abs(Global.currCombatTimeMultiplier) * (Global.timeIsNotStopped as int)
-		if bulletSpawnTimeCounter <= 0 or bulletSpawnTimeCounter >= attackPatternData[currAttack]['waitTime']: #wait time for ITSELF to spawm
-			attack()
 	elif currState == ABSCONDING:
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
@@ -76,8 +71,6 @@ func startAttackPhase():
 	currState = ATTACKING
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
 	$BulletSpawnPath.rotateBulletSpawnPath()
-	currAttack = loopStart
-	attack()
 func startLeavePhase():
 	currState = ABSCONDING
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
@@ -125,18 +118,12 @@ func introduction():
 
 #FIGHT AND BULLET SPAWNING
 
+var gridSizeByBulletPathPerc = 17
+func attack(musicNotePitch):
 	
-func attack():
-	bulletSpawnTimeCounter = 0 
+	if not bulletsStopped and currState == ATTACKING:
+		$BulletSpawnPath.spawnBullet(50 + musicNotePitch * gridSizeByBulletPathPerc, 0)
 	
-	if Global.currCombatTimeMultiplier > 0 and not bulletsStopped:
-		$BulletSpawnPath.spawnBullet(attackPatternData[currAttack]['spawnLocationX'], attackPatternData[currAttack]['angle'])
-	
-	currAttack += 1 * sign(Global.currCombatTimeMultiplier)
-	if currAttack > loopEnd:
-		currAttack = loopStart
-	elif currAttack < loopStart:
-		currAttack = loopEnd
 func changeAnimationSpeed(): #called whenever the global time variable is changed, ugly but i cant find a better way
 	$enemyMovement/PathFollow2D/AnimatedSprite.set_speed_scale(abs(Global.currCombatTimeMultiplier))
 	if Global.currCombatTimeMultiplier < 0:

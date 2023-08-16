@@ -2,12 +2,12 @@
 
 [ext_resource path="res://art/butterfly.png" type="Texture" id=1]
 [ext_resource path="res://scripts/battleMode/BattleModeEnemy.gd" type="Script" id=2]
-[ext_resource path="res://scenes/map tiles/Bullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/battleMode/Bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/HitBox.gd" type="Script" id=4]
 [ext_resource path="res://scripts/HurtBox.gd" type="Script" id=5]
 [ext_resource path="res://scripts/battleMode/enemyMovement.gd" type="Script" id=6]
 [ext_resource path="res://art/big explosion.png" type="Texture" id=7]
-[ext_resource path="res://scenes/battleMode/BulletSpawnPath.gd" type="Script" id=8]
+[ext_resource path="res://scripts/battleMode/BulletSpawnPath.gd" type="Script" id=8]
 
 [sub_resource type="CircleShape2D" id=14]
 radius = 16.0
@@ -111,7 +111,7 @@ animations = [ {
 
 [sub_resource type="Curve2D" id=23]
 _data = {
-"points": PoolVector2Array( 0, 0, 0, 0, -78, 10, -7.937, 11.1118, 7.937, -11.1118, -66, -19, -18.652, 5.15905, 18.652, -5.15905, -31, -42, -15.874, -6.3496, 15.874, 6.3496, 35, -41, -9.52441, -11.5087, 9.52441, 11.5087, 63, -18, 0, 0, 0, 0, 73, 11 )
+"points": PoolVector2Array( 0, 0, 0, 0, -74, 19, -10.387, -0.915327, 10.387, 0.915327, -65, 19, -18.4293, -0.631789, 18.4293, 0.631789, -25, 19, -16.5422, 0.109413, 16.5422, -0.109413, 20, 20, -15.7607, 0.518427, 15.7607, -0.518427, 58, 19, 0, 0, 0, 0, 74, 19 )
 }
 
 [node name="BattleModeEnemy" type="KinematicBody2D" groups=["enemies"]]
@@ -180,16 +180,16 @@ disabled = true
 position = Vector2( 3.8147e-06, 0 )
 frames = SubResource( 24 )
 animation = "idle"
+frame = 1
 playing = true
 
 [node name="BulletSpawnPath" type="Path2D" parent="."]
-rotation = 1.5708
 curve = SubResource( 23 )
 script = ExtResource( 8 )
 
 [node name="bulletSpawnLocation" type="PathFollow2D" parent="BulletSpawnPath"]
-position = Vector2( -70.5673, -11.1675 )
-rotation = -1.08742
+position = Vector2( -51.5521, 19.2094 )
+rotation = -0.0289248
 offset = 22.4759
 
 [connection signal="timeout" from="ApproachTimer" to="." method="_on_ApproachTimer_timeout"]
