@@ -16,19 +16,19 @@ enum {
 var currState
 
 func _ready():
-	$AnimatedSprite.play("warning")
-	currState = WARNING
+	$AnimatedSprite.play("default")
+	currState = MOVING
 
 func _process(delta):
-	if currState == WARNING:
-		warningCount += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		if warningCount < 0:
-			queue_free()
-		elif warningCount >= warningAnimationTime:
-			currState = MOVING
-			$AnimatedSprite.play("default")
-	else:
-		position += velocity.rotated(angle) * speed * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+#	if currState == WARNING:
+#		warningCount += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+#		if warningCount < 0:
+#			queue_free()
+#		elif warningCount >= warningAnimationTime:
+#			currState = MOVING
+#			$AnimatedSprite.play("default")
+#	else:
+	position += velocity.rotated(angle) * speed * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 func reverseTime():
 	pass
 func speedUpTime(_multiplier : float = 1): #can pass in number, if no number default is 1 (no change)

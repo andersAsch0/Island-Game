@@ -29,9 +29,6 @@ signal offensePhaseEnding
 func _ready(): #this script sets up enemy, approach() function will handle the rest
 	Global.currCombatTimeMultiplier = 1
 	enemyScene = load(Global.battleModeEnemyPath)
-	$normalMusicLoop.play()
-	$reverseMusicLoop.play()
-	$reverseMusicLoop/tickingClockFX.play()
 	$offenseModeCamera/PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
 	updateTimeJuiceBar()
 	enemy = enemyScene.instance()
@@ -40,6 +37,7 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	add_child(enemy) # add node to scene
 	enemy.connect("enemyMoved", $BigGridPerspective/enemyGridHighlight, "on_enemyMoved")
 	enemy.connect("enemyMoved", $offenseModeCamera/Arrows, "on_enemyMoved")
+	$MusicHandler.connect("melodyNote", enemy, "attack")
 	on_attack_phase_ending() #battles start in offense mode for the player
 	
 	 # connect the signal to start fight from the new node to this one
@@ -67,6 +65,7 @@ func _input(event):
 		if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == 0):
 			$reverseTimeDuration.start()
 			currTimeJuice -= timeJuiceCost
+			$MusicHandler.timeHasReversed()		
 			reverseTime()
 		elif(event.is_action_pressed("stopTime") and $stopTimeDuration.time_left == 0):
 			$stopTimeDuration.start()
@@ -93,16 +92,13 @@ func _input(event):
 		
 func reverseTime():
 	Global.set_timeMultiplier(-1)
-	$reverseMusicLoop/reverseStartFX.play()
-	$normalMusicLoop.stream_paused = Global.currCombatTimeMultiplier < 0
-	$reverseMusicLoop.stream_paused = not Global.currCombatTimeMultiplier < 0
-	$reverseMusicLoop/tickingClockFX.stream_paused = not Global.currCombatTimeMultiplier < 0
 	updateTimeJuiceBar()
 func _on_reverseTimeDuration_timeout():
 	reverseTime()
+	$MusicHandler.timeHasReversedBack()
 
 func stopTime():
-	toggleMusic()
+	$MusicHandler.timeHasStopped()
 	Global.set_timeFlow(false)
 	updateTimeJuiceBar()
 	currState = STOPPEDTIME
@@ -110,16 +106,16 @@ func stopTime():
 func _on_stopTimeDuration_timeout():
 	resumeTime()
 func resumeTime():
-	toggleMusic()
 	Global.set_timeFlow(true)
 	updateTimeJuiceBar()
 	currState = DEFENSE
 	showActionMenu(false, false)
+	$MusicHandler.timeHasResumed()
 	
 func changeTimeScale(timeMultiplier : float):
 	Global.set_timeMultiplier(timeMultiplier)
 	updateTimeJuiceBar()
-	setMusicPitchScaleToGlobal()
+	$MusicHandler.syncPitchWithGlobal()
 func _on_speedTimeDuration_timeout():
 	changeTimeScale(1.0 * 1/timeScalingFactor)
 func _on_slowTimeDuration_timeout():
@@ -162,24 +158,6 @@ func _on_BattleModePlayer_PlayerDie():
 	
 func _on_DefeatButton_pressed():
 	var _PTS = get_tree().change_scene(overWorldPath)
-
-#MUSIC
-func _on_normalMusicLoop_finished():
-	$normalMusicLoop.play(0)
-func _on_reverseAudioLoop_finished():
-	$reverseMusicLoop.play(0)
-func _on_tickingClockFX_finished():
-	$reverseMusicLoop/tickingClockFX.play(0)
-func toggleMusic():
-	$normalMusicLoop.playing = not Global.timeIsNotStopped #what thee heck
-	$reverseMusicLoop.playing = not Global.timeIsNotStopped
-	$reverseMusicLoop/tickingClockFX.stop()
-	$reverseMusicLoop/reverseStartFX.stop()
-func setMusicPitchScaleToGlobal():
-	$normalMusicLoop.pitch_scale = abs(Global.currCombatTimeMultiplier)
-	$reverseMusicLoop.pitch_scale = abs(Global.currCombatTimeMultiplier)
-	$reverseMusicLoop/tickingClockFX.pitch_scale = abs(Global.currCombatTimeMultiplier)
-	$reverseMusicLoop/reverseStartFX.pitch_scale = abs(Global.currCombatTimeMultiplier)
 
 
 #ACTIONS

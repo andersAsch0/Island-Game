@@ -12,7 +12,7 @@ func _input(event):
 		Global.set_timeMultiplier(-1)
 		$MusicHandler.timeHasReversed()
 		$reverseTimeTimer.start()
-	elif event.is_action_pressed("stopTime"):
+	elif event.is_action_pressed("stopTime") and $stopTimeTimer.time_left == 0:
 		Global.set_timeFlow(false)
 		$MusicHandler.timeHasStopped()
 		$stopTimeTimer.start()

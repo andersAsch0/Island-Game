@@ -3,11 +3,13 @@ extends Node2D
 
 var attackPatternData
 export(String, FILE, "*.json") var attackPatternFile #imported json file
-var currJsonLine = 0
-var JsonLength = 63
+var currMeasure = 0
+var currEighthNote : int = 0
+var JsonLength = 75
 export var bpm = 207
-var subdivisionsPerBeat = 8
-var secondsPerSubdivision : float = (1 / (1.0 * bpm / 60)) / subdivisionsPerBeat
+var subdivisionsPerBeat = 2
+var secondsPerEigthNote : float = (1 / (1.0 * bpm / 60)) / subdivisionsPerBeat
+var secondsPerMeasure : float = 1.0 * bpm / 60 * 4
 var trackNodes = []
 var trackIsActive = [true, false, false, false, false] #does NOT change when time is stopped
 var trackProgressions = [0.0, 0.0, 0.0, 0.0, 0.0]
@@ -28,23 +30,23 @@ func _ready():
 	handleMelodyNote()
 
 var beatCounter : float = 0
+var eighthNoteLastFrame : int  = 0
 func _process(delta):
 	for track in range(4):
 		if trackIsActive[track]:
 			trackProgressions[track] += delta * abs(Global.currCombatTimeMultiplier) * (Global.timeIsNotStopped as int)
-	beatCounter += delta
-	if beatCounter >= secondsPerSubdivision:
-		handleMelodyNote()
-		beatCounter -= secondsPerSubdivision
-		currJsonLine += 1
-		if currJsonLine > JsonLength:
-			set_process(false)
-#	print("NORMAL: " , trackProgressions[NORMALMUSIC], " REVERSE : ", trackProgressions[REVERSEMUSIC])
+	if Global.currCombatTimeMultiplier > 0:
+		currEighthNote = 1.0 * trackNodes[NORMALMUSIC].get_playback_position() / secondsPerEigthNote
+		if currEighthNote != eighthNoteLastFrame:
+			eighthNoteLastFrame = currEighthNote
+			handleMelodyNote()
+		
+
+
 
 func handleMelodyNote():
-	if (attackPatternData[currJsonLine]['melody'] as bool):
+	if (attackPatternData[currEighthNote / 8]['melody'][currEighthNote % 8] as bool):
 			emit_signal("melodyNote")
-#			print("doo ", currJsonLine)
 
 func syncPitchWithGlobal():
 	setAllPitchScales(abs(Global.currCombatTimeMultiplier))
