@@ -9,7 +9,7 @@ var woodTileSet2
 func _ready():
 	timer = $footstepTimer
 	grassTileSet = get_node("../../../grass")
-	sandTileSet = get_node("../../../sandAndWater")
+	sandTileSet = get_node("../../../sandAndWaterEdges")
 	woodTileSet1 = get_node("../../../wood top")
 	woodTileSet2 = get_node("../../../wood bottom")
 	if grassTileSet == null or sandTileSet == null or woodTileSet1 == null or woodTileSet2 == null:
