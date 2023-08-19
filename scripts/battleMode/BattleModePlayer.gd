@@ -162,17 +162,18 @@ func finishWindWatch():
 	$Animations.play("idle")
 	return true
 func startHeal():
+	currState = IMOBILE
 	if isShielded:
 		return
 	$Animations.play("wind watch")
 func finishHeal(hpHealed : int):
-	if isShielded:
-		return
+	if currState == IMOBILE:
+		currState = IDLE #DONT SET STATE TO IDLE IN DEFENSE MODE
+		$Animations.play("idle")
 	currentHP += hpHealed
 	if currentHP > maxHP:
 		currentHP = maxHP
 	emit_signal("PlayerHit") #update HP bar in parent node
-	$Animations.play("idle")
 func startAttack(damage : int):
 	if isShielded:
 		return

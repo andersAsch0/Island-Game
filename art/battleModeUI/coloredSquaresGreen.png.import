@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/coloredSquares.png-96204ca03aa4857b8b62e85cae4464ad.stex"
+path="res://.import/coloredSquaresGreen.png-47281fb74b630dacaa25c3512d943450.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/coloredSquares.png"
-dest_files=[ "res://.import/coloredSquares.png-96204ca03aa4857b8b62e85cae4464ad.stex" ]
+source_file="res://art/battleModeUI/coloredSquaresGreen.png"
+dest_files=[ "res://.import/coloredSquaresGreen.png-47281fb74b630dacaa25c3512d943450.stex" ]
 
 [params]
 

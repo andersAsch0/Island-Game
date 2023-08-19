@@ -167,6 +167,7 @@ sheild={
 2d_physics/layer_5="HitBoxesEnemy"
 2d_physics/layer_6="HitBoxesPlayer"
 2d_physics/layer_7="HitBoxesBullets"
+2d_physics/layer_9="HealMiniGame"
 
 [physics]
 

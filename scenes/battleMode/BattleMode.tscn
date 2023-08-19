@@ -1,17 +1,19 @@
-[gd_scene load_steps=87 format=2]
+[gd_scene load_steps=89 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
 [ext_resource path="res://scenes/battleMode/BattleModeEnemy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://art/clock.png" type="Texture" id=4]
+[ext_resource path="res://art/battleModeUI/clock.png" type="Texture" id=4]
+[ext_resource path="res://scenes/battleMode/catchMiniGame.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/battleMode/windWatchMinigame.tscn" type="PackedScene" id=6]
 [ext_resource path="res://art/battlegrid.png" type="Texture" id=7]
 [ext_resource path="res://scenes/battleMode/MusicHandler.tscn" type="PackedScene" id=11]
-[ext_resource path="res://art/action menu horiz.png" type="Texture" id=12]
+[ext_resource path="res://art/battleModeUI/action menu horiz.png" type="Texture" id=12]
 [ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
-[ext_resource path="res://art/arrow.png" type="Texture" id=14]
+[ext_resource path="res://art/battleModeUI/arrow.png" type="Texture" id=14]
 [ext_resource path="res://scripts/downArrowButton.gd" type="Script" id=15]
 [ext_resource path="res://scripts/battleMode/Arrows.gd" type="Script" id=16]
-[ext_resource path="res://art/enemy circle highlight.png" type="Texture" id=17]
+[ext_resource path="res://art/battleModeUI/enemy circle highlight.png" type="Texture" id=17]
 [ext_resource path="res://scripts/battleMode/enemyGridHighlight.gd" type="Script" id=18]
 [ext_resource path="res://art/bigGrid.png" type="Texture" id=19]
 [ext_resource path="res://scripts/battleMode/BigGridPerspective.gd" type="Script" id=20]
@@ -498,6 +500,13 @@ scale = Vector2( 1.2, 0.7 )
 frames = SubResource( 98 )
 script = ExtResource( 15 )
 
+[node name="catchMiniGame" parent="offenseModeCamera" instance=ExtResource( 5 )]
+position = Vector2( -153, -91 )
+
+[node name="windWatchMiniGame" parent="offenseModeCamera" instance=ExtResource( 6 )]
+position = Vector2( 97, -19 )
+scale = Vector2( 1.71853, 1.71853 )
+
 [node name="MusicHandler" parent="." instance=ExtResource( 11 )]
 
 [connection signal="offensePhaseEnding" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
@@ -516,3 +525,5 @@ script = ExtResource( 15 )
 [connection signal="timeout" from="slowTimeDuration" to="." method="_on_slowTimeDuration_timeout"]
 [connection signal="pressed" from="offenseModeCamera/VictoryButton" to="." method="_on_VictoryButton_pressed"]
 [connection signal="pressed" from="offenseModeCamera/DefeatButton" to="." method="_on_DefeatButton_pressed"]
+[connection signal="caughtHeal" from="offenseModeCamera/catchMiniGame" to="." method="_on_catchMiniGame_caughtHeal"]
+[connection signal="gameEnded" from="offenseModeCamera/catchMiniGame" to="." method="_on_catchMiniGame_gameEnded"]

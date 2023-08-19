@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/catcher.png-84ff17be126d33ff836d5c1a594403be.stex"
+path="res://.import/enemy circle highlight.png-ea4823fd6bc51e7beb61e7cd9acf5280.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/catcher.png"
-dest_files=[ "res://.import/catcher.png-84ff17be126d33ff836d5c1a594403be.stex" ]
+source_file="res://art/battleModeUI/enemy circle highlight.png"
+dest_files=[ "res://.import/enemy circle highlight.png-ea4823fd6bc51e7beb61e7cd9acf5280.stex" ]
 
 [params]
 

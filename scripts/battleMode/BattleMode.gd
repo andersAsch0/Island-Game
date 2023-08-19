@@ -179,12 +179,15 @@ func _on_watchWindTimer_timeout():
 			currTimeJuice = maxTimeJuiceSeconds
 		updateTimeJuiceBar()
 func _on_HealButton_pressed():
+	$offenseModeCamera/catchMiniGame.playGame()
 	$BattleModePlayer.startHeal()
-	$BattleModePlayer/HealTimer.start()
-func _on_HealTimer_timeout():
+func _on_catchMiniGame_caughtHeal():
 	$BattleModePlayer.finishHeal(1)
+func _on_catchMiniGame_gameEnded():
+	$BattleModePlayer.finishHeal(0)
 func _on_AttackButton_pressed():
 	$BattleModePlayer.startAttack(1)
 func _on_ShieldButton_pressed():
 	$BattleModePlayer.shield()
+
 
