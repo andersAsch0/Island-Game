@@ -3,7 +3,6 @@ extends Node2D
 
 var attackPatternData
 export(String, FILE, "*.json") var attackPatternFile #imported json file
-var currMeasure = 0
 var currEighthNote : int = 0
 var JsonLength = 75
 export var bpm = 207
@@ -38,6 +37,8 @@ func _process(delta):
 	if Global.currCombatTimeMultiplier > 0:
 		currEighthNote = 1.0 * trackNodes[NORMALMUSIC].get_playback_position() / secondsPerEigthNote
 		if currEighthNote != eighthNoteLastFrame:
+			if currEighthNote > 8 * JsonLength:
+				currEighthNote = 0
 			eighthNoteLastFrame = currEighthNote
 			handleMelodyNote()
 		

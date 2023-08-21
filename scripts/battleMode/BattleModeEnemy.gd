@@ -6,8 +6,6 @@ export(String, FILE, "*.json") var attackPatternFile #imported json file
 var attackPatternData #json file in text form so I can use it
 var origScale = 0.3 # starting size of sprite when enemy spawns
 export var finalScale = 1 #final size of the sprite once it has approached
-var loopStart = 1 #line of the json where the enemies continous attack loop starts
-var loopEnd = 2
 export var enemySpeed = 10 #speed at which the enemy wanders around
 export var maxHP = 5
 var currentHP = maxHP
@@ -22,7 +20,7 @@ enum {
 	ABSCONDING
 }
 var currState = AWAY
-export var stateWaitTimes = [30, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [10, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
@@ -39,9 +37,6 @@ func _ready():
 	$enemyMovement/PathFollow2D/AnimatedSprite.scale.y = origScale
 	$enemyMovement.enemySpeed = enemySpeed
 	attackPatternData = getAttackPatternData() #get the json file and get it as a string
-	loopStart = attackPatternData[0]['loopStart'] #iterated through json file
-	loopEnd = attackPatternData[0]['loopEnd']
-	bulletSpawnTimeCounter = attackPatternData[loopStart]['waitTime']
 	if get_parent():
 		connect("attackPhaseStarting", get_parent(), "on_attack_phase_starting")
 		connect("attackPhaseEnding", get_parent(), "on_attack_phase_ending")
@@ -84,6 +79,9 @@ func startApproachPhase():
 	emit_signal("enemyMoved")
 	approachVector = Vector2(Global.getEnemyCoords().x - prevLocation.x, Global.getEnemyCoords().y - prevLocation.y).normalized()
 	stateWaitTimes[APPROACHING] = (prevLocation.distance_to(Global.getEnemyCoords()) / approachSpeed ) + 0.1
+	if stateWaitTimes[APPROACHING] < 0.5: #if enemy is not moving. fixes weird bugs as things are divided by tiny floats and looks jank
+		approachVector = Vector2.ZERO
+		stateWaitTimes[APPROACHING] = 1
 	currState = APPROACHING
 	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
 	emit_signal("attackPhaseStarting")

@@ -11,6 +11,8 @@ signal gameEnded
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rng.seed = hash("weeeee")
+	catcherStartPos = $catcher.position
+	healStartPos = $Heart.position
 
 func playGame():
 	if not healFlying:
@@ -50,6 +52,7 @@ func gameEnd():
 	set_process(false)
 	$catcher.visible = false
 	emit_signal("gameEnded")
+	$Heart.position = healStartPos
 
 
 func _on_catcher_animation_finished():
