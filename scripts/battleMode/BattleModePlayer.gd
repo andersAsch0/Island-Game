@@ -206,7 +206,7 @@ func windWatchButtonPressed():
 			$Animations.play("wind watch")
 	else:
 		miniGameActive = $catchMiniGame.healFlying
-		if currState == IDLE:
+		if currState == IDLE and not miniGameActive:
 			$Animations.play("idle")
 	
 func healButtonPressed():
@@ -223,7 +223,7 @@ func _on_catchMiniGame_caughtHeal():
 	emit_signal("PlayerHit") #update HP bar in parent node
 func _on_catchMiniGame_gameEnded():
 	miniGameActive = $catchMiniGame.healFlying or $windWatchMiniGame.is_processing_input()
-	if currState == IDLE:
+	if currState == IDLE and not miniGameActive:
 		$Animations.play("idle")
 
 
