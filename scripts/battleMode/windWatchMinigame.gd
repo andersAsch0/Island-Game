@@ -70,6 +70,11 @@ func getPrevState():
 		return currState - 1
 	else:
 		return HANDLEFT
+
+func gameEnd():
+	$clock.visible = false
+	$arrowRotater.visible = false
+	set_process_input(false) 
 #
 #func updateArrows():
 #	for arrow in arrows:

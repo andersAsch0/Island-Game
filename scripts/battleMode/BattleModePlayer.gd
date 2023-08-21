@@ -152,20 +152,22 @@ func _on_BattleMode_offensePhaseEnding():
 func _on_BattleMode_offensePhaseStarting():
 	position = Global.getPlayerCoords()
 	currState = IDLE
-func startWindWatch():
+func windWatchToggle():
 	if isShielded:
-		return
-	$Animations.play("wind watch")
-func finishWindWatch():
-	if isShielded: 
-		return false #return whether it actually happended
-	$Animations.play("idle")
+		return false
+	if $Animations.animation == "wind watch":
+		$Animations.play("idle")
+		currState = IDLE
+	else:
+		$Animations.play("wind watch")
+		currState = IMOBILE
 	return true
 func startHeal():
-	currState = IMOBILE
 	if isShielded:
-		return
+		return false
+	currState = IMOBILE
 	$Animations.play("wind watch")
+	return true
 func finishHeal(hpHealed : int):
 	if currState == IMOBILE:
 		currState = IDLE #DONT SET STATE TO IDLE IN DEFENSE MODE
