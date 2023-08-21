@@ -3,15 +3,15 @@
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
 [ext_resource path="res://scenes/battleMode/BattleModeEnemy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://art/clock.png" type="Texture" id=4]
+[ext_resource path="res://art/battleModeUI/clock.png" type="Texture" id=4]
 [ext_resource path="res://art/battlegrid.png" type="Texture" id=7]
 [ext_resource path="res://scenes/battleMode/MusicHandler.tscn" type="PackedScene" id=11]
-[ext_resource path="res://art/action menu horiz.png" type="Texture" id=12]
+[ext_resource path="res://art/battleModeUI/action menu horiz.png" type="Texture" id=12]
 [ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
-[ext_resource path="res://art/arrow.png" type="Texture" id=14]
+[ext_resource path="res://art/battleModeUI/arrow.png" type="Texture" id=14]
 [ext_resource path="res://scripts/downArrowButton.gd" type="Script" id=15]
 [ext_resource path="res://scripts/battleMode/Arrows.gd" type="Script" id=16]
-[ext_resource path="res://art/enemy circle highlight.png" type="Texture" id=17]
+[ext_resource path="res://art/battleModeUI/enemy circle highlight.png" type="Texture" id=17]
 [ext_resource path="res://scripts/battleMode/enemyGridHighlight.gd" type="Script" id=18]
 [ext_resource path="res://art/bigGrid.png" type="Texture" id=19]
 [ext_resource path="res://scripts/battleMode/BigGridPerspective.gd" type="Script" id=20]
@@ -366,12 +366,6 @@ texture = ExtResource( 19 )
 position = Vector2( 160, 110 )
 scale = Vector2( 1.13792, 1.13792 )
 
-[node name="HealTimer" type="Timer" parent="BattleModePlayer"]
-one_shot = true
-
-[node name="watchWindTimer" type="Timer" parent="BattleModePlayer"]
-one_shot = true
-
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 162, 39 )
 
@@ -508,8 +502,7 @@ script = ExtResource( 15 )
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="BigGridPerspective" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera/Arrows" method="_on_BattleModePlayer_playerMovedOffense"]
-[connection signal="timeout" from="BattleModePlayer/HealTimer" to="." method="_on_HealTimer_timeout"]
-[connection signal="timeout" from="BattleModePlayer/watchWindTimer" to="." method="_on_watchWindTimer_timeout"]
+[connection signal="watchWind" from="BattleModePlayer" to="." method="_on_windWatchMiniGame_wind"]
 [connection signal="timeout" from="reverseTimeDuration" to="." method="_on_reverseTimeDuration_timeout"]
 [connection signal="timeout" from="stopTimeDuration" to="." method="_on_stopTimeDuration_timeout"]
 [connection signal="timeout" from="speedTimeDuration" to="." method="_on_speedTimeDuration_timeout"]

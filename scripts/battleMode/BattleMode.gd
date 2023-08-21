@@ -139,6 +139,7 @@ func on_attack_phase_ending():
 	currState = OFFENSE
 	$offenseModeCamera/Grid.visible = false
 	$BigGridPerspective.visible = true
+	$offenseModeCamera/Arrows.visible = true
 	showActionMenu(true, true)
 func on_enemyDead():
 	$offenseModeCamera/VictoryButton.visible = true
@@ -170,21 +171,22 @@ var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, 
 func updateTimeJuiceBar():
 	$offenseModeCamera/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
 func _on_WindWatchButton_pressed():
-	$BattleModePlayer.startWindWatch()
-	$BattleModePlayer/watchWindTimer.start()
-func _on_watchWindTimer_timeout():
-	if $BattleModePlayer.finishWindWatch():
-		currTimeJuice += timeJuiceCost
-		if currTimeJuice > maxTimeJuiceSeconds:
-			currTimeJuice = maxTimeJuiceSeconds
-		updateTimeJuiceBar()
+	$BattleModePlayer.windWatchButtonPressed()
+func _on_windWatchMiniGame_wind(timeJuiceChange):
+	currTimeJuice += timeJuiceChange
+	if currTimeJuice > maxTimeJuiceSeconds:
+		currTimeJuice = maxTimeJuiceSeconds
+	updateTimeJuiceBar()
 func _on_HealButton_pressed():
-	$BattleModePlayer.startHeal()
-	$BattleModePlayer/HealTimer.start()
-func _on_HealTimer_timeout():
-	$BattleModePlayer.finishHeal(1)
+	$BattleModePlayer.healButtonPressed()
 func _on_AttackButton_pressed():
 	$BattleModePlayer.startAttack(1)
 func _on_ShieldButton_pressed():
 	$BattleModePlayer.shield()
+#	$offenseModeCamera/Arrows.visible = false
+
+
+
+
+
 

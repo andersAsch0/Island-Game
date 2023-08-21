@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/action menu.png-89c2d16c061844256dfd6055e32be000.stex"
+path="res://.import/arrow.png-560eab35d90ab6650318d1a8b4b5defe.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/action menu.png"
-dest_files=[ "res://.import/action menu.png-89c2d16c061844256dfd6055e32be000.stex" ]
+source_file="res://art/battleModeUI/arrow.png"
+dest_files=[ "res://.import/arrow.png-560eab35d90ab6650318d1a8b4b5defe.stex" ]
 
 [params]
 

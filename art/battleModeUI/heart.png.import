@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/clock.png-32853f4185d6c0894e704b8f6dcb0b9a.stex"
+path="res://.import/heart.png-4a7fc359957004daa1ec3c45b22e57c0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/clock.png"
-dest_files=[ "res://.import/clock.png-32853f4185d6c0894e704b8f6dcb0b9a.stex" ]
+source_file="res://art/battleModeUI/heart.png"
+dest_files=[ "res://.import/heart.png-4a7fc359957004daa1ec3c45b22e57c0.stex" ]
 
 [params]
 

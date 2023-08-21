@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/coloredSquares.png-96204ca03aa4857b8b62e85cae4464ad.stex"
+path="res://.import/enemy circle highlight.png-ea4823fd6bc51e7beb61e7cd9acf5280.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/coloredSquares.png"
-dest_files=[ "res://.import/coloredSquares.png-96204ca03aa4857b8b62e85cae4464ad.stex" ]
+source_file="res://art/battleModeUI/enemy circle highlight.png"
+dest_files=[ "res://.import/enemy circle highlight.png-ea4823fd6bc51e7beb61e7cd9acf5280.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=true
+detect_3d=false
 svg/scale=1.0
