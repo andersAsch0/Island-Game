@@ -46,6 +46,7 @@ func caughtHeal():
 	$catcher.play("caughtHeal")
 	$Heart.position = healStartPos
 	healFlying = false
+	$healSFX.play(0.0)
 	emit_signal("caughtHeal")
 
 func gameEnd():

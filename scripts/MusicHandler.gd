@@ -68,15 +68,14 @@ func timeHasReversedBack():
 	pause(TICKING)
 	
 func timeHasStopped():
-	$normalMusicLoop.stream_paused=true #replace w trackNodes[]
-	$reverseMusicLoop.stream_paused=true
-	$reverseStartFX.stream_paused=true
-	$reverseEndFX.stream_paused=true
-	$tickingClockFX.stream_paused=true
+	for track in range(4):
+		trackNodes[track].stream_paused = true
+	play(TICKING)
 func timeHasResumed():
 	for track in range(4):
 		if trackIsActive[track]:
 			play(track)
+	pause(TICKING)
 
 func setAllPitchScales(newScale : float):
 	$normalMusicLoop.pitch_scale = newScale

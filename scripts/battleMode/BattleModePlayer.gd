@@ -125,13 +125,16 @@ func getHit(damage:int):
 		$Shield.visible = false
 		return
 	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
+	$hitSFX.play(0.0)
 	emit_signal("PlayerHit")
 	if currentHP <= 0:
 		die()
+		
 func die():
 	set_process_input(false)
 	$HurtBox/CollisionShape2D.set_deferred("disabled", true)
 	$HitBox/CollisionShape2D.set_deferred("disabled", true)
+	$dieSFX.play(0.0)
 	emit_signal("PlayerDie")
 	$Animations.play("die")
 

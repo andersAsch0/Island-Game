@@ -59,6 +59,7 @@ func windForward(newState):
 	arrowCurrentlyMoving = true
 	currState = newState
 	$clock.play(clockWindAnims[currState])
+	$windSFX.play(0.0)
 	emit_signal("wind")
 func windBack():
 	currState = getPrevState()
