@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 export var bulletScene : PackedScene #packed scene of the bullet this enemy uses
 var bullet = null
-export(String, FILE, "*.json") var attackPatternFile #imported json file
+export(String, FILE, "*.json") var attackPatternFile #imported json file of music pattern
 export var normalMusic : AudioStreamSample
 export var reverseMusic : AudioStreamSample
 var origScale = 0.3 # starting size of sprite when enemy spawns
@@ -21,7 +21,7 @@ enum {
 	ABSCONDING
 }
 var currState = AWAY
-export var stateWaitTimes = [10, 100, 100, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [10, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
@@ -158,6 +158,7 @@ func _on_DeathTimer_timeout():
 	emit_signal("enemyDead")
 	Global.updateDeadEnemyList(Global.overWorldDeadEnemiesList)
 	queue_free()
+
 
 
 #GRID MOVEMENT

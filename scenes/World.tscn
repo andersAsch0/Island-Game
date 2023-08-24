@@ -1285,6 +1285,9 @@ position = Vector2( 255, 33 )
 [node name="smallTree" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 93, 9 )
 
+[node name="beeEnemy" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 156, 95 )
+
 [node name="enemy" parent="YSort" instance=ExtResource( 10 )]
 position = Vector2( 156, 44 )
 
@@ -1313,9 +1316,6 @@ position = Vector2( 27, 87 )
 [node name="caveDoor" parent="." instance=ExtResource( 5 )]
 visible = false
 position = Vector2( 216, 25 )
-
-[node name="enemy" parent="." instance=ExtResource( 4 )]
-position = Vector2( 160, 83 )
 
 [editable path="YSort/smallPalm"]
 [editable path="YSort/smallTree2"]

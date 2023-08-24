@@ -33,18 +33,17 @@ collision_mask = 2
 script = ExtResource( 3 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 0, -24 )
+position = Vector2( 0, -22 )
 frames = SubResource( 13 )
 animation = "idle"
-frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( -2, -22 )
+position = Vector2( 0, -20 )
 shape = SubResource( 14 )
 
 [node name="fightArea" type="Area2D" parent="."]
-position = Vector2( -2, -22 )
+position = Vector2( 0, -20 )
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 2 )

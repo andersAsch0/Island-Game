@@ -1,5 +1,5 @@
 extends Path2D
-
+#used for all bulletSpawnPaths
 
 var bulletScene : PackedScene
 var bullet = null

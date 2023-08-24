@@ -123,6 +123,7 @@ func getHit(damage:int):
 	if isShielded:
 		isShielded = false
 		$Shield.visible = false
+		$hitSheildSFX.play(0.05)
 		return
 	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
 	$hitSFX.play(0.0)
@@ -166,13 +167,15 @@ func startAttack(damage : int):
 func finishAttack():
 	pass
 func shield():
-	$Shield.visible = true
-	isShielded = true
-	$catchMiniGame.gameEnd()
-	$windWatchMiniGame.gameEnd()
-	miniGameActive = false
-	if currState == IDLE:
-		$Animations.play("idle")
+	if not isShielded:
+		$equipSheildSFX.play(0.15)
+		$Shield.visible = true
+		isShielded = true
+		$catchMiniGame.gameEnd()
+		$windWatchMiniGame.gameEnd()
+		miniGameActive = false
+		if currState == IDLE:
+			$Animations.play("idle")
 func move(direction):
 	if currState != MOVINGTILES and Global.canMoveTo(Global.playerGridLocation + moveVectors[direction]) and not miniGameActive:
 		moveDirection = direction

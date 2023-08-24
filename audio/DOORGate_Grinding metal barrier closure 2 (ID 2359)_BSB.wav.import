@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/DOORGate_Grinding metal barrier closure 2 (ID 2359)_BSB.wav-c5c527fa3fe385a4cdc2c84532686419.sample"
+
+[deps]
+
+source_file="res://audio/DOORGate_Grinding metal barrier closure 2 (ID 2359)_BSB.wav"
+dest_files=[ "res://.import/DOORGate_Grinding metal barrier closure 2 (ID 2359)_BSB.wav-c5c527fa3fe385a4cdc2c84532686419.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

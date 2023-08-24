@@ -36,9 +36,7 @@ func _process(delta):
 			trackProgressions[track] += delta * abs(Global.currCombatTimeMultiplier) * (Global.timeIsNotStopped as int)
 	if Global.currCombatTimeMultiplier > 0:
 		currEighthNote = 1.0 * trackNodes[NORMALMUSIC].get_playback_position() / secondsPerEigthNote
-		if currEighthNote != eighthNoteLastFrame:
-			if currEighthNote > 8 * JsonLength:
-				currEighthNote = 0
+		if (currEighthNote != eighthNoteLastFrame) and (currEighthNote < JsonLength * 8):
 			eighthNoteLastFrame = currEighthNote
 			handleMelodyNote()
 		
