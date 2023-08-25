@@ -1,0 +1,169 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://scripts/battleMode/comboMiniGame.gd" type="Script" id=3]
+[ext_resource path="res://art/battleModeUI/redArrows.png" type="Texture" id=4]
+[ext_resource path="res://art/battleModeUI/arrow.png" type="Texture" id=5]
+[ext_resource path="res://art/battleModeUI/comboAnims.png" type="Texture" id=6]
+
+[sub_resource type="AtlasTexture" id=113]
+atlas = ExtResource( 5 )
+region = Rect2( 224, 96, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=102]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=114]
+animations = [ {
+"frames": [ SubResource( 113 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 102 ) ],
+"loop": true,
+"name": "pressed",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=115]
+atlas = ExtResource( 5 )
+region = Rect2( 256, 64, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=116]
+animations = [ {
+"frames": [ SubResource( 115 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 102 ) ],
+"loop": true,
+"name": "pressed",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=117]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=118]
+animations = [ {
+"frames": [ SubResource( 117 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 102 ) ],
+"loop": true,
+"name": "pressed",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=77]
+atlas = ExtResource( 5 )
+region = Rect2( 224, 32, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=119]
+animations = [ {
+"frames": [ SubResource( 77 ) ],
+"loop": true,
+"name": "default",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 102 ) ],
+"loop": true,
+"name": "pressed",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=106]
+atlas = ExtResource( 6 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=107]
+atlas = ExtResource( 6 )
+region = Rect2( 608, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=108]
+atlas = ExtResource( 6 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=109]
+atlas = ExtResource( 6 )
+region = Rect2( 608, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=110]
+atlas = ExtResource( 6 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=111]
+atlas = ExtResource( 6 )
+region = Rect2( 608, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=112]
+animations = [ {
+"frames": [ SubResource( 106 ), SubResource( 107 ) ],
+"loop": false,
+"name": "BIG combo!!!",
+"speed": 1.0
+}, {
+"frames": [ SubResource( 108 ), SubResource( 109 ) ],
+"loop": false,
+"name": "combo!!!",
+"speed": 1.0
+}, {
+"frames": [ SubResource( 110 ), SubResource( 111 ) ],
+"loop": false,
+"name": "failedCombo",
+"speed": 1.0
+} ]
+
+[node name="comboMiniGame" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="Arrows" type="Node2D" parent="."]
+self_modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 68, 60 )
+scale = Vector2( 1.13792, 1.13792 )
+z_index = 1
+
+[node name="downArrow" type="AnimatedSprite" parent="Arrows"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+position = Vector2( 1.7576, 39.5458 )
+scale = Vector2( 0.7, 1.2 )
+frames = SubResource( 114 )
+playing = true
+
+[node name="upArrow" type="AnimatedSprite" parent="Arrows"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+position = Vector2( 1.7576, -40.4245 )
+scale = Vector2( 0.7, 1.2 )
+frames = SubResource( 116 )
+playing = true
+
+[node name="rightArrow" type="AnimatedSprite" parent="Arrows"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+position = Vector2( 43.0609, 3.8147e-06 )
+scale = Vector2( 1.2, 0.7 )
+frames = SubResource( 118 )
+playing = true
+
+[node name="leftArrow" type="AnimatedSprite" parent="Arrows"]
+self_modulate = Color( 1, 1, 1, 0.392157 )
+position = Vector2( -40.4245, 1.75758 )
+scale = Vector2( 1.2, 0.7 )
+frames = SubResource( 119 )
+playing = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="comboAnims" type="AnimatedSprite" parent="."]
+position = Vector2( 71, 60 )
+frames = SubResource( 112 )
+animation = "failedCombo"
+frame = 1
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

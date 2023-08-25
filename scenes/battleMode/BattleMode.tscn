@@ -343,12 +343,13 @@ position = Vector2( 280, 205 )
 scale = Vector2( 2.1, 2.1 )
 
 [node name="BigGridPerspective" type="Sprite" parent="."]
-position = Vector2( 162, 44 )
-scale = Vector2( 4.4, 4.4 )
+position = Vector2( 164, -68 )
+scale = Vector2( 1.352, 1.352 )
 texture = ExtResource( 19 )
 script = ExtResource( 20 )
 
 [node name="enemyGridHighlight" type="Sprite" parent="BigGridPerspective"]
+visible = false
 self_modulate = Color( 1, 1, 1, 0.0745098 )
 position = Vector2( 0, -0.795455 )
 scale = Vector2( 0.497159, 0.490057 )
@@ -363,8 +364,8 @@ scale = Vector2( 4.844, 4.844 )
 texture = ExtResource( 19 )
 
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
-position = Vector2( 160, 110 )
-scale = Vector2( 1.13792, 1.13792 )
+position = Vector2( 162, 123 )
+scale = Vector2( 1.3795, 1.3795 )
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 162, 39 )
@@ -426,8 +427,8 @@ custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
 custom_colors/font_color_shadow = Color( 0.0941176, 0.321569, 0.854902, 1 )
 
 [node name="Grid" type="Sprite" parent="offenseModeCamera"]
-position = Vector2( 3.05176e-05, 20 )
-scale = Vector2( 2.1, 2.1 )
+position = Vector2( 3, 33 )
+scale = Vector2( 2.31579, 2.31579 )
 z_as_relative = false
 texture = ExtResource( 7 )
 
@@ -458,6 +459,7 @@ frames = SubResource( 54 )
 animation = "showing"
 
 [node name="Arrows" type="Node2D" parent="offenseModeCamera"]
+visible = false
 self_modulate = Color( 1, 1, 1, 0 )
 position = Vector2( 0, 19 )
 scale = Vector2( 1.13792, 1.13792 )
