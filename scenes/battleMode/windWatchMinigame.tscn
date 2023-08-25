@@ -184,19 +184,17 @@ scale = Vector2( 0.3166, 0.329562 )
 texture = ExtResource( 4 )
 
 [node name="clock" type="AnimatedSprite" parent="."]
-visible = false
 frames = SubResource( 17 )
 animation = "starting"
 
 [node name="arrowRotater" type="Node2D" parent="."]
-visible = false
 scale = Vector2( 0.36, 0.75 )
 
 [node name="arrowRight2" type="AnimatedSprite" parent="arrowRotater"]
 position = Vector2( 13.8889, -22.6667 )
 scale = Vector2( 2.08333, 0.48 )
 frames = SubResource( 50 )
-frame = 9
+frame = 7
 playing = true
 
 [node name="windSFX" type="AudioStreamPlayer" parent="."]

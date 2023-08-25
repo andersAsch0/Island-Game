@@ -16,17 +16,26 @@ var comboDamage = [1, 5]
 var arrowNodes = []
 func _ready():
 	arrowNodes = [$Arrows/rightArrow, $Arrows/leftArrow, $Arrows/upArrow, $Arrows/downArrow]
+	gameEnd()
 	
 signal successfulCombo(damage)
+signal failedCombo
 
 func playGame():
-	$Arrows.visible = true
-	set_process_input(true)
-func endGame():
-	$Arrows.visible = false
+	if not visible:
+		visible = true
+		set_process_input(true)
+		set_process(true)
+	else:
+		gameEnd()
+func gameEnd():
+	visible = false
 	set_process_input(false)
+	set_process(false)
 	
 var currCombo = []
+func _process(delta):
+	$inputTimeLeft.value = $Timer.time_left / $Timer.wait_time * 100
 func _input(event):
 	if event.is_action_pressed("ui_right"):
 		processInput(RIGHT)
@@ -61,13 +70,14 @@ func displayCombo(comboIndex): #do anim for current combo
 	$comboAnims.play(comboAnims[comboIndex])
 func enactCombo(comboIndex): #carry out current combo
 	emit_signal("successfulCombo", comboDamage[comboIndex])
-	print("did combo ", comboIndex, " for ", comboDamage[comboIndex], " damage")
 	
 var currComboIndex
 func _on_Timer_timeout():
 	currComboIndex = checkCombo()
 	if currComboIndex == -1:
 		$comboAnims.play("failedCombo")
+		$comboAnims.frame = 0
+		emit_signal("failedCombo")
 	else:
 		enactCombo(currComboIndex)
 		

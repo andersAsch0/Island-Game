@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scripts/battleMode/comboMiniGame.gd" type="Script" id=3]
 [ext_resource path="res://art/battleModeUI/redArrows.png" type="Texture" id=4]
@@ -9,9 +9,9 @@
 atlas = ExtResource( 5 )
 region = Rect2( 224, 96, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=102]
+[sub_resource type="AtlasTexture" id=120]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 32, 32 )
+region = Rect2( 96, 0, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=114]
 animations = [ {
@@ -20,7 +20,7 @@ animations = [ {
 "name": "default",
 "speed": 10.0
 }, {
-"frames": [ SubResource( 102 ) ],
+"frames": [ SubResource( 120 ) ],
 "loop": true,
 "name": "pressed",
 "speed": 5.0
@@ -30,6 +30,10 @@ animations = [ {
 atlas = ExtResource( 5 )
 region = Rect2( 256, 64, 32, 32 )
 
+[sub_resource type="AtlasTexture" id=121]
+atlas = ExtResource( 4 )
+region = Rect2( 64, 0, 32, 32 )
+
 [sub_resource type="SpriteFrames" id=116]
 animations = [ {
 "frames": [ SubResource( 115 ) ],
@@ -37,19 +41,23 @@ animations = [ {
 "name": "default",
 "speed": 10.0
 }, {
-"frames": [ SubResource( 102 ) ],
+"frames": [ SubResource( 121 ) ],
 "loop": true,
 "name": "pressed",
 "speed": 5.0
 } ]
 
-[sub_resource type="AtlasTexture" id=117]
+[sub_resource type="AtlasTexture" id=122]
 atlas = ExtResource( 5 )
+region = Rect2( 224, 32, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=102]
+atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=118]
 animations = [ {
-"frames": [ SubResource( 117 ) ],
+"frames": [ SubResource( 122 ) ],
 "loop": true,
 "name": "default",
 "speed": 10.0
@@ -60,18 +68,22 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="AtlasTexture" id=77]
+[sub_resource type="AtlasTexture" id=123]
 atlas = ExtResource( 5 )
-region = Rect2( 224, 32, 32, 32 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=124]
+atlas = ExtResource( 4 )
+region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=119]
 animations = [ {
-"frames": [ SubResource( 77 ) ],
+"frames": [ SubResource( 123 ) ],
 "loop": true,
 "name": "default",
 "speed": 10.0
 }, {
-"frames": [ SubResource( 102 ) ],
+"frames": [ SubResource( 124 ) ],
 "loop": true,
 "name": "pressed",
 "speed": 5.0
@@ -82,6 +94,10 @@ atlas = ExtResource( 6 )
 region = Rect2( 64, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=107]
+atlas = ExtResource( 6 )
+region = Rect2( 608, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=125]
 atlas = ExtResource( 6 )
 region = Rect2( 608, 0, 32, 32 )
 
@@ -108,6 +124,11 @@ animations = [ {
 "name": "BIG combo!!!",
 "speed": 1.0
 }, {
+"frames": [ SubResource( 125 ) ],
+"loop": true,
+"name": "blank",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 108 ), SubResource( 109 ) ],
 "loop": false,
 "name": "combo!!!",
@@ -123,35 +144,34 @@ animations = [ {
 script = ExtResource( 3 )
 
 [node name="Arrows" type="Node2D" parent="."]
-self_modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 68, 60 )
-scale = Vector2( 1.13792, 1.13792 )
+self_modulate = Color( 1, 1, 1, 0.176471 )
+scale = Vector2( 1.13086, 1.13792 )
 z_index = 1
 
 [node name="downArrow" type="AnimatedSprite" parent="Arrows"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-position = Vector2( 1.7576, 39.5458 )
+self_modulate = Color( 1, 1, 1, 0.647059 )
+position = Vector2( 0, 29.0003 )
 scale = Vector2( 0.7, 1.2 )
 frames = SubResource( 114 )
 playing = true
 
 [node name="upArrow" type="AnimatedSprite" parent="Arrows"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-position = Vector2( 1.7576, -40.4245 )
+self_modulate = Color( 1, 1, 1, 0.647059 )
+position = Vector2( 0, -30.7579 )
 scale = Vector2( 0.7, 1.2 )
 frames = SubResource( 116 )
 playing = true
 
 [node name="rightArrow" type="AnimatedSprite" parent="Arrows"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-position = Vector2( 43.0609, 3.8147e-06 )
+self_modulate = Color( 1, 1, 1, 0.647059 )
+position = Vector2( 30.7579, 0 )
 scale = Vector2( 1.2, 0.7 )
 frames = SubResource( 118 )
 playing = true
 
 [node name="leftArrow" type="AnimatedSprite" parent="Arrows"]
-self_modulate = Color( 1, 1, 1, 0.392157 )
-position = Vector2( -40.4245, 1.75758 )
+self_modulate = Color( 1, 1, 1, 0.647059 )
+position = Vector2( -30.7579, -1.19209e-07 )
 scale = Vector2( 1.2, 0.7 )
 frames = SubResource( 119 )
 playing = true
@@ -160,10 +180,17 @@ playing = true
 wait_time = 0.4
 one_shot = true
 
+[node name="inputTimeLeft" type="ProgressBar" parent="."]
+margin_left = -11.0
+margin_top = 1.0
+margin_right = 29.0
+margin_bottom = 15.0
+rect_scale = Vector2( 0.549671, 0.567602 )
+percent_visible = false
+
 [node name="comboAnims" type="AnimatedSprite" parent="."]
-position = Vector2( 71, 60 )
+position = Vector2( 1, -4 )
 frames = SubResource( 112 )
-animation = "failedCombo"
-frame = 1
+animation = "blank"
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

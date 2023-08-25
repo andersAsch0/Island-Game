@@ -19,7 +19,7 @@ var arrowCurrentlyMoving = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_process_input(false)
+	playGame()
 func _process(delta):
 	if arrowCurrentlyMoving:
 		$arrowRotater.rotate(6 * PI * delta)
@@ -28,10 +28,8 @@ func _process(delta):
 			$arrowRotater.rotation_degrees = arrowRotations[currState]
 
 func playGame():
-	$clock.visible = not $clock.visible
-#	$U.visible = $clock.visible
-	$arrowRotater.visible = $clock.visible
-	set_process_input($clock.visible)
+	visible = not visible
+	set_process_input(visible)
 
 func _input(event):
 	if event.is_action_pressed("ui_right"):

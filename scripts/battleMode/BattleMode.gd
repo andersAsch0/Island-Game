@@ -40,7 +40,7 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	$MusicHandler/normalMusicLoop.stream = enemy.normalMusic
 	$MusicHandler/reverseMusicLoop.stream = enemy.reverseMusic
 	$MusicHandler.attackPatternFile = enemy.attackPatternFile
-	add_child(enemy) # add node to scene
+	add_child_below_node($MusicHandler, enemy)
 	on_attack_phase_ending() #battles start in offense mode for the player
 	
 	 # connect the signal to start fight from the new node to this one
@@ -183,10 +183,11 @@ func _on_windWatchMiniGame_wind(timeJuiceChange):
 func _on_HealButton_pressed():
 	$BattleModePlayer.healButtonPressed()
 func _on_AttackButton_pressed():
-	$BattleModePlayer.startAttack(1)
+	$BattleModePlayer.attackButtonPressed()
 func _on_ShieldButton_pressed():
 	$BattleModePlayer.shield()
 #	$offenseModeCamera/Arrows.visible = false
+
 
 
 

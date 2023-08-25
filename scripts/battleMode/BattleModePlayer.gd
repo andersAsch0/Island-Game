@@ -155,15 +155,12 @@ func _on_BattleMode_offensePhaseEnding():
 		storagePos.y += currGridSize
 	$catchMiniGame.gameEnd()
 	$windWatchMiniGame.gameEnd()
+	$comboMiniGame.gameEnd()
 	$catchMiniGame.visible = false
 func _on_BattleMode_offensePhaseStarting():
 	position = Global.getPlayerCoords()
 	currState = IDLE
 	$catchMiniGame.visible = true
-func startAttack(damage : int):
-	if isShielded:
-		return
-	get_tree().call_group("enemies", "getHit", damage)
 func finishAttack():
 	pass
 func shield():
@@ -211,7 +208,7 @@ func windWatchButtonPressed():
 		if currState == IDLE:
 			$Animations.play("wind watch")
 	else:
-		miniGameActive = $catchMiniGame.healFlying
+		miniGameActive = $catchMiniGame.healFlying or $comboMiniGame.is_processing_input()
 		if currState == IDLE and not miniGameActive:
 			$Animations.play("idle")
 	
@@ -233,8 +230,30 @@ func _on_catchMiniGame_gameEnded():
 		$Animations.play("idle")
 
 
+func attackButtonPressed():
+	if isShielded or currState == DEFENSE:
+		return	
+	$comboMiniGame.playGame()
+	if $comboMiniGame.is_processing_input():
+		miniGameActive = true
+		if currState == IDLE:
+			$Animations.play("wind watch")
+	else:
+		miniGameActive = $catchMiniGame.healFlying or $windWatchMiniGame.is_processing_input()
+		if currState == IDLE and not miniGameActive:
+			$Animations.play("idle")
+func _on_comboMiniGame_successfulCombo(damage):
+	if abs(Global.getEnemyDisplacementFromPlayer().x) <= 1 and  abs(Global.getEnemyDisplacementFromPlayer().y) <= 1:
+		get_tree().call_group("enemies", "getHit", damage)
+		#do enemy damage anim
+	else:
+		pass
+		#do miss anim
+
+
 signal watchWind(timeJuiceChange)
 func _on_windWatchMiniGame_wind():
 	emit_signal("watchWind", 1)
 func _on_windWatchMiniGame_failedWind():
 	emit_signal("watchWind", -1)
+

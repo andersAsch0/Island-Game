@@ -170,13 +170,10 @@ var bigGridLocationsy = [-30, 40, 110, 180, 250]
 
 func findNewTile(): #finds closest valid tile near the player to move to
 	var squareAbove = (Global.playerGridLocation + Vector2(0, -1))
-	var squareBelow = (Global.playerGridLocation + Vector2(0, 1))
 	var squareLeft = (Global.playerGridLocation + Vector2(-1, 0))
 	var squareRight = (Global.playerGridLocation + Vector2(1, 0))
 	var closestSquare = squareAbove
 	
-	if calculateTileDistance(closestSquare) > calculateTileDistance(squareBelow):
-		closestSquare = squareBelow
 	if calculateTileDistance(closestSquare) > calculateTileDistance(squareRight):
 		closestSquare = squareRight
 	if calculateTileDistance(closestSquare) > calculateTileDistance(squareLeft):

@@ -1,9 +1,11 @@
-[gd_scene load_steps=87 format=2]
+[gd_scene load_steps=95 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
 [ext_resource path="res://scenes/battleMode/BattleModeEnemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://art/battleModeUI/clock.png" type="Texture" id=4]
+[ext_resource path="res://scenes/battleMode/hitAndMissAnims.gd" type="Script" id=5]
+[ext_resource path="res://art/battleModeUI/comboAnims.png" type="Texture" id=6]
 [ext_resource path="res://art/battlegrid.png" type="Texture" id=7]
 [ext_resource path="res://scenes/battleMode/MusicHandler.tscn" type="PackedScene" id=11]
 [ext_resource path="res://art/battleModeUI/action menu horiz.png" type="Texture" id=12]
@@ -334,6 +336,44 @@ animations = [ {
 "speed": 10.0
 } ]
 
+[sub_resource type="AtlasTexture" id=99]
+atlas = ExtResource( 6 )
+region = Rect2( 608, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=100]
+atlas = ExtResource( 6 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=101]
+atlas = ExtResource( 6 )
+region = Rect2( 608, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=102]
+atlas = ExtResource( 6 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=103]
+atlas = ExtResource( 6 )
+region = Rect2( 608, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=104]
+animations = [ {
+"frames": [ SubResource( 99 ) ],
+"loop": true,
+"name": "empty",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 100 ), SubResource( 101 ) ],
+"loop": false,
+"name": "hit",
+"speed": 2.0
+}, {
+"frames": [ SubResource( 102 ), SubResource( 103 ) ],
+"loop": false,
+"name": "miss",
+"speed": 1.0
+} ]
+
 [node name="BattleMode" type="Node2D"]
 script = ExtResource( 2 )
 enemyScene = ExtResource( 3 )
@@ -343,8 +383,8 @@ position = Vector2( 280, 205 )
 scale = Vector2( 2.1, 2.1 )
 
 [node name="BigGridPerspective" type="Sprite" parent="."]
-position = Vector2( 164, -68 )
-scale = Vector2( 1.352, 1.352 )
+position = Vector2( 167, 0 )
+scale = Vector2( 1.464, 0.919 )
 texture = ExtResource( 19 )
 script = ExtResource( 20 )
 
@@ -427,6 +467,7 @@ custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
 custom_colors/font_color_shadow = Color( 0.0941176, 0.321569, 0.854902, 1 )
 
 [node name="Grid" type="Sprite" parent="offenseModeCamera"]
+self_modulate = Color( 1, 1, 1, 0.215686 )
 position = Vector2( 3, 33 )
 scale = Vector2( 2.31579, 2.31579 )
 z_as_relative = false
@@ -496,6 +537,11 @@ script = ExtResource( 15 )
 
 [node name="MusicHandler" parent="." instance=ExtResource( 11 )]
 
+[node name="hitAndMissAnims" type="AnimatedSprite" parent="."]
+frames = SubResource( 104 )
+animation = "empty"
+script = ExtResource( 5 )
+
 [connection signal="offensePhaseEnding" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
 [connection signal="offensePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
 [connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
@@ -505,9 +551,13 @@ script = ExtResource( 15 )
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera/Arrows" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="watchWind" from="BattleModePlayer" to="." method="_on_windWatchMiniGame_wind"]
+[connection signal="failedCombo" from="BattleModePlayer/comboMiniGame" to="hitAndMissAnims" method="_on_comboMiniGame_failedCombo"]
+[connection signal="successfulCombo" from="BattleModePlayer/comboMiniGame" to="hitAndMissAnims" method="_on_comboMiniGame_successfulCombo"]
 [connection signal="timeout" from="reverseTimeDuration" to="." method="_on_reverseTimeDuration_timeout"]
 [connection signal="timeout" from="stopTimeDuration" to="." method="_on_stopTimeDuration_timeout"]
 [connection signal="timeout" from="speedTimeDuration" to="." method="_on_speedTimeDuration_timeout"]
 [connection signal="timeout" from="slowTimeDuration" to="." method="_on_slowTimeDuration_timeout"]
 [connection signal="pressed" from="offenseModeCamera/VictoryButton" to="." method="_on_VictoryButton_pressed"]
 [connection signal="pressed" from="offenseModeCamera/DefeatButton" to="." method="_on_DefeatButton_pressed"]
+
+[editable path="BattleModePlayer"]
