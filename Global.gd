@@ -30,8 +30,8 @@ func updateDeadEnemyList(list : Array): #all enemies are alive by default, as yo
 	
 
 #BATTLEMODE GRID TRACKING (so all nodes can know where the enemy & player are)
-var gridCoordsY = [-30, 33, 110, 205, 330]
-var gridCoordsX = [[-9, 76, 160, 248, 335], [-31, 66, 162, 256, 355], [-48, 57, 162, 268, 374], [-80, 41, 159, 280, 407], [-115, 21, 161, 295, 436]]
+var gridCoordsY = [53, 74, 99, 132, 179]
+var gridCoordsX = [[11, 87, 163, 239, 313], [-6, 79, 162, 246, 331], [-26, 68, 162, 258, 353], [-54, 55, 162, 270, 381], [-92, 37, 162, 291, 420]]
 var bigGridLocationsx = [18, 90, 160, 230, 300 ]
 var bigGridLocationsy = [-30, 40, 110, 180, 250]
 

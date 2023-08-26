@@ -1,12 +1,13 @@
-[gd_scene load_steps=95 format=2]
+[gd_scene load_steps=96 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
 [ext_resource path="res://scenes/battleMode/BattleModeEnemy.tscn" type="PackedScene" id=3]
 [ext_resource path="res://art/battleModeUI/clock.png" type="Texture" id=4]
-[ext_resource path="res://scenes/battleMode/hitAndMissAnims.gd" type="Script" id=5]
+[ext_resource path="res://scripts/hitAndMissAnims.gd" type="Script" id=5]
 [ext_resource path="res://art/battleModeUI/comboAnims.png" type="Texture" id=6]
 [ext_resource path="res://art/battlegrid.png" type="Texture" id=7]
+[ext_resource path="res://art/butterfly1.png" type="Texture" id=8]
 [ext_resource path="res://scenes/battleMode/MusicHandler.tscn" type="PackedScene" id=11]
 [ext_resource path="res://art/battleModeUI/action menu horiz.png" type="Texture" id=12]
 [ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
@@ -379,12 +380,12 @@ script = ExtResource( 2 )
 enemyScene = ExtResource( 3 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 280, 205 )
+position = Vector2( -92, 182 )
 scale = Vector2( 2.1, 2.1 )
 
 [node name="BigGridPerspective" type="Sprite" parent="."]
-position = Vector2( 167, 0 )
-scale = Vector2( 1.464, 0.919 )
+position = Vector2( 167, 28 )
+scale = Vector2( 1.464, 0.74 )
 texture = ExtResource( 19 )
 script = ExtResource( 20 )
 
@@ -542,12 +543,16 @@ frames = SubResource( 104 )
 animation = "empty"
 script = ExtResource( 5 )
 
+[node name="Butterfly1" type="Sprite" parent="."]
+visible = false
+position = Vector2( 160, 27 )
+scale = Vector2( 1.82863, 1.82474 )
+texture = ExtResource( 8 )
+
 [connection signal="offensePhaseEnding" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
 [connection signal="offensePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
 [connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
-[connection signal="playerFinishedMoving" from="BattleModePlayer" to="BigGridPerspective" method="_on_BattleModePlayer_playerFinishedMoving"]
-[connection signal="playerMovedOffense" from="BattleModePlayer" to="BigGridPerspective" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera/Arrows" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="watchWind" from="BattleModePlayer" to="." method="_on_windWatchMiniGame_wind"]

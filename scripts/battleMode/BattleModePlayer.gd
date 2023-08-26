@@ -185,6 +185,7 @@ func move(direction):
 func updateCurrGridSquare():
 	Global.setPlayerGridLocation(Global.playerGridLocation + moveVectors[moveDirection])
 func _on_moveTilesTimer_timeout():
+	position = Global.getPlayerCoords()
 	emit_signal("playerFinishedMoving", Global.playerGridLocation)
 	$Animations.play("idle")
 	if miniGameActive:
