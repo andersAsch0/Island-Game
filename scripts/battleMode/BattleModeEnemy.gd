@@ -5,7 +5,7 @@ var bullet = null
 export(String, FILE, "*.json") var attackPatternFile #imported json file
 export var normalMusic : AudioStreamSample
 export var reverseMusic : AudioStreamSample
-var origScale = 0.3 # starting size of sprite when enemy spawns
+var origScale = 0.9 # starting size of sprite when enemy spawns
 export var finalScale = 1 #final size of the sprite once it has approached
 export var enemySpeed = 10 #speed at which the enemy wanders around
 export var maxHP = 5
@@ -17,16 +17,23 @@ var bulletSpawnTimeCounter : float = 0 #using this instead of a timer node becau
 enum {
 	AWAY
 	APPROACHING
+	ANGLECHANGE
 	ATTACKING
 	ABSCONDING
 }
 var currState = AWAY
-export var stateWaitTimes = [10, 100, 100, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [10.0, 100.0, 2, 20, 0.5] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
+var animatedSpriteNode
 
+signal awayPhaseStarting
+signal approachPhaseStarting
+signal angleChangePhaseStarting
 signal attackPhaseStarting
+signal abscondPhaseStarting
+
 signal attackPhaseEnding
 signal enemyDead
 signal enemyMoved
@@ -34,45 +41,51 @@ signal enemyMoved
 #SETUP AND APPROACH
 
 func _ready():
-	$enemyMovement/PathFollow2D/AnimatedSprite.scale.x = origScale
-	$enemyMovement/PathFollow2D/AnimatedSprite.scale.y = origScale
+	animatedSpriteNode = $enemyMovement/PathFollow2D/AnimatedSprite
+	animatedSpriteNode.scale.x = origScale
+	animatedSpriteNode.scale.y = origScale
 	$enemyMovement.enemySpeed = enemySpeed
-	if get_parent():
-		connect("attackPhaseStarting", get_parent(), "on_attack_phase_starting")
-		connect("attackPhaseEnding", get_parent(), "on_attack_phase_ending")
-		connect("enemyDead", get_parent(), "on_enemyDead")
-		Global.connect("timeMultiplierChanged", self, "changeAnimationSpeed")
-		Global.connect("timeFlowChanged", self, "startOrStopAnimation")
-	
+	Global.connect("timeMultiplierChanged", self, "changeAnimationSpeed")
+	Global.connect("timeFlowChanged", self, "startOrStopAnimation")
+
 	currState = AWAY
 	startAwayPhase()
 	visible = true
 		
 func _physics_process(delta):
-	$enemyMovement/PathFollow2D/HPBar.value = 1.0 * currentHP/maxHP * 100
 	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int) * ((Global.currCombatTimeMultiplier > 0) as int) # only inc if time is moving AND time isnt reversed
 	if stateCounter >= stateWaitTimes[currState]: #need to go to next state
 		goToNextState()
 	elif stateCounter <= 0: #time reversed, need to go to prev state
 		goToPrevState()
+	
+	#frame by frame animation and movement
 	if currState == APPROACHING: #increase scale (grow bigger each frame)
 		position += approachVector * delta * approachSpeed
-		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		animatedSpriteNode.scale.x += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		animatedSpriteNode.scale.y += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+	elif currState == ANGLECHANGE:
+		position += (angleChangeVectors[displacementEnum] / stateWaitTimes[ANGLECHANGE] )* delta
 	elif currState == ABSCONDING:
-		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		animatedSpriteNode.scale.x -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		animatedSpriteNode.scale.y -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		position -= (angleChangeVectors[displacementEnum] / stateWaitTimes[ABSCONDING]) * delta
 func startAttackPhase():
 	currState = ATTACKING
-	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
+	animatedSpriteNode.play("idle")
 	$BulletSpawnPath.rotateBulletSpawnPath()
+	emit_signal("attackPhaseStarting")
 func startLeavePhase():
 	currState = ABSCONDING
-	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
+	animatedSpriteNode.play("moving")
+	emit_signal("abscondPhaseStarting")
 func startAwayPhase():
+	animatedSpriteNode.scale.x = origScale
+	animatedSpriteNode.scale.y = origScale
 	currState = AWAY
-	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
+	animatedSpriteNode.play("idle")
 	emit_signal("attackPhaseEnding")
+	emit_signal("awayPhaseStarting")
 func startApproachPhase(): 
 	prevLocation = position
 	findNewTile()
@@ -83,31 +96,49 @@ func startApproachPhase():
 		approachVector = Vector2.ZERO
 		stateWaitTimes[APPROACHING] = 1
 	currState = APPROACHING
-	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
-	emit_signal("attackPhaseStarting")
-
+	animatedSpriteNode.play("moving")
+	emit_signal("approachPhaseStarting")
+var angleChangeVectors = [Vector2(0, -6), Vector2(0, -6), Vector2(0, -63), Vector2(0, 63)]
+enum {RIGHT, LEFT, UP, DOWN}
+var displacementEnum
+func startAnglechangePhase():
+	position = Global.getEnemyCoords()
+	animatedSpriteNode.scale.x = finalScale
+	animatedSpriteNode.scale.y = finalScale
+	var enemyDiscplacement = Global.getEnemyDisplacementFromPlayer()
+	if enemyDiscplacement.x == 0:
+		displacementEnum = UP
+	else:
+		displacementEnum = RIGHT
+	currState = ANGLECHANGE
+	print("enum : ", displacementEnum, " vector :  ", angleChangeVectors[displacementEnum])
+	emit_signal("angleChangePhaseStarting")
 
 func goToNextState():
 	stateCounter = 0
 	if currState == AWAY:
 		startApproachPhase()
 	elif currState == APPROACHING:
+		startAnglechangePhase()
+	elif currState == ANGLECHANGE:
 		startAttackPhase()
 	elif currState == ATTACKING:
 		startLeavePhase()
-	else:
+	else: #currstate == absconding
 		startAwayPhase()
+	print("currstte: ", currState)
 
 func goToPrevState():
 	if currState == AWAY:
 		startLeavePhase()
 	elif currState == APPROACHING:
 		startAwayPhase()
-	elif currState == ATTACKING:
+	elif currState == ANGLECHANGE:
 		startApproachPhase()
-	else:
+	elif currState == ATTACKING:
+		startAnglechangePhase()
+	else: # currstate == absconding
 		startAttackPhase()
-	stateCounter = stateWaitTimes[currState]
 
 func introduction():
 	pass

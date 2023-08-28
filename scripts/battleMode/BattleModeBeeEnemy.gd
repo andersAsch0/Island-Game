@@ -37,12 +37,8 @@ func _ready():
 	$enemyMovement/PathFollow2D/AnimatedSprite.scale.x = origScale
 	$enemyMovement/PathFollow2D/AnimatedSprite.scale.y = origScale
 	$enemyMovement.enemySpeed = enemySpeed
-	if get_parent():
-		connect("attackPhaseStarting", get_parent(), "on_attack_phase_starting")
-		connect("attackPhaseEnding", get_parent(), "on_attack_phase_ending")
-		connect("enemyDead", get_parent(), "on_enemyDead")
-		Global.connect("timeMultiplierChanged", self, "changeAnimationSpeed")
-		Global.connect("timeFlowChanged", self, "startOrStopAnimation")
+	Global.connect("timeMultiplierChanged", self, "changeAnimationSpeed")
+	Global.connect("timeFlowChanged", self, "startOrStopAnimation")
 	
 	currState = AWAY
 	startAwayPhase()

@@ -380,7 +380,7 @@ script = ExtResource( 2 )
 enemyScene = ExtResource( 3 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( -92, 182 )
+position = Vector2( 57, 128 )
 scale = Vector2( 2.1, 2.1 )
 
 [node name="BigGridPerspective" type="Sprite" parent="."]
@@ -549,8 +549,8 @@ position = Vector2( 160, 27 )
 scale = Vector2( 1.82863, 1.82474 )
 texture = ExtResource( 8 )
 
-[connection signal="offensePhaseEnding" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
-[connection signal="offensePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
+[connection signal="enemyAngleChangePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
+[connection signal="enemyAwayPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
 [connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera" method="_on_BattleModePlayer_playerMovedOffense"]
