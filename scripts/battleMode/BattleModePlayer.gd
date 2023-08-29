@@ -141,6 +141,8 @@ func die():
 
 # OFFENSE MODE (called by BattleMode.gd)
 
+func _on_BattleMode_enemyApproachPhaseStarting(): #disable movingtiles
+	movingTilesDisabled = true
 func _on_BattleMode_offensePhaseEnding():
 	currState = DEFENSE
 	position = Global.getPlayerCoords() #snap to correct grid location (shouldnt be able to see the sudden movement bc grid is hidden)
@@ -158,6 +160,7 @@ func _on_BattleMode_offensePhaseEnding():
 	$comboMiniGame.gameEnd()
 	$catchMiniGame.visible = false
 func _on_BattleMode_offensePhaseStarting():
+	movingTilesDisabled = false
 	position = Global.getPlayerCoords()
 	currState = IDLE
 	$catchMiniGame.visible = true
@@ -173,8 +176,9 @@ func shield():
 		miniGameActive = false
 		if currState == IDLE:
 			$Animations.play("idle")
+var movingTilesDisabled = false
 func move(direction):
-	if currState != MOVINGTILES and Global.canMoveTo(Global.playerGridLocation + moveVectors[direction]) and not miniGameActive:
+	if currState != MOVINGTILES and Global.canMoveTo(Global.playerGridLocation + moveVectors[direction]) and not miniGameActive and not movingTilesDisabled:
 		moveDirection = direction
 		prevLocation = position
 		updateCurrGridSquare()
@@ -257,4 +261,5 @@ func _on_windWatchMiniGame_wind():
 	emit_signal("watchWind", 1)
 func _on_windWatchMiniGame_failedWind():
 	emit_signal("watchWind", -1)
+
 

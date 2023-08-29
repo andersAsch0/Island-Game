@@ -51,7 +51,7 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	$MusicHandler/reverseMusicLoop.stream = enemy.reverseMusic
 	$MusicHandler.attackPatternFile = enemy.attackPatternFile
 	add_child_below_node($MusicHandler, enemy)
-	on_abscond_phase_starting()
+	on_away_phase_starting()
 	
 	 # connect the signal to start fight from the new node to this one
 	# enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")

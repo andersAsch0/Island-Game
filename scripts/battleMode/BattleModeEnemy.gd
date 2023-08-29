@@ -22,7 +22,7 @@ enum {
 	ABSCONDING
 }
 var currState = AWAY
-export var stateWaitTimes = [10.0, 100.0, 2, 20, 0.5] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [10.0, 100.0, 0.8, 20, 0.8] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
@@ -98,7 +98,7 @@ func startApproachPhase():
 	currState = APPROACHING
 	animatedSpriteNode.play("moving")
 	emit_signal("approachPhaseStarting")
-var angleChangeVectors = [Vector2(0, -6), Vector2(0, -6), Vector2(0, -63), Vector2(0, 63)]
+var angleChangeVectors = [Vector2(0, -6), Vector2(0, -6), Vector2(0, -53), Vector2(0, 53)]
 enum {RIGHT, LEFT, UP, DOWN}
 var displacementEnum
 func startAnglechangePhase():
@@ -111,7 +111,6 @@ func startAnglechangePhase():
 	else:
 		displacementEnum = RIGHT
 	currState = ANGLECHANGE
-	print("enum : ", displacementEnum, " vector :  ", angleChangeVectors[displacementEnum])
 	emit_signal("angleChangePhaseStarting")
 
 func goToNextState():
@@ -126,7 +125,6 @@ func goToNextState():
 		startLeavePhase()
 	else: #currstate == absconding
 		startAwayPhase()
-	print("currstte: ", currState)
 
 func goToPrevState():
 	if currState == AWAY:
