@@ -15,22 +15,21 @@ var YScaleChange : float = 1.0 - 0.33
 func _process(delta):
 	if isPlayerOffensePhase: # going from offense (3d) to defense (2d) (stretch)
 		rect_scale.y += (YScaleChange / animTime) * delta
-		grid.position -= (offsetFrom2DTo3D[Global.playerGridLocation.x][Global.playerGridLocation.y] / animTime) * delta
+#		grid.position -= (offsetFrom2DTo3D[Global.playerGridLocation.x][Global.playerGridLocation.y] / animTime) * delta
 	else: # going from 2d to 3d (squash)
 		rect_scale.y -= (YScaleChange / animTime) * delta
-		grid.position += (offsetFrom2DTo3D[Global.playerGridLocation.x][Global.playerGridLocation.y] / animTime) * delta
+#		grid.position += (offsetFrom2DTo3D[Global.playerGridLocation.x][Global.playerGridLocation.y] / animTime) * delta
 
 func _on_BattleMode_enemyAttackPhaseStarting():
 	set_process(false)
 func startAngleChangeTo2D(): #called by the camera which sets its position, so it doesnt start moving until it has the correct position
 	isPlayerOffensePhase = true
 	set_process(true)
-	grid.play("default", true)
+#	grid.play("default", true)
 
 func _on_BattleMode_enemyAwayPhaseStarting(): # end angle change
-	var gridscale = grid.scale.y
 	set_process(false)
 func _on_BattleMode_enemyAbscondPhaseStarting():
 	isPlayerOffensePhase = false
 	set_process(true)
-	grid.play("default", false)
+#	grid.play("default", false)

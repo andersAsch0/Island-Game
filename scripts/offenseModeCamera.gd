@@ -4,7 +4,8 @@ extends Camera2D
 
 var battleModePlayerNode
 onready var gridCenter = get_node("../gridCenter")
-onready var grid = get_node("../gridCenter/bigGrid")
+onready var grid = get_node("../gridCenter/bigGrid3")
+onready var globalGridPos = gridCenter.rect_position
 var shouldFollow = true
 
 func _ready():
@@ -18,15 +19,10 @@ func _process(_delta):
 func setFollow(enable : bool):
 	shouldFollow = enable
 func snapToPlayer():
-	position = battleModePlayerNode.position + vec
+	position = Global.getPlayerCoords() + vec
 	gridCenter.rect_position = position
-	grid.global_position = Vector2(174,129)
+	grid.position = globalGridPos - position
 	gridCenter.startAngleChangeTo2D()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
 
 func _on_BattleModePlayer_playerMovedOffense(_direction, _newTile, _timeToMove):
 	setFollow(true)

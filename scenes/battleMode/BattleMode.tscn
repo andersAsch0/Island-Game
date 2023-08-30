@@ -457,8 +457,7 @@ frames = SubResource( 114 )
 
 [node name="bigGrid3" type="AnimatedSprite" parent="gridCenter"]
 self_modulate = Color( 1, 1, 1, 0.47451 )
-position = Vector2( 8, 7 )
-scale = Vector2( 1, 0.33 )
+scale = Vector2( 1.2, 0.33 )
 frames = SubResource( 114 )
 frame = 8
 
