@@ -98,7 +98,7 @@ func startApproachPhase():
 	currState = APPROACHING
 	animatedSpriteNode.play("moving")
 	emit_signal("approachPhaseStarting")
-var angleChangeVectors = [Vector2(0, -6), Vector2(0, -6), Vector2(0, -53), Vector2(0, 53)]
+var angleChangeVectors = [Vector2(0, -6), Vector2(0, -6), Vector2(0, -33), Vector2(0, 33)]
 enum {RIGHT, LEFT, UP, DOWN}
 var displacementEnum
 func startAnglechangePhase():

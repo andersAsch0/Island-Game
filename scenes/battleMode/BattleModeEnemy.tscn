@@ -141,7 +141,7 @@ shape = SubResource( 14 )
 position = Vector2( 0, 35 )
 
 [node name="enemyMovement" type="Path2D" parent="."]
-position = Vector2( -1, 10 )
+position = Vector2( 0, -12 )
 scale = Vector2( 1, 0.991857 )
 curve = SubResource( 17 )
 script = ExtResource( 6 )
@@ -184,6 +184,7 @@ disabled = true
 position = Vector2( 3.8147e-06, 0 )
 frames = SubResource( 24 )
 animation = "idle"
+frame = 2
 playing = true
 
 [node name="BulletSpawnPath" type="Path2D" parent="."]
