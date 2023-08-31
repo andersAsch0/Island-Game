@@ -430,7 +430,7 @@ margin_left = 160.0
 margin_top = 123.0
 margin_right = 160.0
 margin_bottom = 123.0
-rect_scale = Vector2( 1.2, 1 )
+rect_scale = Vector2( 1.2, 0.33 )
 script = ExtResource( 9 )
 
 [node name="bigGrid" type="AnimatedSprite" parent="gridCenter"]
@@ -489,8 +489,7 @@ position = Vector2( -200, -195 )
 position = Vector2( 193.333, 195 )
 
 [node name="Position2D" type="Position2D" parent="."]
-visible = false
-position = Vector2( -54, 273 )
+position = Vector2( 53, 174 )
 scale = Vector2( 2.1, 2.1 )
 
 [node name="BigGridPerspective" type="Sprite" parent="."]

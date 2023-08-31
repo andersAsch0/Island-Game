@@ -50,7 +50,7 @@ func generate2dCoords(topLeft: Vector2, bottomRight: Vector2): #return arrays
 			array[y].append(Vector2(x * distBetweenLocations + topLeft.x, y * distBetweenLocations + topLeft.y))
 	return array
 			
-func generate3dCoords(topLeft: Vector2, topRight: Vector2, bottomLeft: Vector2, bottomRight: Vector2, square01 : Vector2, square02: Vector2, square03: Vector2, square41: Vector2, square42: Vector2, square43: Vector2):
+func generate3dCoords(topLeft: Vector2, topRight: Vector2, bottomRight: Vector2, bottomLeft: Vector2, square01 : Vector2, square02: Vector2, square03: Vector2, square41: Vector2, square42: Vector2, square43: Vector2):
 	var array = []
 	var distBetweenLocations : float
 	var leftColumn = [topLeft, square01, square02, square03, bottomLeft]
@@ -61,7 +61,11 @@ func generate3dCoords(topLeft: Vector2, topRight: Vector2, bottomLeft: Vector2, 
 			for x in range(5):
 				array[y].append(Vector2(leftColumn[y].x + distBetweenLocations * x, leftColumn[y].y))
 	return array
-#only call when gridCenter is at 0,0
 func updateGlobal(full3DCoordsRelativeToGridCenter):
-	pass
+	Global.gridCoords = []
+	for y in range(5):
+		Global.gridCoords.append([])
+		for x in range(5):
+			Global.gridCoords[y].append(Vector2(full3DCoordsRelativeToGridCenter[y][x].x * rect_scale.x + rect_position.x, full3DCoordsRelativeToGridCenter[y][x].y * rect_scale.y + rect_position.y))
+	print(Global.gridCoords)
 		
