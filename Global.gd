@@ -30,10 +30,9 @@ func updateDeadEnemyList(list : Array): #all enemies are alive by default, as yo
 	
 
 #BATTLEMODE GRID TRACKING (so all nodes can know where the enemy & player are)
-var gridCoordsY = [53, 74, 99, 132, 179]
-var gridCoordsX = [[11, 87, 163, 239, 313], [-6, 79, 162, 246, 331], [-26, 68, 162, 258, 353], [-54, 55, 162, 270, 381], [-92, 37, 162, 291, 420]]
-var bigGridLocationsx = [18, 90, 160, 230, 300 ]
-var bigGridLocationsy = [-30, 40, 110, 180, 250]
+var gridCoords = []
+#var bigGridLocationsx = [18, 90, 160, 230, 300 ]
+#var bigGridLocationsy = [-30, 40, 110, 180, 250]
 
 var playerGridLocation = Vector2(2,2)
 var enemyGridLocation = Vector2(2,1)
@@ -43,9 +42,9 @@ func setEnemyGridLocation( newLocation : Vector2):
 	enemyGridLocation = newLocation
 
 func getEnemyCoords():
-	return Vector2(gridCoordsX[enemyGridLocation.y][enemyGridLocation.x], gridCoordsY[enemyGridLocation.y])
+	return gridCoords[enemyGridLocation.y][enemyGridLocation.x]
 func getPlayerCoords():
-	return Vector2(gridCoordsX[playerGridLocation.y][playerGridLocation.x], gridCoordsY[playerGridLocation.y])
+	return gridCoords[playerGridLocation.y][playerGridLocation.x]
 func getEnemyDisplacementFromPlayer():
 	return enemyGridLocation - playerGridLocation
 

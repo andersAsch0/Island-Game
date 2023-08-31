@@ -13,7 +13,9 @@ var coords3d = []
 func _ready():
 	coords2d = generate2dCoords($bigGrid3/frame0Corner.position, $bigGrid3/frame0Corner3.position)
 	coords3d = generate3dCoords($bigGrid3/frame8Corner.position, $bigGrid3/frame8Corner2.position, $bigGrid3/frame8Corner3.position, $bigGrid3/frame8Corner4.position,
-	$bigGrid3/frame8LeftSide2.position, $bigGrid3/frame8LeftSide3.position, $bigGrid3/frame8LeftSide4.position)
+	$bigGrid3/frame8LeftSide2.position, $bigGrid3/frame8LeftSide3.position, $bigGrid3/frame8LeftSide4.position, $bigGrid3/frame8RightSide2.position, $bigGrid3/frame8RightSide3.position, $bigGrid3/frame8RightSide4.position)
+	updateGlobal(coords3d)
+	
 
 func _process(delta):
 	if isPlayerOffensePhase: # going from offense (3d) to defense (2d) (stretch)
@@ -46,8 +48,20 @@ func generate2dCoords(topLeft: Vector2, bottomRight: Vector2): #return arrays
 		array.append([])
 		for x in range(5):
 			array[y].append(Vector2(x * distBetweenLocations + topLeft.x, y * distBetweenLocations + topLeft.y))
-	print(array)
 	return array
 			
-func generate3dCoords(topLeft: Vector2, topRight: Vector2, bottomLeft: Vector2, bottomRight: Vector2, square01 : Vector2, square02: Vector2, square03: Vector2):
-	return null
+func generate3dCoords(topLeft: Vector2, topRight: Vector2, bottomLeft: Vector2, bottomRight: Vector2, square01 : Vector2, square02: Vector2, square03: Vector2, square41: Vector2, square42: Vector2, square43: Vector2):
+	var array = []
+	var distBetweenLocations : float
+	var leftColumn = [topLeft, square01, square02, square03, bottomLeft]
+	var rightColumn = [topRight, square41, square42, square43, bottomRight]
+	for y in range(5):
+			distBetweenLocations = (rightColumn[y].x - leftColumn[y].x) / 4
+			array.append([])
+			for x in range(5):
+				array[y].append(Vector2(leftColumn[y].x + distBetweenLocations * x, leftColumn[y].y))
+	return array
+#only call when gridCenter is at 0,0
+func updateGlobal(full3DCoordsRelativeToGridCenter):
+	pass
+		

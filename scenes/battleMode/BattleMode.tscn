@@ -430,6 +430,7 @@ margin_left = 160.0
 margin_top = 123.0
 margin_right = 160.0
 margin_bottom = 123.0
+rect_scale = Vector2( 1.2, 1 )
 script = ExtResource( 9 )
 
 [node name="bigGrid" type="AnimatedSprite" parent="gridCenter"]
@@ -448,8 +449,8 @@ frames = SubResource( 114 )
 
 [node name="bigGrid3" type="AnimatedSprite" parent="gridCenter"]
 self_modulate = Color( 1, 1, 1, 0.47451 )
-scale = Vector2( 1.2, 1 )
 frames = SubResource( 114 )
+frame = 8
 
 [node name="frame8Corner" type="Position2D" parent="gridCenter/bigGrid3"]
 position = Vector2( -101.667, -223.333 )
@@ -472,6 +473,15 @@ position = Vector2( -129.167, -88 )
 [node name="frame8LeftSide4" type="Position2D" parent="gridCenter/bigGrid3"]
 position = Vector2( -150, 12 )
 
+[node name="frame8RightSide2" type="Position2D" parent="gridCenter/bigGrid3"]
+position = Vector2( 107.5, -163 )
+
+[node name="frame8RightSide3" type="Position2D" parent="gridCenter/bigGrid3"]
+position = Vector2( 123.333, -87 )
+
+[node name="frame8RightSide4" type="Position2D" parent="gridCenter/bigGrid3"]
+position = Vector2( 146.667, 14 )
+
 [node name="frame0Corner" type="Position2D" parent="gridCenter/bigGrid3"]
 position = Vector2( -200, -195 )
 
@@ -480,7 +490,7 @@ position = Vector2( 193.333, 195 )
 
 [node name="Position2D" type="Position2D" parent="."]
 visible = false
-position = Vector2( -81, -121 )
+position = Vector2( -54, 273 )
 scale = Vector2( 2.1, 2.1 )
 
 [node name="BigGridPerspective" type="Sprite" parent="."]
