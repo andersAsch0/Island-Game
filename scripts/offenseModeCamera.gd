@@ -5,7 +5,7 @@ extends Camera2D
 var battleModePlayerNode
 onready var gridCenter = get_node("../gridCenter")
 onready var grid = get_node("../gridCenter/bigGrid3")
-onready var globalGridPos = gridCenter.rect_position
+onready var globalGridPos = gridCenter.rect_position # since grid child is at 0,0
 var shouldFollow = true
 
 func _ready():
@@ -20,8 +20,8 @@ func setFollow(enable : bool):
 	shouldFollow = enable
 func snapToPlayer():
 	position = Global.getPlayerCoords() + vec
-	gridCenter.rect_position = position
-	grid.position = globalGridPos - position
+	grid.position = globalGridPos - (battleModePlayerNode.position * gridCenter.rect_scale)
+	gridCenter.rect_position = battleModePlayerNode.position
 	gridCenter.startAngleChangeTo2D()
 
 func _on_BattleModePlayer_playerMovedOffense(_direction, _newTile, _timeToMove):
