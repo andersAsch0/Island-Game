@@ -2,10 +2,10 @@ extends KinematicBody2D
 
 export var bulletScene : PackedScene #packed scene of the bullet this enemy uses
 var bullet = null
-export(String, FILE, "*.json") var attackPatternFile #imported json file
+export(String, FILE, "*.json") var attackPatternFile #imported json file of music pattern
 export var normalMusic : AudioStreamSample
 export var reverseMusic : AudioStreamSample
-var origScale = 0.9 # starting size of sprite when enemy spawns
+var origScale = 0.3 # starting size of sprite when enemy spawns
 export var finalScale = 1 #final size of the sprite once it has approached
 export var enemySpeed = 10 #speed at which the enemy wanders around
 export var maxHP = 5
@@ -17,23 +17,16 @@ var bulletSpawnTimeCounter : float = 0 #using this instead of a timer node becau
 enum {
 	AWAY
 	APPROACHING
-	ANGLECHANGE
 	ATTACKING
 	ABSCONDING
 }
 var currState = AWAY
-export var stateWaitTimes = [5.0, 100.0, 0.8, 2, 0.8] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [10, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
-var animatedSpriteNode
 
-signal awayPhaseStarting
-signal approachPhaseStarting
-signal angleChangePhaseStarting
 signal attackPhaseStarting
-signal abscondPhaseStarting
-
 signal attackPhaseEnding
 signal enemyDead
 signal enemyMoved
@@ -41,51 +34,41 @@ signal enemyMoved
 #SETUP AND APPROACH
 
 func _ready():
-	animatedSpriteNode = $enemyMovement/PathFollow2D/AnimatedSprite
-	animatedSpriteNode.scale.x = origScale
-	animatedSpriteNode.scale.y = origScale
+	$enemyMovement/PathFollow2D/AnimatedSprite.scale.x = origScale
+	$enemyMovement/PathFollow2D/AnimatedSprite.scale.y = origScale
 	$enemyMovement.enemySpeed = enemySpeed
 	Global.connect("timeMultiplierChanged", self, "changeAnimationSpeed")
 	Global.connect("timeFlowChanged", self, "startOrStopAnimation")
-
+	
 	currState = AWAY
 	startAwayPhase()
 	visible = true
 		
 func _physics_process(delta):
+	$enemyMovement/PathFollow2D/HPBar.value = 1.0 * currentHP/maxHP * 100
 	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int) * ((Global.currCombatTimeMultiplier > 0) as int) # only inc if time is moving AND time isnt reversed
 	if stateCounter >= stateWaitTimes[currState]: #need to go to next state
 		goToNextState()
 	elif stateCounter <= 0: #time reversed, need to go to prev state
 		goToPrevState()
-	
-	#frame by frame animation and movement
 	if currState == APPROACHING: #increase scale (grow bigger each frame)
 		position += approachVector * delta * approachSpeed
-		animatedSpriteNode.scale.x += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		animatedSpriteNode.scale.y += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-	elif currState == ANGLECHANGE:
-		position += (angleChangeVector / stateWaitTimes[ANGLECHANGE] ) * delta
+		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	elif currState == ABSCONDING:
-		animatedSpriteNode.scale.x -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		animatedSpriteNode.scale.y -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		position -= (angleChangeVector / stateWaitTimes[ABSCONDING]) * delta
+		$enemyMovement/PathFollow2D/AnimatedSprite.scale.x -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		$enemyMovement/PathFollow2D/AnimatedSprite.scale.y -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 func startAttackPhase():
 	currState = ATTACKING
-	animatedSpriteNode.play("idle")
+	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
 	$BulletSpawnPath.rotateBulletSpawnPath()
-	emit_signal("attackPhaseStarting")
 func startLeavePhase():
 	currState = ABSCONDING
-	animatedSpriteNode.play("moving")
-	emit_signal("abscondPhaseStarting")
+	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
 func startAwayPhase():
-	animatedSpriteNode.scale.x = origScale
-	animatedSpriteNode.scale.y = origScale
 	currState = AWAY
-	animatedSpriteNode.play("idle")
+	$enemyMovement/PathFollow2D/AnimatedSprite.play("idle")
 	emit_signal("attackPhaseEnding")
-	emit_signal("awayPhaseStarting")
 func startApproachPhase(): 
 	prevLocation = position
 	findNewTile()
@@ -96,32 +79,19 @@ func startApproachPhase():
 		approachVector = Vector2.ZERO
 		stateWaitTimes[APPROACHING] = 1
 	currState = APPROACHING
-	animatedSpriteNode.play("moving")
-	emit_signal("approachPhaseStarting")
-var angleChangeVector = Vector2()
-func startAnglechangePhase():
-	position = Global.getEnemyCoords()
-	animatedSpriteNode.scale.x = finalScale
-	animatedSpriteNode.scale.y = finalScale
-	var enemyDiscplacement = Global.getEnemyDisplacementFromPlayer()
-	if enemyDiscplacement.x == 0:
-		angleChangeVector = Vector2(0,(69 - abs(Global.getPlayerCoords().y - Global.getEnemyCoords().y))*sign(Global.getPlayerCoords().y - Global.getEnemyCoords().y) * -1)
-	else:
-		angleChangeVector = Vector2((69 - abs(Global.getPlayerCoords().x - Global.getEnemyCoords().x))*sign(Global.getPlayerCoords().x - Global.getEnemyCoords().x) * -1, 0)
-	currState = ANGLECHANGE
-	emit_signal("angleChangePhaseStarting")
+	$enemyMovement/PathFollow2D/AnimatedSprite.play("moving")
+	emit_signal("attackPhaseStarting")
+
 
 func goToNextState():
 	stateCounter = 0
 	if currState == AWAY:
 		startApproachPhase()
 	elif currState == APPROACHING:
-		startAnglechangePhase()
-	elif currState == ANGLECHANGE:
 		startAttackPhase()
 	elif currState == ATTACKING:
 		startLeavePhase()
-	else: #currstate == absconding
+	else:
 		startAwayPhase()
 
 func goToPrevState():
@@ -129,12 +99,11 @@ func goToPrevState():
 		startLeavePhase()
 	elif currState == APPROACHING:
 		startAwayPhase()
-	elif currState == ANGLECHANGE:
-		startApproachPhase()
 	elif currState == ATTACKING:
-		startAnglechangePhase()
-	else: # currstate == absconding
+		startApproachPhase()
+	else:
 		startAttackPhase()
+	stateCounter = stateWaitTimes[currState]
 
 func introduction():
 	pass
@@ -187,6 +156,7 @@ func _on_DeathTimer_timeout():
 	queue_free()
 
 
+
 #GRID MOVEMENT
 var playerGridSquare = Vector2(2, 2)
 var currentGridSquare = Vector2(2, 1)
@@ -197,10 +167,13 @@ var bigGridLocationsy = [-30, 40, 110, 180, 250]
 
 func findNewTile(): #finds closest valid tile near the player to move to
 	var squareAbove = (Global.playerGridLocation + Vector2(0, -1))
+	var squareBelow = (Global.playerGridLocation + Vector2(0, 1))
 	var squareLeft = (Global.playerGridLocation + Vector2(-1, 0))
 	var squareRight = (Global.playerGridLocation + Vector2(1, 0))
 	var closestSquare = squareAbove
 	
+	if calculateTileDistance(closestSquare) > calculateTileDistance(squareBelow):
+		closestSquare = squareBelow
 	if calculateTileDistance(closestSquare) > calculateTileDistance(squareRight):
 		closestSquare = squareRight
 	if calculateTileDistance(closestSquare) > calculateTileDistance(squareLeft):

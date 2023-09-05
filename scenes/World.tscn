@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://scenes/map tiles/noncollidingScenery.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
@@ -10,14 +10,17 @@
 [ext_resource path="res://art/map tiles/nature sprite sheet.png" type="Texture" id=8]
 [ext_resource path="res://art/map tiles/dirt n sane.png" type="Texture" id=9]
 [ext_resource path="res://scenes/enemy.tscn" type="PackedScene" id=10]
+[ext_resource path="res://art/map tiles/docks and water no water.png" type="Texture" id=11]
 [ext_resource path="res://art/map tiles/walkway vertical.png" type="Texture" id=12]
 [ext_resource path="res://art/map tiles/docks and water.png" type="Texture" id=13]
 [ext_resource path="res://art/map tiles/water and docks.png" type="Texture" id=14]
 [ext_resource path="res://art/map tiles/walkway horizontal.png" type="Texture" id=15]
+[ext_resource path="res://art/map tiles/water and docks no water.png" type="Texture" id=16]
 [ext_resource path="res://scenes/map tiles/smallPalm.tscn" type="PackedScene" id=17]
 [ext_resource path="res://scenes/map tiles/smallHouse.tscn" type="PackedScene" id=18]
 [ext_resource path="res://art/map tiles/waterMovement/waterMovement.tres" type="Texture" id=19]
 [ext_resource path="res://art/map tiles/waterMovement/waterEdgeAnimatedTiles.tres" type="Texture" id=20]
+[ext_resource path="res://art/map tiles/waterMovement/animatedDocksAndWater.tres" type="Texture" id=21]
 
 [sub_resource type="TileSet" id=4]
 0/name = "nature sprite sheet.png 0"
@@ -1207,6 +1210,174 @@
 15/shape_one_way_margin = 0.0
 15/shapes = [  ]
 15/z_index = 0
+16/name = "animatedDocksAndWater.tres 16"
+16/texture = ExtResource( 21 )
+16/tex_offset = Vector2( 0, 0 )
+16/modulate = Color( 1, 1, 1, 1 )
+16/region = Rect2( 0, 64, 32, 32 )
+16/tile_mode = 0
+16/occluder_offset = Vector2( 0, 0 )
+16/navigation_offset = Vector2( 0, 0 )
+16/shape_offset = Vector2( 0, 0 )
+16/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+16/shape_one_way = false
+16/shape_one_way_margin = 0.0
+16/shapes = [  ]
+16/z_index = 0
+18/name = "animatedDocksAndWater.tres 18"
+18/texture = ExtResource( 21 )
+18/tex_offset = Vector2( 0, 0 )
+18/modulate = Color( 1, 1, 1, 1 )
+18/region = Rect2( 64, 64, 32, 32 )
+18/tile_mode = 0
+18/occluder_offset = Vector2( 0, 0 )
+18/navigation_offset = Vector2( 0, 0 )
+18/shape_offset = Vector2( 0, 0 )
+18/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+18/shape_one_way = false
+18/shape_one_way_margin = 0.0
+18/shapes = [  ]
+18/z_index = 0
+19/name = "animatedDocksAndWater.tres 19"
+19/texture = ExtResource( 21 )
+19/tex_offset = Vector2( 0, 0 )
+19/modulate = Color( 1, 1, 1, 1 )
+19/region = Rect2( 96, 0, 32, 32 )
+19/tile_mode = 0
+19/occluder_offset = Vector2( 0, 0 )
+19/navigation_offset = Vector2( 0, 0 )
+19/shape_offset = Vector2( 0, 0 )
+19/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+19/shape_one_way = false
+19/shape_one_way_margin = 0.0
+19/shapes = [  ]
+19/z_index = 0
+20/name = "animatedDocksAndWater.tres 20"
+20/texture = ExtResource( 21 )
+20/tex_offset = Vector2( 0, 0 )
+20/modulate = Color( 1, 1, 1, 1 )
+20/region = Rect2( 128, 0, 32, 32 )
+20/tile_mode = 0
+20/occluder_offset = Vector2( 0, 0 )
+20/navigation_offset = Vector2( 0, 0 )
+20/shape_offset = Vector2( 0, 0 )
+20/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+20/shape_one_way = false
+20/shape_one_way_margin = 0.0
+20/shapes = [  ]
+20/z_index = 0
+21/name = "animatedDocksAndWater.tres 21"
+21/texture = ExtResource( 21 )
+21/tex_offset = Vector2( 0, 0 )
+21/modulate = Color( 1, 1, 1, 1 )
+21/region = Rect2( 160, 0, 32, 32 )
+21/tile_mode = 0
+21/occluder_offset = Vector2( 0, 0 )
+21/navigation_offset = Vector2( 0, 0 )
+21/shape_offset = Vector2( 0, 0 )
+21/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+21/shape_one_way = false
+21/shape_one_way_margin = 0.0
+21/shapes = [  ]
+21/z_index = 0
+22/name = "animatedDocksAndWater.tres 22"
+22/texture = ExtResource( 21 )
+22/tex_offset = Vector2( 0, 0 )
+22/modulate = Color( 1, 1, 1, 1 )
+22/region = Rect2( 32, 64, 32, 32 )
+22/tile_mode = 0
+22/occluder_offset = Vector2( 0, 0 )
+22/navigation_offset = Vector2( 0, 0 )
+22/shape_offset = Vector2( 0, 0 )
+22/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+22/shape_one_way = false
+22/shape_one_way_margin = 0.0
+22/shapes = [  ]
+22/z_index = 0
+23/name = "water and docks no water.png 23"
+23/texture = ExtResource( 16 )
+23/tex_offset = Vector2( 0, 0 )
+23/modulate = Color( 1, 1, 1, 1 )
+23/region = Rect2( 0, 0, 32, 32 )
+23/tile_mode = 0
+23/occluder_offset = Vector2( 0, 0 )
+23/navigation_offset = Vector2( 0, 0 )
+23/shape_offset = Vector2( 0, 0 )
+23/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+23/shape_one_way = false
+23/shape_one_way_margin = 0.0
+23/shapes = [  ]
+23/z_index = 0
+24/name = "water and docks no water.png 24"
+24/texture = ExtResource( 16 )
+24/tex_offset = Vector2( 0, 0 )
+24/modulate = Color( 1, 1, 1, 1 )
+24/region = Rect2( 32, 0, 32, 32 )
+24/tile_mode = 0
+24/occluder_offset = Vector2( 0, 0 )
+24/navigation_offset = Vector2( 0, 0 )
+24/shape_offset = Vector2( 0, 0 )
+24/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+24/shape_one_way = false
+24/shape_one_way_margin = 0.0
+24/shapes = [  ]
+24/z_index = 0
+25/name = "water and docks no water.png 25"
+25/texture = ExtResource( 16 )
+25/tex_offset = Vector2( 0, 0 )
+25/modulate = Color( 1, 1, 1, 1 )
+25/region = Rect2( 64, 0, 32, 32 )
+25/tile_mode = 0
+25/occluder_offset = Vector2( 0, 0 )
+25/navigation_offset = Vector2( 0, 0 )
+25/shape_offset = Vector2( 0, 0 )
+25/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+25/shape_one_way = false
+25/shape_one_way_margin = 0.0
+25/shapes = [  ]
+25/z_index = 0
+26/name = "docks and water no water.png 26"
+26/texture = ExtResource( 11 )
+26/tex_offset = Vector2( 0, 0 )
+26/modulate = Color( 1, 1, 1, 1 )
+26/region = Rect2( 0, 64, 32, 32 )
+26/tile_mode = 0
+26/occluder_offset = Vector2( 0, 0 )
+26/navigation_offset = Vector2( 0, 0 )
+26/shape_offset = Vector2( 0, 0 )
+26/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+26/shape_one_way = false
+26/shape_one_way_margin = 0.0
+26/shapes = [  ]
+26/z_index = 0
+27/name = "docks and water no water.png 27"
+27/texture = ExtResource( 11 )
+27/tex_offset = Vector2( 0, 0 )
+27/modulate = Color( 1, 1, 1, 1 )
+27/region = Rect2( 32, 64, 32, 32 )
+27/tile_mode = 0
+27/occluder_offset = Vector2( 0, 0 )
+27/navigation_offset = Vector2( 0, 0 )
+27/shape_offset = Vector2( 0, 0 )
+27/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+27/shape_one_way = false
+27/shape_one_way_margin = 0.0
+27/shapes = [  ]
+27/z_index = 0
+28/name = "docks and water no water.png 28"
+28/texture = ExtResource( 11 )
+28/tex_offset = Vector2( 0, 0 )
+28/modulate = Color( 1, 1, 1, 1 )
+28/region = Rect2( 64, 64, 32, 32 )
+28/tile_mode = 0
+28/occluder_offset = Vector2( 0, 0 )
+28/navigation_offset = Vector2( 0, 0 )
+28/shape_offset = Vector2( 0, 0 )
+28/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+28/shape_one_way = false
+28/shape_one_way_margin = 0.0
+28/shapes = [  ]
+28/z_index = 0
 
 [node name="World" type="Node2D"]
 script = ExtResource( 6 )
@@ -1244,7 +1415,7 @@ scale = Vector2( 0.5, 0.5 )
 tile_set = SubResource( 5 )
 cell_size = Vector2( 32, 32 )
 format = 1
-tile_data = PoolIntArray( -131056, 5, 0, -131055, 11, 0, -131054, 11, 0, -131053, 11, 0, -131052, 11, 0, -131051, 11, 0, -65520, 5, 0, -65519, 11, 0, -65518, 11, 0, -65517, 11, 0, -65516, 11, 0, -65515, 11, 0, 16, 13, 0, 17, 1, 0, 18, 1, 0, 19, 1, 0, 20, 1, 0, 21, 1, 0, 65550, 9, 0, 65551, 7, 0, 65552, 7, 0, 65553, 7, 0, 65554, 7, 0, 65555, 7, 0, 65556, 10, 0, 131086, 5, 0, 131087, 11, 0, 131088, 11, 0, 131089, 11, 0, 131090, 11, 0, 131091, 11, 0, 131092, 3, 0, 196622, 13, 0, 196623, 1, 0, 196624, 2, 0, 196625, 11, 0, 196626, 11, 0, 196627, 11, 0, 196628, 3, 0, 262160, 5, 0, 262161, 11, 0, 262162, 11, 0, 262163, 11, 0, 262164, 3, 0, 327696, 5, 0, 327697, 11, 0, 327698, 11, 0, 327699, 11, 0, 327700, 3, 0, 393232, 5, 0, 393233, 11, 0, 393234, 11, 0, 393235, 11, 0, 393236, 3, 0, 458768, 5, 0, 458769, 11, 0, 458770, 11, 0, 458771, 11, 0, 458772, 3, 0, 524302, 9, 0, 524303, 7, 0, 524304, 6, 0, 524305, 11, 0, 524306, 11, 0, 524307, 11, 0, 524308, 3, 0, 589838, 13, 0, 589839, 1, 0, 589840, 2, 0, 589841, 11, 0, 589842, 11, 0, 589843, 11, 0, 589844, 3, 0, 655376, 5, 0, 655377, 11, 0, 655378, 11, 0, 655379, 11, 0, 655380, 3, 0, 720912, 5, 0, 720913, 11, 0, 720914, 11, 0, 720915, 11, 0, 720916, 3, 0, 786448, 5, 0, 786449, 11, 0, 786450, 11, 0, 786451, 11, 0, 786452, 3, 0, 851984, 5, 0, 851985, 11, 0, 851986, 11, 0, 851987, 11, 0, 851988, 3, 0, 917520, 5, 0, 917521, 11, 0, 917522, 11, 0, 917523, 11, 0, 917524, 3, 0, 983056, 5, 0, 983057, 11, 0, 983058, 11, 0, 983059, 11, 0, 983060, 3, 0, 1048592, 13, 0, 1048593, 1, 0, 1048594, 1, 0, 1048595, 1, 0, 1048596, 12, 0 )
+tile_data = PoolIntArray( -131056, 5, 0, -131055, 11, 0, -131054, 11, 0, -131053, 11, 0, -131052, 11, 0, -131051, 11, 0, -65520, 5, 0, -65519, 11, 0, -65518, 11, 0, -65517, 11, 0, -65516, 11, 0, -65515, 11, 0, 16, 13, 0, 17, 20, 0, 18, 20, 0, 19, 20, 0, 20, 20, 0, 21, 20, 0, 65550, 9, 0, 65551, 7, 0, 65552, 7, 0, 65553, 7, 0, 65554, 7, 0, 65555, 7, 0, 65556, 10, 0, 131086, 5, 0, 131087, 11, 0, 131088, 11, 0, 131089, 11, 0, 131090, 11, 0, 131091, 11, 0, 131092, 3, 0, 196622, 26, 0, 196623, 27, 0, 196624, 25, 0, 196625, 11, 0, 196626, 11, 0, 196627, 11, 0, 196628, 3, 0, 262160, 5, 0, 262161, 11, 0, 262162, 11, 0, 262163, 11, 0, 262164, 3, 0, 327696, 5, 0, 327697, 11, 0, 327698, 11, 0, 327699, 11, 0, 327700, 3, 0, 393232, 5, 0, 393233, 11, 0, 393234, 11, 0, 393235, 11, 0, 393236, 3, 0, 458768, 5, 0, 458769, 11, 0, 458770, 11, 0, 458771, 11, 0, 458772, 3, 0, 524302, 9, 0, 524303, 7, 0, 524304, 6, 0, 524305, 11, 0, 524306, 11, 0, 524307, 11, 0, 524308, 3, 0, 589838, 16, 0, 589839, 20, 0, 589840, 21, 0, 589841, 11, 0, 589842, 11, 0, 589843, 11, 0, 589844, 3, 0, 655376, 5, 0, 655377, 11, 0, 655378, 11, 0, 655379, 11, 0, 655380, 3, 0, 720912, 5, 0, 720913, 11, 0, 720914, 11, 0, 720915, 11, 0, 720916, 3, 0, 786448, 5, 0, 786449, 11, 0, 786450, 11, 0, 786451, 11, 0, 786452, 3, 0, 851984, 5, 0, 851985, 11, 0, 851986, 11, 0, 851987, 11, 0, 851988, 3, 0, 917520, 5, 0, 917521, 11, 0, 917522, 11, 0, 917523, 11, 0, 917524, 3, 0, 983056, 5, 0, 983057, 11, 0, 983058, 11, 0, 983059, 11, 0, 983060, 3, 0, 1048592, 13, 0, 1048593, 1, 0, 1048594, 1, 0, 1048595, 1, 0, 1048596, 12, 0 )
 
 [node name="wood top" type="TileMap" parent="."]
 scale = Vector2( 0.5, 0.5 )
@@ -1285,6 +1456,9 @@ position = Vector2( 255, 33 )
 [node name="smallTree" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 93, 9 )
 
+[node name="beeEnemy" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 156, 95 )
+
 [node name="enemy" parent="YSort" instance=ExtResource( 10 )]
 position = Vector2( 156, 44 )
 
@@ -1313,9 +1487,6 @@ position = Vector2( 27, 87 )
 [node name="caveDoor" parent="." instance=ExtResource( 5 )]
 visible = false
 position = Vector2( 216, 25 )
-
-[node name="enemy" parent="." instance=ExtResource( 4 )]
-position = Vector2( 160, 83 )
 
 [editable path="YSort/smallPalm"]
 [editable path="YSort/smallTree2"]

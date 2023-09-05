@@ -16,3 +16,5 @@ func _input(event):
 		$catchMiniGame.playGame()
 	if event.is_action_pressed("windWatch"):
 		$windWatchMiniGame.playGame()
+	elif event.is_action_pressed("attack"):
+		$comboMiniGame.playGame()

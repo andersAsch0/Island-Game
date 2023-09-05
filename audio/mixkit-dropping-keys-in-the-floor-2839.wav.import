@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mixkit-dropping-keys-in-the-floor-2839.wav-40636a837080bb1f33d92b917f886883.sample"
+
+[deps]
+
+source_file="res://audio/mixkit-dropping-keys-in-the-floor-2839.wav"
+dest_files=[ "res://.import/mixkit-dropping-keys-in-the-floor-2839.wav-40636a837080bb1f33d92b917f886883.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -22,8 +22,11 @@ enum{
 }
 var currState = OFFENSE
 
-signal offensePhaseStarting
-signal offensePhaseEnding
+signal enemyAttackPhaseStarting
+signal enemyAbscondPhaseStarting
+signal enemyAwayPhaseStarting
+signal enemyApproachPhaseStarting
+signal enemyAngleChangePhaseStarting
 
 
 func _ready(): #this script sets up enemy, approach() function will handle the rest
@@ -34,11 +37,21 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemy = enemyScene.instance()
 	enemy.position = $enemySpawnLocation.position
 	enemy.visible = false
+	enemy.connect("attackPhaseStarting", self, "on_attack_phase_starting")
+	enemy.connect("abscondPhaseStarting", self, "on_abscond_phase_starting")
+	enemy.connect("awayPhaseStarting", self, "on_away_phase_starting")
+	enemy.connect("approachPhaseStarting", self, "on_approach_phase_starting")
+	enemy.connect("angleChangePhaseStarting", self, "on_angle_change_phase_starting")
+	
 	enemy.connect("enemyMoved", $BigGridPerspective/enemyGridHighlight, "on_enemyMoved")
 	enemy.connect("enemyMoved", $offenseModeCamera/Arrows, "on_enemyMoved")
+	enemy.connect("enemyDead", self, "on_enemyDead")
 	$MusicHandler.connect("melodyNote", enemy, "attack")
-	add_child(enemy) # add node to scene
-	on_attack_phase_ending() #battles start in offense mode for the player
+	$MusicHandler/normalMusicLoop.stream = enemy.normalMusic
+	$MusicHandler/reverseMusicLoop.stream = enemy.reverseMusic
+	$MusicHandler.attackPatternFile = enemy.attackPatternFile
+	add_child_below_node($MusicHandler, enemy)
+	on_away_phase_starting()
 	
 	 # connect the signal to start fight from the new node to this one
 	# enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")
@@ -124,23 +137,36 @@ func _on_slowTimeDuration_timeout():
 
 	
 
-#SIGNALS FROM ENEMY
+#SIGNALS FROM ENEMY (controlling current state of battleMode)
 export var overWorldPath = "res://scenes/World.tscn"
 func on_attack_phase_starting():
-	emit_signal("offensePhaseEnding")
+	emit_signal("enemyAttackPhaseStarting")
+func on_abscond_phase_starting():
+	emit_signal("enemyAbscondPhaseStarting")
+func on_away_phase_starting():
+	emit_signal("enemyAwayPhaseStarting")
+	switchToOffenseMode()
+func on_approach_phase_starting():
+	emit_signal("enemyApproachPhaseStarting")
+	$offenseModeCamera/Arrows.visible = false
+func on_angle_change_phase_starting():
+	emit_signal("enemyAngleChangePhaseStarting")
+	switchToDefenseMode()
+
+func switchToDefenseMode():
 	currState = DEFENSE
 	$offenseModeCamera/Grid.visible = true
 	$BigGridPerspective.visible = false
 	showActionMenu(false, false)
 	$offenseModeCamera.setFollow(false)
 	$offenseModeCamera.snapToPlayer()
-func on_attack_phase_ending():
-	emit_signal("offensePhaseStarting")
+func switchToOffenseMode():
 	currState = OFFENSE
 	$offenseModeCamera/Grid.visible = false
 	$BigGridPerspective.visible = true
 	$offenseModeCamera/Arrows.visible = true
 	showActionMenu(true, true)
+
 func on_enemyDead():
 	$offenseModeCamera/VictoryButton.visible = true
 	$offenseModeCamera/VictoryButton.disabled = false
@@ -180,10 +206,11 @@ func _on_windWatchMiniGame_wind(timeJuiceChange):
 func _on_HealButton_pressed():
 	$BattleModePlayer.healButtonPressed()
 func _on_AttackButton_pressed():
-	$BattleModePlayer.startAttack(1)
+	$BattleModePlayer.attackButtonPressed()
 func _on_ShieldButton_pressed():
 	$BattleModePlayer.shield()
 #	$offenseModeCamera/Arrows.visible = false
+
 
 
 
