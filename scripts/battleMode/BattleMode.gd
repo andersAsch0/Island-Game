@@ -148,6 +148,7 @@ func on_away_phase_starting():
 	switchToOffenseMode()
 func on_approach_phase_starting():
 	emit_signal("enemyApproachPhaseStarting")
+	$offenseModeCamera/Arrows.visible = false
 func on_angle_change_phase_starting():
 	emit_signal("enemyAngleChangePhaseStarting")
 	switchToDefenseMode()

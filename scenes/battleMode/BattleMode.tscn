@@ -1,4 +1,4 @@
-[gd_scene load_steps=108 format=2]
+[gd_scene load_steps=111 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -9,7 +9,7 @@
 [ext_resource path="res://art/battlegrid.png" type="Texture" id=7]
 [ext_resource path="res://art/butterfly1.png" type="Texture" id=8]
 [ext_resource path="res://scripts/gridCenter.gd" type="Script" id=9]
-[ext_resource path="res://art/grid anim.png" type="Texture" id=10]
+[ext_resource path="res://art/gridAnim.png" type="Texture" id=10]
 [ext_resource path="res://scenes/battleMode/MusicHandler.tscn" type="PackedScene" id=11]
 [ext_resource path="res://art/battleModeUI/action menu horiz.png" type="Texture" id=12]
 [ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
@@ -21,45 +21,57 @@
 [ext_resource path="res://art/bigGrid.png" type="Texture" id=19]
 [ext_resource path="res://scripts/battleMode/BigGridPerspective.gd" type="Script" id=20]
 
-[sub_resource type="AtlasTexture" id=105]
+[sub_resource type="AtlasTexture" id=115]
 atlas = ExtResource( 10 )
-region = Rect2( 0, 0, 500, 500 )
+region = Rect2( 0, 0, 600, 381 )
 
-[sub_resource type="AtlasTexture" id=106]
+[sub_resource type="AtlasTexture" id=116]
 atlas = ExtResource( 10 )
-region = Rect2( 500, 0, 500, 500 )
+region = Rect2( 600, 0, 600, 381 )
 
-[sub_resource type="AtlasTexture" id=107]
+[sub_resource type="AtlasTexture" id=117]
 atlas = ExtResource( 10 )
-region = Rect2( 1000, 0, 500, 500 )
+region = Rect2( 1200, 0, 600, 381 )
 
-[sub_resource type="AtlasTexture" id=108]
+[sub_resource type="AtlasTexture" id=118]
 atlas = ExtResource( 10 )
-region = Rect2( 1500, 0, 500, 500 )
+region = Rect2( 1800, 0, 600, 381 )
 
-[sub_resource type="AtlasTexture" id=109]
+[sub_resource type="AtlasTexture" id=119]
 atlas = ExtResource( 10 )
-region = Rect2( 2000, 0, 500, 500 )
+region = Rect2( 2400, 0, 600, 381 )
 
-[sub_resource type="AtlasTexture" id=110]
+[sub_resource type="AtlasTexture" id=120]
 atlas = ExtResource( 10 )
-region = Rect2( 2500, 0, 500, 500 )
+region = Rect2( 3000, 0, 600, 381 )
 
-[sub_resource type="AtlasTexture" id=111]
+[sub_resource type="AtlasTexture" id=121]
 atlas = ExtResource( 10 )
-region = Rect2( 3000, 0, 500, 500 )
+region = Rect2( 3600, 0, 600, 381 )
 
-[sub_resource type="AtlasTexture" id=112]
+[sub_resource type="AtlasTexture" id=122]
 atlas = ExtResource( 10 )
-region = Rect2( 3500, 0, 500, 500 )
+region = Rect2( 4200, 0, 600, 381 )
 
-[sub_resource type="AtlasTexture" id=113]
+[sub_resource type="AtlasTexture" id=123]
 atlas = ExtResource( 10 )
-region = Rect2( 4000, 0, 500, 500 )
+region = Rect2( 4800, 0, 600, 381 )
+
+[sub_resource type="AtlasTexture" id=124]
+atlas = ExtResource( 10 )
+region = Rect2( 5400, 0, 600, 381 )
+
+[sub_resource type="AtlasTexture" id=125]
+atlas = ExtResource( 10 )
+region = Rect2( 6000, 0, 600, 381 )
+
+[sub_resource type="AtlasTexture" id=126]
+atlas = ExtResource( 10 )
+region = Rect2( 6600, 0, 600, 381 )
 
 [sub_resource type="SpriteFrames" id=114]
 animations = [ {
-"frames": [ SubResource( 105 ), SubResource( 106 ), SubResource( 107 ), SubResource( 108 ), SubResource( 109 ), SubResource( 110 ), SubResource( 111 ), SubResource( 112 ), SubResource( 113 ) ],
+"frames": [ SubResource( 115 ), SubResource( 116 ), SubResource( 117 ), SubResource( 118 ), SubResource( 119 ), SubResource( 120 ), SubResource( 121 ), SubResource( 122 ), SubResource( 123 ), SubResource( 124 ), SubResource( 125 ), SubResource( 126 ) ],
 "loop": false,
 "name": "default",
 "speed": 10.0
@@ -425,71 +437,50 @@ animations = [ {
 script = ExtResource( 2 )
 enemyScene = ExtResource( 3 )
 
-[node name="gridCenter" type="CenterContainer" parent="."]
-margin_left = 160.0
-margin_top = 123.0
-margin_right = 160.0
-margin_bottom = 123.0
-rect_scale = Vector2( 1.2, 0.3 )
+[node name="bigGrid3" type="AnimatedSprite" parent="."]
+self_modulate = Color( 1, 1, 1, 0.47451 )
+position = Vector2( 160, 123 )
+frames = SubResource( 114 )
 script = ExtResource( 9 )
 
-[node name="bigGrid" type="AnimatedSprite" parent="gridCenter"]
-visible = false
-self_modulate = Color( 1, 1, 1, 0.47451 )
-position = Vector2( 174, 129 )
-scale = Vector2( 1.444, 0.336 )
-frames = SubResource( 114 )
-frame = 8
+[node name="frame8Corner" type="Position2D" parent="bigGrid3"]
+position = Vector2( -109.167, -72.5 )
 
-[node name="bigGrid2" type="AnimatedSprite" parent="gridCenter"]
-visible = false
-self_modulate = Color( 1, 1, 1, 0.47451 )
-position = Vector2( 8, 7 )
-frames = SubResource( 114 )
+[node name="frame8Corner2" type="Position2D" parent="bigGrid3"]
+position = Vector2( 99.1667, -74.1667 )
 
-[node name="bigGrid3" type="AnimatedSprite" parent="gridCenter"]
-self_modulate = Color( 1, 1, 1, 0.47451 )
-frames = SubResource( 114 )
-frame = 8
+[node name="frame8Corner3" type="Position2D" parent="bigGrid3"]
+position = Vector2( 198.333, 104.167 )
 
-[node name="frame8Corner" type="Position2D" parent="gridCenter/bigGrid3"]
-position = Vector2( -101.667, -223.333 )
+[node name="frame8Corner4" type="Position2D" parent="bigGrid3"]
+position = Vector2( -206.667, 105.833 )
 
-[node name="frame8Corner2" type="Position2D" parent="gridCenter/bigGrid3"]
-position = Vector2( 95, -223.333 )
+[node name="frame8LeftSide2" type="Position2D" parent="bigGrid3"]
+position = Vector2( -122.5, -48.3333 )
 
-[node name="frame8Corner3" type="Position2D" parent="gridCenter/bigGrid3"]
-position = Vector2( 174.167, 153.333 )
+[node name="frame8LeftSide3" type="Position2D" parent="bigGrid3"]
+position = Vector2( -141.667, -13.3333 )
 
-[node name="frame8Corner4" type="Position2D" parent="gridCenter/bigGrid3"]
-position = Vector2( -179.167, 150 )
+[node name="frame8LeftSide4" type="Position2D" parent="bigGrid3"]
+position = Vector2( -170, 33.3333 )
 
-[node name="frame8LeftSide2" type="Position2D" parent="gridCenter/bigGrid3"]
-position = Vector2( -111.667, -162 )
+[node name="frame8RightSide2" type="Position2D" parent="bigGrid3"]
+position = Vector2( 112.5, -48.3333 )
 
-[node name="frame8LeftSide3" type="Position2D" parent="gridCenter/bigGrid3"]
-position = Vector2( -129.167, -88 )
+[node name="frame8RightSide3" type="Position2D" parent="bigGrid3"]
+position = Vector2( 132.5, -15 )
 
-[node name="frame8LeftSide4" type="Position2D" parent="gridCenter/bigGrid3"]
-position = Vector2( -150, 12 )
+[node name="frame8RightSide4" type="Position2D" parent="bigGrid3"]
+position = Vector2( 160, 31.6667 )
 
-[node name="frame8RightSide2" type="Position2D" parent="gridCenter/bigGrid3"]
-position = Vector2( 107.5, -163 )
+[node name="frame0Corner" type="Position2D" parent="bigGrid3"]
+position = Vector2( -139.167, -152.5 )
 
-[node name="frame8RightSide3" type="Position2D" parent="gridCenter/bigGrid3"]
-position = Vector2( 123.333, -87 )
-
-[node name="frame8RightSide4" type="Position2D" parent="gridCenter/bigGrid3"]
-position = Vector2( 146.667, 14 )
-
-[node name="frame0Corner" type="Position2D" parent="gridCenter/bigGrid3"]
-position = Vector2( -200, -195 )
-
-[node name="frame0Corner3" type="Position2D" parent="gridCenter/bigGrid3"]
-position = Vector2( 193.333, 195 )
+[node name="frame0Corner3" type="Position2D" parent="bigGrid3"]
+position = Vector2( 134.167, 121.667 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 53, 174 )
+position = Vector2( 20, 227 )
 scale = Vector2( 2.1, 2.1 )
 
 [node name="BigGridPerspective" type="Sprite" parent="."]
@@ -513,7 +504,7 @@ position = Vector2( 160, 123 )
 scale = Vector2( 1.3795, 1.3795 )
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
-position = Vector2( 162, 39 )
+position = Vector2( 156, 74 )
 
 [node name="reverseTimeDuration" type="Timer" parent="."]
 wait_time = 5.0
@@ -539,7 +530,7 @@ frames = SubResource( 31 )
 animation = "forward"
 
 [node name="offenseModeCamera" type="Camera2D" parent="."]
-position = Vector2( 160, 91 )
+position = Vector2( 160, 103 )
 z_index = 1
 current = true
 script = ExtResource( 13 )
@@ -573,7 +564,7 @@ custom_colors/font_color_shadow = Color( 0.0941176, 0.321569, 0.854902, 1 )
 
 [node name="Grid" type="Sprite" parent="offenseModeCamera"]
 self_modulate = Color( 1, 1, 1, 0.215686 )
-position = Vector2( 3, 33 )
+position = Vector2( 0, 11 )
 scale = Vector2( 2.31579, 2.31579 )
 z_as_relative = false
 texture = ExtResource( 7 )
@@ -653,12 +644,13 @@ position = Vector2( 160, 27 )
 scale = Vector2( 1.82863, 1.82474 )
 texture = ExtResource( 8 )
 
-[connection signal="enemyAbscondPhaseStarting" from="." to="gridCenter" method="_on_BattleMode_enemyAbscondPhaseStarting"]
+[connection signal="enemyAbscondPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
 [connection signal="enemyApproachPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyApproachPhaseStarting"]
-[connection signal="enemyAttackPhaseStarting" from="." to="gridCenter" method="_on_BattleMode_enemyAttackPhaseStarting"]
-[connection signal="enemyAwayPhaseStarting" from="." to="gridCenter" method="_on_BattleMode_enemyAwayPhaseStarting"]
+[connection signal="enemyAttackPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAttackPhaseStarting"]
+[connection signal="enemyAwayPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
+[connection signal="frame_changed" from="bigGrid3" to="bigGrid3" method="_on_bigGrid3_frame_changed"]
 [connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera" method="_on_BattleModePlayer_playerMovedOffense"]

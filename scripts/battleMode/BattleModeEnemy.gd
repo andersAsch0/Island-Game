@@ -65,11 +65,11 @@ func _physics_process(delta):
 		animatedSpriteNode.scale.x += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		animatedSpriteNode.scale.y += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	elif currState == ANGLECHANGE:
-		position += (angleChangeVectors[displacementEnum] / stateWaitTimes[ANGLECHANGE] )* delta
+		position += (angleChangeVector / stateWaitTimes[ANGLECHANGE] ) * delta
 	elif currState == ABSCONDING:
 		animatedSpriteNode.scale.x -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		animatedSpriteNode.scale.y -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		position -= (angleChangeVectors[displacementEnum] / stateWaitTimes[ABSCONDING]) * delta
+		position -= (angleChangeVector / stateWaitTimes[ABSCONDING]) * delta
 func startAttackPhase():
 	currState = ATTACKING
 	animatedSpriteNode.play("idle")
@@ -98,18 +98,16 @@ func startApproachPhase():
 	currState = APPROACHING
 	animatedSpriteNode.play("moving")
 	emit_signal("approachPhaseStarting")
-var angleChangeVectors = [Vector2(0, -6), Vector2(0, -6), Vector2(0, -33), Vector2(0, 33)]
-enum {RIGHT, LEFT, UP, DOWN}
-var displacementEnum
+var angleChangeVector = Vector2()
 func startAnglechangePhase():
 	position = Global.getEnemyCoords()
 	animatedSpriteNode.scale.x = finalScale
 	animatedSpriteNode.scale.y = finalScale
 	var enemyDiscplacement = Global.getEnemyDisplacementFromPlayer()
 	if enemyDiscplacement.x == 0:
-		displacementEnum = UP
+		angleChangeVector = Vector2(0,(69 - abs(Global.getPlayerCoords().y - Global.getEnemyCoords().y))*sign(Global.getPlayerCoords().y - Global.getEnemyCoords().y) * -1)
 	else:
-		displacementEnum = RIGHT
+		angleChangeVector = Vector2((69 - abs(Global.getPlayerCoords().x - Global.getEnemyCoords().x))*sign(Global.getPlayerCoords().x - Global.getEnemyCoords().x) * -1, 0)
 	currState = ANGLECHANGE
 	emit_signal("angleChangePhaseStarting")
 
