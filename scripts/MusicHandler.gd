@@ -44,8 +44,8 @@ func _process(delta):
 
 
 func handleMelodyNote():
-	if (attackPatternData[currEighthNote / 8]['melody'][currEighthNote % 8] as bool):
-			emit_signal("melodyNote", attackPatternData[currEighthNote / 8]['pitch'][currEighthNote % 8])
+	if (attackPatternData[currEighthNote / 8]['track1'][currEighthNote % 8] as bool):
+			emit_signal("melodyNote", attackPatternData[currEighthNote / 8]['pitch1'][currEighthNote % 8])
 
 func syncPitchWithGlobal():
 	setAllPitchScales(abs(Global.currCombatTimeMultiplier))
