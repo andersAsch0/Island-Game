@@ -46,7 +46,7 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemy.connect("enemyMoved", $BigGridPerspective/enemyGridHighlight, "on_enemyMoved")
 	enemy.connect("enemyMoved", $offenseModeCamera/Arrows, "on_enemyMoved")
 	enemy.connect("enemyDead", self, "on_enemyDead")
-	$MusicHandler.connect("melodyNote", enemy, "attack")
+#	$MusicHandler.connect("melodyNote", enemy, "attack")
 	$MusicHandler/normalMusicLoop.stream = enemy.normalMusic
 	$MusicHandler/reverseMusicLoop.stream = enemy.reverseMusic
 	$MusicHandler.attackPatternFile = enemy.attackPatternFile

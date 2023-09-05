@@ -7,8 +7,9 @@ var currEighthNote : int = 0
 var JsonLength = 75
 export var bpm = 207
 var subdivisionsPerBeat = 2
-var secondsPerEigthNote : float = (1 / (1.0 * bpm / 60)) / subdivisionsPerBeat
-var secondsPerMeasure : float = 1.0 * bpm / 60 * 4
+var secondsPerEigthNote : float
+var secondsPerMeasure : float
+var eightNotesInAdvance = 0
 var trackNodes = []
 var trackIsActive = [true, false, false, false, false] #does NOT change when time is stopped
 var trackProgressions = [0.0, 0.0, 0.0, 0.0, 0.0]
@@ -19,14 +20,16 @@ enum {
 	REVERSESTARTFX
 	REVERSEENDFX
 }
-signal melodyNote(pitch)
+signal melodyNote(pitch, timeInAdvance)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	secondsPerEigthNote = (1 / (1.0 * bpm / 60)) / subdivisionsPerBeat
+	secondsPerMeasure = 1.0 * bpm / 60 * 4
 	trackNodes = [get_node("normalMusicLoop"), get_node("reverseMusicLoop"), get_node("tickingClockFX"), get_node("reverseStartFX"), get_node("reverseEndFX")]
 	play(NORMALMUSIC)
 	attackPatternData = getAttackPatternData()
-	handleMelodyNote()
+#	handleMelodyNote()
 
 var beatCounter : float = 0
 var eighthNoteLastFrame : int  = 0
@@ -35,7 +38,7 @@ func _process(delta):
 		if trackIsActive[track]:
 			trackProgressions[track] += delta * abs(Global.currCombatTimeMultiplier) * (Global.timeIsNotStopped as int)
 	if Global.currCombatTimeMultiplier > 0:
-		currEighthNote = 1.0 * trackNodes[NORMALMUSIC].get_playback_position() / secondsPerEigthNote
+		currEighthNote = (1.0 * trackNodes[NORMALMUSIC].get_playback_position() / secondsPerEigthNote) + eightNotesInAdvance
 		if (currEighthNote != eighthNoteLastFrame) and (currEighthNote < JsonLength * 8):
 			eighthNoteLastFrame = currEighthNote
 			handleMelodyNote()
@@ -45,7 +48,7 @@ func _process(delta):
 
 func handleMelodyNote():
 	if (attackPatternData[currEighthNote / 8]['track1'][currEighthNote % 8] as bool):
-			emit_signal("melodyNote", attackPatternData[currEighthNote / 8]['pitch1'][currEighthNote % 8])
+			emit_signal("melodyNote", (attackPatternData[currEighthNote / 8]['pitch1'][currEighthNote % 8]) as int, eightNotesInAdvance * secondsPerEigthNote)
 
 func syncPitchWithGlobal():
 	setAllPitchScales(abs(Global.currCombatTimeMultiplier))

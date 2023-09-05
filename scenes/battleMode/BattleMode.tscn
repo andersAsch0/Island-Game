@@ -537,6 +537,7 @@ current = true
 script = ExtResource( 13 )
 
 [node name="gridAttack" parent="offenseModeCamera" instance=ExtResource( 21 )]
+visible = false
 position = Vector2( 0, 12 )
 scale = Vector2( 0.8, 0.8 )
 

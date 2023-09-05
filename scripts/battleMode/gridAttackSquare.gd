@@ -3,8 +3,10 @@ extends AnimatedSprite
 func _ready():
 	connect("animation_finished", self, "animationFinished")
 	$HitBox/CollisionShape2D.set_deferred("disabled", true)
+	play("notVisible")
 
-func attack():
+func attack(warningTime):
+	frames.set_animation_speed("warning", 1.0 / warningTime)
 	play("warning")
 
 func animationFinished():
