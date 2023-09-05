@@ -18,7 +18,8 @@ func _ready():
 
 var count : int = 0
 func on_track_1(pitch, timeInAdvance = 0.0): #grid attack
-	$gridAttack.attack(count % 3, pitch % 3, timeInAdvance)
+	$gridAttack.attack(melodyPattern[count % 9].x, melodyPattern[count % 9].y, timeInAdvance)
+	count += 1
 
 var bulletXLocations = [50, 100, 150]
 var bullet
@@ -28,3 +29,7 @@ func on_track_2(pitch, timeInAdvance = 0.0): #bullet attack
 	bullet.warningAnimationTime = timeInAdvance
 	call_deferred("add_child", bullet)
 	
+
+var melodyPattern = [Vector2(1,1),Vector2(1,0),Vector2(1,2),Vector2(1,1),Vector2(0,2),Vector2(0,0),Vector2(2,2),Vector2(2,0), Vector2(1,1)]
+func _on_MusicHandler_musicStart():
+	pass # Replace with function body.

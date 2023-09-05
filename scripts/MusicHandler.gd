@@ -20,15 +20,18 @@ enum {
 	REVERSESTARTFX
 	REVERSEENDFX
 }
+signal musicStart
 signal melodyNote(pitch, timeInAdvance)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	secondsPerEigthNote = (1 / (1.0 * bpm / 60)) / subdivisionsPerBeat
 	secondsPerMeasure = 1.0 * bpm / 60 * 4
 	trackNodes = [get_node("normalMusicLoop"), get_node("reverseMusicLoop"), get_node("tickingClockFX"), get_node("reverseStartFX"), get_node("reverseEndFX")]
-	play(NORMALMUSIC)
 	attackPatternData = getAttackPatternData()
+	play(NORMALMUSIC)
+	emit_signal("musicStart")
 #	handleMelodyNote()
 
 var beatCounter : float = 0

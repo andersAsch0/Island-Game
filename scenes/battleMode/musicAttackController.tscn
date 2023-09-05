@@ -15,3 +15,4 @@ bulletPackedScene = ExtResource( 3 )
 position = Vector2( 72, 68 )
 
 [connection signal="melodyNote" from="MusicHandler" to="." method="on_track_1"]
+[connection signal="musicStart" from="MusicHandler" to="." method="_on_MusicHandler_musicStart"]

@@ -1,41 +1,68 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scripts/HitBox.gd" type="Script" id=1]
 [ext_resource path="res://scripts/battleMode/gridAttack.gd" type="Script" id=2]
 [ext_resource path="res://scripts/battleMode/gridAttackSquare.gd" type="Script" id=3]
-[ext_resource path="res://art/battleModeUI/coloredSquares.png" type="Texture" id=4]
+[ext_resource path="res://art/grassTileAttack.png" type="Texture" id=4]
 [ext_resource path="res://art/battleModeUI/action menu.png" type="Texture" id=5]
-[ext_resource path="res://art/battleModeUI/enemy circle highlight.png" type="Texture" id=6]
 
-[sub_resource type="AtlasTexture" id=1]
-flags = 4
+[sub_resource type="AtlasTexture" id=9]
 atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 32, 32 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 4 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 4 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 4 )
+region = Rect2( 160, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 5 )
 region = Rect2( 576, 0, 64, 48 )
 
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 6 )
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 4 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 4 )
+region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ SubResource( 1 ) ],
-"loop": true,
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
+"loop": false,
 "name": "attack",
-"speed": 1.0
+"speed": 20.0
 }, {
 "frames": [ SubResource( 2 ) ],
-"loop": true,
+"loop": false,
 "name": "notVisible",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 3 ) ],
-"loop": true,
+"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 2 ) ],
+"loop": false,
+"name": "retreat",
+"speed": 20.0
+}, {
+"frames": [ SubResource( 15 ), SubResource( 15 ), SubResource( 15 ), SubResource( 16 ) ],
+"loop": false,
 "name": "warning",
-"speed": 1.0
+"speed": 8.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=5]
@@ -84,7 +111,7 @@ shape = SubResource( 6 )
 [node name="grid02" type="AnimatedSprite" parent="."]
 position = Vector2( -35, 34 )
 frames = SubResource( 4 )
-animation = "attack"
+animation = "retreat"
 script = ExtResource( 3 )
 
 [node name="HitBox" type="Area2D" parent="grid02"]
