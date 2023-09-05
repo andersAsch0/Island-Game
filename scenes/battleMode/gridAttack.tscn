@@ -1,8 +1,8 @@
 [gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scripts/HitBox.gd" type="Script" id=1]
-[ext_resource path="res://gridAttack.gd" type="Script" id=2]
-[ext_resource path="res://gridAttackSquare.gd" type="Script" id=3]
+[ext_resource path="res://scripts/battleMode/gridAttack.gd" type="Script" id=2]
+[ext_resource path="res://scripts/battleMode/gridAttackSquare.gd" type="Script" id=3]
 [ext_resource path="res://art/battleModeUI/coloredSquares.png" type="Texture" id=4]
 [ext_resource path="res://art/battleModeUI/action menu.png" type="Texture" id=5]
 [ext_resource path="res://art/battleModeUI/enemy circle highlight.png" type="Texture" id=6]
@@ -56,7 +56,7 @@ script = ExtResource( 2 )
 [node name="grid00" type="AnimatedSprite" parent="."]
 position = Vector2( -35, -36 )
 frames = SubResource( 4 )
-animation = "notVisible"
+animation = "attack"
 script = ExtResource( 3 )
 
 [node name="HitBox" type="Area2D" parent="grid00"]
