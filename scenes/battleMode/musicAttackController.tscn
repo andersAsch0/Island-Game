@@ -14,5 +14,7 @@ bulletPackedScene = ExtResource( 3 )
 [node name="gridAttack" parent="." instance=ExtResource( 4 )]
 position = Vector2( 72, 68 )
 
-[connection signal="melodyNote" from="MusicHandler" to="." method="on_track_1"]
-[connection signal="musicStart" from="MusicHandler" to="." method="_on_MusicHandler_musicStart"]
+[connection signal="metronome" from="MusicHandler" to="." method="_on_MusicHandler_metronome"]
+[connection signal="track1" from="MusicHandler" to="." method="on_track_1"]
+[connection signal="track2" from="MusicHandler" to="." method="on_track_2"]
+[connection signal="track3" from="MusicHandler" to="." method="on_track_3"]
