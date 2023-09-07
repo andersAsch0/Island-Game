@@ -1,13 +1,12 @@
 extends Node2D
 
 export var enemyScene : PackedScene
-var enemy
+var controllerScene : PackedScene
 var enemyAttackPatternJson #File object
 var attackPatternData = [] #string
 var currAttack = 1 #int representing current line in json file
 var loopStart = 1
 var loopEnd = 2
-var enemyBulletScene #packed scene of the enemys chosen bullet
 var bullet
 var currTimeMultiplier : float = 1 # keeps track of current time rate, will NEVER BE 0 THO
 var timeIsStopped = false
@@ -31,32 +30,31 @@ signal enemyAngleChangePhaseStarting
 
 func _ready(): #this script sets up enemy, approach() function will handle the rest
 	Global.currCombatTimeMultiplier = 1
-	enemyScene = load(Global.battleModeEnemyPath)
 	$offenseModeCamera/PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
 	updateTimeJuiceBar()
-	enemy = enemyScene.instance()
+	
+	enemyScene = load(Global.battleModeEnemyPath)
+	controllerScene = load(Global.musicAttackControllerPath)
+	var enemy = enemyScene.instance()
 	enemy.position = $enemySpawnLocation.position
-	enemy.visible = false
+	enemy.visible = false #node's func, where to, where to's func
 	enemy.connect("attackPhaseStarting", self, "on_attack_phase_starting")
 	enemy.connect("abscondPhaseStarting", self, "on_abscond_phase_starting")
 	enemy.connect("awayPhaseStarting", self, "on_away_phase_starting")
 	enemy.connect("approachPhaseStarting", self, "on_approach_phase_starting")
 	enemy.connect("angleChangePhaseStarting", self, "on_angle_change_phase_starting")
-	
 	enemy.connect("enemyMoved", $BigGridPerspective/enemyGridHighlight, "on_enemyMoved")
 	enemy.connect("enemyMoved", $offenseModeCamera/Arrows, "on_enemyMoved")
 	enemy.connect("enemyDead", self, "on_enemyDead")
-#	$MusicHandler.connect("melodyNote", enemy, "attack")
-	$MusicHandler/normalMusicLoop.stream = enemy.normalMusic
-	$MusicHandler/reverseMusicLoop.stream = enemy.reverseMusic
-	$MusicHandler.attackPatternFile = enemy.attackPatternFile
-	add_child_below_node($MusicHandler, enemy)
+	var controller = controllerScene.instance()
+	enemy.connect("attackPhaseStarting", controller, "defenseModeStarting")
+	enemy.connect("abscondPhaseStarting", controller, "offenseModeStarting")
+	add_child_below_node($offenseModeCamera, enemy)
+	add_child_below_node($offenseModeCamera, controllerScene.instance())
 	on_away_phase_starting()
 	
 	 # connect the signal to start fight from the new node to this one
 	# enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")
-	# get the bullet from the enemy so we can spawn it
-	enemyBulletScene = enemy.bulletScene
 	
 
 func _process(_delta):
@@ -78,7 +76,7 @@ func _input(event):
 		if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == 0):
 			$reverseTimeDuration.start()
 			currTimeJuice -= timeJuiceCost
-			$MusicHandler.timeHasReversed()		
+#			$MusicHandler.timeHasReversed()		
 			reverseTime()
 		elif(event.is_action_pressed("stopTime") and $stopTimeDuration.time_left == 0):
 			$stopTimeDuration.start()
@@ -108,10 +106,10 @@ func reverseTime():
 	updateTimeJuiceBar()
 func _on_reverseTimeDuration_timeout():
 	reverseTime()
-	$MusicHandler.timeHasReversedBack()
+#	$MusicHandler.timeHasReversedBack()
 
 func stopTime():
-	$MusicHandler.timeHasStopped()
+#	$MusicHandler.timeHasStopped()
 	Global.set_timeFlow(false)
 	updateTimeJuiceBar()
 	currState = STOPPEDTIME
@@ -123,12 +121,12 @@ func resumeTime():
 	updateTimeJuiceBar()
 	currState = DEFENSE
 	showActionMenu(false, false)
-	$MusicHandler.timeHasResumed()
+#	$MusicHandler.timeHasResumed()
 	
 func changeTimeScale(timeMultiplier : float):
 	Global.set_timeMultiplier(timeMultiplier)
 	updateTimeJuiceBar()
-	$MusicHandler.syncPitchWithGlobal()
+#	$MusicHandler.syncPitchWithGlobal()
 func _on_speedTimeDuration_timeout():
 	changeTimeScale(1.0 * 1/timeScalingFactor)
 func _on_slowTimeDuration_timeout():

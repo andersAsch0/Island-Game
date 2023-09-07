@@ -144,10 +144,10 @@ func introduction():
 #FIGHT AND BULLET SPAWNING
 
 var gridSizeByBulletPathPerc = 17
-func attack(musicNotePitch):
-	
-	if not bulletsStopped and currState == ATTACKING:
-		$BulletSpawnPath.spawnBullet(50 + musicNotePitch * gridSizeByBulletPathPerc, 0)
+#func attack(musicNotePitch):
+#
+#	if not bulletsStopped and currState == ATTACKING:
+#		$BulletSpawnPath.spawnBullet(50 + musicNotePitch * gridSizeByBulletPathPerc, 0)
 	
 func changeAnimationSpeed(): #called whenever the global time variable is changed, ugly but i cant find a better way
 	$enemyMovement/PathFollow2D/AnimatedSprite.set_speed_scale(abs(Global.currCombatTimeMultiplier))
