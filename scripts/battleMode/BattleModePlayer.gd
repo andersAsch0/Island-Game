@@ -125,7 +125,7 @@ func getHit(damage:int):
 		$Shield.visible = false
 		$hitSheildSFX.play(0.05)
 		return
-	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
+	currentHP -= 2 * abs(Global.currCombatTimeMultiplier)
 	$hitSFX.play(0.0)
 	emit_signal("PlayerHit")
 	if currentHP <= 0:

@@ -58,7 +58,6 @@ func _process(delta):
 func handleBeat():
 	emit_signal("metronome", eightNotesInAdvance * secondsPerEigthNote)
 	for i in range( attackPatternDataArray.size()): #go through each array of music data
-		var thing = attackPatternDataArray[i][currEighthNote / 8]
 		if (attackPatternDataArray[i][currEighthNote / 8]['note'][currEighthNote % 8] as bool): # if it has a note on this beat that needs to be signaled
 				emit_signal(signalStrings[i], (attackPatternDataArray[i][currEighthNote / 8]['pitch'][currEighthNote % 8]) as int, eightNotesInAdvance * secondsPerEigthNote)
 

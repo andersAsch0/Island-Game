@@ -10,6 +10,8 @@ script = ExtResource( 1 )
 bulletPackedScene = ExtResource( 3 )
 
 [node name="MusicHandler" parent="." instance=ExtResource( 2 )]
+visible = false
+position = Vector2( 168, 40 )
 
 [node name="gridAttack" parent="." instance=ExtResource( 4 )]
 position = Vector2( 72, 68 )

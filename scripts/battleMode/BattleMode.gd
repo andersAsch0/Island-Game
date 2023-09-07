@@ -47,10 +47,10 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemy.connect("enemyMoved", $offenseModeCamera/Arrows, "on_enemyMoved")
 	enemy.connect("enemyDead", self, "on_enemyDead")
 	var controller = controllerScene.instance()
-	enemy.connect("attackPhaseStarting", controller, "defenseModeStarting")
-	enemy.connect("abscondPhaseStarting", controller, "offenseModeStarting")
+	connect("enemyAttackPhaseStarting", controller, "defenseModeStarting")
+	connect("enemyAbscondPhaseStarting", controller, "offenseModeStarting")
 	add_child_below_node($offenseModeCamera, enemy)
-	add_child_below_node($offenseModeCamera, controllerScene.instance())
+	add_child_below_node($offenseModeCamera, controller)
 	on_away_phase_starting()
 	
 	 # connect the signal to start fight from the new node to this one
