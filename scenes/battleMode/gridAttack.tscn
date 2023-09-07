@@ -136,7 +136,7 @@ shape = SubResource( 6 )
 [node name="grid02" type="AnimatedSprite" parent="."]
 position = Vector2( -35, 34 )
 frames = SubResource( 4 )
-animation = "retreat"
+animation = "attack"
 script = ExtResource( 3 )
 
 [node name="HitBox" type="Area2D" parent="grid02"]

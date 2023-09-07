@@ -5,16 +5,16 @@
 [ext_resource path="res://scenes/battleMode/Bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/battleMode/gridAttack.tscn" type="PackedScene" id=4]
 
-[node name="musicAttackController" type="Node"]
+[node name="musicAttackController" type="Node2D"]
 script = ExtResource( 1 )
 bulletPackedScene = ExtResource( 3 )
 
 [node name="MusicHandler" parent="." instance=ExtResource( 2 )]
 visible = false
-position = Vector2( 168, 40 )
 
 [node name="gridAttack" parent="." instance=ExtResource( 4 )]
-position = Vector2( 72, 68 )
+position = Vector2( 1.52588e-05, 7.62939e-06 )
+scale = Vector2( 0.8, 0.8 )
 
 [connection signal="metronome" from="MusicHandler" to="." method="_on_MusicHandler_metronome"]
 [connection signal="track1" from="MusicHandler" to="." method="on_track_1"]

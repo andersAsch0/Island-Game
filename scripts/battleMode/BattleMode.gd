@@ -1,7 +1,9 @@
 extends Node2D
 
 export var enemyScene : PackedScene
+var enemy # reference to the node in the scene tree
 var controllerScene : PackedScene
+var musicAttackController # reference to the node 
 var enemyAttackPatternJson #File object
 var attackPatternData = [] #string
 var currAttack = 1 #int representing current line in json file
@@ -35,7 +37,7 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	
 	enemyScene = load(Global.battleModeEnemyPath)
 	controllerScene = load(Global.musicAttackControllerPath)
-	var enemy = enemyScene.instance()
+	enemy = enemyScene.instance()
 	enemy.position = $enemySpawnLocation.position
 	enemy.visible = false #node's func, where to, where to's func
 	enemy.connect("attackPhaseStarting", self, "on_attack_phase_starting")
@@ -46,11 +48,12 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemy.connect("enemyMoved", $BigGridPerspective/enemyGridHighlight, "on_enemyMoved")
 	enemy.connect("enemyMoved", $offenseModeCamera/Arrows, "on_enemyMoved")
 	enemy.connect("enemyDead", self, "on_enemyDead")
-	var controller = controllerScene.instance()
-	connect("enemyAttackPhaseStarting", controller, "defenseModeStarting")
-	connect("enemyAbscondPhaseStarting", controller, "offenseModeStarting")
+	musicAttackController = controllerScene.instance()
+	connect("enemyAttackPhaseStarting", musicAttackController, "defenseModeStarting")
+	connect("enemyAbscondPhaseStarting", musicAttackController, "offenseModeStarting")
 	add_child_below_node($offenseModeCamera, enemy)
-	add_child_below_node($offenseModeCamera, controller)
+	add_child_below_node($offenseModeCamera/Grid, musicAttackController)
+	musicAttackController.position = $offenseModeCamera.vec
 	on_away_phase_starting()
 	
 	 # connect the signal to start fight from the new node to this one
@@ -76,7 +79,7 @@ func _input(event):
 		if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == 0):
 			$reverseTimeDuration.start()
 			currTimeJuice -= timeJuiceCost
-#			$MusicHandler.timeHasReversed()		
+			musicAttackController.get_node("MusicHandler").timeHasReversed()		
 			reverseTime()
 		elif(event.is_action_pressed("stopTime") and $stopTimeDuration.time_left == 0):
 			$stopTimeDuration.start()
@@ -106,10 +109,10 @@ func reverseTime():
 	updateTimeJuiceBar()
 func _on_reverseTimeDuration_timeout():
 	reverseTime()
-#	$MusicHandler.timeHasReversedBack()
+	musicAttackController.get_node("MusicHandler").timeHasReversedBack()
 
 func stopTime():
-#	$MusicHandler.timeHasStopped()
+	musicAttackController.get_node("MusicHandler").timeHasStopped()
 	Global.set_timeFlow(false)
 	updateTimeJuiceBar()
 	currState = STOPPEDTIME
@@ -121,12 +124,12 @@ func resumeTime():
 	updateTimeJuiceBar()
 	currState = DEFENSE
 	showActionMenu(false, false)
-#	$MusicHandler.timeHasResumed()
+	musicAttackController.get_node("MusicHandler").timeHasResumed()
 	
 func changeTimeScale(timeMultiplier : float):
 	Global.set_timeMultiplier(timeMultiplier)
 	updateTimeJuiceBar()
-#	$MusicHandler.syncPitchWithGlobal()
+	musicAttackController.get_node("MusicHandler").syncPitchWithGlobal()
 func _on_speedTimeDuration_timeout():
 	changeTimeScale(1.0 * 1/timeScalingFactor)
 func _on_slowTimeDuration_timeout():
@@ -196,6 +199,7 @@ func updateTimeJuiceBar():
 	$offenseModeCamera/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
 func _on_WindWatchButton_pressed():
 	$BattleModePlayer.windWatchButtonPressed()
+	print("camera : ", $offenseModeCamera.position, " player: ", $BattleModePlayer.position)
 func _on_windWatchMiniGame_wind(timeJuiceChange):
 	currTimeJuice += timeJuiceChange
 	if currTimeJuice > maxTimeJuiceSeconds:

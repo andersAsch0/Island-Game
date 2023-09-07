@@ -1,4 +1,4 @@
-[gd_scene load_steps=111 format=2]
+[gd_scene load_steps=110 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -7,9 +7,9 @@
 [ext_resource path="res://scripts/hitAndMissAnims.gd" type="Script" id=5]
 [ext_resource path="res://art/battleModeUI/comboAnims.png" type="Texture" id=6]
 [ext_resource path="res://art/battlegrid.png" type="Texture" id=7]
-[ext_resource path="res://art/butterfly1.png" type="Texture" id=8]
 [ext_resource path="res://scripts/gridCenter.gd" type="Script" id=9]
 [ext_resource path="res://art/gridAnim.png" type="Texture" id=10]
+[ext_resource path="res://scenes/battleMode/musicAttackController.tscn" type="PackedScene" id=11]
 [ext_resource path="res://art/battleModeUI/action menu horiz.png" type="Texture" id=12]
 [ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
 [ext_resource path="res://art/battleModeUI/arrow.png" type="Texture" id=14]
@@ -19,7 +19,6 @@
 [ext_resource path="res://scripts/battleMode/enemyGridHighlight.gd" type="Script" id=18]
 [ext_resource path="res://art/bigGrid.png" type="Texture" id=19]
 [ext_resource path="res://scripts/battleMode/BigGridPerspective.gd" type="Script" id=20]
-[ext_resource path="res://scenes/battleMode/gridAttack.tscn" type="PackedScene" id=21]
 
 [sub_resource type="AtlasTexture" id=115]
 atlas = ExtResource( 10 )
@@ -480,7 +479,7 @@ position = Vector2( -139.167, -152.5 )
 position = Vector2( 134.167, 121.667 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 20, 227 )
+position = Vector2( 157, 109 )
 scale = Vector2( 2.1, 2.1 )
 
 [node name="BigGridPerspective" type="Sprite" parent="."]
@@ -500,7 +499,7 @@ texture = ExtResource( 17 )
 script = ExtResource( 18 )
 
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
-position = Vector2( 160, 123 )
+position = Vector2( 155.4, 109.6 )
 scale = Vector2( 1.3795, 1.3795 )
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
@@ -530,15 +529,10 @@ frames = SubResource( 31 )
 animation = "forward"
 
 [node name="offenseModeCamera" type="Camera2D" parent="."]
-position = Vector2( 160, 103 )
+position = Vector2( 155.4, 89.6 )
 z_index = 1
 current = true
 script = ExtResource( 13 )
-
-[node name="gridAttack" parent="offenseModeCamera" instance=ExtResource( 21 )]
-visible = false
-position = Vector2( 0, 12 )
-scale = Vector2( 0.8, 0.8 )
 
 [node name="HP&TJ" type="Label" parent="offenseModeCamera"]
 margin_left = -153.834
@@ -573,6 +567,10 @@ position = Vector2( 0, 11 )
 scale = Vector2( 2.31579, 2.31579 )
 z_as_relative = false
 texture = ExtResource( 7 )
+
+[node name="musicAttackController" parent="offenseModeCamera" instance=ExtResource( 11 )]
+visible = false
+position = Vector2( 0.600006, 9.4 )
 
 [node name="VictoryButton" type="Button" parent="offenseModeCamera"]
 visible = false
@@ -640,12 +638,6 @@ script = ExtResource( 15 )
 frames = SubResource( 104 )
 animation = "empty"
 script = ExtResource( 5 )
-
-[node name="Butterfly1" type="Sprite" parent="."]
-visible = false
-position = Vector2( 160, 27 )
-scale = Vector2( 1.82863, 1.82474 )
-texture = ExtResource( 8 )
 
 [connection signal="enemyAbscondPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]

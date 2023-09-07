@@ -34,7 +34,6 @@ func _process(delta):
 		$Heart.position += healVelocity * delta
 		healVelocity += grav * delta
 		if $Heart.position.y > 214:
-			healFlying = false
 			gameEnd()
 	input = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	$catcher.position.x += input * delta * 100
@@ -51,6 +50,7 @@ func caughtHeal():
 
 func gameEnd():
 	set_process(false)
+	healFlying = false
 	$catcher.visible = false
 	emit_signal("gameEnded")
 	$Heart.position = healStartPos
