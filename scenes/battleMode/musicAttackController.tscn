@@ -1,13 +1,17 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/battleMode/musicAttackController.gd" type="Script" id=1]
 [ext_resource path="res://scenes/battleMode/MusicHandler.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/battleMode/Bullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/battleMode/gridAttack.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/battleMode/laser.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/battleMode/mothLaserBullet.tscn" type="PackedScene" id=6]
 
 [node name="musicAttackController" type="Node2D"]
 script = ExtResource( 1 )
 bulletPackedScene = ExtResource( 3 )
+laserPackedScene = ExtResource( 5 )
+laserBulletScene = ExtResource( 6 )
 
 [node name="MusicHandler" parent="." instance=ExtResource( 2 )]
 visible = false

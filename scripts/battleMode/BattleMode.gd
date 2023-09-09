@@ -51,9 +51,9 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	musicAttackController = controllerScene.instance()
 	connect("enemyAttackPhaseStarting", musicAttackController, "defenseModeStarting")
 	connect("enemyAbscondPhaseStarting", musicAttackController, "offenseModeStarting")
+	musicAttackController.position = Vector2(0,10) # this being hard coded is stupid. but idk how to do it better
 	add_child_below_node($offenseModeCamera, enemy)
-	add_child_below_node($offenseModeCamera/Grid, musicAttackController)
-	musicAttackController.position = $offenseModeCamera.vec
+	$offenseModeCamera.add_child_below_node($offenseModeCamera/Grid, musicAttackController)
 	on_away_phase_starting()
 	
 	 # connect the signal to start fight from the new node to this one
