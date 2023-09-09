@@ -12,7 +12,7 @@
 script = ExtResource( 6 )
 attackPatternFile = "res://scripts/attackPatternJsonData/butterflyMusicData.json"
 attackPatternFile2 = "res://scripts/attackPatternJsonData/butterflyMusicData2.json"
-attackPatternFile3 = "res://scripts/attackPatternJsonData/butterflyMusicData.json"
+attackPatternFile3 = "res://scripts/attackPatternJsonData/butterflyMusicData3.json"
 
 [node name="normalMusicLoop" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )

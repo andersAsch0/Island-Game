@@ -37,18 +37,19 @@ func on_track_2(pitch, timeInAdvance = 0.0): #bullet attack
 		bullet.warningAnimationTime = timeInAdvance
 		call_deferred("add_child", bullet)
 func on_track_3(pitch, timeInAdvance = 0.0): #laser attack
-#	if isDefenseMode: 
-#		var laserWarningNode = laserPackedScene.instance()
-#		laserWarningNode.lengthOfWarningSeconds = timeInAdvance
-#		laserWarningNode.bulletPackedScene = bullet
-#		add_child(laserWarningNode)	
-	pass
+	if isDefenseMode: 
+		var laserNode = laserPackedScene.instance()
+		laserNode.lengthOfWarningSeconds = timeInAdvance
+		laserNode.bulletPackedScene = laserBulletScene
+		laserNode.position = Vector2(bulletXLocations[pitch % 3], 0)
+		add_child(laserNode)	
 		
 func fireLaser():
 	var laserNode = laserPackedScene.instance()
 	laserNode.lengthOfWarningSeconds = 2
 	laserNode.bulletPackedScene = laserBulletScene
 	add_child(laserNode)	
+	pass
 
 func _on_MusicHandler_musicStart():
 	pass # Replace with function body.

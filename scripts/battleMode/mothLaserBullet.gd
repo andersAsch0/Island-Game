@@ -42,12 +42,11 @@ func die(): #called by enemy when it dies
 func _on_DeathTimer_timeout():
 	queue_free()
 	emit_signal("despawned")
-
 	
-
-func _on_Bullet_child_exiting_tree(_timer : Timer): # please stop 
+func _on_mothLaserBullet_child_exiting_tree(_timer : Timer):
 	$DespawnTimer.paused = true
 
 
 func _on_WarningTimer_timeout():
 	pass # Replace with function body.
+
