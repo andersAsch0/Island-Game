@@ -18,22 +18,24 @@ func _ready():
 
 
 var count : int = eigthNotesInAdvance
-var gridAttackPattern = [[Vector2(1,0), Vector2(1,1), Vector2(1,2)], [], [], [], [Vector2(0,1), Vector2(1,1), Vector2(2, 1)], [], [], [], [Vector2(0, 2)], [], [Vector2(0,0)], [], [Vector2(2, 0)], [], [Vector2(2, 2)], []]
+var gridAttackPattern = [[Vector2(1,1)], [], [], [], [Vector2(1,1)], [], [], [], [Vector2(0, 2)], [], [Vector2(0,0)], [], [Vector2(2, 0)], [], [Vector2(2, 2)], []]
 func _on_MusicHandler_metronome(timeInAdvance): # grid attack
 	if isDefenseMode:
-		for vec in gridAttackPattern[count % 16]:
+		for vec in gridAttackPattern[count % gridAttackPattern.size()]:
 			$gridAttack.attack(vec.x, vec.y, timeInAdvance)
 	count += 1
 func on_track_1(pitch, timeInAdvance = 0.0):
 	if isDefenseMode:
 		pass
 onready var bulletXLocations = [$gridAttack/grid00.position.x, $gridAttack/grid10.position.x, $gridAttack/grid20.position.x]
+onready var bulletYLocations = [$gridAttack/grid00.position.y, $gridAttack/grid01.position.y, $gridAttack/grid02.position.y]
+var gridRadius = -50
 var bullet
 func on_track_2(pitch, timeInAdvance = 0.0): #bullet attack
 	temp += 1
 	if isDefenseMode:
 		bullet = bulletPackedScene.instance()
-		bullet.position = Vector2(bulletXLocations[pitch % 3], 0)
+		bullet.position = Vector2(bulletXLocations[pitch % 3], gridRadius)
 		bullet.warningAnimationTime = timeInAdvance
 		call_deferred("add_child", bullet)
 func on_track_3(pitch, timeInAdvance = 0.0): #laser attack
@@ -41,15 +43,13 @@ func on_track_3(pitch, timeInAdvance = 0.0): #laser attack
 		var laserNode = laserPackedScene.instance()
 		laserNode.lengthOfWarningSeconds = timeInAdvance
 		laserNode.bulletPackedScene = laserBulletScene
-		laserNode.position = Vector2(bulletXLocations[pitch % 3], 0)
+		if pitch / 3 < 1:
+			laserNode.position = Vector2(bulletXLocations[pitch % 3], gridRadius)
+		else:
+			laserNode.position = Vector2(gridRadius, bulletYLocations[pitch % 3])
+			laserNode.rotation_degrees = -90
 		add_child(laserNode)	
 		
-func fireLaser():
-	var laserNode = laserPackedScene.instance()
-	laserNode.lengthOfWarningSeconds = 2
-	laserNode.bulletPackedScene = laserBulletScene
-	add_child(laserNode)	
-	pass
 
 func _on_MusicHandler_musicStart():
 	pass # Replace with function body.

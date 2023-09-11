@@ -21,7 +21,7 @@ enum {
 	ATTACKING
 	ABSCONDING
 }
-var currState = AWAY
+var currState = APPROACHING
 export var stateWaitTimes = [10.0, 100.0, 0.8, 10, 0.8] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
@@ -49,7 +49,7 @@ func _ready():
 	Global.connect("timeFlowChanged", self, "startOrStopAnimation")
 
 	currState = AWAY
-	startAwayPhase()
+	startApproachPhase()
 	visible = true
 		
 func _physics_process(delta):

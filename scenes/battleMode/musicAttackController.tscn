@@ -18,7 +18,6 @@ visible = false
 
 [node name="gridAttack" parent="." instance=ExtResource( 4 )]
 position = Vector2( 1.52588e-05, 7.62939e-06 )
-scale = Vector2( 0.8, 0.8 )
 
 [connection signal="metronome" from="MusicHandler" to="." method="_on_MusicHandler_metronome"]
 [connection signal="track1" from="MusicHandler" to="." method="on_track_1"]

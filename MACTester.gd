@@ -6,5 +6,3 @@ func _input(event):
 		$musicAttackController.defenseModeStarting()
 	elif event.is_action_pressed("ui_up"):
 		$musicAttackController.offenseModeStarting()
-	elif event.is_action_pressed("ui_down"):
-		$musicAttackController.fireLaser()
