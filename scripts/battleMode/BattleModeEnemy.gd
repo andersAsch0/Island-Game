@@ -22,11 +22,11 @@ enum {
 	ABSCONDING
 }
 var currState = APPROACHING
-export var stateWaitTimes = [10.0, 100.0, 0.8, 10, 0.8] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [5.0, 100.0, 0.8, 60, 0.8] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
-var animatedSpriteNode
+onready var animatedSpriteNode = $enemyMovement/PathFollow2D/AnimatedSprite
 
 signal awayPhaseStarting
 signal approachPhaseStarting
@@ -41,7 +41,6 @@ signal enemyMoved
 #SETUP AND APPROACH
 
 func _ready():
-	animatedSpriteNode = $enemyMovement/PathFollow2D/AnimatedSprite
 	animatedSpriteNode.scale.x = origScale
 	animatedSpriteNode.scale.y = origScale
 	$enemyMovement.enemySpeed = enemySpeed
