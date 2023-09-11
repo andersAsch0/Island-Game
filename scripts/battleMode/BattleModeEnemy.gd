@@ -49,7 +49,7 @@ func _ready():
 	Global.connect("timeFlowChanged", self, "startOrStopAnimation")
 
 	currState = AWAY
-	startApproachPhase()
+	startAwayPhase()
 	visible = true
 		
 func _physics_process(delta):

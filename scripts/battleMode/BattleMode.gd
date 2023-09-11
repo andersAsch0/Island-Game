@@ -54,7 +54,7 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	musicAttackController.position = Vector2(0,10) # this being hard coded is stupid. but idk how to do it better
 	add_child_below_node($offenseModeCamera, enemy)
 	$offenseModeCamera.add_child_below_node($offenseModeCamera/Grid, musicAttackController)
-	on_approach_phase_starting()
+	on_away_phase_starting()
 	
 	 # connect the signal to start fight from the new node to this one
 	# enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")
@@ -141,6 +141,7 @@ func _on_slowTimeDuration_timeout():
 #SIGNALS FROM ENEMY (controlling current state of battleMode)
 export var overWorldPath = "res://scenes/World.tscn"
 func on_attack_phase_starting():
+	musicAttackController.rotateWithEnemy()
 	emit_signal("enemyAttackPhaseStarting")
 func on_abscond_phase_starting():
 	emit_signal("enemyAbscondPhaseStarting")

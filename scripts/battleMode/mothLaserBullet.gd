@@ -35,7 +35,7 @@ func _on_DespawnTimer_timeout():
 	emit_signal("despawned")
 	queue_free()
 func die(): #called by enemy when it dies
-	$AnimatedSprite.play("die")
+	play("die")
 	#$HitBox.queue_free() # dont hit player during explosion animation
 	set_process(false) #stop moving
 	$DeathTimer.start() # give time for explosion to play

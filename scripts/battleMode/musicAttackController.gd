@@ -50,6 +50,15 @@ func on_track_3(pitch, timeInAdvance = 0.0): #laser attack
 			laserNode.rotation_degrees = -90
 		add_child(laserNode)	
 		
+func rotateWithEnemy():
+	var enemyDisplacement = Global.getEnemyDisplacementFromPlayer()
+	if enemyDisplacement.y == 0: # on same y row
+		self.rotation_degrees = 90 * enemyDisplacement.x
+#		self.global_position.y = Global.getPlayerCoords().y
+	else: # on same x column
+		self.rotation_degrees = 180 * ((enemyDisplacement.y > 1) as int)
+	$gridAttack.rotation_degrees = -(self.rotation_degrees)
+#		self.global_position.x = Global.getPlayerCoords().x
 
 func _on_MusicHandler_musicStart():
 	pass # Replace with function body.
