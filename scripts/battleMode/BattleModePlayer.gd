@@ -125,7 +125,7 @@ func getHit(damage:int):
 		$Shield.visible = false
 		$hitSheildSFX.play(0.05)
 		return
-	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
+	currentHP -= 2 * abs(Global.currCombatTimeMultiplier)
 	$hitSFX.play(0.0)
 	emit_signal("PlayerHit")
 	if currentHP <= 0:
@@ -202,7 +202,9 @@ func _on_moveTilesTimer_timeout():
 
 # MINIGAMES
 #use catchMiniGame.healFlying and windWatchMiniGame.is_proccessing_input to see curr state of game
-var miniGameActive
+var miniGameActive = false
+func updateMiniGameActive():
+	miniGameActive = $catchMiniGame.healFlying or $windWatchMiniGame.is_processing_input() or $comboMiniGame.is_processing_input()
 
 func windWatchButtonPressed():
 	if isShielded or currState == DEFENSE:
@@ -213,7 +215,7 @@ func windWatchButtonPressed():
 		if currState == IDLE:
 			$Animations.play("wind watch")
 	else:
-		miniGameActive = $catchMiniGame.healFlying or $comboMiniGame.is_processing_input()
+		updateMiniGameActive()
 		if currState == IDLE and not miniGameActive:
 			$Animations.play("idle")
 	
@@ -229,8 +231,9 @@ func _on_catchMiniGame_caughtHeal():
 	if currentHP > maxHP:
 		currentHP = maxHP
 	emit_signal("PlayerHit") #update HP bar in parent node
+	updateMiniGameActive()
 func _on_catchMiniGame_gameEnded():
-	miniGameActive = $catchMiniGame.healFlying or $windWatchMiniGame.is_processing_input()
+	updateMiniGameActive()
 	if currState == IDLE and not miniGameActive:
 		$Animations.play("idle")
 
@@ -244,7 +247,7 @@ func attackButtonPressed():
 		if currState == IDLE:
 			$Animations.play("wind watch")
 	else:
-		miniGameActive = $catchMiniGame.healFlying or $windWatchMiniGame.is_processing_input()
+		updateMiniGameActive()
 		if currState == IDLE and not miniGameActive:
 			$Animations.play("idle")
 func _on_comboMiniGame_successfulCombo(damage):

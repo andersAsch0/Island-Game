@@ -1457,6 +1457,7 @@ position = Vector2( 255, 33 )
 position = Vector2( 93, 9 )
 
 [node name="beeEnemy" parent="YSort" instance=ExtResource( 4 )]
+visible = false
 position = Vector2( 156, 95 )
 
 [node name="enemy" parent="YSort" instance=ExtResource( 10 )]

@@ -22,12 +22,27 @@ func set_timeFlow(timeIsNotStoppedBool: bool):
 var overWorldLocation = Vector2(62, 43) #stored location for use when loading back into overworld from fight
 var overWorldDeadEnemiesList = [] #list of SCENETREE PATHS
 var battleModeEnemyPath : String = "" #path to battlemode version for fighting (referring to fileSystem, not scenetree)
+var musicAttackControllerPath : String = ""
 var overWorldEnemyPath : String = "" #path to overworld version to despawn after defeating ^ (referring to scenetree)
 var mostRecentOverWorldEnemyName : String = ""
 var overWorldShouldDespawnEnemy = false #when loading into the overworld, this is used to know if it should despawn an enemy
 func updateDeadEnemyList(list : Array): #all enemies are alive by default, as you defeat them they are added onto the dead list
 	list.append(overWorldEnemyPath) #this is called after a battle, to add the defeated enemy onto that scene's dead list
-	
+
+
+var battleModePath = "res://scenes/battleMode/BattleMode.tscn"
+func enterBattleMode(respawnPos : Vector2, OenemyPath : String, BMenemyPath : String, controllerPath : String):
+	overWorldEnemyPath = OenemyPath
+	battleModeEnemyPath = BMenemyPath
+	musicAttackControllerPath = controllerPath
+	leaveOverworld(respawnPos, battleModePath)
+func leaveOverworld(respawnPos : Vector2, newScene : String):
+	overWorldLocation = respawnPos
+	var _PTS = get_tree().change_scene(newScene) # change_scene takes path, change_scene_to takes PackedScene
+var overWorldPath = "res://scenes/World.tscn"
+func reEnterOverworld():
+	var _PTS = get_tree().change_scene(overWorldPath) # change_scene takes path, change_scene_to takes PackedScene
+
 
 #BATTLEMODE GRID TRACKING (so all nodes can know where the enemy & player are)
 var gridCoords = []
