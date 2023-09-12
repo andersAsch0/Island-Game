@@ -175,6 +175,9 @@ func getHit(damage:int):
 		$enemyMovement/PathFollow2D/AnimatedSprite.play("die")
 		$DeathTimer.start() #leave time to play death animation before showing win screen
 		get_tree().call_group("bulletTypes", "die")
+		return
+	if currState == AWAY:
+		stateCounter = stateWaitTimes[AWAY] #being attacked triggers enemy to approach again
 func _on_DeathTimer_timeout():
 	emit_signal("enemyDead")
 	Global.updateDeadEnemyList(Global.overWorldDeadEnemiesList)

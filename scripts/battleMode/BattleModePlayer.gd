@@ -114,8 +114,9 @@ func _on_inputTimer_timeout():
 	position = storagePos
 	$Animations.flip_v = false
 	$Animations.play("land")
-	$HurtBox/CollisionShape2D.disabled = false
-	$HitBox/CollisionShape2D.disabled = false
+	if currState == DEFENSE:
+		$HurtBox/CollisionShape2D.disabled = false
+		$HitBox/CollisionShape2D.disabled = false
 
 # GET HIT 	
 
@@ -169,6 +170,7 @@ func _on_BattleMode_offensePhaseEnding():
 	$catchMiniGame.visible = false
 func _on_BattleMode_enemyAbscondPhaseStarting():
 	currState = IDLE
+	# forces player character to move to the center of the grid as if they jumped there
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
 		storagePos.x -= currGridSize
 	if Input.get_action_strength("ui_left") > 0:
@@ -177,8 +179,12 @@ func _on_BattleMode_enemyAbscondPhaseStarting():
 		storagePos.y += currGridSize
 	if Input.get_action_strength("ui_down") > 0:
 		storagePos.y -= currGridSize
+	$HurtBox/CollisionShape2D.disabled = true 
+	$HitBox/CollisionShape2D.disabled = true
 	$inputTimer.start()
 func _on_BattleMode_offensePhaseStarting():
+	$HurtBox/CollisionShape2D.disabled = false 
+	$HitBox/CollisionShape2D.disabled = false
 	movingTilesDisabled = false
 	position = Global.getPlayerCoords()
 	$catchMiniGame.visible = true
