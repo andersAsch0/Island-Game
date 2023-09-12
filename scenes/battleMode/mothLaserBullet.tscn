@@ -49,8 +49,9 @@ radius = 8.0
 [sub_resource type="CircleShape2D" id=9]
 radius = 8.0
 
-[node name="mothLaserBullet" type="AnimatedSprite"]
+[node name="mothLaserBullet" type="AnimatedSprite" groups=["enemies"]]
 frames = SubResource( 7 )
+frame = 1
 playing = true
 script = ExtResource( 4 )
 

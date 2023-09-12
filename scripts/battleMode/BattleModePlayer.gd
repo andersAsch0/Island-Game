@@ -120,17 +120,26 @@ func _on_inputTimer_timeout():
 # GET HIT 	
 
 func getHit(damage:int):
-	if isShielded:
+	if isShielded: # if sheilded, dont hit
 		isShielded = false
 		$Shield.visible = false
 		$hitSheildSFX.play(0.05)
 		return
-	currentHP -= 2 * abs(Global.currCombatTimeMultiplier)
+	
+	$HurtBox/CollisionShape2D.set_deferred("disabled", true)
+	$HitBox/CollisionShape2D.set_deferred("disabled", true)
+	$damageCooldownTimer.start()
+	$Animations.playHurtAnimation()
+	currentHP -= damage * abs(Global.currCombatTimeMultiplier)
 	$hitSFX.play(0.0)
 	emit_signal("PlayerHit")
 	if currentHP <= 0:
 		die()
 		
+func _on_damageCooldownTimer_timeout():
+	$HurtBox/CollisionShape2D.set_deferred("disabled", false)
+	$HitBox/CollisionShape2D.set_deferred("disabled", false)
+
 func die():
 	set_process_input(false)
 	$HurtBox/CollisionShape2D.set_deferred("disabled", true)
@@ -145,7 +154,6 @@ func _on_BattleMode_enemyApproachPhaseStarting(): #disable movingtiles
 	movingTilesDisabled = true
 func _on_BattleMode_offensePhaseEnding():
 	currState = DEFENSE
-	position = Global.getPlayerCoords() #snap to correct grid location (shouldnt be able to see the sudden movement bc grid is hidden)
 	storagePos = position
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
 		storagePos.x += currGridSize
@@ -159,10 +167,20 @@ func _on_BattleMode_offensePhaseEnding():
 	$windWatchMiniGame.gameEnd()
 	$comboMiniGame.gameEnd()
 	$catchMiniGame.visible = false
+func _on_BattleMode_enemyAbscondPhaseStarting():
+	currState = IDLE
+	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
+		storagePos.x -= currGridSize
+	if Input.get_action_strength("ui_left") > 0:
+		storagePos.x += currGridSize
+	if Input.get_action_strength("ui_up") > 0:
+		storagePos.y += currGridSize
+	if Input.get_action_strength("ui_down") > 0:
+		storagePos.y -= currGridSize
+	$inputTimer.start()
 func _on_BattleMode_offensePhaseStarting():
 	movingTilesDisabled = false
 	position = Global.getPlayerCoords()
-	currState = IDLE
 	$catchMiniGame.visible = true
 func finishAttack():
 	pass

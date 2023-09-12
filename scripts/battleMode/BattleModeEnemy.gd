@@ -13,7 +13,6 @@ var currentHP = maxHP
 var currAttack = 1 #current line of json file
 var currBullets = 0
 var bulletsStopped = false
-var bulletSpawnTimeCounter : float = 0 #using this instead of a timer node because I need it to be effected by the time shenanigans
 enum {
 	AWAY
 	APPROACHING
@@ -73,7 +72,6 @@ func _physics_process(delta):
 func startAttackPhase():
 	currState = ATTACKING
 	animatedSpriteNode.play("idle")
-	$BulletSpawnPath.rotateBulletSpawnPath()
 	emit_signal("attackPhaseStarting")
 func startLeavePhase():
 	currState = ABSCONDING
@@ -144,11 +142,7 @@ func introduction():
 #FIGHT AND BULLET SPAWNING
 
 var gridSizeByBulletPathPerc = 17
-#func attack(musicNotePitch):
-#
-#	if not bulletsStopped and currState == ATTACKING:
-#		$BulletSpawnPath.spawnBullet(50 + musicNotePitch * gridSizeByBulletPathPerc, 0)
-	
+
 func changeAnimationSpeed(): #called whenever the global time variable is changed, ugly but i cant find a better way
 	$enemyMovement/PathFollow2D/AnimatedSprite.set_speed_scale(abs(Global.currCombatTimeMultiplier))
 	if Global.currCombatTimeMultiplier < 0:
