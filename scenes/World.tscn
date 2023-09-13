@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scenes/map tiles/noncollidingScenery.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://art/map tiles/waterMovement/waterMovement.tres" type="Texture" id=19]
 [ext_resource path="res://art/map tiles/waterMovement/waterEdgeAnimatedTiles.tres" type="Texture" id=20]
 [ext_resource path="res://art/map tiles/waterMovement/animatedDocksAndWater.tres" type="Texture" id=21]
+[ext_resource path="res://scenes/overworldClock.tscn" type="PackedScene" id=22]
 
 [sub_resource type="TileSet" id=4]
 0/name = "nature sprite sheet.png 0"
@@ -1488,6 +1489,13 @@ position = Vector2( 27, 87 )
 [node name="caveDoor" parent="." instance=ExtResource( 5 )]
 visible = false
 position = Vector2( 216, 25 )
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="overworldClock" parent="HUD" instance=ExtResource( 22 )]
+visible = false
+position = Vector2( 221, 82 )
+scale = Vector2( 3.07813, 3.07813 )
 
 [editable path="YSort/smallPalm"]
 [editable path="YSort/smallTree2"]

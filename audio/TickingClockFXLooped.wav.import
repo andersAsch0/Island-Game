@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/TickingClockFXLooped.wav-51259969960ccea40e1d621fb79d5f7d.sample"
+
+[deps]
+
+source_file="res://audio/TickingClockFXLooped.wav"
+dest_files=[ "res://.import/TickingClockFXLooped.wav-51259969960ccea40e1d621fb79d5f7d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=1
+edit/loop_begin=0
+edit/loop_end=880677
+compress/mode=0

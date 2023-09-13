@@ -183,6 +183,7 @@ func _on_BattleMode_enemyAbscondPhaseStarting():
 	$HitBox/CollisionShape2D.disabled = true
 	$inputTimer.start()
 func _on_BattleMode_offensePhaseStarting():
+	currState = IDLE
 	$HurtBox/CollisionShape2D.disabled = false 
 	$HitBox/CollisionShape2D.disabled = false
 	movingTilesDisabled = false

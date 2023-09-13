@@ -210,7 +210,7 @@ visible = false
 position = Vector2( -0.5, -9 )
 frames = SubResource( 17 )
 animation = "idle"
-frame = 6
+frame = 5
 playing = true
 
 [node name="Animations" type="AnimatedSprite" parent="."]
@@ -248,8 +248,8 @@ one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-limit_left = -20
-limit_top = -20
+limit_left = 0
+limit_top = 0
 limit_right = 400
 limit_bottom = 400
 limit_smoothed = true
