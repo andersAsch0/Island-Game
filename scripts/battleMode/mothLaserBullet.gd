@@ -1,7 +1,7 @@
 extends AnimatedSprite
 
 var velocity = Vector2.DOWN
-var speed = 50
+var speed = 100
 # depawn timer should be long enough that even if the player uses all their time reverse at once,
 # the bullets will not have despawned too early
 # maybe this can be adjusted by the player script when the player has little time reversal left, in order to optimize

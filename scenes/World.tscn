@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scenes/map tiles/noncollidingScenery.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://art/map tiles/waterMovement/waterMovement.tres" type="Texture" id=19]
 [ext_resource path="res://art/map tiles/waterMovement/waterEdgeAnimatedTiles.tres" type="Texture" id=20]
 [ext_resource path="res://art/map tiles/waterMovement/animatedDocksAndWater.tres" type="Texture" id=21]
+[ext_resource path="res://scenes/overworldClock.tscn" type="PackedScene" id=22]
 
 [sub_resource type="TileSet" id=4]
 0/name = "nature sprite sheet.png 0"
@@ -1442,6 +1443,17 @@ polygon = PoolVector2Array( 186, 175, 186, 161, 248, 162, 248, 145, 225, 145, 21
 
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 62, 43 )
+
+[node name="Camera2D" type="Camera2D" parent="YSort/Player"]
+current = true
+limit_left = -20
+limit_top = -20
+limit_right = 400
+limit_bottom = 400
+editor_draw_limits = true
+
+[node name="overworldClock" parent="YSort/Player/Camera2D" instance=ExtResource( 22 )]
+position = Vector2( 204, 84 )
 
 [node name="smallPalm" parent="YSort" instance=ExtResource( 17 )]
 position = Vector2( 197, 17 )
