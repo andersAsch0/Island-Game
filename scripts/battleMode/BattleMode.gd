@@ -182,7 +182,7 @@ func _on_BattleModePlayer_PlayerHit():
 func _on_BattleModePlayer_PlayerDie():
 	$offenseModeCamera/DefeatButton.visible = true
 	$offenseModeCamera/DefeatButton.disabled = false
-	set_block_signals(true)
+	set_process_input(false)
 	get_tree().call_group("enemies", "playerDie")
 	
 func _on_DefeatButton_pressed():

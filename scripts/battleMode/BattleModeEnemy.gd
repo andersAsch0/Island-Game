@@ -44,6 +44,7 @@ func _ready():
 	animatedSpriteNode.scale.x = origScale
 	animatedSpriteNode.scale.y = origScale
 	$enemyMovement.enemySpeed = enemySpeed
+	updateHPBar()
 	Global.connect("timeMultiplierChanged", self, "changeAnimationSpeed")
 	Global.connect("timeFlowChanged", self, "startOrStopAnimation")
 
@@ -168,7 +169,7 @@ func playerDie():
 
 func getHit(damage:int):
 	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
-	$enemyMovement/PathFollow2D/HPBar.value = 1.0 * currentHP/maxHP * 100
+	updateHPBar()
 	if currentHP <= 0:
 		set_process(false)
 		$enemyMovement.set_process(false)
@@ -182,7 +183,8 @@ func _on_DeathTimer_timeout():
 	emit_signal("enemyDead")
 	Global.updateDeadEnemyList(Global.overWorldDeadEnemiesList)
 	queue_free()
-
+func updateHPBar():
+	$enemyMovement/PathFollow2D/HPBar.value = 1.0 * currentHP/maxHP * 100
 
 #GRID MOVEMENT
 var playerGridSquare = Vector2(2, 2)

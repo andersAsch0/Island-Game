@@ -143,6 +143,8 @@ func _on_damageCooldownTimer_timeout():
 
 func die():
 	set_process_input(false)
+	$damageCooldownTimer.stop()
+	$Animations._on_damageCooldownTimer_timeout()
 	$HurtBox/CollisionShape2D.set_deferred("disabled", true)
 	$HitBox/CollisionShape2D.set_deferred("disabled", true)
 	$dieSFX.play(0.0)
@@ -168,6 +170,7 @@ func _on_BattleMode_offensePhaseEnding():
 	$windWatchMiniGame.gameEnd()
 	$comboMiniGame.gameEnd()
 	$catchMiniGame.visible = false
+	$Animations.play("idle")
 func _on_BattleMode_enemyAbscondPhaseStarting():
 	currState = IDLE
 	# forces player character to move to the center of the grid as if they jumped there
