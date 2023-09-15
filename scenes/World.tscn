@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scenes/map tiles/noncollidingScenery.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://art/map tiles/waterMovement/waterEdgeAnimatedTiles.tres" type="Texture" id=20]
 [ext_resource path="res://art/map tiles/waterMovement/animatedDocksAndWater.tres" type="Texture" id=21]
 [ext_resource path="res://scenes/overworldClock.tscn" type="PackedScene" id=22]
+[ext_resource path="res://scenes/Door.tscn" type="PackedScene" id=23]
 
 [sub_resource type="TileSet" id=4]
 0/name = "nature sprite sheet.png 0"
@@ -1453,6 +1454,10 @@ region_rect = Rect2( 64, 0, 64, 64 )
 
 [node name="smallHouse" parent="YSort" instance=ExtResource( 18 )]
 position = Vector2( 255, 33 )
+
+[node name="Door" parent="YSort" instance=ExtResource( 23 )]
+position = Vector2( 259.5, 33 )
+destinationPath = "res://scenes/buildingInsidePrototype.tscn"
 
 [node name="smallTree" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 93, 9 )

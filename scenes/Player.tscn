@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://audio/SandFootsteps4.wav" type="AudioStream" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://scripts/playerFootstepMaker.gd" type="Script" id=4]
 [ext_resource path="res://audio/GrassFootsteps3.wav" type="AudioStream" id=5]
 [ext_resource path="res://audio/SandFootsteps2.wav" type="AudioStream" id=6]
+[ext_resource path="res://scripts/HitBox.gd" type="Script" id=7]
 
 [sub_resource type="AtlasTexture" id=1]
 region = Rect2( 0, 0, 17, 20 )
@@ -210,7 +211,7 @@ visible = false
 position = Vector2( -0.5, -9 )
 frames = SubResource( 17 )
 animation = "idle"
-frame = 5
+frame = 1
 playing = true
 
 [node name="Animations" type="AnimatedSprite" parent="."]
@@ -248,10 +249,15 @@ one_shot = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-limit_left = 0
-limit_top = 0
-limit_right = 400
-limit_bottom = 400
 limit_smoothed = true
+
+[node name="doorHitBox" type="Area2D" parent="."]
+script = ExtResource( 7 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="doorHitBox"]
+position = Vector2( -1, -1 )
+rotation = 1.57344
+scale = Vector2( 1, 1 )
+shape = SubResource( 40 )
 
 [connection signal="timeout" from="playerFootstepMaker/footstepTimer" to="playerFootstepMaker" method="_on_footstepTimer_timeout"]

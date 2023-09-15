@@ -17,3 +17,7 @@ func _on_area_entered(hitbox: HitBox): #passes in null if not hitbox
 
 func setCollisionLayer(layer:int):
 	collision_layer = layer
+
+func playClosingAnim(backward : bool = false):
+	$AnimatedSprite.frame = 0
+	$AnimatedSprite.play("default", backward)
