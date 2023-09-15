@@ -1,16 +1,19 @@
-extends Node
+class_name SceneTransition
 
+extends Area2D
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+export var destinationPath = ""
+export var entryPointNum = 0
+signal transitionTaken
 
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	connect("area_entered", self, "_on_area_entered")
+	
+func _on_area_entered(hitbox: HitBox): #passes in null if not hitbox
+	if hitbox: #only proceed if it is a hitbox
+		emit_signal("transitionTaken")
+		if destinationPath != "":
+			Global.switchOverworldScene(entryPointNum, destinationPath)
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func setCollisionLayer(layer:int):
+	collision_layer = layer
