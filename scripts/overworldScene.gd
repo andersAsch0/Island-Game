@@ -3,15 +3,19 @@ class_name overworldScene
 extends Node
 
 
-export var despawnList = []
+export var despawnListIndex : int = 0
 
 signal playerEntered(entryPoint, despawnList)
 
 func _ready():
-	emit_signal("playerEntered", Global.latestEntryNum, despawnList)
+	Global.currDespawnListIndex = despawnListIndex
+	emit_signal("playerEntered", Global.latestEntryNum, despawnListIndex)
+
+func getDespawnList():
+	return Global.despawnList[despawnListIndex]
 
 func addToDepsawnList(entityPath : String):
-	despawnList.append(entityPath)
+	Global.despawnList[despawnListIndex].append(entityPath)
 
-func removeFromDespawnList(entityPath: String):
-	despawnList.erase(entityPath)
+func removeFromDespawnList(entityPath : String):
+	Global.despawnList[despawnListIndex].erase(entityPath)

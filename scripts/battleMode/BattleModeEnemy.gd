@@ -181,7 +181,6 @@ func getHit(damage:int):
 		stateCounter = stateWaitTimes[AWAY] #being attacked triggers enemy to approach again
 func _on_DeathTimer_timeout():
 	emit_signal("enemyDead")
-	Global.updateDeadEnemyList(Global.overWorldDeadEnemiesList)
 	queue_free()
 func updateHPBar():
 	$enemyMovement/PathFollow2D/HPBar.value = 1.0 * currentHP/maxHP * 100

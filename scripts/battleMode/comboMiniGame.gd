@@ -11,7 +11,7 @@ enum{
 var enabledCombos = [true, true]
 var allCombos = [[UP, UP, DOWN], [UP, UP, DOWN, DOWN, LEFT, RIGHT, LEFT, RIGHT]]
 var comboAnims = ["combo!!!", "BIG combo!!!"]
-var comboDamage = [1, 5]
+var comboDamage = [1, 10]
 
 var arrowNodes = []
 func _ready():

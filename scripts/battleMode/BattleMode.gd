@@ -172,6 +172,7 @@ func switchToOffenseMode():
 func on_enemyDead():
 	$offenseModeCamera/VictoryButton.visible = true
 	$offenseModeCamera/VictoryButton.disabled = false
+	Global.battleModeEnemyDefeated()
 func _on_VictoryButton_pressed():
 	var _PTS = get_tree().change_scene(overWorldPath)
 

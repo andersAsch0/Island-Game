@@ -18,5 +18,5 @@ func _on_overworldScene_playerEntered(entryPoint, despawnList):
 	if entryPoint == 1:
 		$YSort/Door.playClosingAnim()
 	#play any door animations or whatever
-	for deadEntityPath in despawnList:
+	for deadEntityPath in owner.getDespawnList():
 		get_node(deadEntityPath).queue_free()
