@@ -346,18 +346,11 @@
 
 [node name="overworldScene" type="Node"]
 script = ExtResource( 1 )
+despawnListIndex = 1
+fileSystemPath = "res://scenes/buildingInsidePrototype.tscn"
 
 [node name="buildingInside" type="Node2D" parent="."]
 script = ExtResource( 3 )
-
-[node name="wood bottom" type="TileMap" parent="buildingInside"]
-format = 1
-
-[node name="grass" type="TileMap" parent="buildingInside"]
-format = 1
-
-[node name="sandAndWaterEdges" type="TileMap" parent="buildingInside"]
-format = 1
 
 [node name="wood top" type="TileMap" parent="buildingInside"]
 scale = Vector2( 0.5, 0.5 )

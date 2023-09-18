@@ -279,7 +279,7 @@ func attackButtonPressed():
 		if currState == IDLE and not miniGameActive:
 			$Animations.play("idle")
 func _on_comboMiniGame_successfulCombo(damage):
-	if abs(Global.getEnemyDisplacementFromPlayer().x) <= 1 and  abs(Global.getEnemyDisplacementFromPlayer().y) <= 1:
+	if abs(Global.getEnemyDisplacementFromPlayer().x) <= 1 and abs(Global.getEnemyDisplacementFromPlayer().y) <= 1:
 		get_tree().call_group("enemies", "getHit", damage)
 		#do enemy damage anim
 	else:

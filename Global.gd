@@ -4,7 +4,6 @@
 
 extends Node
 
-var door_name = null
 signal timeMultiplierChanged
 signal timeFlowChanged
 
@@ -19,16 +18,18 @@ func set_timeFlow(timeIsNotStoppedBool: bool):
 	emit_signal("timeFlowChanged")
 
 #BATTLEMODE ENTERING AND EXITING
-var battleModePath = "res://scenes/battleMode/BattleMode.tscn"
-func enterBattleMode(respawnPos : Vector2, OenemyPath : String, BMenemyPath : String, controllerPath : String):
-	overWorldEnemyPath = OenemyPath
-	battleModeEnemyPath = BMenemyPath
-	musicAttackControllerPath = controllerPath
+#I know these names are awful I KNOW
+var battleModePath = "res://scenes/battleMode/BattleMode.tscn" # path of (empty) battlemode in filesystem
+func enterBattleMode(overWorldFileSystemPath : String, respawnPos : Vector2, OenemyPath : String, BMenemyPath : String, controllerPath : String):
+	overWorldPath = overWorldFileSystemPath # path of the scene of the whole overworld in the filesystem
+	overWorldEnemyPath = OenemyPath # path of the overworld enemy in the filesystem
+	battleModeEnemyPath = BMenemyPath # path of the battlemode version in the filsystem
+	musicAttackControllerPath = controllerPath # ditto
 	leaveOverworld(respawnPos, battleModePath)
 func leaveOverworld(respawnPos : Vector2, newScene : String):
-	overWorldLocation = respawnPos
+	overWorldLocation = respawnPos # location where player will respawn in when they leave battlemode and go back to the overworld
 	var _PTS = get_tree().change_scene(newScene) # change_scene takes path, change_scene_to takes PackedScene
-var overWorldPath = "res://scenes/World.tscn"
+var overWorldPath = "res://scenes/overworldPrototype.tscn"
 func reEnterOverworld():
 	var _PTS = get_tree().change_scene(overWorldPath) # change_scene takes path, change_scene_to takes PackedScene
 

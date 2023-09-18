@@ -168,7 +168,7 @@ func playerDie():
 #TAKE DAMAGE
 
 func getHit(damage:int):
-	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
+	currentHP -= damage * abs(Global.currCombatTimeMultiplier)
 	updateHPBar()
 	if currentHP <= 0:
 		set_process(false)

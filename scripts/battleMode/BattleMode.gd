@@ -174,7 +174,7 @@ func on_enemyDead():
 	$offenseModeCamera/VictoryButton.disabled = false
 	Global.battleModeEnemyDefeated()
 func _on_VictoryButton_pressed():
-	var _PTS = get_tree().change_scene(overWorldPath)
+	Global.reEnterOverworld()
 
 #SIGNALS FROM PLAYER
 func _on_BattleModePlayer_PlayerHit():
@@ -187,7 +187,7 @@ func _on_BattleModePlayer_PlayerDie():
 	get_tree().call_group("enemies", "playerDie")
 	
 func _on_DefeatButton_pressed():
-	var _PTS = get_tree().change_scene(overWorldPath)
+	Global.reEnterOverworld()
 
 
 #ACTIONS

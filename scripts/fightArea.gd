@@ -8,4 +8,4 @@ func _input(event):
 		
 
 func enterFight():
-	Global.enterBattleMode(owner.position, owner.get_path(), owner.get_battleModeVersionScenePath(), owner.get_controller_path())
+	Global.enterBattleMode(owner.owner.fileSystemPath, owner.position, owner.get_path(), owner.get_battleModeVersionScenePath(), owner.get_controller_path())

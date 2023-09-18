@@ -5,6 +5,7 @@
 
 [node name="overworldScene" type="Node"]
 script = ExtResource( 1 )
+fileSystemPath = "res://scenes/overworldPrototype.tscn"
 
 [node name="World" parent="." instance=ExtResource( 2 )]
 

@@ -4,6 +4,7 @@ extends Node
 
 
 export var despawnListIndex : int = 0
+export var fileSystemPath : String
 
 signal playerEntered(entryPoint, despawnList)
 

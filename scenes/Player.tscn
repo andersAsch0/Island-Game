@@ -157,22 +157,22 @@ region = Rect2( 0, 64, 32, 32 )
 [sub_resource type="SpriteFrames" id=39]
 animations = [ {
 "frames": [ SubResource( 41 ) ],
-"loop": true,
+"loop": false,
 "name": "idle down",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 42 ) ],
-"loop": true,
+"loop": false,
 "name": "idle left",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 43 ) ],
-"loop": true,
+"loop": false,
 "name": "idle right",
 "speed": 5.0
 }, {
 "frames": [ SubResource( 44 ) ],
-"loop": true,
+"loop": false,
 "name": "idle up",
 "speed": 5.0
 }, {
@@ -211,7 +211,7 @@ visible = false
 position = Vector2( -0.5, -9 )
 frames = SubResource( 17 )
 animation = "idle"
-frame = 1
+frame = 7
 playing = true
 
 [node name="Animations" type="AnimatedSprite" parent="."]
@@ -222,6 +222,7 @@ animation = "idle down"
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( -1, -1 )
 rotation = 1.57344
 shape = SubResource( 40 )
@@ -252,12 +253,12 @@ current = true
 limit_smoothed = true
 
 [node name="doorHitBox" type="Area2D" parent="."]
+visible = false
 script = ExtResource( 7 )
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="doorHitBox"]
 position = Vector2( -1, -1 )
 rotation = 1.57344
-scale = Vector2( 1, 1 )
 shape = SubResource( 40 )
 
 [connection signal="timeout" from="playerFootstepMaker/footstepTimer" to="playerFootstepMaker" method="_on_footstepTimer_timeout"]

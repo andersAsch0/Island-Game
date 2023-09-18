@@ -19,5 +19,6 @@ func setCollisionLayer(layer:int):
 	collision_layer = layer
 
 func playClosingAnim(backward : bool = false):
+	$openAndCloseFX.play(0.0)
 	$AnimatedSprite.frame = 0
 	$AnimatedSprite.play("default", backward)
