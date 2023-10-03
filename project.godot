@@ -23,11 +23,23 @@ _global_script_classes=[ {
 "class": "HurtBox",
 "language": "GDScript",
 "path": "res://scripts/HurtBox.gd"
+}, {
+"base": "Area2D",
+"class": "SceneTransition",
+"language": "GDScript",
+"path": "res://scripts/sceneTransition.gd"
+}, {
+"base": "Node",
+"class": "overworldScene",
+"language": "GDScript",
+"path": "res://scripts/overworldScene.gd"
 } ]
 _global_script_class_icons={
 "GitAPI": "",
 "HitBox": "",
-"HurtBox": ""
+"HurtBox": "",
+"SceneTransition": "",
+"overworldScene": ""
 }
 
 [application]

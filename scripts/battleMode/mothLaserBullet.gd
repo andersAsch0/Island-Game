@@ -9,7 +9,6 @@ var speed = 100
 func _process(delta):
 	position += velocity * speed * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 func reverseTime():
-	print("moth reversing")
 	pass
 func speedUpTime(_multiplier : float = 1): #can pass in number, if no number default is 1 (no change)
 	pass

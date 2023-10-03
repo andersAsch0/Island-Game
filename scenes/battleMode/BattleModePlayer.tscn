@@ -13,6 +13,7 @@
 [ext_resource path="res://audio/mixkit-dropping-keys-in-the-floor-2839.wav" type="AudioStream" id=11]
 [ext_resource path="res://audio/mixkit-axe-hits-to-a-plate-2774.wav" type="AudioStream" id=12]
 [ext_resource path="res://scenes/battleMode/comboMiniGame.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scripts/battleMode/battleModePlayerAnimation.gd" type="Script" id=14]
 
 [sub_resource type="AtlasTexture" id=26]
 atlas = ExtResource( 1 )
@@ -218,10 +219,6 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=11]
-radius = 0.974213
-height = 6.05128
-
 [sub_resource type="CapsuleShape2D" id=24]
 radius = 3.0
 height = 0.0
@@ -250,6 +247,7 @@ scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 10 )
 animation = "idle"
 playing = true
+script = ExtResource( 14 )
 
 [node name="moveTilesTimer" type="Timer" parent="Animations"]
 one_shot = true
@@ -258,15 +256,11 @@ one_shot = true
 wait_time = 0.1
 one_shot = true
 
-[node name="wallHitBox" type="CollisionShape2D" parent="."]
-rotation = 1.57938
-shape = SubResource( 11 )
-
 [node name="inputTimer" type="Timer" parent="."]
 wait_time = 0.15
 one_shot = true
 
-[node name="DashCooldown" type="Timer" parent="."]
+[node name="damageCooldownTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="HurtBox" type="Area2D" parent="."]
@@ -315,6 +309,8 @@ volume_db = -30.0
 [connection signal="timeout" from="Animations/moveTilesTimer" to="." method="_on_moveTilesTimer_timeout"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_DashTimer_timeout"]
 [connection signal="timeout" from="inputTimer" to="." method="_on_inputTimer_timeout"]
+[connection signal="timeout" from="damageCooldownTimer" to="." method="_on_damageCooldownTimer_timeout"]
+[connection signal="timeout" from="damageCooldownTimer" to="Animations" method="_on_damageCooldownTimer_timeout"]
 [connection signal="caughtHeal" from="catchMiniGame" to="." method="_on_catchMiniGame_caughtHeal"]
 [connection signal="gameEnded" from="catchMiniGame" to="." method="_on_catchMiniGame_gameEnded"]
 [connection signal="failedWind" from="windWatchMiniGame" to="." method="_on_windWatchMiniGame_failedWind"]

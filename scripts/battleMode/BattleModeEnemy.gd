@@ -13,7 +13,6 @@ var currentHP = maxHP
 var currAttack = 1 #current line of json file
 var currBullets = 0
 var bulletsStopped = false
-var bulletSpawnTimeCounter : float = 0 #using this instead of a timer node because I need it to be effected by the time shenanigans
 enum {
 	AWAY
 	APPROACHING
@@ -44,6 +43,7 @@ func _ready():
 	animatedSpriteNode.scale.x = origScale
 	animatedSpriteNode.scale.y = origScale
 	$enemyMovement.enemySpeed = enemySpeed
+	updateHPBar()
 	Global.connect("timeMultiplierChanged", self, "changeAnimationSpeed")
 	Global.connect("timeFlowChanged", self, "startOrStopAnimation")
 
@@ -72,7 +72,6 @@ func _physics_process(delta):
 func startAttackPhase():
 	currState = ATTACKING
 	animatedSpriteNode.play("idle")
-	$BulletSpawnPath.rotateBulletSpawnPath()
 	emit_signal("attackPhaseStarting")
 func startLeavePhase():
 	currState = ABSCONDING
@@ -143,11 +142,7 @@ func introduction():
 #FIGHT AND BULLET SPAWNING
 
 var gridSizeByBulletPathPerc = 17
-#func attack(musicNotePitch):
-#
-#	if not bulletsStopped and currState == ATTACKING:
-#		$BulletSpawnPath.spawnBullet(50 + musicNotePitch * gridSizeByBulletPathPerc, 0)
-	
+
 func changeAnimationSpeed(): #called whenever the global time variable is changed, ugly but i cant find a better way
 	$enemyMovement/PathFollow2D/AnimatedSprite.set_speed_scale(abs(Global.currCombatTimeMultiplier))
 	if Global.currCombatTimeMultiplier < 0:
@@ -172,19 +167,22 @@ func playerDie():
 #TAKE DAMAGE
 
 func getHit(damage:int):
-	currentHP -= 1 * abs(Global.currCombatTimeMultiplier)
-	$enemyMovement/PathFollow2D/HPBar.value = 1.0 * currentHP/maxHP * 100
+	currentHP -= damage * abs(Global.currCombatTimeMultiplier)
+	updateHPBar()
 	if currentHP <= 0:
 		set_process(false)
 		$enemyMovement.set_process(false)
 		$enemyMovement/PathFollow2D/AnimatedSprite.play("die")
 		$DeathTimer.start() #leave time to play death animation before showing win screen
 		get_tree().call_group("bulletTypes", "die")
+		return
+	if currState == AWAY:
+		stateCounter = stateWaitTimes[AWAY] #being attacked triggers enemy to approach again
 func _on_DeathTimer_timeout():
 	emit_signal("enemyDead")
-	Global.updateDeadEnemyList(Global.overWorldDeadEnemiesList)
 	queue_free()
-
+func updateHPBar():
+	$enemyMovement/PathFollow2D/HPBar.value = 1.0 * currentHP/maxHP * 100
 
 #GRID MOVEMENT
 var playerGridSquare = Vector2(2, 2)
