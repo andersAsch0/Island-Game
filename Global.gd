@@ -20,6 +20,7 @@ func set_timeFlow(timeIsNotStoppedBool: bool):
 #BATTLEMODE ENTERING AND EXITING
 #I know these names are awful I KNOW
 var battleModePath = "res://scenes/battleMode/BattleMode.tscn" # path of (empty) battlemode in filesystem
+var spawnPlayerAtPrevOverworldCoords = false #this will be true when returning to overworld from battlemode, and so the overworldScene will spawn the player accordingly
 func enterBattleMode(overWorldFileSystemPath : String, respawnPos : Vector2, OenemyPath : String, BMenemyPath : String, controllerPath : String):
 	overWorldPath = overWorldFileSystemPath # path of the scene of the whole overworld in the filesystem
 	overWorldEnemyPath = OenemyPath # path of the overworld enemy in the filesystem
@@ -32,6 +33,11 @@ func leaveOverworld(respawnPos : Vector2, newScene : String):
 var overWorldPath = "res://scenes/overworldPrototype.tscn"
 func reEnterOverworld():
 	var _PTS = get_tree().change_scene(overWorldPath) # change_scene takes path, change_scene_to takes PackedScene
+	spawnPlayerAtPrevOverworldCoords = true
+func getPrevOverworldPlayerCoords():
+	spawnPlayerAtPrevOverworldCoords = false
+	return overWorldLocation
+	
 
 
 #BATTLEMODE GRID TRACKING (so all nodes can know where the enemy & player are)
@@ -82,9 +88,6 @@ var latestEntryNum : int = 0
 func switchOverworldScene(entryPoint : int, destinationPath : String):
 	latestEntryNum = entryPoint
 	var _PTS = get_tree().change_scene(destinationPath) # change_scene takes path, change_scene_to takes PackedScene
-	
-	
-	
 	
 
 #ENTITY DESPAWNING MASTER LIST (each location has its own index correspondind to an entry in this array

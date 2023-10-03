@@ -348,6 +348,7 @@
 script = ExtResource( 1 )
 despawnListIndex = 1
 fileSystemPath = "res://scenes/buildingInsidePrototype.tscn"
+entryPointCoords = [ Vector2( 1, 5 ) ]
 
 [node name="buildingInside" type="Node2D" parent="."]
 script = ExtResource( 3 )
@@ -379,7 +380,7 @@ tile_data = PoolIntArray( -262140, 16, 0, -262139, 15, 0, -262138, 536870941, 0,
 position = Vector2( 1, 5 )
 
 [node name="Door" parent="buildingInside/YSort" instance=ExtResource( 4 )]
-destinationPath = "res://scenes/overworldPrototype.tscn"
+destinationPath = "res://scenes/locations/overWorldHaven.tscn"
 entryPointNum = 1
 
 [connection signal="playerEntered" from="." to="buildingInside" method="_on_overworldScene_playerEntered"]
