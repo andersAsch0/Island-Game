@@ -191,7 +191,7 @@ func finishAttack():
 	pass
 var movingTilesDisabled = false
 func move(direction):
-	if currState != MOVINGTILES and Global.canMoveTo(Global.playerGridLocation + moveVectors[direction]) and not movingTilesDisabled:
+	if currState != MOVINGTILES and Global.canMoveTo(Global.playerGridLocation + moveVectors[direction]) and not miniGameActive and not movingTilesDisabled:
 		moveDirection = direction
 		prevLocation = position
 		updateCurrGridSquare()
@@ -267,8 +267,8 @@ var miniGameActive = false
 #	else:
 #		pass
 #		#do miss anim
-#
-#
+##
+##
 #signal watchWind(timeJuiceChange)
 #func _on_windWatchMiniGame_wind():
 #	emit_signal("watchWind", 1)
@@ -294,4 +294,18 @@ func _on_UI_sheildActivated():
 	$Shield.visible = true
 	isShielded = true
 	miniGameActive = false
+func _on_UI_caughtHeal(HPHealed):
+	currentHP += HPHealed
+	if currentHP > maxHP:
+		currentHP = maxHP
+	emit_signal("PlayerHit") #update HP bar in parent node
+
+
+#minigame animations
+func _on_UI_winding(activated):
+	pass # Replace with function body.
+func _on_UI_attacking(activated):
+	pass # Replace with function body.
+func _on_UI_healing(activated):
+	pass # Replace with function body.
 
