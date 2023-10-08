@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=2]
+[gd_scene load_steps=114 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -7,8 +7,10 @@
 [ext_resource path="res://scripts/hitAndMissAnims.gd" type="Script" id=5]
 [ext_resource path="res://art/battleModeUI/comboAnims.png" type="Texture" id=6]
 [ext_resource path="res://art/battlegrid.png" type="Texture" id=7]
+[ext_resource path="res://scenes/battleMode/battlemodeButton.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scripts/gridCenter.gd" type="Script" id=9]
 [ext_resource path="res://art/gridAnim.png" type="Texture" id=10]
+[ext_resource path="res://scenes/battleMode/windWatchMinigame.tscn" type="PackedScene" id=11]
 [ext_resource path="res://art/battleModeUI/action menu horiz.png" type="Texture" id=12]
 [ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
 [ext_resource path="res://art/battleModeUI/arrow.png" type="Texture" id=14]
@@ -18,6 +20,9 @@
 [ext_resource path="res://scripts/battleMode/enemyGridHighlight.gd" type="Script" id=18]
 [ext_resource path="res://art/bigGrid.png" type="Texture" id=19]
 [ext_resource path="res://scripts/battleMode/BigGridPerspective.gd" type="Script" id=20]
+[ext_resource path="res://scenes/battleMode/catchMiniGame.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/battleMode/comboMiniGame.tscn" type="PackedScene" id=22]
+[ext_resource path="res://scripts/battleMode/BattleModeUI.gd" type="Script" id=23]
 
 [sub_resource type="AtlasTexture" id=115]
 atlas = ExtResource( 10 )
@@ -586,6 +591,7 @@ disabled = true
 text = "DEFEAT"
 
 [node name="actionMenu" type="AnimatedSprite" parent="offenseModeCamera"]
+visible = false
 position = Vector2( 141, 3.00005 )
 rotation = 1.57557
 scale = Vector2( 0.400679, 0.529486 )
@@ -635,20 +641,51 @@ animation = "empty"
 script = ExtResource( 5 )
 
 [node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource( 23 )
+
+[node name="windButton" parent="UI" instance=ExtResource( 8 )]
+position = Vector2( 337, 24 )
+
+[node name="windWatchMiniGame" parent="UI/windButton" instance=ExtResource( 11 )]
+
+[node name="attackButton" parent="UI" instance=ExtResource( 8 )]
+position = Vector2( 337, 67 )
+
+[node name="buttonIcon" parent="UI/attackButton/blankButton" index="0"]
+region_rect = Rect2( 95, 0, 95, 44 )
+
+[node name="comboMiniGame" parent="UI/attackButton" instance=ExtResource( 22 )]
+position = Vector2( -337, -67 )
+
+[node name="healButton" parent="UI" instance=ExtResource( 8 )]
+position = Vector2( 337, 110 )
+
+[node name="buttonIcon" parent="UI/healButton/blankButton" index="0"]
+region_rect = Rect2( 190, 0, 95, 44 )
+
+[node name="catchMiniGame" parent="UI/healButton" instance=ExtResource( 21 )]
+position = Vector2( -385, -111 )
+
+[node name="sheildButton" parent="UI" instance=ExtResource( 8 )]
+position = Vector2( 337, 154 )
+
+[node name="buttonIcon" parent="UI/sheildButton/blankButton" index="0"]
+region_rect = Rect2( 285, 0, 95, 44 )
 
 [connection signal="enemyAbscondPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAbscondPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
+[connection signal="enemyAngleChangePhaseStarting" from="." to="UI" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
 [connection signal="enemyApproachPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyApproachPhaseStarting"]
 [connection signal="enemyAttackPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAttackPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
+[connection signal="enemyAwayPhaseStarting" from="." to="UI" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="frame_changed" from="bigGrid3" to="bigGrid3" method="_on_bigGrid3_frame_changed"]
 [connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera/Arrows" method="_on_BattleModePlayer_playerMovedOffense"]
-[connection signal="watchWind" from="BattleModePlayer" to="." method="_on_windWatchMiniGame_wind"]
 [connection signal="failedCombo" from="BattleModePlayer/comboMiniGame" to="hitAndMissAnims" method="_on_comboMiniGame_failedCombo"]
 [connection signal="successfulCombo" from="BattleModePlayer/comboMiniGame" to="hitAndMissAnims" method="_on_comboMiniGame_successfulCombo"]
 [connection signal="timeout" from="reverseTimeDuration" to="." method="_on_reverseTimeDuration_timeout"]
@@ -657,5 +694,16 @@ script = ExtResource( 5 )
 [connection signal="timeout" from="slowTimeDuration" to="." method="_on_slowTimeDuration_timeout"]
 [connection signal="pressed" from="offenseModeCamera/VictoryButton" to="." method="_on_VictoryButton_pressed"]
 [connection signal="pressed" from="offenseModeCamera/DefeatButton" to="." method="_on_DefeatButton_pressed"]
+[connection signal="minigameActiveUpdate" from="UI" to="BattleModePlayer" method="_on_UI_minigameActiveUpdate"]
+[connection signal="sheildActivated" from="UI" to="BattleModePlayer" method="_on_UI_sheildActivated"]
+[connection signal="failedWind" from="UI/windButton/windWatchMiniGame" to="UI" method="_on_windWatchMiniGame_failedWind"]
+[connection signal="wind" from="UI/windButton/windWatchMiniGame" to="UI" method="_on_windWatchMiniGame_wind"]
+[connection signal="successfulCombo" from="UI/attackButton/comboMiniGame" to="UI" method="_on_comboMiniGame_successfulCombo"]
+[connection signal="caughtHeal" from="UI/healButton/catchMiniGame" to="UI" method="_on_catchMiniGame_caughtHeal"]
+[connection signal="gameEnded" from="UI/healButton/catchMiniGame" to="UI" method="_on_catchMiniGame_gameEnded"]
 
 [editable path="BattleModePlayer"]
+[editable path="UI/windButton"]
+[editable path="UI/attackButton"]
+[editable path="UI/healButton"]
+[editable path="UI/sheildButton"]

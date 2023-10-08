@@ -166,10 +166,6 @@ func _on_BattleMode_offensePhaseEnding():
 		storagePos.y -= currGridSize
 	if Input.get_action_strength("ui_down") > 0:
 		storagePos.y += currGridSize
-	$catchMiniGame.gameEnd()
-	$windWatchMiniGame.gameEnd()
-	$comboMiniGame.gameEnd()
-	$catchMiniGame.visible = false
 	$Animations.play("idle")
 func _on_BattleMode_enemyAbscondPhaseStarting():
 	currState = IDLE
@@ -191,22 +187,11 @@ func _on_BattleMode_offensePhaseStarting():
 	$HitBox/CollisionShape2D.disabled = false
 	movingTilesDisabled = false
 	position = Global.getPlayerCoords()
-	$catchMiniGame.visible = true
 func finishAttack():
 	pass
-func shield():
-	if not isShielded:
-		$equipSheildSFX.play(0.15)
-		$Shield.visible = true
-		isShielded = true
-		$catchMiniGame.gameEnd()
-		$windWatchMiniGame.gameEnd()
-		miniGameActive = false
-		if currState == IDLE:
-			$Animations.play("idle")
 var movingTilesDisabled = false
 func move(direction):
-	if currState != MOVINGTILES and Global.canMoveTo(Global.playerGridLocation + moveVectors[direction]) and not miniGameActive and not movingTilesDisabled:
+	if currState != MOVINGTILES and Global.canMoveTo(Global.playerGridLocation + moveVectors[direction]) and not movingTilesDisabled:
 		moveDirection = direction
 		prevLocation = position
 		updateCurrGridSquare()
@@ -220,8 +205,8 @@ func _on_moveTilesTimer_timeout():
 	position = Global.getPlayerCoords()
 	emit_signal("playerFinishedMoving", Global.playerGridLocation)
 	$Animations.play("idle")
-	if miniGameActive:
-		$Animations.play("wind watch")
+#	if miniGameActive:
+#		$Animations.play("wind watch")
 	if currState == DEFENSE:
 		return
 	currState = IDLE
@@ -229,68 +214,84 @@ func _on_moveTilesTimer_timeout():
 	
 
 # MINIGAMES
-#use catchMiniGame.healFlying and windWatchMiniGame.is_proccessing_input to see curr state of game
 var miniGameActive = false
-func updateMiniGameActive():
-	miniGameActive = $catchMiniGame.healFlying or $windWatchMiniGame.is_processing_input() or $comboMiniGame.is_processing_input()
 
-func windWatchButtonPressed():
-	if isShielded or currState == DEFENSE:
-		return
-	$windWatchMiniGame.playGame()
-	if $windWatchMiniGame.is_processing_input(): #game start
-		miniGameActive = true
-		if currState == IDLE:
-			$Animations.play("wind watch")
-	else:
-		updateMiniGameActive()
-		if currState == IDLE and not miniGameActive:
-			$Animations.play("idle")
-	
-func healButtonPressed():
-	if isShielded or currState == DEFENSE:
-		return
-	$catchMiniGame.playGame()
-	miniGameActive = true
-	if currState == IDLE:
-		$Animations.play("wind watch")
-func _on_catchMiniGame_caughtHeal():
-	currentHP += 1
-	if currentHP > maxHP:
-		currentHP = maxHP
-	emit_signal("PlayerHit") #update HP bar in parent node
-	updateMiniGameActive()
-func _on_catchMiniGame_gameEnded():
-	updateMiniGameActive()
-	if currState == IDLE and not miniGameActive:
-		$Animations.play("idle")
+#func windWatchButtonPressed():
+#	if isShielded or currState == DEFENSE:
+#		return
+#	$windWatchMiniGame.playGame()
+#	if $windWatchMiniGame.is_processing_input(): #game start
+#		miniGameActive = true
+#		if currState == IDLE:
+#			$Animations.play("wind watch")
+#	else:
+#		updateMiniGameActive()
+#		if currState == IDLE and not miniGameActive:
+#			$Animations.play("idle")
+#
+#func healButtonPressed():
+#	if isShielded or currState == DEFENSE:
+#		return
+#	$catchMiniGame.playGame()
+#	miniGameActive = true
+#	if currState == IDLE:
+#		$Animations.play("wind watch")
+#func _on_catchMiniGame_caughtHeal():
+#	currentHP += 1
+#	if currentHP > maxHP:
+#		currentHP = maxHP
+#	emit_signal("PlayerHit") #update HP bar in parent node
+#	updateMiniGameActive()
+#func _on_catchMiniGame_gameEnded():
+#	updateMiniGameActive()
+#	if currState == IDLE and not miniGameActive:
+#		$Animations.play("idle")
+#
+#
+#func attackButtonPressed():
+#	if isShielded or currState == DEFENSE:
+#		return	
+#	$comboMiniGame.playGame()
+#	if $comboMiniGame.is_processing_input():
+#		miniGameActive = true
+#		if currState == IDLE:
+#			$Animations.play("wind watch")
+#	else:
+#		updateMiniGameActive()
+#		if currState == IDLE and not miniGameActive:
+#			$Animations.play("idle")
+#func _on_comboMiniGame_successfulCombo(damage):
+#	if abs(Global.getEnemyDisplacementFromPlayer().x) <= 1 and abs(Global.getEnemyDisplacementFromPlayer().y) <= 1:
+#		get_tree().call_group("enemies", "getHit", damage)
+#		#do enemy damage anim
+#	else:
+#		pass
+#		#do miss anim
+#
+#
+#signal watchWind(timeJuiceChange)
+#func _on_windWatchMiniGame_wind():
+#	emit_signal("watchWind", 1)
+#func _on_windWatchMiniGame_failedWind():
+#	emit_signal("watchWind", -1)
 
+#func shield():
+#	if not isShielded:
+#		$equipSheildSFX.play(0.15)
+#		$Shield.visible = true
+#		isShielded = true
+#		$catchMiniGame.gameEnd()
+#		$windWatchMiniGame.gameEnd()
+#		miniGameActive = false
+#		if currState == IDLE:
+#			$Animations.play("idle")
 
-func attackButtonPressed():
-	if isShielded or currState == DEFENSE:
-		return	
-	$comboMiniGame.playGame()
-	if $comboMiniGame.is_processing_input():
-		miniGameActive = true
-		if currState == IDLE:
-			$Animations.play("wind watch")
-	else:
-		updateMiniGameActive()
-		if currState == IDLE and not miniGameActive:
-			$Animations.play("idle")
-func _on_comboMiniGame_successfulCombo(damage):
-	if abs(Global.getEnemyDisplacementFromPlayer().x) <= 1 and abs(Global.getEnemyDisplacementFromPlayer().y) <= 1:
-		get_tree().call_group("enemies", "getHit", damage)
-		#do enemy damage anim
-	else:
-		pass
-		#do miss anim
+func _on_UI_minigameActiveUpdate(active):
+	miniGameActive = active
 
-
-signal watchWind(timeJuiceChange)
-func _on_windWatchMiniGame_wind():
-	emit_signal("watchWind", 1)
-func _on_windWatchMiniGame_failedWind():
-	emit_signal("watchWind", -1)
-
+func _on_UI_sheildActivated():
+	$equipSheildSFX.play(0.15)
+	$Shield.visible = true
+	isShielded = true
+	miniGameActive = false
 

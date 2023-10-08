@@ -95,13 +95,13 @@ func _input(event):
 			changeTimeScale(1.0 * 1/timeScalingFactor)
 	else: #is offense phase or time stopped
 		if(event.is_action_pressed("windWatch")):
-			_on_WindWatchButton_pressed()
+			$UI.windWatchButtonPressed()
 		elif(event.is_action_pressed("heal")):
-			_on_HealButton_pressed()
+			$UI.healButtonPressed()
 		elif(event.is_action_pressed("attack")):
-			_on_AttackButton_pressed()
+			$UI.attackButtonPressed()
 		elif(event.is_action_pressed("sheild")):
-			_on_ShieldButton_pressed()
+			$UI.sheildButtonPressed()
 		
 		
 func reverseTime():
@@ -116,14 +116,14 @@ func stopTime():
 	Global.set_timeFlow(false)
 	updateTimeJuiceBar()
 	currState = STOPPEDTIME
-	showActionMenu(true, false)
+	showActionMenu(true, true, true, true, false)
 func _on_stopTimeDuration_timeout():
 	resumeTime()
 func resumeTime():
 	Global.set_timeFlow(true)
 	updateTimeJuiceBar()
 	currState = DEFENSE
-	showActionMenu(false, false)
+	showActionMenu(false, false, false, false, false)
 	musicAttackController.get_node("MusicHandler").timeHasResumed()
 	
 func changeTimeScale(timeMultiplier : float):
@@ -159,7 +159,7 @@ func switchToDefenseMode():
 	currState = DEFENSE
 	$offenseModeCamera/Grid.visible = true
 	$BigGridPerspective.visible = false
-	showActionMenu(false, false)
+	showActionMenu(false, false, false, false, false)
 	$offenseModeCamera.setFollow(false)
 	$offenseModeCamera.snapToPlayer()
 func switchToOffenseMode():
@@ -167,7 +167,7 @@ func switchToOffenseMode():
 	$offenseModeCamera/Grid.visible = false
 	$BigGridPerspective.visible = true
 	$offenseModeCamera/Arrows.visible = true
-	showActionMenu(true, true)
+	showActionMenu(true, true, true, true, true)
 
 func on_enemyDead():
 	$offenseModeCamera/VictoryButton.visible = true
@@ -191,28 +191,23 @@ func _on_DefeatButton_pressed():
 
 
 #ACTIONS
-func showActionMenu(showMenu : bool, showArrows : bool):
+func showActionMenu(showAttack : bool, showHeal : bool, showWind : bool, showSheild: bool, showArrows : bool):
 	$offenseModeCamera/Arrows.visible = showArrows
-	$offenseModeCamera/actionMenu.play("hide", showMenu)
+	$UI/attackButton.showButton(showAttack)
+	$UI/healButton.showButton(showHeal)
+	$UI/windButton.showButton(showWind)
+	$UI/sheildButton.showButton(showSheild)
 enum { RIGHT, LEFT, UP, DOWN }
 var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
 
 func updateTimeJuiceBar():
 	$offenseModeCamera/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
-func _on_WindWatchButton_pressed():
-	$BattleModePlayer.windWatchButtonPressed()
-	print("camera : ", $offenseModeCamera.position, " player: ", $BattleModePlayer.position)
 func _on_windWatchMiniGame_wind(timeJuiceChange):
 	currTimeJuice += timeJuiceChange
 	if currTimeJuice > maxTimeJuiceSeconds:
 		currTimeJuice = maxTimeJuiceSeconds
 	updateTimeJuiceBar()
-func _on_HealButton_pressed():
-	$BattleModePlayer.healButtonPressed()
-func _on_AttackButton_pressed():
-	$BattleModePlayer.attackButtonPressed()
-func _on_ShieldButton_pressed():
-	$BattleModePlayer.shield()
+
 #	$offenseModeCamera/Arrows.visible = false
 
 
