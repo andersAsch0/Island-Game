@@ -178,7 +178,6 @@ disabled = true
 position = Vector2( 3.8147e-06, 0 )
 frames = SubResource( 24 )
 animation = "idle"
-frame = 1
 playing = true
 
 [connection signal="timeout" from="ApproachTimer" to="." method="_on_ApproachTimer_timeout"]

@@ -1,26 +1,42 @@
 extends Node2D
 
 var active = false #button is pressed and extended to show minigame ui
-export var activePos = Vector2(-70, 0)
+var enabled = false
+export var activePos = Vector2(-60, 0)
 var hiddenPos = Vector2(32, 0)
 var enabledPos = Vector2.ZERO
 
+func _ready():
+	$blankButton.position = hiddenPos
 
-#will replace w sliding animations probably
+var targetPos = Vector2()
+var movementTimeSec = 0.2
+func _process(delta):
+	$blankButton.position += delta * (targetPos - $blankButton.position) / movementTimeSec
+	if abs($blankButton.position.x - targetPos.x) < 1:
+		set_process(false)
+	
 
 func showButton(enable: bool):
-	activate(false)
-	visible = enable
+	enabled = enable
 	if enable and active:
-		$blankButton.position = activePos
+		targetPos = activePos
+		set_process(true)
 	elif enable:
-		$blankButton.position = enabledPos
+		targetPos = enabledPos
+		set_process(true)
 	else:
-		$blankButton.position = hiddenPos
+		targetPos = hiddenPos
+		active = false
+		set_process(true)
 	
 
 func activate(enable: bool):
-	if visible:
-		$blankButton.position = activePos * Vector2((enable as int), 0)
+	if enabled:
+		if enable:
+			targetPos = activePos
+		else:
+			targetPos = enabledPos
 		active = enable
+		set_process(true)
 

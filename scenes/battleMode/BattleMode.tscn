@@ -538,33 +538,6 @@ z_index = 1
 current = true
 script = ExtResource( 13 )
 
-[node name="HP&TJ" type="Label" parent="offenseModeCamera"]
-margin_left = -153.834
-margin_top = -35.0
-margin_right = -113.834
-margin_bottom = -21.0
-rect_scale = Vector2( 0.632878, 0.87013 )
-text = "HP TJ"
-
-[node name="PlayerHPBar" type="ProgressBar" parent="offenseModeCamera"]
-margin_left = -153.834
-margin_top = 46.0
-margin_right = -83.834
-margin_bottom = 60.0
-rect_rotation = -90.1426
-rect_scale = Vector2( 0.955148, 0.51705 )
-custom_colors/font_color = Color( 1, 0.74902, 0, 1 )
-
-[node name="TimeJuiceBar" type="ProgressBar" parent="offenseModeCamera"]
-margin_left = -142.834
-margin_top = 46.0
-margin_right = -77.8336
-margin_bottom = 61.0
-rect_rotation = 270.0
-rect_scale = Vector2( 1.03451, 0.511248 )
-custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
-custom_colors/font_color_shadow = Color( 0.0941176, 0.321569, 0.854902, 1 )
-
 [node name="Grid" type="Sprite" parent="offenseModeCamera"]
 self_modulate = Color( 1, 1, 1, 0.215686 )
 position = Vector2( 0, 11 )
@@ -643,10 +616,39 @@ script = ExtResource( 5 )
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 23 )
 
+[node name="HP&TJ" type="Label" parent="UI"]
+margin_left = 1.56599
+margin_top = 54.6
+margin_right = 41.566
+margin_bottom = 68.6
+rect_scale = Vector2( 0.632878, 0.87013 )
+text = "HP TJ"
+
+[node name="PlayerHPBar" type="ProgressBar" parent="UI"]
+margin_left = 1.56599
+margin_top = 135.6
+margin_right = 71.566
+margin_bottom = 149.6
+rect_rotation = -90.1426
+rect_scale = Vector2( 0.955148, 0.51705 )
+custom_colors/font_color = Color( 1, 0.74902, 0, 1 )
+
+[node name="TimeJuiceBar" type="ProgressBar" parent="UI"]
+margin_left = 12.566
+margin_top = 135.6
+margin_right = 77.5664
+margin_bottom = 150.6
+rect_rotation = 270.0
+rect_scale = Vector2( 1.03451, 0.511248 )
+custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.0941176, 0.321569, 0.854902, 1 )
+
 [node name="windButton" parent="UI" instance=ExtResource( 8 )]
 position = Vector2( 337, 24 )
 
-[node name="windWatchMiniGame" parent="UI/windButton" instance=ExtResource( 11 )]
+[node name="windWatchMiniGame" parent="UI/windButton/blankButton" index="1" instance=ExtResource( 11 )]
+position = Vector2( -2, 0 )
+scale = Vector2( 0.818122, 0.818122 )
 
 [node name="attackButton" parent="UI" instance=ExtResource( 8 )]
 position = Vector2( 337, 67 )
@@ -654,8 +656,9 @@ position = Vector2( 337, 67 )
 [node name="buttonIcon" parent="UI/attackButton/blankButton" index="0"]
 region_rect = Rect2( 95, 0, 95, 44 )
 
-[node name="comboMiniGame" parent="UI/attackButton" instance=ExtResource( 22 )]
-position = Vector2( -337, -67 )
+[node name="comboMiniGame" parent="UI/attackButton/blankButton" index="1" instance=ExtResource( 22 )]
+position = Vector2( -2, 0 )
+scale = Vector2( 0.476667, 0.476667 )
 
 [node name="healButton" parent="UI" instance=ExtResource( 8 )]
 position = Vector2( 337, 110 )
@@ -663,8 +666,9 @@ position = Vector2( 337, 110 )
 [node name="buttonIcon" parent="UI/healButton/blankButton" index="0"]
 region_rect = Rect2( 190, 0, 95, 44 )
 
-[node name="catchMiniGame" parent="UI/healButton" instance=ExtResource( 21 )]
-position = Vector2( -385, -111 )
+[node name="catchMiniGame" parent="UI/healButton/blankButton" index="1" instance=ExtResource( 21 )]
+position = Vector2( -192, -164 )
+scale = Vector2( 1.3, 1.3 )
 
 [node name="sheildButton" parent="UI" instance=ExtResource( 8 )]
 position = Vector2( 337, 154 )
@@ -686,8 +690,6 @@ region_rect = Rect2( 285, 0, 95, 44 )
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera/Arrows" method="_on_BattleModePlayer_playerMovedOffense"]
-[connection signal="failedCombo" from="BattleModePlayer/comboMiniGame" to="hitAndMissAnims" method="_on_comboMiniGame_failedCombo"]
-[connection signal="successfulCombo" from="BattleModePlayer/comboMiniGame" to="hitAndMissAnims" method="_on_comboMiniGame_successfulCombo"]
 [connection signal="timeout" from="reverseTimeDuration" to="." method="_on_reverseTimeDuration_timeout"]
 [connection signal="timeout" from="stopTimeDuration" to="." method="_on_stopTimeDuration_timeout"]
 [connection signal="timeout" from="speedTimeDuration" to="." method="_on_speedTimeDuration_timeout"]
@@ -701,11 +703,11 @@ region_rect = Rect2( 285, 0, 95, 44 )
 [connection signal="sheildActivated" from="UI" to="BattleModePlayer" method="_on_UI_sheildActivated"]
 [connection signal="watchWind" from="UI" to="." method="_on_windWatchMiniGame_wind"]
 [connection signal="winding" from="UI" to="BattleModePlayer" method="_on_UI_winding"]
-[connection signal="failedWind" from="UI/windButton/windWatchMiniGame" to="UI" method="_on_windWatchMiniGame_failedWind"]
-[connection signal="wind" from="UI/windButton/windWatchMiniGame" to="UI" method="_on_windWatchMiniGame_wind"]
-[connection signal="successfulCombo" from="UI/attackButton/comboMiniGame" to="UI" method="_on_comboMiniGame_successfulCombo"]
-[connection signal="caughtHeal" from="UI/healButton/catchMiniGame" to="UI" method="_on_catchMiniGame_caughtHeal"]
-[connection signal="gameEnded" from="UI/healButton/catchMiniGame" to="UI" method="_on_catchMiniGame_gameEnded"]
+[connection signal="failedWind" from="UI/windButton/blankButton/windWatchMiniGame" to="UI" method="_on_windWatchMiniGame_failedWind"]
+[connection signal="wind" from="UI/windButton/blankButton/windWatchMiniGame" to="UI" method="_on_windWatchMiniGame_wind"]
+[connection signal="successfulCombo" from="UI/attackButton/blankButton/comboMiniGame" to="UI" method="_on_comboMiniGame_successfulCombo"]
+[connection signal="caughtHeal" from="UI/healButton/blankButton/catchMiniGame" to="UI" method="_on_catchMiniGame_caughtHeal"]
+[connection signal="gameEnded" from="UI/healButton/blankButton/catchMiniGame" to="UI" method="_on_catchMiniGame_gameEnded"]
 
 [editable path="BattleModePlayer"]
 [editable path="UI/windButton"]

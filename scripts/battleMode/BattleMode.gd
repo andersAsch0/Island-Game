@@ -32,7 +32,7 @@ signal enemyAngleChangePhaseStarting
 
 func _ready(): #this script sets up enemy, approach() function will handle the rest
 	Global.currCombatTimeMultiplier = 1
-	$offenseModeCamera/PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
+	_on_BattleModePlayer_PlayerHit()
 	updateTimeJuiceBar()
 	
 	enemyScene = load(Global.battleModeEnemyPath)
@@ -178,7 +178,7 @@ func _on_VictoryButton_pressed():
 
 #SIGNALS FROM PLAYER
 func _on_BattleModePlayer_PlayerHit():
-	$offenseModeCamera/PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
+	$UI/PlayerHPBar.value = 1.0 * $BattleModePlayer.currentHP / $BattleModePlayer.maxHP * 100
 
 func _on_BattleModePlayer_PlayerDie():
 	$offenseModeCamera/DefeatButton.visible = true
@@ -201,7 +201,7 @@ enum { RIGHT, LEFT, UP, DOWN }
 var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
 
 func updateTimeJuiceBar():
-	$offenseModeCamera/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
+	$UI/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100
 func _on_windWatchMiniGame_wind(timeJuiceChange):
 	currTimeJuice += timeJuiceChange
 	if currTimeJuice > maxTimeJuiceSeconds:

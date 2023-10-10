@@ -1,17 +1,22 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/battleMode/catchMiniGame.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/catchTester.gd" type="Script" id=2]
 [ext_resource path="res://scenes/battleMode/windWatchMinigame.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/battleMode/comboMiniGame.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/battleMode/battlemodeButton.tscn" type="PackedScene" id=5]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 2 )
 
 [node name="catchMiniGame" parent="." instance=ExtResource( 1 )]
+position = Vector2( 149, 3 )
 
 [node name="windWatchMiniGame" parent="." instance=ExtResource( 3 )]
 position = Vector2( 127, 94 )
 
 [node name="comboMiniGame" parent="." instance=ExtResource( 4 )]
 position = Vector2( 69, 84 )
+
+[node name="battlemodeButton" parent="." instance=ExtResource( 5 )]
+position = Vector2( 340, 25 )
