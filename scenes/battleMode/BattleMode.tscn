@@ -676,6 +676,9 @@ position = Vector2( 337, 154 )
 [node name="buttonIcon" parent="UI/sheildButton/blankButton" index="0"]
 region_rect = Rect2( 285, 0, 95, 44 )
 
+[node name="sheildDeactivateDelay" type="Timer" parent="UI"]
+one_shot = true
+
 [connection signal="enemyAbscondPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAbscondPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
@@ -701,6 +704,7 @@ region_rect = Rect2( 285, 0, 95, 44 )
 [connection signal="healing" from="UI" to="BattleModePlayer" method="_on_UI_healing"]
 [connection signal="minigameActiveUpdate" from="UI" to="BattleModePlayer" method="_on_UI_minigameActiveUpdate"]
 [connection signal="sheildActivated" from="UI" to="BattleModePlayer" method="_on_UI_sheildActivated"]
+[connection signal="sheildDeactivationComplete" from="UI" to="BattleModePlayer" method="_on_UI_sheildDeactivationComplete"]
 [connection signal="watchWind" from="UI" to="." method="_on_windWatchMiniGame_wind"]
 [connection signal="winding" from="UI" to="BattleModePlayer" method="_on_UI_winding"]
 [connection signal="failedWind" from="UI/windButton/blankButton/windWatchMiniGame" to="UI" method="_on_windWatchMiniGame_failedWind"]
@@ -708,6 +712,7 @@ region_rect = Rect2( 285, 0, 95, 44 )
 [connection signal="successfulCombo" from="UI/attackButton/blankButton/comboMiniGame" to="UI" method="_on_comboMiniGame_successfulCombo"]
 [connection signal="caughtHeal" from="UI/healButton/blankButton/catchMiniGame" to="UI" method="_on_catchMiniGame_caughtHeal"]
 [connection signal="gameEnded" from="UI/healButton/blankButton/catchMiniGame" to="UI" method="_on_catchMiniGame_gameEnded"]
+[connection signal="timeout" from="UI/sheildDeactivateDelay" to="UI" method="_on_sheildDeactivateDelay_timeout"]
 
 [editable path="BattleModePlayer"]
 [editable path="UI/windButton"]

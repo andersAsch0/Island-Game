@@ -116,14 +116,14 @@ func stopTime():
 	Global.set_timeFlow(false)
 	updateTimeJuiceBar()
 	currState = STOPPEDTIME
-	showActionMenu(true, true, true, true, false)
+	$UI.on_time_stopped()
 func _on_stopTimeDuration_timeout():
 	resumeTime()
 func resumeTime():
 	Global.set_timeFlow(true)
 	updateTimeJuiceBar()
 	currState = DEFENSE
-	showActionMenu(false, false, false, false, false)
+	$UI.on_time_resumed()
 	musicAttackController.get_node("MusicHandler").timeHasResumed()
 	
 func changeTimeScale(timeMultiplier : float):
@@ -159,7 +159,7 @@ func switchToDefenseMode():
 	currState = DEFENSE
 	$offenseModeCamera/Grid.visible = true
 	$BigGridPerspective.visible = false
-	showActionMenu(false, false, false, false, false)
+#	showActionMenu(false, false, false, false, false)
 	$offenseModeCamera.setFollow(false)
 	$offenseModeCamera.snapToPlayer()
 func switchToOffenseMode():
@@ -167,7 +167,7 @@ func switchToOffenseMode():
 	$offenseModeCamera/Grid.visible = false
 	$BigGridPerspective.visible = true
 	$offenseModeCamera/Arrows.visible = true
-	showActionMenu(true, true, true, true, true)
+#	showActionMenu(true, true, true, true, true)
 
 func on_enemyDead():
 	$offenseModeCamera/VictoryButton.visible = true

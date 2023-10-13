@@ -1,6 +1,7 @@
 extends CanvasLayer
 
-signal sheildActivated
+signal sheildActivated(activated, delaySeconds) #if this stat becomes changable, it w other stats will b taken from global or smth
+signal sheildDeactivationComplete()
 signal winding(activated)
 signal healing(activated)
 signal attacking(activated)
@@ -16,22 +17,29 @@ var sheildActive : bool = false
 
 func _on_BattleMode_enemyAwayPhaseStarting():
 	actionsActive = true
-	sheildActive = false
+	sheildActive = get_node("../BattleModePlayer").isShielded
 	updateMiniGameActive()
-	enableActionButtons(true, true, true, true)
+	enableActionButtons(not sheildActive, not sheildActive, not sheildActive, true)
+	$sheildButton.activate(sheildActive)
 
 func _on_BattleMode_enemyAngleChangePhaseStarting():
 	actionsActive = false
 	deactivateButtonsAndGames(false, false, false)
 	enableActionButtons(false, false, false, false)
 
+func on_time_stopped():
+	_on_BattleMode_enemyAwayPhaseStarting()
+func on_time_resumed():
+	_on_BattleMode_enemyAngleChangePhaseStarting()
+		
+
+#this is kind of bad bc the games dont get deactivated. i dont want to change it tho. gotta remember to end games first
 func enableActionButtons(enableWind: bool, enableAttack : bool, enableHeal : bool, enableSheild : bool):
 	$windButton.showButton(enableWind)
 	$attackButton.showButton(enableAttack)
 	$healButton.showButton(enableHeal)
 	$sheildButton.showButton(enableSheild)
 
-#move hp and tj bar to UI layer and link up
 #todo: equipping shield is instant, removing it takes time, but you CAN remove it 
 func updateMiniGameActive():
 	emit_signal("minigameActiveUpdate",  $healButton.active or $windButton.active or $attackButton.active)
@@ -90,15 +98,33 @@ func _on_comboMiniGame_successfulCombo(damage):
 		pass
 		#do miss anim
 
-func sheildButtonPressed(): #not a toggle (yet)
-	if sheildActive or not actionsActive:
+var sheildDeactivateDelaySeconds = 1.0
+func sheildButtonPressed(): #this is a toggle
+	if not actionsActive:
 		return
-	sheildActive = true
-	$sheildButton.activate(true)
-	deactivateButtonsAndGames(false, false, false)
-	enableActionButtons(false, false, false, true)
+	elif not sheildActive: #activate sheild
+		deactivateButtonsAndGames(false, false, false)
+		enableActionButtons(false, false, false, true)
+		emit_signal("sheildActivated", true, 0.0)
+		sheildActive = true
+		$sheildButton.activate(true)
+		updateMiniGameActive()
+	else : #disable shield
+		if $sheildDeactivateDelay.time_left == 0: #sheild is already mid-removal
+			emit_signal("sheildActivated", false, sheildDeactivateDelaySeconds)
+			$sheildDeactivateDelay.wait_time = sheildDeactivateDelaySeconds
+			$sheildDeactivateDelay.start()
+
+func _on_sheildDeactivateDelay_timeout():
+	enableActionButtons(true, true, true, true)
+	sheildActive = false
+	$sheildButton.activate(false)
 	updateMiniGameActive()
-	emit_signal("sheildActivated")
+	emit_signal("sheildDeactivationComplete")
+	
+
+		
+		
 
 
 func deactivateButtonsAndGames(windOn : bool, attackOn : bool, healOn : bool):
@@ -111,3 +137,4 @@ func deactivateButtonsAndGames(windOn : bool, attackOn : bool, healOn : bool):
 	if not healOn:
 		$healButton.activate(false)
 		$healButton/blankButton/catchMiniGame.gameEnd()
+	updateMiniGameActive()

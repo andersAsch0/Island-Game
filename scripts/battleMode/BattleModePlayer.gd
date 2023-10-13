@@ -289,11 +289,22 @@ var miniGameActive = false
 func _on_UI_minigameActiveUpdate(active):
 	miniGameActive = active
 
-func _on_UI_sheildActivated():
-	$equipSheildSFX.play(0.15)
-	$Shield.visible = true
-	isShielded = true
-	miniGameActive = false
+func _on_UI_sheildActivated(activated, delaySeconds):
+	movingTilesDisabled = true
+	isShielded = activated
+	$Shield.visible = activated
+	if activated:
+		$equipSheildSFX.play(0.15)
+		$Shield.visible = true
+		#play sheild equip anim
+	else:
+		$unequipSheildSFX.play(0.15)
+		$Animations.frame = 0
+		$Animations.play("unsheild")
+func _on_UI_sheildDeactivationComplete():
+	movingTilesDisabled = false
+
+
 func _on_UI_caughtHeal(HPHealed):
 	currentHP += HPHealed
 	if currentHP > maxHP:
