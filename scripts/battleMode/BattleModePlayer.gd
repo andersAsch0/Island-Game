@@ -123,7 +123,7 @@ func _on_inputTimer_timeout():
 func getHit(damage:int):
 	if isShielded: # if sheilded, dont hit
 		isShielded = false
-		$Shield.visible = false
+		$Shield.play("hit")
 		$hitSheildSFX.play(0.05)
 		return
 	
@@ -292,12 +292,11 @@ func _on_UI_minigameActiveUpdate(active):
 func _on_UI_sheildActivated(activated, delaySeconds):
 	movingTilesDisabled = true
 	isShielded = activated
-	$Shield.visible = activated
 	if activated:
+		$Shield.play("activated")
 		$equipSheildSFX.play(0.15)
-		$Shield.visible = true
-		#play sheild equip anim
 	else:
+		$Shield.play("deactivate")
 		$unequipSheildSFX.play(0.15)
 		$Animations.frame = 0
 		$Animations.play("unsheild")
