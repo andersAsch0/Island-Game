@@ -43,6 +43,8 @@ func _ready():
 var beatCounter : float = 0
 var eighthNoteLastFrame : int  = 0
 func _process(delta):
+	if not Global.timeIsNotStopped:
+		return
 	for track in range(4):
 		if trackIsActive[track]:
 			trackProgressions[track] += delta * abs(Global.currCombatTimeMultiplier) * (Global.timeIsNotStopped as int)
@@ -65,7 +67,7 @@ func syncPitchWithGlobal():
 	setAllPitchScales(abs(Global.currCombatTimeMultiplier))
 func timeHasReversed():
 	pause(NORMALMUSIC)
-	$reverseMusicLoop.stream_paused = false
+	if Global.timeIsNotStopped: $reverseMusicLoop.stream_paused = false
 	trackProgressions[REVERSEMUSIC] = $reverseMusicLoop.stream.get_length() - trackProgressions[NORMALMUSIC]
 	$reverseMusicLoop.play((1.0 * $reverseMusicLoop.stream.get_length() - trackProgressions[NORMALMUSIC]))
 	trackIsActive[REVERSEMUSIC] = true
@@ -73,11 +75,11 @@ func timeHasReversed():
 	play(TICKING)
 func timeHasReversedBack():
 	pause(REVERSEMUSIC)
-	$normalMusicLoop.stream_paused = false
+	if Global.timeIsNotStopped: $normalMusicLoop.stream_paused = false
 	trackProgressions[NORMALMUSIC] = $normalMusicLoop.stream.get_length() - trackProgressions[REVERSEMUSIC]
 	$normalMusicLoop.play((1.0 * $normalMusicLoop.stream.get_length() - trackProgressions[REVERSEMUSIC]))
 	trackIsActive[NORMALMUSIC] = true
-	pause(TICKING)
+	if Global.timeIsNotStopped: pause(TICKING)
 	
 func timeHasStopped():
 	for track in range(4):

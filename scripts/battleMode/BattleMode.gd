@@ -11,7 +11,6 @@ var loopStart = 1
 var loopEnd = 2
 var bullet
 var currTimeMultiplier : float = 1 # keeps track of current time rate, will NEVER BE 0 THO
-var timeIsStopped = false
 var maxTimeJuiceSeconds : float = 10
 var currTimeJuice : float = maxTimeJuiceSeconds
 var timeJuiceCost : float = 4
@@ -73,7 +72,7 @@ func incrementAbilityTimes(_delta):
 #
 
 func _input(event):
-	if currState == DEFENSE:
+	if currState != OFFENSE: #is defense phase or time stopped
 		if(currTimeJuice < timeJuiceCost):
 			return
 		if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == 0):
@@ -93,7 +92,7 @@ func _input(event):
 			$slowTimeDuration.start()
 			currTimeJuice -= timeJuiceCost
 			changeTimeScale(1.0 * 1/timeScalingFactor)
-	else: #is offense phase or time stopped
+	if currState != DEFENSE: #is offense phase or time stopped
 		if(event.is_action_pressed("windWatch")):
 			$UI.windWatchButtonPressed()
 		elif(event.is_action_pressed("heal")):
