@@ -78,7 +78,7 @@ func _input(event):
 		if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == 0):
 			$reverseTimeDuration.start()
 			currTimeJuice -= timeJuiceCost
-			musicAttackController.get_node("MusicHandler").timeHasReversed()		
+			musicAttackController.get_node("MusicHandler").timeHasReversed($reverseTimeDuration.wait_time)		
 			reverseTime()
 		elif(event.is_action_pressed("stopTime") and $stopTimeDuration.time_left == 0):
 			$stopTimeDuration.start()
@@ -87,11 +87,11 @@ func _input(event):
 		elif(event.is_action_pressed("speedUpTime") and $speedTimeDuration.time_left == 0):
 			$speedTimeDuration.start()
 			currTimeJuice -= timeJuiceCost
-			changeTimeScale(timeScalingFactor)
+			changeTimeScale(timeScalingFactor, $speedTimeDuration.wait_time, true)
 		elif(event.is_action_pressed("slowDownTime") and $slowTimeDuration.time_left == 0):
 			$slowTimeDuration.start()
 			currTimeJuice -= timeJuiceCost
-			changeTimeScale(1.0 * 1/timeScalingFactor)
+			changeTimeScale(1.0 * 1/timeScalingFactor, $slowTimeDuration.wait_time, true)
 	if currState != DEFENSE: #is offense phase or time stopped
 		if(event.is_action_pressed("windWatch")):
 			$UI.windWatchButtonPressed()
@@ -111,7 +111,7 @@ func _on_reverseTimeDuration_timeout():
 	musicAttackController.get_node("MusicHandler").timeHasReversedBack()
 
 func stopTime():
-	musicAttackController.get_node("MusicHandler").timeHasStopped()
+	musicAttackController.get_node("MusicHandler").timeHasStopped($stopTimeDuration.wait_time)
 	Global.set_timeFlow(false)
 	updateTimeJuiceBar()
 	currState = STOPPEDTIME
@@ -125,14 +125,14 @@ func resumeTime():
 	$UI.on_time_resumed()
 	musicAttackController.get_node("MusicHandler").timeHasResumed()
 	
-func changeTimeScale(timeMultiplier : float):
+func changeTimeScale(timeMultiplier : float, duration : float, startOfDistortion : bool):
 	Global.set_timeMultiplier(timeMultiplier)
 	updateTimeJuiceBar()
-	musicAttackController.get_node("MusicHandler").syncPitchWithGlobal()
+	musicAttackController.get_node("MusicHandler").syncPitchWithGlobal(duration, startOfDistortion)
 func _on_speedTimeDuration_timeout():
-	changeTimeScale(1.0 * 1/timeScalingFactor)
+	changeTimeScale(1.0 * 1/timeScalingFactor, 0, false)
 func _on_slowTimeDuration_timeout():
-	changeTimeScale(timeScalingFactor)
+	changeTimeScale(timeScalingFactor, 0, false)
 
 
 	
