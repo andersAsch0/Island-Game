@@ -25,7 +25,7 @@ export var stateWaitTimes = [20.0, 100.0, 0.8, 5.0, 0.8] # how long in seconds e
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
-onready var animatedSpriteNode = $enemyMovement/PathFollow2D/AnimatedSprite
+onready var animatedSpriteNode = $enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite
 
 signal awayPhaseStarting
 signal approachPhaseStarting
@@ -64,11 +64,11 @@ func _physics_process(delta):
 		animatedSpriteNode.scale.x += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		animatedSpriteNode.scale.y += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	elif currState == ANGLECHANGE:
-		position += (angleChangeVector / stateWaitTimes[ANGLECHANGE] ) * delta
+		position += (angleChangeVector / stateWaitTimes[ANGLECHANGE] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	elif currState == ABSCONDING:
 		animatedSpriteNode.scale.x -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		animatedSpriteNode.scale.y -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		position -= (angleChangeVector / stateWaitTimes[ABSCONDING]) * delta
+		position -= (angleChangeVector / stateWaitTimes[ABSCONDING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 func startAttackPhase():
 	currState = ATTACKING
 	animatedSpriteNode.play("idle")
@@ -144,20 +144,20 @@ func introduction():
 var gridSizeByBulletPathPerc = 17
 
 func changeAnimationSpeed(): #called whenever the global time variable is changed, ugly but i cant find a better way
-	$enemyMovement/PathFollow2D/AnimatedSprite.set_speed_scale(abs(Global.currCombatTimeMultiplier))
+	$enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.set_speed_scale(abs(Global.currCombatTimeMultiplier))
 	if Global.currCombatTimeMultiplier < 0:
 		$enemyMovement/PathFollow2D/HurtBox/CollisionShape2D.set_deferred("disabled", false)
 		$enemyMovement/PathFollow2D/HitBox/CollisionShape2D.set_deferred("disabled", false)
 		if Global.timeIsNotStopped:
-			$enemyMovement/PathFollow2D/AnimatedSprite.play($enemyMovement/PathFollow2D/AnimatedSprite.animation, true)
+			$enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.play($enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.animation, true)
 	else:
 		$enemyMovement/PathFollow2D/HurtBox/CollisionShape2D.set_deferred("disabled", true)
 		$enemyMovement/PathFollow2D/HitBox/CollisionShape2D.set_deferred("disabled", true)
 func startOrStopAnimation():
 	if Global.timeIsNotStopped:
-		$enemyMovement/PathFollow2D/AnimatedSprite.play($enemyMovement/PathFollow2D/AnimatedSprite.animation, Global.currCombatTimeMultiplier < 0)
+		$enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.play($enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.animation, Global.currCombatTimeMultiplier < 0)
 	else:
-		$enemyMovement/PathFollow2D/AnimatedSprite.stop()
+		$enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.stop()
 
 func playerDie():
 	bulletsStopped = true
@@ -172,7 +172,7 @@ func getHit(damage:int):
 	if currentHP <= 0:
 		set_process(false)
 		$enemyMovement.set_process(false)
-		$enemyMovement/PathFollow2D/AnimatedSprite.play("die")
+		$enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.play("die")
 		$DeathTimer.start() #leave time to play death animation before showing win screen
 		get_tree().call_group("bulletTypes", "die")
 		return

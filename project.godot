@@ -29,6 +29,16 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/sceneTransition.gd"
 }, {
+"base": "AnimatedSprite",
+"class": "TimeSyncedAnimatedSprite",
+"language": "GDScript",
+"path": "res://scripts/TimeSyncedAnimatedSprite.gd"
+}, {
+"base": "Timer",
+"class": "TimeSyncedTimer",
+"language": "GDScript",
+"path": "res://scripts/TimeSyncedTimer.gd"
+}, {
 "base": "Node",
 "class": "overworldScene",
 "language": "GDScript",
@@ -39,6 +49,8 @@ _global_script_class_icons={
 "HitBox": "",
 "HurtBox": "",
 "SceneTransition": "",
+"TimeSyncedAnimatedSprite": "",
+"TimeSyncedTimer": "",
 "overworldScene": ""
 }
 

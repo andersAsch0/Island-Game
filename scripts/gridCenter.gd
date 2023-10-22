@@ -21,9 +21,9 @@ func _process(delta):
 
 func _on_bigGrid3_frame_changed():
 	if isPlayerOffensePhase: # going from offense (3d) to defense (2d) (stretch)
-		position += (offsetFrom2DTo3D(Global.playerGridLocation.x,Global.playerGridLocation.y) / animTime) * timeBetweenFrames
+		position += (offsetFrom2DTo3D(Global.playerGridLocation.x,Global.playerGridLocation.y) / animTime) * timeBetweenFrames * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	else: # going from 2d to 3d (squash)
-		position -= (offsetFrom2DTo3D(Global.playerGridLocation.x, Global.playerGridLocation.y) / animTime) * timeBetweenFrames
+		position -= (offsetFrom2DTo3D(Global.playerGridLocation.x, Global.playerGridLocation.y) / animTime) * timeBetweenFrames * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	timeBetweenFrames = 0
 
 func _on_BattleMode_enemyAttackPhaseStarting(): #end change to 2d

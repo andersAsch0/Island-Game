@@ -27,7 +27,19 @@ signal enemyAbscondPhaseStarting
 signal enemyAwayPhaseStarting
 signal enemyApproachPhaseStarting
 signal enemyAngleChangePhaseStarting
+#
+#signal timeStopped
+#signal timeResumed
+#signal timeReversed
+#signal timeScaleChanged(factor)
 
+#Battlemode todo: (hopefully)
+#make time distortion work in anglechange and abscond phases (current issue: big grid frame rate)
+#get time distortion to effect: enemy state counter, other time distortions counters
+# maybe even work during offense ???? cant effect minigames i think bc then what would happen when u stop time during defense
+# also i think the idea is that amadeus isnt effected. but it could effect the enemeys state counter
+#redo time system to work on signals, (above) instead of cluttering up with manual calls to every damn random thing
+#maybe just redo time system idk, having some of them be toggles and other not is dumb and annoying
 
 func _ready(): #this script sets up enemy, approach() function will handle the rest
 	Global.currCombatTimeMultiplier = 1
@@ -58,27 +70,17 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	 # connect the signal to start fight from the new node to this one
 	# enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")
 	
-
-func _process(_delta):
-	pass
 func incrementAbilityTimes(_delta): 
 	updateTimeJuiceBar()
-#	if currTimeMultiplier < 0: # if time is reversed, decrease time juice
-#		currTimeJuice -= delta
-#	if abs(currTimeMultiplier) > 1: # if time is fast, decrease time juice
-#		currTimeJuice -= delta
-#	if currTimeJuice < maxTimeJuiceSeconds and currTimeMultiplier == 1: # only regain the juice during normal time
-#		currTimeJuice += delta
-#
 
 func _input(event):
-	if currState != OFFENSE: #is defense phase or time stopped
+	if currState != OFFENSE and not bandaidFixTimeStuffDisabled: #is defense phase or time stopped
 		if(currTimeJuice < timeJuiceCost):
 			return
 		if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == 0):
 			$reverseTimeDuration.start()
 			currTimeJuice -= timeJuiceCost
-			musicAttackController.get_node("MusicHandler").timeHasReversed($reverseTimeDuration.wait_time)		
+#			musicAttackController.get_node("MusicHandler").timeHasReversed($reverseTimeDuration.wait_time)		
 			reverseTime()
 		elif(event.is_action_pressed("stopTime") and $stopTimeDuration.time_left == 0):
 			$stopTimeDuration.start()
@@ -102,33 +104,35 @@ func _input(event):
 		elif(event.is_action_pressed("sheild")):
 			$UI.sheildButtonPressed()
 		
+func _process(_delta):
+	$ProgressBar.value = ($ProgressBar/TimeSyncedTimer.time_left / $ProgressBar/TimeSyncedTimer.wait_time) * 100.0
 		
 func reverseTime():
-	Global.set_timeMultiplier(-1)
+	Global.set_timeMultiplier(-1, $reverseTimeDuration.wait_time)
 	updateTimeJuiceBar()
 func _on_reverseTimeDuration_timeout():
-	reverseTime()
-	musicAttackController.get_node("MusicHandler").timeHasReversedBack()
+	Global.set_timeMultiplier(-1, 0)
+#	musicAttackController.get_node("MusicHandler").timeHasReversedBack()
 
 func stopTime():
-	musicAttackController.get_node("MusicHandler").timeHasStopped($stopTimeDuration.wait_time)
-	Global.set_timeFlow(false)
+#	musicAttackController.get_node("MusicHandler").timeHasStopped($stopTimeDuration.wait_time)
+	Global.set_timeFlow(false, $stopTimeDuration.wait_time)
 	updateTimeJuiceBar()
 	currState = STOPPEDTIME
 	$UI.on_time_stopped()
 func _on_stopTimeDuration_timeout():
 	resumeTime()
 func resumeTime():
-	Global.set_timeFlow(true)
+	Global.set_timeFlow(true, 0)
 	updateTimeJuiceBar()
 	currState = DEFENSE
 	$UI.on_time_resumed()
-	musicAttackController.get_node("MusicHandler").timeHasResumed()
+#	musicAttackController.get_node("MusicHandler").timeHasResumed()
 	
 func changeTimeScale(timeMultiplier : float, duration : float, startOfDistortion : bool):
-	Global.set_timeMultiplier(timeMultiplier)
+	Global.set_timeMultiplier(timeMultiplier, duration)
 	updateTimeJuiceBar()
-	musicAttackController.get_node("MusicHandler").syncPitchWithGlobal(duration, startOfDistortion)
+#	musicAttackController.get_node("MusicHandler").syncPitchWithGlobal(duration, startOfDistortion)
 func _on_speedTimeDuration_timeout():
 	changeTimeScale(1.0 * 1/timeScalingFactor, 0, false)
 func _on_slowTimeDuration_timeout():
@@ -139,18 +143,23 @@ func _on_slowTimeDuration_timeout():
 
 #SIGNALS FROM ENEMY (controlling current state of battleMode)
 export var overWorldPath = "res://scenes/World.tscn"
+var bandaidFixTimeStuffDisabled : bool = false
 func on_attack_phase_starting():
+	bandaidFixTimeStuffDisabled = false
 	musicAttackController.rotateWithEnemy()
 	emit_signal("enemyAttackPhaseStarting")
 func on_abscond_phase_starting():
+	bandaidFixTimeStuffDisabled = true
 	emit_signal("enemyAbscondPhaseStarting")
 func on_away_phase_starting():
+	bandaidFixTimeStuffDisabled = false
 	emit_signal("enemyAwayPhaseStarting")
 	switchToOffenseMode()
 func on_approach_phase_starting():
 	emit_signal("enemyApproachPhaseStarting")
 	$offenseModeCamera/Arrows.visible = false
 func on_angle_change_phase_starting():
+	bandaidFixTimeStuffDisabled = true
 	emit_signal("enemyAngleChangePhaseStarting")
 	switchToDefenseMode()
 

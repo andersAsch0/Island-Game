@@ -59,11 +59,11 @@ func _process(delta):
 		position.x += (storagePos.x - position.x)/$inputTimer.time_left * delta
 		position.y += (storagePos.y - position.y)/$inputTimer.time_left * delta
 		if abs(storagePos.x - position.x) >= abs(storagePos.y - position.y):
-			$Animations.animation = "ball horizontal"
-			$Animations.flip_h = storagePos.x < position.x
+			if storagePos.x - position.x > 0: $Animations.play("jump right")
+			else:$Animations.play("jump left")
 		else:
-			$Animations.animation = "ball vertical"
-			$Animations.flip_v = storagePos.y < position.y
+			if storagePos.y - position.y > 0: $Animations.play("jump down")
+			else:$Animations.play("jump up")
 	elif currState == MOVINGTILES:
 		position +=( Global.getPlayerCoords() - prevLocation) / $Animations/moveTilesTimer.wait_time * delta
 
