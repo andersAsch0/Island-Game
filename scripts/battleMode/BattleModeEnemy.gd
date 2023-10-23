@@ -21,7 +21,7 @@ enum {
 	ABSCONDING
 }
 var currState = APPROACHING
-export var stateWaitTimes = [20.0, 100.0, 0.8, 5.0, 0.8] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [5.0, 100.0, 0.8, 100.0, 0.8] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
@@ -44,8 +44,6 @@ func _ready():
 	animatedSpriteNode.scale.y = origScale
 	$enemyMovement.enemySpeed = enemySpeed
 	updateHPBar()
-	Global.connect("timeMultiplierChanged", self, "changeAnimationSpeed")
-	Global.connect("timeFlowChanged", self, "startOrStopAnimation")
 
 	currState = AWAY
 	startAwayPhase()
@@ -142,23 +140,6 @@ func introduction():
 #FIGHT AND BULLET SPAWNING
 
 var gridSizeByBulletPathPerc = 17
-
-func changeAnimationSpeed(): #called whenever the global time variable is changed, ugly but i cant find a better way
-	$enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.set_speed_scale(abs(Global.currCombatTimeMultiplier))
-	if Global.currCombatTimeMultiplier < 0:
-		$enemyMovement/PathFollow2D/HurtBox/CollisionShape2D.set_deferred("disabled", false)
-		$enemyMovement/PathFollow2D/HitBox/CollisionShape2D.set_deferred("disabled", false)
-		if Global.timeIsNotStopped:
-			$enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.play($enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.animation, true)
-	else:
-		$enemyMovement/PathFollow2D/HurtBox/CollisionShape2D.set_deferred("disabled", true)
-		$enemyMovement/PathFollow2D/HitBox/CollisionShape2D.set_deferred("disabled", true)
-func startOrStopAnimation():
-	if Global.timeIsNotStopped:
-		$enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.play($enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.animation, Global.currCombatTimeMultiplier < 0)
-	else:
-		$enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite.stop()
-
 func playerDie():
 	bulletsStopped = true
 	set_physics_process(false)

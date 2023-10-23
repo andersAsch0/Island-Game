@@ -105,7 +105,10 @@ func _input(event):
 			$UI.sheildButtonPressed()
 		
 func _process(_delta):
-	$ProgressBar.value = ($ProgressBar/TimeSyncedTimer.time_left / $ProgressBar/TimeSyncedTimer.wait_time) * 100.0
+#	$PlayerHPBar2.value = 30
+	$PlayerHPBar2.value = ($ProgressBar/TimeSyncedTimer.time_left / $ProgressBar/TimeSyncedTimer.waitTimeReal) * 100.0
+#	var value = ($ProgressBar/TimeSyncedTimer.time_left / $ProgressBar/TimeSyncedTimer.waitTimeReal) * 100.0
+#	print(value)
 		
 func reverseTime():
 	Global.set_timeMultiplier(-1, $reverseTimeDuration.wait_time)

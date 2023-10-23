@@ -510,15 +510,27 @@ scale = Vector2( 1.3795, 1.3795 )
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 156, 74 )
 
+[node name="PlayerHPBar2" type="ProgressBar" parent="."]
+margin_left = 96.0
+margin_top = 131.0
+margin_right = 166.0
+margin_bottom = 145.0
+rect_rotation = -90.1426
+rect_scale = Vector2( 0.955148, 0.51705 )
+custom_colors/font_color = Color( 1, 0.74902, 0, 1 )
+
 [node name="ProgressBar" type="ProgressBar" parent="."]
 margin_left = 65.0
 margin_top = 55.0
 margin_right = 69.0
 margin_bottom = 69.0
 rect_scale = Vector2( 6.34825, 6.34825 )
+custom_colors/font_color = Color( 0.909804, 0.0980392, 0.0980392, 1 )
+value = 50.0
 
 [node name="TimeSyncedTimer" type="Timer" parent="ProgressBar"]
-wait_time = 3.0
+wait_time = 10.0
+one_shot = true
 autostart = true
 script = ExtResource( 24 )
 
