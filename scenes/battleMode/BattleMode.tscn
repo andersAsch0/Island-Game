@@ -1,4 +1,4 @@
-[gd_scene load_steps=114 format=2]
+[gd_scene load_steps=116 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -23,6 +23,8 @@
 [ext_resource path="res://scenes/battleMode/catchMiniGame.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/battleMode/comboMiniGame.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scripts/battleMode/BattleModeUI.gd" type="Script" id=23]
+[ext_resource path="res://scripts/TimeSyncedAnimatedSprite.gd" type="Script" id=24]
+[ext_resource path="res://scripts/bigGridController.gd" type="Script" id=25]
 
 [sub_resource type="AtlasTexture" id=115]
 atlas = ExtResource( 10 )
@@ -440,7 +442,52 @@ animations = [ {
 script = ExtResource( 2 )
 enemyScene = ExtResource( 3 )
 
+[node name="bigGridController" type="Node2D" parent="."]
+script = ExtResource( 25 )
+
+[node name="bigGrid" type="AnimatedSprite" parent="bigGridController"]
+position = Vector2( 160, 123 )
+frames = SubResource( 114 )
+script = ExtResource( 24 )
+
+[node name="frame8Corner" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( -109.167, -72.5 )
+
+[node name="frame8Corner2" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( 99.1667, -74.1667 )
+
+[node name="frame8Corner3" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( 198.333, 104.167 )
+
+[node name="frame8Corner4" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( -206.667, 105.833 )
+
+[node name="frame8LeftSide2" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( -122.5, -48.3333 )
+
+[node name="frame8LeftSide3" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( -141.667, -13.3333 )
+
+[node name="frame8LeftSide4" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( -170, 33.3333 )
+
+[node name="frame8RightSide2" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( 112.5, -48.3333 )
+
+[node name="frame8RightSide3" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( 132.5, -15 )
+
+[node name="frame8RightSide4" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( 160, 31.6667 )
+
+[node name="frame0Corner" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( -139.167, -152.5 )
+
+[node name="frame0Corner3" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( 134.167, 121.667 )
+
 [node name="bigGrid3" type="AnimatedSprite" parent="."]
+visible = false
 self_modulate = Color( 1, 1, 1, 0.47451 )
 position = Vector2( 160, 123 )
 frames = SubResource( 114 )
@@ -505,6 +552,9 @@ script = ExtResource( 18 )
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
 position = Vector2( 155.4, 109.6 )
 scale = Vector2( 1.3795, 1.3795 )
+
+[node name="Animations" parent="BattleModePlayer" index="2"]
+frame = 0
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 156, 74 )
@@ -681,13 +731,17 @@ one_shot = true
 
 [connection signal="enemyAbscondPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAbscondPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyAbscondPhaseStarting"]
+[connection signal="enemyAbscondPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="UI" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
 [connection signal="enemyApproachPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyApproachPhaseStarting"]
 [connection signal="enemyAttackPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAttackPhaseStarting"]
+[connection signal="enemyAttackPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAttackPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="UI" method="_on_BattleMode_enemyAwayPhaseStarting"]
+[connection signal="enemyAwayPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAwayPhaseStarting"]
+[connection signal="frame_changed" from="bigGridController/bigGrid" to="bigGridController" method="_on_bigGrid_frame_changed"]
 [connection signal="frame_changed" from="bigGrid3" to="bigGrid3" method="_on_bigGrid3_frame_changed"]
 [connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
