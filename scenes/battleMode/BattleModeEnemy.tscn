@@ -118,15 +118,8 @@ attackPatternFile = "res://scripts/attackPatternJsonData/butterflyAttack.json"
 normalMusic = ExtResource( 9 )
 reverseMusic = ExtResource( 10 )
 
-[node name="ApproachTimer" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 2.0
-
-[node name="bulletSpawnTimer" type="Timer" parent="."]
-one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
@@ -175,13 +168,6 @@ script = ExtResource( 4 )
 shape = SubResource( 16 )
 disabled = true
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="enemyMovement/PathFollow2D"]
-visible = false
-position = Vector2( 3.8147e-06, 0 )
-frames = SubResource( 24 )
-animation = "idle"
-playing = true
-
 [node name="TimeSyncedAnimatedSprite" type="AnimatedSprite" parent="enemyMovement/PathFollow2D"]
 frames = SubResource( 24 )
 animation = "idle"
@@ -189,6 +175,31 @@ frame = 1
 playing = true
 script = ExtResource( 8 )
 
-[connection signal="timeout" from="ApproachTimer" to="." method="_on_ApproachTimer_timeout"]
+[node name="PlayerHPBar2" type="ProgressBar" parent="."]
+margin_left = -28.0
+margin_top = -2.0
+margin_right = 42.0
+margin_bottom = 12.0
+rect_rotation = -90.1426
+rect_scale = Vector2( 0.316833, 0.422195 )
+custom_colors/font_color = Color( 1, 0.74902, 0, 1 )
+
+[node name="Label" type="Label" parent="."]
+margin_left = -57.0
+margin_top = -29.0
+margin_right = 46.0
+margin_bottom = 53.0
+rect_scale = Vector2( 0.258753, 0.301935 )
+text = "0 : away
+1 : approaching
+2 : angle change
+3 : attacking
+4 : absconding"
+
+[node name="Label" type="Label" parent="Label"]
+margin_left = 108.211
+margin_top = -6.62395
+margin_right = 148.211
+margin_bottom = 7.37605
+
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
-[connection signal="timeout" from="bulletSpawnTimer" to="." method="_on_bulletSpawnTimer_timeout"]

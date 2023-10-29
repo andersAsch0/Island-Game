@@ -21,7 +21,7 @@ enum {
 	ABSCONDING
 }
 var currState = APPROACHING
-export var stateWaitTimes = [5.0, 100.0, 0.8, 100.0, 0.8] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [10.0, 10.0, 10, 10, 10] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
@@ -50,15 +50,15 @@ func _ready():
 	visible = true
 		
 func _physics_process(delta):
-	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int) * ((Global.currCombatTimeMultiplier > 0) as int) # only inc if time is moving AND time isnt reversed
+	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int) # only inc if time is moving
 	if stateCounter >= stateWaitTimes[currState]: #need to go to next state
 		goToNextState()
 	elif stateCounter <= 0: #time reversed, need to go to prev state
 		goToPrevState()
 	
 	#frame by frame animation and movement
-	if currState == APPROACHING: #increase scale (grow bigger each frame)
-		position += approachVector * delta * approachSpeed
+	if currState == APPROACHING:
+		position += approachVector * delta * approachSpeed * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		animatedSpriteNode.scale.x += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		animatedSpriteNode.scale.y += ((finalScale - origScale)/stateWaitTimes[APPROACHING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	elif currState == ANGLECHANGE:
@@ -67,6 +67,8 @@ func _physics_process(delta):
 		animatedSpriteNode.scale.x -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		animatedSpriteNode.scale.y -= ((finalScale - origScale)/stateWaitTimes[ABSCONDING] ) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		position -= (angleChangeVector / stateWaitTimes[ABSCONDING]) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+	
+	$PlayerHPBar2.value = stateCounter / stateWaitTimes[currState] * 100
 func startAttackPhase():
 	currState = ATTACKING
 	animatedSpriteNode.play("idle")
@@ -96,9 +98,8 @@ func startApproachPhase():
 	emit_signal("approachPhaseStarting")
 var angleChangeVector = Vector2()
 func startAnglechangePhase():
-	position = Global.getEnemyCoords()
-	animatedSpriteNode.scale.x = finalScale
-	animatedSpriteNode.scale.y = finalScale
+#	animatedSpriteNode.scale.x = finalScale
+#	animatedSpriteNode.scale.y = finalScale
 	var enemyDiscplacement = Global.getEnemyDisplacementFromPlayer()
 	if enemyDiscplacement.x == 0:
 		angleChangeVector = Vector2(0,(69 - abs(Global.getPlayerCoords().y - Global.getEnemyCoords().y))*sign(Global.getPlayerCoords().y - Global.getEnemyCoords().y) * -1)
@@ -119,6 +120,7 @@ func goToNextState():
 		startLeavePhase()
 	else: #currstate == absconding
 		startAwayPhase()
+	$Label/Label.text = (currState as String)
 
 func goToPrevState():
 	if currState == AWAY:
@@ -131,6 +133,8 @@ func goToPrevState():
 		startAnglechangePhase()
 	else: # currstate == absconding
 		startAttackPhase()
+	stateCounter = stateWaitTimes[currState]
+	$Label/Label.text = (currState as String)
 
 func introduction():
 	pass

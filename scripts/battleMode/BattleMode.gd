@@ -10,8 +10,7 @@ var currAttack = 1 #int representing current line in json file
 var loopStart = 1
 var loopEnd = 2
 var bullet
-var currTimeMultiplier : float = 1 # keeps track of current time rate, will NEVER BE 0 THO
-var maxTimeJuiceSeconds : float = 10
+var maxTimeJuiceSeconds : float = 100
 var currTimeJuice : float = maxTimeJuiceSeconds
 var timeJuiceCost : float = 4
 var timeScalingFactor = 2 # ratio by which time speeds or slows
@@ -74,26 +73,26 @@ func incrementAbilityTimes(_delta):
 	updateTimeJuiceBar()
 
 func _input(event):
-	if currState != OFFENSE and not bandaidFixTimeStuffDisabled: #is defense phase or time stopped
-		if(currTimeJuice < timeJuiceCost):
-			return
-		if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == 0):
-			$reverseTimeDuration.start()
-			currTimeJuice -= timeJuiceCost
+#	if currState != OFFENSE: #is defense phase or time stopped
+	if(currTimeJuice < timeJuiceCost):
+		return
+	if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == 0):
+		$reverseTimeDuration.start()
+		currTimeJuice -= timeJuiceCost
 #			musicAttackController.get_node("MusicHandler").timeHasReversed($reverseTimeDuration.wait_time)		
-			reverseTime()
-		elif(event.is_action_pressed("stopTime") and $stopTimeDuration.time_left == 0):
-			$stopTimeDuration.start()
-			currTimeJuice -= timeJuiceCost
-			stopTime()
-		elif(event.is_action_pressed("speedUpTime") and $speedTimeDuration.time_left == 0):
-			$speedTimeDuration.start()
-			currTimeJuice -= timeJuiceCost
-			changeTimeScale(timeScalingFactor, $speedTimeDuration.wait_time, true)
-		elif(event.is_action_pressed("slowDownTime") and $slowTimeDuration.time_left == 0):
-			$slowTimeDuration.start()
-			currTimeJuice -= timeJuiceCost
-			changeTimeScale(1.0 * 1/timeScalingFactor, $slowTimeDuration.wait_time, true)
+		reverseTime()
+	elif(event.is_action_pressed("stopTime") and $stopTimeDuration.time_left == 0):
+		$stopTimeDuration.start()
+		currTimeJuice -= timeJuiceCost
+		stopTime()
+	elif(event.is_action_pressed("speedUpTime") and $speedTimeDuration.time_left == 0):
+		$speedTimeDuration.start()
+		currTimeJuice -= timeJuiceCost
+		changeTimeScale(timeScalingFactor, $speedTimeDuration.wait_time, true)
+	elif(event.is_action_pressed("slowDownTime") and $slowTimeDuration.time_left == 0):
+		$slowTimeDuration.start()
+		currTimeJuice -= timeJuiceCost
+		changeTimeScale(1.0 * 1/timeScalingFactor, $slowTimeDuration.wait_time, true)
 	if currState != DEFENSE: #is offense phase or time stopped
 		if(event.is_action_pressed("windWatch")):
 			$UI.windWatchButtonPressed()
@@ -104,11 +103,7 @@ func _input(event):
 		elif(event.is_action_pressed("sheild")):
 			$UI.sheildButtonPressed()
 		
-func _process(_delta):
-#	$PlayerHPBar2.value = 30
-	$PlayerHPBar2.value = ($ProgressBar/TimeSyncedTimer.time_left / $ProgressBar/TimeSyncedTimer.waitTimeReal) * 100.0
-#	var value = ($ProgressBar/TimeSyncedTimer.time_left / $ProgressBar/TimeSyncedTimer.waitTimeReal) * 100.0
-#	print(value)
+
 		
 func reverseTime():
 	Global.set_timeMultiplier(-1, $reverseTimeDuration.wait_time)

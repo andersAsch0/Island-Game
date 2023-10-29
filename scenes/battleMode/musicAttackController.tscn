@@ -13,6 +13,7 @@ script = ExtResource( 1 )
 bulletPackedScene = ExtResource( 3 )
 laserPackedScene = ExtResource( 5 )
 laserBulletScene = ExtResource( 6 )
+bulletsEnabled = false
 
 [node name="MusicHandler" parent="." instance=ExtResource( 2 )]
 visible = false

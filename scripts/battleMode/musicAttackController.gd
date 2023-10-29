@@ -5,6 +5,7 @@ extends Node
 export var bulletPackedScene : PackedScene
 export var laserPackedScene : PackedScene
 export var laserBulletScene : PackedScene
+export var bulletsEnabled = true
 
 #variables that may be different for dfferent battles or tracks, must be set up and passed to musicHandler
 var bpm = 207
@@ -20,7 +21,7 @@ func _ready():
 var count : int = eigthNotesInAdvance
 var gridAttackPattern = [[Vector2(1,1)], [], [], [], [Vector2(1,1)], [], [], [], [Vector2(0, 2)], [], [Vector2(0,0)], [], [Vector2(2, 0)], [], [Vector2(2, 2)], []]
 func _on_MusicHandler_metronome(timeInAdvance): # grid attack
-	if isDefenseMode:
+	if isDefenseMode and bulletsEnabled:
 		for vec in gridAttackPattern[count % gridAttackPattern.size()]:
 			$gridAttack.attack(vec.x, vec.y, timeInAdvance)
 	count += 1
@@ -33,13 +34,13 @@ var gridRadius = -50
 var bullet
 func on_track_2(pitch, timeInAdvance = 0.0): #bullet attack
 	temp += 1
-	if isDefenseMode:
+	if isDefenseMode and bulletsEnabled:
 		bullet = bulletPackedScene.instance()
 		bullet.position = Vector2(bulletXLocations[pitch % 3], gridRadius)
 		bullet.warningAnimationTime = timeInAdvance
 		call_deferred("add_child", bullet)
 func on_track_3(pitch, timeInAdvance = 0.0): #laser attack
-	if isDefenseMode: 
+	if isDefenseMode and bulletsEnabled: 
 		var laserNode = laserPackedScene.instance()
 		laserNode.lengthOfWarningSeconds = timeInAdvance
 		laserNode.bulletPackedScene = laserBulletScene
