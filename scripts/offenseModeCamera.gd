@@ -3,7 +3,7 @@ extends Camera2D
 
 
 var battleModePlayerNode
-onready var grid = get_node("../bigGrid3")
+onready var grid = get_node("../bigGridController")
 onready var globalGridPos = grid.position # since grid child is at 0,0
 var shouldFollow = true
 

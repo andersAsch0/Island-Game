@@ -55,7 +55,6 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemy.connect("awayPhaseStarting", self, "on_away_phase_starting")
 	enemy.connect("approachPhaseStarting", self, "on_approach_phase_starting")
 	enemy.connect("angleChangePhaseStarting", self, "on_angle_change_phase_starting")
-	enemy.connect("enemyMoved", $BigGridPerspective/enemyGridHighlight, "on_enemyMoved")
 	enemy.connect("enemyMoved", $offenseModeCamera/Arrows, "on_enemyMoved")
 	enemy.connect("enemyDead", self, "on_enemyDead")
 	musicAttackController = controllerScene.instance()
@@ -149,6 +148,7 @@ func on_attack_phase_starting():
 func on_abscond_phase_starting():
 	bandaidFixTimeStuffDisabled = true
 	emit_signal("enemyAbscondPhaseStarting")
+	$UI/TimeSyncedAnimatedSprite.play("default", true)
 func on_away_phase_starting():
 	bandaidFixTimeStuffDisabled = false
 	emit_signal("enemyAwayPhaseStarting")
@@ -159,19 +159,18 @@ func on_approach_phase_starting():
 func on_angle_change_phase_starting():
 	bandaidFixTimeStuffDisabled = true
 	emit_signal("enemyAngleChangePhaseStarting")
+	$UI/TimeSyncedAnimatedSprite.play("default")
 	switchToDefenseMode()
 
 func switchToDefenseMode():
 	currState = DEFENSE
 	$offenseModeCamera/Grid.visible = true
-	$BigGridPerspective.visible = false
-#	showActionMenu(false, false, false, false, false)
+#	showActionMenu(false, false, false, faflse, false)
 	$offenseModeCamera.setFollow(false)
 	$offenseModeCamera.snapToPlayer()
 func switchToOffenseMode():
 	currState = OFFENSE
 	$offenseModeCamera/Grid.visible = false
-	$BigGridPerspective.visible = true
 	$offenseModeCamera/Arrows.visible = true
 #	showActionMenu(true, true, true, true, true)
 

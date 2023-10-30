@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=2]
+[gd_scene load_steps=120 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -16,10 +16,7 @@
 [ext_resource path="res://art/battleModeUI/arrow.png" type="Texture" id=14]
 [ext_resource path="res://scripts/downArrowButton.gd" type="Script" id=15]
 [ext_resource path="res://scripts/battleMode/Arrows.gd" type="Script" id=16]
-[ext_resource path="res://art/battleModeUI/enemy circle highlight.png" type="Texture" id=17]
-[ext_resource path="res://scripts/battleMode/enemyGridHighlight.gd" type="Script" id=18]
-[ext_resource path="res://art/bigGrid.png" type="Texture" id=19]
-[ext_resource path="res://scripts/battleMode/BigGridPerspective.gd" type="Script" id=20]
+[ext_resource path="res://art/grassTileAttack.png" type="Texture" id=17]
 [ext_resource path="res://scenes/battleMode/catchMiniGame.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/battleMode/comboMiniGame.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scripts/battleMode/BattleModeUI.gd" type="Script" id=23]
@@ -438,6 +435,38 @@ animations = [ {
 "speed": 1.0
 } ]
 
+[sub_resource type="AtlasTexture" id=127]
+atlas = ExtResource( 17 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=128]
+atlas = ExtResource( 17 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=129]
+atlas = ExtResource( 17 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=130]
+atlas = ExtResource( 17 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=131]
+atlas = ExtResource( 17 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=132]
+atlas = ExtResource( 17 )
+region = Rect2( 160, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=133]
+animations = [ {
+"frames": [ SubResource( 127 ), SubResource( 128 ), SubResource( 129 ), SubResource( 130 ), SubResource( 131 ), SubResource( 132 ) ],
+"loop": false,
+"name": "default",
+"speed": 5.0
+} ]
+
 [node name="BattleMode" type="Node2D"]
 script = ExtResource( 2 )
 enemyScene = ExtResource( 3 )
@@ -449,6 +478,7 @@ script = ExtResource( 25 )
 position = Vector2( 160, 123 )
 frames = SubResource( 114 )
 script = ExtResource( 24 )
+isPlaying = false
 
 [node name="frame8Corner" type="Position2D" parent="bigGridController/bigGrid"]
 position = Vector2( -109.167, -72.5 )
@@ -533,28 +563,9 @@ position = Vector2( 134.167, 121.667 )
 position = Vector2( 157, 109 )
 scale = Vector2( 2.1, 2.1 )
 
-[node name="BigGridPerspective" type="Sprite" parent="."]
-visible = false
-self_modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 167, 28 )
-scale = Vector2( 1.464, 0.74 )
-texture = ExtResource( 19 )
-script = ExtResource( 20 )
-
-[node name="enemyGridHighlight" type="Sprite" parent="BigGridPerspective"]
-visible = false
-self_modulate = Color( 1, 1, 1, 0.0745098 )
-position = Vector2( 0, -0.795455 )
-scale = Vector2( 0.497159, 0.490057 )
-texture = ExtResource( 17 )
-script = ExtResource( 18 )
-
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
 position = Vector2( 155.4, 109.6 )
 scale = Vector2( 1.3795, 1.3795 )
-
-[node name="Animations" parent="BattleModePlayer" index="2"]
-frame = 0
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 156, 74 )
@@ -666,6 +677,12 @@ script = ExtResource( 5 )
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 23 )
 
+[node name="TimeSyncedAnimatedSprite" type="AnimatedSprite" parent="UI"]
+position = Vector2( 160, 37 )
+frames = SubResource( 133 )
+script = ExtResource( 24 )
+isPlaying = false
+
 [node name="HP&TJ" type="Label" parent="UI"]
 margin_left = 1.56599
 margin_top = 54.6
@@ -729,18 +746,18 @@ region_rect = Rect2( 285, 0, 95, 44 )
 [node name="sheildDeactivateDelay" type="Timer" parent="UI"]
 one_shot = true
 
+[connection signal="enemyAbscondPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAbscondPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAbscondPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyAbscondPhaseStarting"]
-[connection signal="enemyAbscondPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="UI" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
 [connection signal="enemyApproachPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyApproachPhaseStarting"]
-[connection signal="enemyAttackPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAttackPhaseStarting"]
 [connection signal="enemyAttackPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAttackPhaseStarting"]
+[connection signal="enemyAttackPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAttackPhaseStarting"]
+[connection signal="enemyAwayPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="UI" method="_on_BattleMode_enemyAwayPhaseStarting"]
-[connection signal="enemyAwayPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="frame_changed" from="bigGridController/bigGrid" to="bigGridController" method="_on_bigGrid_frame_changed"]
 [connection signal="frame_changed" from="bigGrid3" to="bigGrid3" method="_on_bigGrid3_frame_changed"]
 [connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
