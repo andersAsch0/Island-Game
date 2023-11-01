@@ -15,22 +15,22 @@ signal minigameActiveUpdate(active)
 var actionsActive : bool = true
 var sheildActive : bool = false
 
-func _on_BattleMode_enemyAwayPhaseStarting():
+func _on_BattleMode_enemyAwayPhaseStarting(_duration):
 	actionsActive = true
 	sheildActive = get_node("../BattleModePlayer").isShielded
 	updateMiniGameActive()
 	enableActionButtons(not sheildActive, not sheildActive, not sheildActive, true)
 	$sheildButton.activate(sheildActive)
 
-func _on_BattleMode_enemyAngleChangePhaseStarting():
+func _on_BattleMode_enemyAngleChangePhaseStarting(_duration):
 	actionsActive = false
 	deactivateButtonsAndGames(false, false, false)
 	enableActionButtons(false, false, false, false)
 
 func on_time_stopped():
-	_on_BattleMode_enemyAwayPhaseStarting()
+	_on_BattleMode_enemyAwayPhaseStarting(0)
 func on_time_resumed():
-	_on_BattleMode_enemyAngleChangePhaseStarting()
+	_on_BattleMode_enemyAngleChangePhaseStarting(0)
 		
 
 #this is kind of bad bc the games dont get deactivated. i dont want to change it tho. gotta remember to end games first

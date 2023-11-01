@@ -153,9 +153,9 @@ func die():
 
 # OFFENSE MODE (called by BattleMode.gd)
 
-func _on_BattleMode_enemyApproachPhaseStarting(): #disable movingtiles
+func _on_BattleMode_enemyApproachPhaseStarting(_duration): #disable movingtiles
 	movingTilesDisabled = true
-func _on_BattleMode_offensePhaseEnding():
+func _on_BattleMode_offensePhaseEnding(_duration):
 	currState = DEFENSE
 	storagePos = position
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
@@ -167,7 +167,7 @@ func _on_BattleMode_offensePhaseEnding():
 	if Input.get_action_strength("ui_down") > 0:
 		storagePos.y += currGridSize
 	$Animations.play("idle")
-func _on_BattleMode_enemyAbscondPhaseStarting():
+func _on_BattleMode_enemyAbscondPhaseStarting(_duration):
 	currState = IDLE
 	# forces player character to move to the center of the grid as if they jumped there
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
@@ -181,7 +181,7 @@ func _on_BattleMode_enemyAbscondPhaseStarting():
 	$HurtBox/CollisionShape2D.disabled = true 
 	$HitBox/CollisionShape2D.disabled = true
 	$inputTimer.start()
-func _on_BattleMode_offensePhaseStarting():
+func _on_BattleMode_offensePhaseStarting(_duration):
 	currState = IDLE
 	$HurtBox/CollisionShape2D.disabled = false 
 	$HitBox/CollisionShape2D.disabled = false

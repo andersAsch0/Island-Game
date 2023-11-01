@@ -57,3 +57,9 @@ func _process(delta):
 			frame = frame - 1
 		count = secondsPerFrame
 
+func set_fps(anim : String, fps : float):
+	frames.set_animation_speed(anim, fps)
+	if anim == animation : secondsPerFrame = 1.0 / frames.get_animation_speed(anim)
+func set_anim_duration(anim : String, animDuration : float):
+	frames.set_animation_speed(anim, frames.get_frame_count(anim)/animDuration)
+	if anim == animation : secondsPerFrame = 1.0 / frames.get_animation_speed(anim)

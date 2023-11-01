@@ -27,11 +27,11 @@ var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
 onready var animatedSpriteNode = $enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite
 
-signal awayPhaseStarting
-signal approachPhaseStarting
-signal angleChangePhaseStarting
-signal attackPhaseStarting
-signal abscondPhaseStarting
+signal awayPhaseStarting(duration)
+signal approachPhaseStarting(duration)
+signal angleChangePhaseStarting(duration)
+signal attackPhaseStarting(duration)
+signal abscondPhaseStarting(duration)
 
 signal attackPhaseEnding
 signal enemyDead
@@ -72,18 +72,18 @@ func _physics_process(delta):
 func startAttackPhase():
 	currState = ATTACKING
 	animatedSpriteNode.play("idle")
-	emit_signal("attackPhaseStarting")
+	emit_signal("attackPhaseStarting", stateWaitTimes[ATTACKING])
 func startLeavePhase():
 	currState = ABSCONDING
 	animatedSpriteNode.play("moving")
-	emit_signal("abscondPhaseStarting")
+	emit_signal("abscondPhaseStarting", stateWaitTimes[ABSCONDING])
 func startAwayPhase():
 	animatedSpriteNode.scale.x = origScale
 	animatedSpriteNode.scale.y = origScale
 	currState = AWAY
 	animatedSpriteNode.play("idle")
 	emit_signal("attackPhaseEnding")
-	emit_signal("awayPhaseStarting")
+	emit_signal("awayPhaseStarting", stateWaitTimes[AWAY])
 func startApproachPhase(): 
 	prevLocation = position
 	findNewTile()
@@ -95,7 +95,7 @@ func startApproachPhase():
 		stateWaitTimes[APPROACHING] = 1
 	currState = APPROACHING
 	animatedSpriteNode.play("moving")
-	emit_signal("approachPhaseStarting")
+	emit_signal("approachPhaseStarting", stateWaitTimes[APPROACHING])
 var angleChangeVector = Vector2()
 func startAnglechangePhase():
 #	animatedSpriteNode.scale.x = finalScale
@@ -106,7 +106,7 @@ func startAnglechangePhase():
 	else:
 		angleChangeVector = Vector2((69 - abs(Global.getPlayerCoords().x - Global.getEnemyCoords().x))*sign(Global.getPlayerCoords().x - Global.getEnemyCoords().x) * -1, 0)
 	currState = ANGLECHANGE
-	emit_signal("angleChangePhaseStarting")
+	emit_signal("angleChangePhaseStarting", stateWaitTimes[ANGLECHANGE])
 
 func goToNextState():
 	stateCounter = 0

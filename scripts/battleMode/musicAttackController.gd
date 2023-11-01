@@ -65,9 +65,9 @@ func _on_MusicHandler_musicStart():
 	pass # Replace with function body.
 
 var temp  = 0
-func offenseModeStarting(): #called when enemy starts absconding
+func offenseModeStarting(_duration): #called when enemy starts absconding
 	isDefenseMode = false
 	temp += 1
-func defenseModeStarting(): #called when enemy starts attacking (after anglechange)
+func defenseModeStarting(_duration): #called when enemy starts attacking (after anglechange)
 	isDefenseMode = true
 	temp += 1

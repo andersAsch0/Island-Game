@@ -26,7 +26,7 @@ func _on_bigGrid3_frame_changed():
 		position -= (offsetFrom2DTo3D(Global.playerGridLocation.x, Global.playerGridLocation.y) / animTime) * timeBetweenFrames * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	timeBetweenFrames = 0
 
-func _on_BattleMode_enemyAttackPhaseStarting(): #end change to 2d
+func _on_BattleMode_enemyAttackPhaseStarting(_duration): #end change to 2d
 	set_process(false)
 #	position = baselinePosition3D
 	
@@ -35,9 +35,9 @@ func startAngleChangeTo2D(): #called by the camera which sets its position, so i
 	set_process(true)
 	play("default", false)
 
-func _on_BattleMode_enemyAwayPhaseStarting(): # end angle change to 3d
+func _on_BattleMode_enemyAwayPhaseStarting(_duration): # end angle change to 3d
 	set_process(false)
-func _on_BattleMode_enemyAbscondPhaseStarting(): #change to 3d
+func _on_BattleMode_enemyAbscondPhaseStarting(_duration): #change to 3d
 	isPlayerOffensePhase = false
 	set_process(true)
 	play("default", true)

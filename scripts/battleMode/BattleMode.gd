@@ -21,11 +21,11 @@ enum{
 }
 var currState = OFFENSE
 
-signal enemyAttackPhaseStarting
-signal enemyAbscondPhaseStarting
-signal enemyAwayPhaseStarting
-signal enemyApproachPhaseStarting
-signal enemyAngleChangePhaseStarting
+signal enemyAttackPhaseStarting(duration)
+signal enemyAbscondPhaseStarting(duration)
+signal enemyAwayPhaseStarting(duration)
+signal enemyApproachPhaseStarting(duration)
+signal enemyAngleChangePhaseStarting(duration)
 #
 #signal timeStopped
 #signal timeResumed
@@ -63,7 +63,7 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	musicAttackController.position = Vector2(0,10) # this being hard coded is stupid. but idk how to do it better
 	add_child_below_node($offenseModeCamera, enemy)
 	$offenseModeCamera.add_child_below_node($offenseModeCamera/Grid, musicAttackController)
-	on_away_phase_starting()
+	on_away_phase_starting(0) #hope this doesnt break something in hte future!!! hahaha!!!!
 	
 	 # connect the signal to start fight from the new node to this one
 	# enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")
@@ -140,25 +140,20 @@ func _on_slowTimeDuration_timeout():
 
 #SIGNALS FROM ENEMY (controlling current state of battleMode)
 export var overWorldPath = "res://scenes/World.tscn"
-var bandaidFixTimeStuffDisabled : bool = false
-func on_attack_phase_starting():
-	bandaidFixTimeStuffDisabled = false
+func on_attack_phase_starting(duration):
 	musicAttackController.rotateWithEnemy()
-	emit_signal("enemyAttackPhaseStarting")
-func on_abscond_phase_starting():
-	bandaidFixTimeStuffDisabled = true
-	emit_signal("enemyAbscondPhaseStarting")
+	emit_signal("enemyAttackPhaseStarting", duration)
+func on_abscond_phase_starting(duration):
+	emit_signal("enemyAbscondPhaseStarting", duration)
 	$UI/TimeSyncedAnimatedSprite.play("default", true)
-func on_away_phase_starting():
-	bandaidFixTimeStuffDisabled = false
-	emit_signal("enemyAwayPhaseStarting")
+func on_away_phase_starting(duration):
+	emit_signal("enemyAwayPhaseStarting", duration)
 	switchToOffenseMode()
-func on_approach_phase_starting():
-	emit_signal("enemyApproachPhaseStarting")
+func on_approach_phase_starting(duration):
+	emit_signal("enemyApproachPhaseStarting", duration)
 	$offenseModeCamera/Arrows.visible = false
-func on_angle_change_phase_starting():
-	bandaidFixTimeStuffDisabled = true
-	emit_signal("enemyAngleChangePhaseStarting")
+func on_angle_change_phase_starting(duration):
+	emit_signal("enemyAngleChangePhaseStarting", duration)
 	$UI/TimeSyncedAnimatedSprite.play("default")
 	switchToDefenseMode()
 
