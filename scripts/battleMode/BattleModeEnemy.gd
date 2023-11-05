@@ -7,7 +7,7 @@ export var normalMusic : AudioStreamSample
 export var reverseMusic : AudioStreamSample
 var origScale = 0.9 # starting size of sprite when enemy spawns
 export var finalScale = 1 #final size of the sprite once it has approached
-export var enemySpeed = 10 #speed at which the enemy wanders around
+export var enemySpeed = 30 #speed at which the enemy wanders around
 export var maxHP = 5
 var currentHP = maxHP
 var currAttack = 1 #current line of json file
@@ -21,7 +21,7 @@ enum {
 	ABSCONDING
 }
 var currState = APPROACHING
-export var stateWaitTimes = [10.0, 10.0, 0.8, 100, 0.8] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
+export var stateWaitTimes = [10.0, 10.0, 0.8, 5, 0.8] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
@@ -72,10 +72,12 @@ func _physics_process(delta):
 func startAttackPhase():
 	currState = ATTACKING
 	animatedSpriteNode.play("idle")
+	$enemyMovement.wander()
 	emit_signal("attackPhaseStarting", stateWaitTimes[ATTACKING])
 func startLeavePhase():
 	currState = ABSCONDING
 	animatedSpriteNode.play("moving")
+	$enemyMovement.returnToMiddle()
 	emit_signal("abscondPhaseStarting", stateWaitTimes[ABSCONDING])
 func startAwayPhase():
 	animatedSpriteNode.scale.x = origScale

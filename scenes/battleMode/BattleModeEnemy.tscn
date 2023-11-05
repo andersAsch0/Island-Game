@@ -16,7 +16,7 @@ radius = 16.0
 
 [sub_resource type="Curve2D" id=17]
 _data = {
-"points": PoolVector2Array( -0.028628, 1.2919, 0.028628, -1.2919, 1, -11, -2.3326, -0.967376, 2.3326, 0.967376, 4, -8, 2.23452, -0.885889, -2.23452, 0.885889, 4, -5, 1.67768, 0.987511, -1.67768, -0.987511, -2, -5, -1.85936, 1.2873, 1.85936, -1.2873, -2, -9, -0.0848745, 0.898732, 0.0848745, -0.898732, 1, -11 )
+"points": PoolVector2Array( 0.138227, 1.33396, -0.138227, -1.33396, 1, -10.0821, -2.3326, -0.967376, 2.3326, 0.967376, 73, -7.05747, 2.23452, -0.0447647, -2.23452, 0.0447647, 4, -7.05747, 1.84453, -0.0218382, -1.84453, 0.0218382, -2, -7.05747, -1.85936, 1.2873, 1.85936, -1.2873, -69, -7.05747, -0.00144701, 0.898732, 0.00144701, -0.898732, 1, -10.0821 )
 }
 
 [sub_resource type="CircleShape2D" id=15]
@@ -133,9 +133,10 @@ position = Vector2( 0, -6 )
 scale = Vector2( 1, 0.991857 )
 curve = SubResource( 17 )
 script = ExtResource( 6 )
+enemySpeed = 10
 
 [node name="PathFollow2D" type="PathFollow2D" parent="enemyMovement"]
-position = Vector2( 1, -11 )
+position = Vector2( 1, -10.0821 )
 rotate = false
 
 [node name="HPBar" type="ProgressBar" parent="enemyMovement/PathFollow2D"]
@@ -171,7 +172,7 @@ disabled = true
 [node name="TimeSyncedAnimatedSprite" type="AnimatedSprite" parent="enemyMovement/PathFollow2D"]
 frames = SubResource( 24 )
 animation = "idle"
-frame = 2
+frame = 3
 playing = true
 script = ExtResource( 8 )
 

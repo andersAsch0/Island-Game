@@ -36,7 +36,7 @@ func on_track_2(pitch, timeInAdvance = 0.0): #bullet attack
 	if isDefenseMode and bulletsEnabled:
 		bullet = bulletPackedScene.instance()
 		bullet.position = Vector2(bulletXLocations[pitch % 3], gridRadius)
-		bullet.warningAnimationTime = timeInAdvance
+		bullet.warningAnimationTime = timeInAdvance * 2
 		call_deferred("add_child", bullet)
 func on_track_3(pitch, timeInAdvance = 0.0): #laser attack
 	if isDefenseMode and bulletsEnabled: 
