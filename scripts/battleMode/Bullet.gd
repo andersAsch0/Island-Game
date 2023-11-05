@@ -16,7 +16,7 @@ enum {
 var currState
 
 func _ready():
-	$AnimatedSprite.play("warning")
+	$TimeSyncedAnimatedSprite.play("warning")
 	currState = WARNING
 
 func _process(delta):
@@ -26,7 +26,7 @@ func _process(delta):
 			queue_free()
 		elif warningCount >= warningAnimationTime:
 			currState = MOVING
-			$AnimatedSprite.play("default")
+			$TimeSyncedAnimatedSprite.play("default")
 	else:
 		position += velocity.rotated(angle) * speed * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 func reverseTime():

@@ -31,7 +31,7 @@ signal PlayerDie
 signal playerMovedOffense(direction, newTile, timeToMoveThere)
 signal playerFinishedMoving(newTile)
 
-# player script mostly deals with movement and animation, all other input is handled by BattleMode.gd
+# player script mostly deals with movement and animation, all other input is handled by BattleMode.gd and actionmenu
 
 
 
@@ -58,6 +58,8 @@ func _process(delta):
 	if $inputTimer.time_left > 0: #if mid jump (defense mode)
 		position.x += (storagePos.x - position.x)/$inputTimer.time_left * delta
 		position.y += (storagePos.y - position.y)/$inputTimer.time_left * delta
+		position.x = clamp(position.x, Global.getPlayerCoords().x - currGridSize, Global.getPlayerCoords().x + currGridSize)
+		position.y = clamp(position.y, Global.getPlayerCoords().y - currGridSize, Global.getPlayerCoords().y + currGridSize)
 		if abs(storagePos.x - position.x) >= abs(storagePos.y - position.y):
 			if storagePos.x - position.x > 0: $Animations.play("jump right")
 			else:$Animations.play("jump left")
@@ -67,7 +69,8 @@ func _process(delta):
 	elif currState == MOVINGTILES:
 		position +=( Global.getPlayerCoords() - prevLocation) / $Animations/moveTilesTimer.wait_time * delta
 
-func _input(event):
+func _input(event): #this is movement only. no actions
+	if not Global.timeIsNotStopped: return
 	if(event.is_action_pressed("ui_up")):
 		if currState == DEFENSE:
 			handleInput()

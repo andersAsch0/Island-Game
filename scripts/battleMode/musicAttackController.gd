@@ -33,7 +33,6 @@ onready var bulletYLocations = [$gridAttack/grid00.position.y, $gridAttack/grid0
 var gridRadius = -50
 var bullet
 func on_track_2(pitch, timeInAdvance = 0.0): #bullet attack
-	temp += 1
 	if isDefenseMode and bulletsEnabled:
 		bullet = bulletPackedScene.instance()
 		bullet.position = Vector2(bulletXLocations[pitch % 3], gridRadius)
@@ -64,10 +63,7 @@ func rotateWithEnemy():
 func _on_MusicHandler_musicStart():
 	pass # Replace with function body.
 
-var temp  = 0
 func offenseModeStarting(_duration): #called when enemy starts absconding
 	isDefenseMode = false
-	temp += 1
 func defenseModeStarting(_duration): #called when enemy starts attacking (after anglechange)
 	isDefenseMode = true
-	temp += 1

@@ -65,8 +65,6 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	$offenseModeCamera.add_child_below_node($offenseModeCamera/Grid, musicAttackController)
 	on_away_phase_starting(0) #hope this doesnt break something in hte future!!! hahaha!!!!
 	
-	 # connect the signal to start fight from the new node to this one
-	# enemy.connect("startFight", self, "_on_BattleModeEnemy_startFight")
 	
 func incrementAbilityTimes(_delta): 
 	updateTimeJuiceBar()
@@ -145,7 +143,6 @@ func on_attack_phase_starting(duration):
 	emit_signal("enemyAttackPhaseStarting", duration)
 func on_abscond_phase_starting(duration):
 	emit_signal("enemyAbscondPhaseStarting", duration)
-	$UI/TimeSyncedAnimatedSprite.play("default", true)
 func on_away_phase_starting(duration):
 	emit_signal("enemyAwayPhaseStarting", duration)
 	switchToOffenseMode()
@@ -154,7 +151,6 @@ func on_approach_phase_starting(duration):
 	$offenseModeCamera/Arrows.visible = false
 func on_angle_change_phase_starting(duration):
 	emit_signal("enemyAngleChangePhaseStarting", duration)
-	$UI/TimeSyncedAnimatedSprite.play("default")
 	switchToDefenseMode()
 
 func switchToDefenseMode():
