@@ -158,7 +158,7 @@ func die():
 
 func _on_BattleMode_enemyApproachPhaseStarting(_duration): #disable movingtiles
 	movingTilesDisabled = true
-func _on_BattleMode_offensePhaseEnding(_duration):
+func _on_BattleMode_offensePhaseEnding(_duration): #approach phase
 	currState = DEFENSE
 	storagePos = position
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
@@ -254,6 +254,7 @@ var miniGameActive = false
 #func attackButtonPressed():
 #	if isShielded or currState == DEFENSE:
 #		return	
+
 #	$comboMiniGame.playGame()
 #	if $comboMiniGame.is_processing_input():
 #		miniGameActive = true
@@ -321,4 +322,5 @@ func _on_UI_attacking(activated):
 	pass # Replace with function body.
 func _on_UI_healing(activated):
 	pass # Replace with function body.
+
 
