@@ -44,7 +44,14 @@ func _ready():
 	animatedSpriteNode.scale.y = origScale
 	$enemyMovement.enemySpeed = enemySpeed
 	updateHPBar()
-
+	
+	print("duration 1 : ", $enemyMovement.calculateWanderSpeed(1))
+	print("duration 5 : ", $enemyMovement.calculateWanderSpeed(5))
+	print("duration 26 : ", $enemyMovement.calculateWanderSpeed(26))
+	print("duration 27 : ", $enemyMovement.calculateWanderSpeed(27))
+	print("duration 28 : ", $enemyMovement.calculateWanderSpeed(28))
+	print("duration 29 : ", $enemyMovement.calculateWanderSpeed(29))
+	print("duration 30 : ", $enemyMovement.calculateWanderSpeed(30))	
 	currState = AWAY
 	startAwayPhase()
 	visible = true
@@ -72,12 +79,12 @@ func _physics_process(delta):
 func startAttackPhase():
 	currState = ATTACKING
 	animatedSpriteNode.play("idle")
-	$enemyMovement.wander()
+	$enemyMovement.wander(stateWaitTimes[ATTACKING])
 	emit_signal("attackPhaseStarting", stateWaitTimes[ATTACKING])
 func startLeavePhase():
 	currState = ABSCONDING
 	animatedSpriteNode.play("moving")
-	$enemyMovement.returnToMiddle()
+	$enemyMovement.stopWander()
 	emit_signal("abscondPhaseStarting", stateWaitTimes[ABSCONDING])
 func startAwayPhase():
 	animatedSpriteNode.scale.x = origScale

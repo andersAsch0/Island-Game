@@ -112,6 +112,7 @@ animations = [ {
 } ]
 
 [node name="BattleModeEnemy" type="KinematicBody2D" groups=["enemies"]]
+position = Vector2( 85, 55 )
 script = ExtResource( 2 )
 bulletScene = ExtResource( 3 )
 attackPatternFile = "res://scripts/attackPatternJsonData/butterflyAttack.json"
@@ -172,7 +173,7 @@ disabled = true
 [node name="TimeSyncedAnimatedSprite" type="AnimatedSprite" parent="enemyMovement/PathFollow2D"]
 frames = SubResource( 24 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 script = ExtResource( 8 )
 
