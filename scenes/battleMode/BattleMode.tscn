@@ -534,6 +534,9 @@ scale = Vector2( 2.1, 2.1 )
 position = Vector2( 155.4, 109.6 )
 scale = Vector2( 1.3795, 1.3795 )
 
+[node name="Animations" parent="BattleModePlayer" index="2"]
+frame = 0
+
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 156, 74 )
 
@@ -716,6 +719,7 @@ one_shot = true
 [connection signal="enemyApproachPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyApproachPhaseStarting"]
 [connection signal="enemyAttackPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAttackPhaseStarting"]
 [connection signal="enemyAttackPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAttackPhaseStarting"]
+[connection signal="enemyAttackPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyAttackPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]

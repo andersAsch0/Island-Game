@@ -10,7 +10,7 @@ export var maxHP : int = 20
 export var currentHP : int = maxHP
 export var invincible : bool = true #for debugging #only works if you dont move
 enum {
-	DEFENSE
+	DEFENSE #small grid dodging
 	IMOBILE # ex. while winding watch
 	MOVINGTILES # moving around the big tiles
 	IDLE # normal state during offense
@@ -158,8 +158,9 @@ func die():
 
 func _on_BattleMode_enemyApproachPhaseStarting(_duration): #disable movingtiles
 	movingTilesDisabled = true
-func _on_BattleMode_offensePhaseEnding(_duration): #approach phase
+func _on_BattleMode_offensePhaseEnding(_duration): #anglechange phase
 	currState = DEFENSE
+	$debugLabel.text = currState as String
 	storagePos = position
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
 		storagePos.x += currGridSize
@@ -172,6 +173,7 @@ func _on_BattleMode_offensePhaseEnding(_duration): #approach phase
 	$Animations.play("idle")
 func _on_BattleMode_enemyAbscondPhaseStarting(_duration):
 	currState = IDLE
+	$debugLabel.text = currState as String
 	# forces player character to move to the center of the grid as if they jumped there
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
 		storagePos.x -= currGridSize
@@ -184,12 +186,18 @@ func _on_BattleMode_enemyAbscondPhaseStarting(_duration):
 	$HurtBox/CollisionShape2D.disabled = true 
 	$HitBox/CollisionShape2D.disabled = true
 	$inputTimer.start()
-func _on_BattleMode_offensePhaseStarting(_duration):
+func _on_BattleMode_offensePhaseStarting(_duration): #away phase starting
 	currState = IDLE
+	$debugLabel.text = currState as String
 	$HurtBox/CollisionShape2D.disabled = false 
 	$HitBox/CollisionShape2D.disabled = false
 	movingTilesDisabled = false
 	position = Global.getPlayerCoords()
+func _on_BattleMode_enemyAttackPhaseStarting(duration):
+	currState = DEFENSE
+	$debugLabel.text = currState as String
+	
+
 func finishAttack():
 	pass
 var movingTilesDisabled = false
@@ -200,6 +208,7 @@ func move(direction):
 		updateCurrGridSquare()
 		$Animations/moveTilesTimer.start()
 		currState = MOVINGTILES
+		$debugLabel.text = currState as String
 		$Animations.play(moveAnimations[direction])
 		emit_signal("playerMovedOffense", direction, Global.playerGridLocation, $Animations/moveTilesTimer.wait_time)
 func updateCurrGridSquare():
@@ -213,6 +222,7 @@ func _on_moveTilesTimer_timeout():
 	if currState == DEFENSE:
 		return
 	currState = IDLE
+	$debugLabel.text = currState as String
 	storagePos = position
 	
 

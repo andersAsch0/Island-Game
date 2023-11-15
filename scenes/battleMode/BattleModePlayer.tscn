@@ -433,7 +433,6 @@ position = Vector2( 0, -7 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 10 )
 animation = "jump left"
-frame = 1
 playing = true
 script = ExtResource( 14 )
 
@@ -489,6 +488,24 @@ pitch_scale = 0.27
 [node name="hitSheildSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
 volume_db = -30.0
+
+[node name="debugLabel" type="Label" parent="."]
+margin_top = -15.0
+margin_right = 40.0
+margin_bottom = -1.0
+rect_scale = Vector2( 0.416677, 0.39518 )
+text = "0"
+
+[node name="debugLabel2" type="Label" parent="."]
+margin_left = -10.0
+margin_top = -17.0
+margin_right = 61.0
+margin_bottom = -3.0
+rect_scale = Vector2( 0.089452, 0.118587 )
+text = "0 : defense
+1 : imobile
+2 : movingtiles
+3 : idle (offense)"
 
 [connection signal="timeout" from="Animations/moveTilesTimer" to="." method="_on_moveTilesTimer_timeout"]
 [connection signal="timeout" from="DashTimer" to="." method="_on_DashTimer_timeout"]

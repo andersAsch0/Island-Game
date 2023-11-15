@@ -173,7 +173,7 @@ disabled = true
 [node name="TimeSyncedAnimatedSprite" type="AnimatedSprite" parent="enemyMovement/PathFollow2D"]
 frames = SubResource( 24 )
 animation = "idle"
-frame = 1
+frame = 3
 playing = true
 script = ExtResource( 8 )
 
