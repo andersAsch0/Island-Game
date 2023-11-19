@@ -61,6 +61,7 @@ func generate2dCoords(topLeft: Vector2, bottomRight: Vector2): #return arrays
 	return array
 			
 func generate3dCoords(topLeft: Vector2, topRight: Vector2, bottomRight: Vector2, bottomLeft: Vector2, square01 : Vector2, square02: Vector2, square03: Vector2, square41: Vector2, square42: Vector2, square43: Vector2):
+	#ordered in the reverse way of normal coords, each row is y and each col is x, so that to get a coord you have to use [y][x]
 	var array = []
 	var distBetweenLocations : float
 	var leftColumn = [topLeft, square01, square02, square03, bottomLeft]

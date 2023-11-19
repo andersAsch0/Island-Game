@@ -63,7 +63,7 @@ func rotateWithEnemy():
 func _on_MusicHandler_musicStart():
 	pass # Replace with function body.
 
-func offenseModeStarting(_duration): #called when enemy starts absconding
-	isDefenseMode = false
-func defenseModeStarting(_duration): #called when enemy starts attacking (after anglechange)
+func enableBullets(_duration): 
 	isDefenseMode = true
+func disableBullets(_duration):
+	isDefenseMode = false

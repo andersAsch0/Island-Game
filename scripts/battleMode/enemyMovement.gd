@@ -15,7 +15,7 @@ var wanderSpeed
 func wander(duration : float):
 	wanderSpeed = calculateWanderSpeed(duration)
 	set_process(true)
-func stopWander():
+func stopWander(_duration):
 	set_process(false)
 	$PathFollow2D.offset = 0
 
@@ -35,3 +35,4 @@ func calculateWanderSpeed(duration : float)-> float:
 		numRotations += 1
 	
 	return 0.0
+

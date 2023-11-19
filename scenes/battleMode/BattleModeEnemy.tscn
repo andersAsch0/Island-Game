@@ -173,7 +173,6 @@ disabled = true
 [node name="TimeSyncedAnimatedSprite" type="AnimatedSprite" parent="enemyMovement/PathFollow2D"]
 frames = SubResource( 24 )
 animation = "idle"
-frame = 3
 playing = true
 script = ExtResource( 8 )
 
@@ -204,4 +203,7 @@ margin_top = -6.62395
 margin_right = 148.211
 margin_bottom = 7.37605
 
+[connection signal="abscondPhaseStarting" from="." to="enemyMovement" method="stopWander"]
+[connection signal="angleChangePhaseStarting" from="." to="enemyMovement" method="stopWander"]
+[connection signal="attackPhaseStarting" from="." to="enemyMovement" method="wander"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]

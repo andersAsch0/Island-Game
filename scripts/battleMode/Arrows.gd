@@ -14,3 +14,21 @@ func on_enemyMoved():
 	$upArrow.updateSelf(UP)
 	$rightArrow.updateSelf(RIGHT)
 	$leftArrow.updateSelf(LEFT)
+
+
+
+func _on_BattleMode_enemyAbscondPhaseStarting(_duration):
+	visible = false
+
+
+func _on_BattleMode_enemyAngleChangePhaseStarting(_duration):
+	visible = false
+
+func _on_BattleMode_enemyApproachPhaseStarting(_duration):
+	visible = false
+
+func _on_BattleMode_enemyAttackPhaseStarting(_duration):
+	visible = false
+
+func _on_BattleMode_enemyAwayPhaseStarting(_duration):
+	visible = true

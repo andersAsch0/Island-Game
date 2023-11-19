@@ -1,4 +1,4 @@
-[gd_scene load_steps=112 format=2]
+[gd_scene load_steps=114 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -16,6 +16,8 @@
 [ext_resource path="res://art/battleModeUI/arrow.png" type="Texture" id=14]
 [ext_resource path="res://scripts/downArrowButton.gd" type="Script" id=15]
 [ext_resource path="res://scripts/battleMode/Arrows.gd" type="Script" id=16]
+[ext_resource path="res://scenes/battleMode/Grid.gd" type="Script" id=17]
+[ext_resource path="res://art/placeholder.jpg" type="Texture" id=18]
 [ext_resource path="res://scenes/battleMode/catchMiniGame.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/battleMode/comboMiniGame.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scripts/battleMode/BattleModeUI.gd" type="Script" id=23]
@@ -527,15 +529,20 @@ position = Vector2( -139.167, -152.5 )
 position = Vector2( 134.167, 121.667 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 157, 109 )
+position = Vector2( 259, 50 )
 scale = Vector2( 2.1, 2.1 )
+
+[node name="Placeholder" type="Sprite" parent="Position2D"]
+position = Vector2( 0.475586, 0.476074 )
+scale = Vector2( -0.0144161, 0.00904175 )
+texture = ExtResource( 18 )
 
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
 position = Vector2( 155.4, 109.6 )
 scale = Vector2( 1.3795, 1.3795 )
 
 [node name="Animations" parent="BattleModePlayer" index="2"]
-frame = 0
+frame = 1
 
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 156, 74 )
@@ -575,6 +582,7 @@ position = Vector2( 0, 11 )
 scale = Vector2( 2.31579, 2.31579 )
 z_as_relative = false
 texture = ExtResource( 7 )
+script = ExtResource( 17 )
 
 [node name="VictoryButton" type="Button" parent="offenseModeCamera"]
 visible = false
@@ -713,16 +721,26 @@ one_shot = true
 [connection signal="enemyAbscondPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAbscondPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAbscondPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyAbscondPhaseStarting"]
+[connection signal="enemyAbscondPhaseStarting" from="." to="offenseModeCamera/Grid" method="_on_BattleMode_enemyAbscondPhaseStarting"]
+[connection signal="enemyAbscondPhaseStarting" from="." to="offenseModeCamera/Arrows" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
+[connection signal="enemyAngleChangePhaseStarting" from="." to="offenseModeCamera/Grid" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
+[connection signal="enemyAngleChangePhaseStarting" from="." to="offenseModeCamera/Arrows" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="UI" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
 [connection signal="enemyApproachPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyApproachPhaseStarting"]
+[connection signal="enemyApproachPhaseStarting" from="." to="offenseModeCamera/Grid" method="_on_BattleMode_enemyApproachPhaseStarting"]
+[connection signal="enemyApproachPhaseStarting" from="." to="offenseModeCamera/Arrows" method="_on_BattleMode_enemyApproachPhaseStarting"]
 [connection signal="enemyAttackPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAttackPhaseStarting"]
 [connection signal="enemyAttackPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAttackPhaseStarting"]
 [connection signal="enemyAttackPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyAttackPhaseStarting"]
+[connection signal="enemyAttackPhaseStarting" from="." to="offenseModeCamera/Grid" method="_on_BattleMode_enemyAttackPhaseStarting"]
+[connection signal="enemyAttackPhaseStarting" from="." to="offenseModeCamera/Arrows" method="_on_BattleMode_enemyAttackPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
+[connection signal="enemyAwayPhaseStarting" from="." to="offenseModeCamera/Grid" method="_on_BattleMode_enemyAwayPhaseStarting"]
+[connection signal="enemyAwayPhaseStarting" from="." to="offenseModeCamera/Arrows" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="UI" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="frame_changed" from="bigGridController/bigGrid" to="bigGridController" method="_on_bigGrid_frame_changed"]
 [connection signal="frame_changed" from="bigGrid3" to="bigGrid3" method="_on_bigGrid3_frame_changed"]

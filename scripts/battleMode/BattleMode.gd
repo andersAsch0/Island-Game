@@ -58,8 +58,9 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemy.connect("enemyMoved", $offenseModeCamera/Arrows, "on_enemyMoved")
 	enemy.connect("enemyDead", self, "on_enemyDead")
 	musicAttackController = controllerScene.instance()
-	connect("enemyAttackPhaseStarting", musicAttackController, "defenseModeStarting")
-	connect("enemyAbscondPhaseStarting", musicAttackController, "offenseModeStarting")
+	connect("enemyAttackPhaseStarting", musicAttackController, "enableBullets")
+	connect("enemyAbscondPhaseStarting", musicAttackController, "disableBullets")
+	connect("enemyAngleChangePhaseStarting", musicAttackController, "disableBullets")
 	musicAttackController.position = Vector2(0,10) # this being hard coded is stupid. but idk how to do it better
 	add_child_below_node($offenseModeCamera, enemy)
 	$offenseModeCamera.add_child_below_node($offenseModeCamera/Grid, musicAttackController)
@@ -148,21 +149,17 @@ func on_away_phase_starting(duration):
 	switchToOffenseMode()
 func on_approach_phase_starting(duration):
 	emit_signal("enemyApproachPhaseStarting", duration)
-	$offenseModeCamera/Arrows.visible = false
 func on_angle_change_phase_starting(duration):
 	emit_signal("enemyAngleChangePhaseStarting", duration)
 	switchToDefenseMode()
 
 func switchToDefenseMode():
 	currState = DEFENSE
-	$offenseModeCamera/Grid.visible = true
 #	showActionMenu(false, false, false, faflse, false)
 	$offenseModeCamera.setFollow(false)
 	$offenseModeCamera.snapToPlayer()
 func switchToOffenseMode():
 	currState = OFFENSE
-	$offenseModeCamera/Grid.visible = false
-	$offenseModeCamera/Arrows.visible = true
 #	showActionMenu(true, true, true, true, true)
 
 func on_enemyDead():
@@ -204,7 +201,7 @@ func _on_windWatchMiniGame_wind(timeJuiceChange):
 		currTimeJuice = maxTimeJuiceSeconds
 	updateTimeJuiceBar()
 
-#	$offenseModeCamera/Arrows.visible = false
+
 
 
 
