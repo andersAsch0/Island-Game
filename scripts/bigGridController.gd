@@ -22,6 +22,7 @@ func _process(delta):
 	timeBetweenFrames += delta
 
 func _on_bigGrid_frame_changed():
+	print("grid frame : ", $bigGrid.frame, " time flow : ", Global.currCombatTimeMultiplier)
 	if isPlayerOffensePhase: # going from offense (3d) to defense (2d) (stretch)
 		position += (offsetFrom2DTo3D(Global.playerGridLocation.x,Global.playerGridLocation.y) / animTime3Dto2D) * timeBetweenFrames * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	else: # going from 2d to 3d (squash)
@@ -37,6 +38,7 @@ func _on_BattleMode_enemyAttackPhaseStarting(_duration): #end change to 2d
 func _on_BattleMode_enemyAngleChangePhaseStarting(duration):
 	animTime3Dto2D = duration
 	$bigGrid.set_anim_duration("default", duration)
+	startAngleChangeTo2D()
 func startAngleChangeTo2D(): #called by the camera which sets its position, so it doesnt start moving until it has the correct position
 	isPlayerOffensePhase = true # (on anglechange phase starting)
 	set_process(true)
@@ -50,6 +52,7 @@ func _on_BattleMode_enemyAbscondPhaseStarting(duration): #change to 3d
 	$bigGrid.play("default", true)
 func _on_BattleMode_enemyAwayPhaseStarting(_duration): # end angle change to 3d
 	set_process(false)
+	position = Vector2.ZERO
 
 func generate2dCoords(topLeft: Vector2, bottomRight: Vector2): #return arrays
 	var array = []

@@ -156,8 +156,8 @@ func die():
 
 # OFFENSE MODE (called by BattleMode.gd)
 
-func _on_BattleMode_enemyApproachPhaseStarting(_duration): #disable movingtiles
-	currState = IDLE
+func _on_BattleMode_enemyApproachPhaseStarting(_duration): #disable movingtiles, but should be able to finish current tile movement
+	if currState != MOVINGTILES: currState = IDLE
 	$debugLabel.text = currState as String
 	movingTilesDisabled = true
 func _on_BattleMode_offensePhaseEnding(_duration): #anglechange phase
@@ -173,7 +173,7 @@ func _on_BattleMode_offensePhaseEnding(_duration): #anglechange phase
 	if Input.get_action_strength("ui_down") > 0:
 		storagePos.y += currGridSize
 	$Animations.play("idle")
-func _on_BattleMode_enemyAttackPhaseStarting(duration):
+func _on_BattleMode_enemyAttackPhaseStarting(_duration):
 	currState = DEFENSE
 	$debugLabel.text = currState as String
 func _on_BattleMode_enemyAbscondPhaseStarting(_duration):
@@ -233,7 +233,7 @@ var miniGameActive = false
 func _on_UI_minigameActiveUpdate(active):
 	miniGameActive = active
 
-func _on_UI_sheildActivated(activated, delaySeconds):
+func _on_UI_sheildActivated(activated, _delaySeconds):
 	movingTilesDisabled = true
 	isShielded = activated
 	if activated:

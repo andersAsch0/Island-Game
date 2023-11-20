@@ -26,7 +26,6 @@ var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
 onready var animatedSpriteNode = $enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite
-
 signal awayPhaseStarting(duration)
 signal approachPhaseStarting(duration)
 signal angleChangePhaseStarting(duration)
@@ -53,8 +52,10 @@ func _physics_process(delta):
 	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int) # only inc if time is moving
 	if stateCounter >= stateWaitTimes[currState]: #need to go to next state
 		goToNextState()
+		print("enemy state : ", getEnemyCurrState())
 	elif stateCounter <= 0: #time reversed, need to go to prev state
 		goToPrevState()
+		print("enemy state : ", getEnemyCurrState())
 	
 	#frame by frame animation and movement
 	if currState == APPROACHING:
@@ -195,7 +196,12 @@ func calculateTileDistance(playerAdjacentTile : Vector2):
 		return 10000 #impossible tile to reach, impossibly big number so it wont go there
 	else: 
 		return abs(Global.enemyGridLocation.x - playerAdjacentTile.x) + abs(Global.enemyGridLocation.y - playerAdjacentTile.y)
+
+func getEnemyCurrState()-> String:
+	if currState == AWAY: return "away"
+	elif currState == APPROACHING: return "approaching"
+	elif currState == ANGLECHANGE: return "angle change 3d to 2d"
+	elif currState == ATTACKING: return "attacking"	
+	elif currState == ABSCONDING: return "absconding (2d to 3d)"
+	else: return "error state"
 	
-
-
-

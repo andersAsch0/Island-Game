@@ -54,13 +54,13 @@ func setEnemyGridLocation( newLocation : Vector2):
 
 func getEnemyCoords():
 	if gridCoords == []: 
-		return Vector2.ZERO
 		print("warning: grid coords not set")
+		return Vector2.ZERO
 	return gridCoords[enemyGridLocation.y][enemyGridLocation.x]
 func getPlayerCoords():
 	if gridCoords == []: 
-		return Vector2.ZERO
 		print("warning: grid coords not set")
+		return Vector2.ZERO
 	return gridCoords[playerGridLocation.y][playerGridLocation.x]
 func getEnemyDisplacementFromPlayer():
 	return enemyGridLocation - playerGridLocation
