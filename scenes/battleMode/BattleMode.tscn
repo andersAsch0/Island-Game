@@ -541,9 +541,6 @@ texture = ExtResource( 18 )
 position = Vector2( 155.4, 109.6 )
 scale = Vector2( 1.3795, 1.3795 )
 
-[node name="Animations" parent="BattleModePlayer" index="2"]
-frame = 0
-
 [node name="enemySpawnLocation" type="Position2D" parent="."]
 position = Vector2( 156, 74 )
 
@@ -728,6 +725,7 @@ one_shot = true
 [connection signal="enemyAngleChangePhaseStarting" from="." to="offenseModeCamera/Grid" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="offenseModeCamera/Arrows" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="UI" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
+[connection signal="enemyApproachPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyApproachPhaseStarting"]
 [connection signal="enemyApproachPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyApproachPhaseStarting"]
 [connection signal="enemyApproachPhaseStarting" from="." to="offenseModeCamera/Grid" method="_on_BattleMode_enemyApproachPhaseStarting"]
 [connection signal="enemyApproachPhaseStarting" from="." to="offenseModeCamera/Arrows" method="_on_BattleMode_enemyApproachPhaseStarting"]

@@ -14,12 +14,7 @@ var maxTimeJuiceSeconds : float = 100
 var currTimeJuice : float = maxTimeJuiceSeconds
 var timeJuiceCost : float = 4
 var timeScalingFactor = 2 # ratio by which time speeds or slows
-enum{
-	DEFENSE
-	OFFENSE
-	STOPPEDTIME
-}
-var currState = OFFENSE
+
 
 signal enemyAttackPhaseStarting(duration)
 signal enemyAbscondPhaseStarting(duration)
@@ -91,7 +86,7 @@ func _input(event):
 		$slowTimeDuration.start()
 		currTimeJuice -= timeJuiceCost
 		changeTimeScale(1.0 * 1/timeScalingFactor, $slowTimeDuration.wait_time, true)
-	if currState != DEFENSE: #is offense phase or time stopped
+	if $UI.actionsActive: #is offense phase or time stopped
 		if(event.is_action_pressed("windWatch")):
 			$UI.windWatchButtonPressed()
 		elif(event.is_action_pressed("heal")):
@@ -114,14 +109,12 @@ func stopTime():
 #	musicAttackController.get_node("MusicHandler").timeHasStopped($stopTimeDuration.wait_time)
 	Global.set_timeFlow(false, $stopTimeDuration.wait_time)
 	updateTimeJuiceBar()
-	currState = STOPPEDTIME
 	$UI.on_time_stopped()
 func _on_stopTimeDuration_timeout():
 	resumeTime()
 func resumeTime():
 	Global.set_timeFlow(true, 0)
 	updateTimeJuiceBar()
-	currState = DEFENSE
 	$UI.on_time_resumed()
 #	musicAttackController.get_node("MusicHandler").timeHasResumed()
 	
@@ -142,25 +135,26 @@ export var overWorldPath = "res://scenes/World.tscn"
 func on_attack_phase_starting(duration):
 	musicAttackController.rotateWithEnemy()
 	emit_signal("enemyAttackPhaseStarting", duration)
+	cameraFollow(false)
 func on_abscond_phase_starting(duration):
 	emit_signal("enemyAbscondPhaseStarting", duration)
+	cameraFollow(false)
 func on_away_phase_starting(duration):
 	emit_signal("enemyAwayPhaseStarting", duration)
-	switchToOffenseMode()
+	cameraFollow(true)
 func on_approach_phase_starting(duration):
 	emit_signal("enemyApproachPhaseStarting", duration)
+	cameraFollow(true)
 func on_angle_change_phase_starting(duration):
 	emit_signal("enemyAngleChangePhaseStarting", duration)
-	switchToDefenseMode()
+	cameraFollow(false)
 
-func switchToDefenseMode():
-	currState = DEFENSE
-#	showActionMenu(false, false, false, faflse, false)
-	$offenseModeCamera.setFollow(false)
-	$offenseModeCamera.snapToPlayer()
-func switchToOffenseMode():
-	currState = OFFENSE
-#	showActionMenu(true, true, true, true, true)
+
+func cameraFollow(enable : bool):
+	$offenseModeCamera.setFollow(enable)
+#	$offenseModeCamera.snapToPlayer()
+func cameraStatic():
+	pass
 
 func on_enemyDead():
 	$offenseModeCamera/VictoryButton.visible = true

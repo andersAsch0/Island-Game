@@ -19,22 +19,13 @@ func _ready():
 	
 var timeBetweenFrames = 0.0
 func _process(delta):
-	timeBetweenFrames += delta
-
-func _on_bigGrid_frame_changed():
-	print("grid frame : ", $bigGrid.frame, " time flow : ", Global.currCombatTimeMultiplier)
-	if isPlayerOffensePhase: # going from offense (3d) to defense (2d) (stretch)
-		position += (offsetFrom2DTo3D(Global.playerGridLocation.x,Global.playerGridLocation.y) / animTime3Dto2D) * timeBetweenFrames * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+	if $bigGrid.frameCountMultiplier > 0: # going from offense (3d) to defense (2d) (stretch)
+		position += (offsetFrom2DTo3D(Global.playerGridLocation.x,Global.playerGridLocation.y) / animTime3Dto2D) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 	else: # going from 2d to 3d (squash)
-		position -= (offsetFrom2DTo3D(Global.playerGridLocation.x, Global.playerGridLocation.y) / animTime2Dto3D) * timeBetweenFrames * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-	timeBetweenFrames = 0
+		position -= (offsetFrom2DTo3D(Global.playerGridLocation.x, Global.playerGridLocation.y) / animTime2Dto3D) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 
-func _on_BattleMode_enemyAttackPhaseStarting(_duration): #end change to 2d
+func _on_BattleMode_enemyApproachPhaseStarting(duration):
 	set_process(false)
-#	position = baselinePosition3D
-	
-
-
 func _on_BattleMode_enemyAngleChangePhaseStarting(duration):
 	animTime3Dto2D = duration
 	$bigGrid.set_anim_duration("default", duration)
@@ -44,6 +35,9 @@ func startAngleChangeTo2D(): #called by the camera which sets its position, so i
 	set_process(true)
 	$bigGrid.play("default", false)
 
+func _on_BattleMode_enemyAttackPhaseStarting(_duration): #end change to 2d
+	set_process(false)
+#	position = baselinePosition3D
 func _on_BattleMode_enemyAbscondPhaseStarting(duration): #change to 3d
 	animTime2Dto3D = duration
 	$bigGrid.set_anim_duration("default", duration)
@@ -86,4 +80,5 @@ func offsetFrom2DTo3D(gridLocationX, gridLocationY):
 	#3d - 2d
 	return Vector2(coords3d[gridLocationY][gridLocationX].x - coords2d[gridLocationY][gridLocationX].x, coords3d[gridLocationY][gridLocationX].y - coords2d[gridLocationY][gridLocationX].y)
 	
+
 
