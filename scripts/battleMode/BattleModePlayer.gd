@@ -46,7 +46,7 @@ func _ready():
 #		position.y -= currGridSize
 #	if Input.get_action_strength("ui_down") > 0:
 #		position.y += currGridSize
-	storagePos = position
+	storagePos = Global.getPlayerCoords()
 	
 	if invincible:
 		$HurtBox/CollisionShape2D.set_deferred("disabled", true)
@@ -163,7 +163,8 @@ func _on_BattleMode_enemyApproachPhaseStarting(_duration): #disable movingtiles,
 func _on_BattleMode_offensePhaseEnding(_duration): #anglechange phase
 	currState = DEFENSE
 	$debugLabel.text = currState as String
-	storagePos = position
+	storagePos = Global.getPlayerCoords()
+	print("Line 166 : storage pos = ", storagePos)
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
 		storagePos.x += currGridSize
 	if Input.get_action_strength("ui_left") > 0:
@@ -225,7 +226,8 @@ func _on_moveTilesTimer_timeout():
 		return
 	currState = IDLE
 	$debugLabel.text = currState as String
-	storagePos = position
+	storagePos = Global.getPlayerCoords()
+	print("Line 229 : storage pos = ", storagePos)
 	
 
 # MINIGAMES
