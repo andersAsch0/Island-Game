@@ -164,15 +164,18 @@ func _on_BattleMode_offensePhaseEnding(_duration): #anglechange phase
 	currState = DEFENSE
 	$debugLabel.text = currState as String
 	storagePos = Global.getPlayerCoords()
-	print("Line 166 : storage pos = ", storagePos)
-	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
-		storagePos.x += currGridSize
-	if Input.get_action_strength("ui_left") > 0:
-		storagePos.x -= currGridSize
-	if Input.get_action_strength("ui_up") > 0:
-		storagePos.y -= currGridSize
-	if Input.get_action_strength("ui_down") > 0:
-		storagePos.y += currGridSize
+#	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
+#		storagePos.x += currGridSize
+#	if Input.get_action_strength("ui_left") > 0:
+#		storagePos.x -= currGridSize
+#	if Input.get_action_strength("ui_up") > 0:
+#		storagePos.y -= currGridSize
+#	if Input.get_action_strength("ui_down") > 0:
+#		storagePos.y += currGridSize
+	if Global.currCombatTimeMultiplier > 0:
+		checkForKeyPresses()
+	else:
+		forcePlayerToMiddle()
 	$Animations.play("idle")
 func _on_BattleMode_enemyAttackPhaseStarting(_duration):
 	currState = DEFENSE
@@ -181,14 +184,18 @@ func _on_BattleMode_enemyAbscondPhaseStarting(_duration):
 	currState = IDLE
 	$debugLabel.text = currState as String
 	# forces player character to move to the center of the grid as if they jumped there
-	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
-		storagePos.x -= currGridSize
-	if Input.get_action_strength("ui_left") > 0:
-		storagePos.x += currGridSize
-	if Input.get_action_strength("ui_up") > 0:
-		storagePos.y += currGridSize
-	if Input.get_action_strength("ui_down") > 0:
-		storagePos.y -= currGridSize
+#	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
+#		storagePos.x -= currGridSize
+#	if Input.get_action_strength("ui_left") > 0:
+#		storagePos.x += currGridSize
+#	if Input.get_action_strength("ui_up") > 0:
+#		storagePos.y += currGridSize
+#	if Input.get_action_strength("ui_down") > 0:
+#		storagePos.y -= currGridSize
+	if Global.currCombatTimeMultiplier > 0:
+		forcePlayerToMiddle()
+	else:
+		checkForKeyPresses()
 	$HurtBox/CollisionShape2D.disabled = true 
 	$HitBox/CollisionShape2D.disabled = true
 	$inputTimer.start()
@@ -227,8 +234,21 @@ func _on_moveTilesTimer_timeout():
 	currState = IDLE
 	$debugLabel.text = currState as String
 	storagePos = Global.getPlayerCoords()
-	print("Line 229 : storage pos = ", storagePos)
-	
+func checkForKeyPresses(reverse : int = 1): # for going from a locked in place phase (angle change or abscond) to enemy attacking
+	if reverse != 1 and reverse != -1:
+		print("ERROR: arguments should be 1 or -1 only")
+		return
+	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
+		storagePos.x += currGridSize * reverse
+	if Input.get_action_strength("ui_left") > 0:
+		storagePos.x -= currGridSize * reverse
+	if Input.get_action_strength("ui_up") > 0:
+		storagePos.y -= currGridSize * reverse
+	if Input.get_action_strength("ui_down") > 0:
+		storagePos.y += currGridSize * reverse
+func forcePlayerToMiddle(): # for going from attacking to a locked in place phase
+	checkForKeyPresses(-1)
+	handleInput()
 
 # MINIGAMES
 var miniGameActive = false
