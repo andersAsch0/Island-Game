@@ -438,6 +438,7 @@ playing = true
 script = ExtResource( 14 )
 
 [node name="moveTilesTimer" type="Timer" parent="Animations"]
+wait_time = 0.8
 one_shot = true
 
 [node name="DashTimer" type="Timer" parent="."]

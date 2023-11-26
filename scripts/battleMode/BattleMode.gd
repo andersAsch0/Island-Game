@@ -138,7 +138,7 @@ func on_attack_phase_starting(duration):
 	cameraFollow(false)
 func on_abscond_phase_starting(duration):
 	emit_signal("enemyAbscondPhaseStarting", duration)
-	cameraFollow(false)
+	cameraFollow(true)
 func on_away_phase_starting(duration):
 	emit_signal("enemyAwayPhaseStarting", duration)
 	cameraFollow(true)

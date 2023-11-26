@@ -156,11 +156,11 @@ func die():
 
 # OFFENSE MODE (called by BattleMode.gd)
 
-func _on_BattleMode_enemyApproachPhaseStarting(_duration): #disable movingtiles, but should be able to finish current tile movement
+func _on_BattleMode_enemyApproachPhaseStarting(_duration): #disable movingtiles, but should be able to finish current tile movement #1
 	currState = IMOBILE
 	$debugLabel.text = currState as String
 	movingTilesDisabled = true
-func _on_BattleMode_offensePhaseEnding(_duration): #anglechange phase
+func _on_BattleMode_offensePhaseEnding(_duration): #anglechange phase #2
 	currState = IMOBILE
 	$debugLabel.text = currState as String
 	storagePos = Global.getPlayerCoords()
@@ -174,8 +174,9 @@ func _on_BattleMode_offensePhaseEnding(_duration): #anglechange phase
 #		storagePos.y += currGridSize
 	if Global.currCombatTimeMultiplier < 0:
 		forcePlayerToMiddle()
+	cutOffInputTimer()
 	$Animations.play("idle")
-func _on_BattleMode_enemyAttackPhaseStarting(_duration):
+func _on_BattleMode_enemyAttackPhaseStarting(_duration): #3
 	checkForKeyPresses()
 	currState = DEFENSE
 	$HurtBox/CollisionShape2D.disabled = false
@@ -193,12 +194,12 @@ func _on_BattleMode_enemyAbscondPhaseStarting(_duration):
 #		storagePos.y += currGridSize
 #	if Input.get_action_strength("ui_down") > 0:
 #		storagePos.y -= currGridSize
+	cutOffInputTimer()
 	if Global.currCombatTimeMultiplier > 0:
 		forcePlayerToMiddle()
 	$HurtBox/CollisionShape2D.disabled = true 
 	$HitBox/CollisionShape2D.disabled = true
-	$inputTimer.start()
-func _on_BattleMode_offensePhaseStarting(_duration): #away phase starting
+func _on_BattleMode_offensePhaseStarting(_duration): #away phase starting #0
 	currState = IDLE
 	$debugLabel.text = currState as String
 	$HurtBox/CollisionShape2D.disabled = false 
@@ -227,20 +228,17 @@ func _on_moveTilesTimer_timeout():
 	$Animations.play("idle")
 	$debugLabel.text = currState as String
 	storagePos = Global.getPlayerCoords()
-func checkForKeyPresses(reverse : int = 1): # for going from a locked in place phase (angle change or abscond) to enemy attacking
-	if reverse != 1 and reverse != -1:
-		print("ERROR: arguments should be 1 or -1 only")
-		return
+func checkForKeyPresses(): # for going from a locked in place phase (angle change or abscond) to enemy attacking
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
-		storagePos.x += currGridSize * reverse
+		storagePos.x += currGridSize
 	if Input.get_action_strength("ui_left") > 0:
-		storagePos.x -= currGridSize * reverse
+		storagePos.x -= currGridSize
 	if Input.get_action_strength("ui_up") > 0:
-		storagePos.y -= currGridSize * reverse
+		storagePos.y -= currGridSize
 	if Input.get_action_strength("ui_down") > 0:
-		storagePos.y += currGridSize * reverse
+		storagePos.y += currGridSize
 func forcePlayerToMiddle(): # for going from attacking to a locked in place phase
-	checkForKeyPresses(-1)
+	storagePos = Global.getPlayerCoords()
 	handleInput()
 
 # MINIGAMES
