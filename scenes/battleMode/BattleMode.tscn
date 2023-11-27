@@ -533,6 +533,7 @@ position = Vector2( 259, 50 )
 scale = Vector2( 2.1, 2.1 )
 
 [node name="Placeholder" type="Sprite" parent="Position2D"]
+visible = false
 position = Vector2( 0.475586, 0.476074 )
 scale = Vector2( -0.0144161, 0.00904175 )
 texture = ExtResource( 18 )

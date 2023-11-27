@@ -1,7 +1,7 @@
 extends Area2D
 
 
-export var speed : int = 70
+export var speed : int = 200
 export var angle : float = 0 #in radians
 export var warningAnimationTime = 1 #how long does the warning anim play before the bullet shoots (set by musicAttackController)
 var warningCount = 0
@@ -17,6 +17,7 @@ var currState
 
 func _ready():
 	currState = WARNING
+	$TimeSyncedAnimatedSprite.play("warning")
 	scale = Vector2(0.05,0.05)
 	$TimeSyncedAnimatedSprite.self_modulate.a = 0
 	
@@ -24,14 +25,18 @@ func _ready():
 func _process(delta):
 	if currState == WARNING:
 		warningCount += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		scale.x += 1.0 / warningAnimationTime * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
-		scale.y += 1.0 / warningAnimationTime * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		scale.x += 2.0 / warningAnimationTime * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		scale.y += 2.0 / warningAnimationTime * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		$TimeSyncedAnimatedSprite.self_modulate.a += 1.0 / warningAnimationTime * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		rotate(2*PI / warningAnimationTime * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int))
 		if warningCount < 0:
 			queue_free()
 		elif warningCount >= warningAnimationTime:
+			scale.x = 1
+			scale.y = 1
+			$TimeSyncedAnimatedSprite.play("default")
 			rotation = 0
+			$bulletTrail.visible = true
 			currState = MOVING
 	else:
 		position += velocity.rotated(angle) * speed * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
@@ -59,7 +64,7 @@ func _on_VisibilityNotifier2D_screen_entered():
 func _on_DespawnTimer_timeout():
 	queue_free()
 func die(): #called by enemy when it dies
-	$AnimatedSprite.play("die")
+	$TimeSyncedAnimatedSprite.play("die")
 	#$HitBox.queue_free() # dont hit player during explosion animation
 	set_process(false) #stop moving
 	$DeathTimer.start() # give time for explosion to play
