@@ -53,9 +53,9 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	enemy.connect("enemyMoved", $offenseModeCamera/Arrows, "on_enemyMoved")
 	enemy.connect("enemyDead", self, "on_enemyDead")
 	musicAttackController = controllerScene.instance()
-	connect("enemyAttackPhaseStarting", musicAttackController, "enableBullets")
-	connect("enemyAbscondPhaseStarting", musicAttackController, "disableBullets")
-	connect("enemyAngleChangePhaseStarting", musicAttackController, "disableBullets")
+	connect("enemyAttackPhaseStarting", musicAttackController, "on_BattleMode_defense_mode")
+	connect("enemyAbscondPhaseStarting", musicAttackController, "on_BattleMode_offense_mode")
+	connect("enemyAngleChangePhaseStarting", musicAttackController, "on_BattleMode_offense_mode")
 	musicAttackController.position = Vector2(0,10) # this being hard coded is stupid. but idk how to do it better
 	add_child_below_node($offenseModeCamera, enemy)
 	$offenseModeCamera.add_child_below_node($offenseModeCamera/Grid, musicAttackController)

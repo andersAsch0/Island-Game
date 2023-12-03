@@ -62,10 +62,13 @@ func rotateWithEnemy():
 	$gridAttack.rotation_degrees = -(self.rotation_degrees)
 #		self.global_position.x = Global.getPlayerCoords().x
 
+
 func _on_MusicHandler_musicStart():
 	pass # Replace with function body.
 
-func enableBullets(_duration): 
+
+
+func on_BattleMode_defense_mode(_duration): 
 	isDefenseMode = true
-func disableBullets(_duration):
+func on_BattleMode_offense_mode(_duration):
 	isDefenseMode = false
