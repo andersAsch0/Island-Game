@@ -3,8 +3,7 @@ extends Node
 #each enemy will have a unique musicAttackController scene. 
 #Each one, though, will have the same MusicHandler child, which must be passed the correct music and correct music/attack data
 export var bulletPackedScene : PackedScene
-export var laserPackedScene : PackedScene
-export var laserBulletScene : PackedScene
+export var bulletSpawnerPackedScene : PackedScene #use one of these bad boys to spawn all bullets
 export var bulletsEnabled = true
 export var laserEnabled = true
 export var gridAttackEnabled = true
@@ -36,15 +35,13 @@ var gridRadius = -50
 var bullet
 func on_track_2(pitch, timeInAdvance = 0.0): #bullet attack
 	if isDefenseMode and bulletsEnabled:
-		bullet = bulletPackedScene.instance()
+		bullet = bulletSpawnerPackedScene.instance().init(bulletPackedScene, 1, 1, timeInAdvance)
 		bullet.position = Vector2(bulletXLocations[pitch % 3], gridRadius)
-		bullet.warningAnimationTime = timeInAdvance * 2
+#		bullet.warningAnimationTime = timeInAdvance * 2 why was this *2 im scared
 		call_deferred("add_child", bullet)
 func on_track_3(pitch, timeInAdvance = 0.0): #laser attack
 	if isDefenseMode and laserEnabled: 
-		var laserNode = laserPackedScene.instance()
-		laserNode.lengthOfWarningSeconds = timeInAdvance
-		laserNode.bulletPackedScene = laserBulletScene
+		var laserNode = bulletSpawnerPackedScene.instance().init(bulletPackedScene, 8, 0.05, timeInAdvance, true)
 		if pitch / 3 < 1:
 			laserNode.position = Vector2(bulletXLocations[pitch % 3], gridRadius)
 		else:

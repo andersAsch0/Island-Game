@@ -20,7 +20,10 @@ func _ready():
 	$TimeSyncedAnimatedSprite.play("warning")
 	scale = Vector2(0.05,0.05)
 	$TimeSyncedAnimatedSprite.self_modulate.a = 0
-	
+
+func init(warningTime):
+	warningAnimationTime = max(warningTime, 0)
+	return self
 
 func _process(delta):
 	if currState == WARNING:
@@ -72,9 +75,9 @@ func _on_DeathTimer_timeout():
 	queue_free()
 
 	
-
+signal despawned
 func _on_Bullet_child_exiting_tree(_timer : Timer): # please stop 
 	$DespawnTimer.paused = true
-
+	emit_signal("despawned")
 
 
