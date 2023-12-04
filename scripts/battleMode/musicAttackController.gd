@@ -7,17 +7,17 @@ export var bulletSpawnerPackedScene : PackedScene #use one of these bad boys to 
 export var bulletsEnabled = true
 export var laserEnabled = true
 export var gridAttackEnabled = true
-
+var isDefenseMode = false
 #variables that may be different for dfferent battles or tracks, must be set up and passed to musicHandler
 var bpm = 207
 var eigthNotesInAdvance = 2 # how many eightnotes in advance does the warning animation play before spawning the attack
 var totalMeasuresInSong = 76
-var isDefenseMode = false
+
+
 func _ready():
 	$MusicHandler.bpm = bpm
 	$MusicHandler.JsonLength = totalMeasuresInSong - 1
 	$MusicHandler.eightNotesInAdvance = eigthNotesInAdvance
-
 
 var count : int = eigthNotesInAdvance
 var gridAttackPattern = [[Vector2(1,1)], [], [], [], [Vector2(1,1)], [], [], [], [Vector2(0, 2)], [], [Vector2(0,0)], [], [Vector2(2, 0)], [], [Vector2(2, 2)], []]
