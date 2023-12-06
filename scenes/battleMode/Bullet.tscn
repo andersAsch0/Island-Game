@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://art/flower.png" type="Texture" id=1]
 [ext_resource path="res://scripts/battleMode/Bullet.gd" type="Script" id=2]
@@ -105,6 +105,13 @@ animations = [ {
 "speed": 30.0
 } ]
 
+[sub_resource type="Gradient" id=22]
+offsets = PoolRealArray( 0, 0.622271, 0.820961 )
+colors = PoolColorArray( 1, 0.990234, 0, 1, 1, 0.0235294, 0.0235294, 0.560784, 0.54902, 0.00784314, 0.00784314, 0 )
+
+[sub_resource type="GradientTexture" id=23]
+gradient = SubResource( 22 )
+
 [sub_resource type="ParticlesMaterial" id=21]
 emission_shape = 2
 emission_box_extents = Vector3( 1, 1, 1 )
@@ -112,10 +119,16 @@ flag_disable_z = true
 direction = Vector3( 0, 1, 0 )
 spread = 52.15
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 20.0
+initial_velocity = 40.0
+initial_velocity_random = 0.3
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-linear_accel = -1.0
+linear_accel = -7.0
+scale = 2.0
+color = Color( 1, 0.992157, 0, 1 )
+color_ramp = SubResource( 23 )
+hue_variation = 0.1
+hue_variation_random = 0.69
 
 [node name="Bullet" type="Area2D" groups=["bulletTypes"]]
 scale = Vector2( 0.1, 0.1 )
@@ -161,7 +174,7 @@ visible = false
 position = Vector2( 0, -10 )
 scale = Vector2( 0.778516, 0.860275 )
 frames = SubResource( 18 )
-frame = 9
+frame = 6
 playing = true
 script = ExtResource( 6 )
 
@@ -171,9 +184,10 @@ script = ExtResource( 6 )
 
 [node name="Particles2D" type="Particles2D" parent="."]
 emitting = false
-amount = 20
+amount = 30
+lifetime = 4.0
 one_shot = true
-speed_scale = 3.22
+speed_scale = 6.0
 explosiveness = 1.0
 randomness = 0.1
 process_material = SubResource( 21 )

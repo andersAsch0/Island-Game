@@ -53,7 +53,7 @@ func _process(delta):
 			rotation = 0
 			$bulletTrail.visible = true
 			currState = MOVING
-			if shakeCamera: cameraNode.cameraShake(0.05)
+			if shakeCamera: cameraNode.cameraPulse(0.3)
 	else: 
 		position += velocity.rotated(angle) * speed * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 func reverseTime():

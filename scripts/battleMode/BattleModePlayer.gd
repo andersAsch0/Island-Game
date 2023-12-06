@@ -1,6 +1,11 @@
 extends KinematicBody2D
 
-
+##
+#func _physics_process():
+#    if Input.is_action_just_pressed("ui_accept"):
+#        # ... will be true for one frame only
+#    if Input.is_action_pressed("ui_accept"):
+#        # ... will be true for all frames the key is hold
 
 export var smallGridSize = 20
 var currGridSize = 20
