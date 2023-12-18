@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=2]
+[gd_scene load_steps=114 format=2]
 
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
@@ -7,17 +7,22 @@
 [ext_resource path="res://scripts/hitAndMissAnims.gd" type="Script" id=5]
 [ext_resource path="res://art/battleModeUI/comboAnims.png" type="Texture" id=6]
 [ext_resource path="res://art/battlegrid.png" type="Texture" id=7]
+[ext_resource path="res://scenes/battleMode/battlemodeButton.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scripts/gridCenter.gd" type="Script" id=9]
 [ext_resource path="res://art/gridAnim.png" type="Texture" id=10]
+[ext_resource path="res://scenes/battleMode/windWatchMinigame.tscn" type="PackedScene" id=11]
 [ext_resource path="res://art/battleModeUI/action menu horiz.png" type="Texture" id=12]
 [ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
 [ext_resource path="res://art/battleModeUI/arrow.png" type="Texture" id=14]
 [ext_resource path="res://scripts/downArrowButton.gd" type="Script" id=15]
 [ext_resource path="res://scripts/battleMode/Arrows.gd" type="Script" id=16]
-[ext_resource path="res://art/battleModeUI/enemy circle highlight.png" type="Texture" id=17]
-[ext_resource path="res://scripts/battleMode/enemyGridHighlight.gd" type="Script" id=18]
-[ext_resource path="res://art/bigGrid.png" type="Texture" id=19]
-[ext_resource path="res://scripts/battleMode/BigGridPerspective.gd" type="Script" id=20]
+[ext_resource path="res://scenes/battleMode/Grid.gd" type="Script" id=17]
+[ext_resource path="res://art/placeholder.jpg" type="Texture" id=18]
+[ext_resource path="res://scenes/battleMode/catchMiniGame.tscn" type="PackedScene" id=21]
+[ext_resource path="res://scenes/battleMode/comboMiniGame.tscn" type="PackedScene" id=22]
+[ext_resource path="res://scripts/battleMode/BattleModeUI.gd" type="Script" id=23]
+[ext_resource path="res://scripts/TimeSyncedAnimatedSprite.gd" type="Script" id=24]
+[ext_resource path="res://scripts/bigGridController.gd" type="Script" id=25]
 
 [sub_resource type="AtlasTexture" id=115]
 atlas = ExtResource( 10 )
@@ -435,7 +440,53 @@ animations = [ {
 script = ExtResource( 2 )
 enemyScene = ExtResource( 3 )
 
+[node name="bigGridController" type="Node2D" parent="."]
+script = ExtResource( 25 )
+
+[node name="bigGrid" type="AnimatedSprite" parent="bigGridController"]
+position = Vector2( 160, 123 )
+frames = SubResource( 114 )
+script = ExtResource( 24 )
+isPlaying = false
+
+[node name="frame8Corner" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( -109.167, -72.5 )
+
+[node name="frame8Corner2" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( 99.1667, -74.1667 )
+
+[node name="frame8Corner3" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( 198.333, 104.167 )
+
+[node name="frame8Corner4" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( -206.667, 105.833 )
+
+[node name="frame8LeftSide2" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( -122.5, -48.3333 )
+
+[node name="frame8LeftSide3" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( -141.667, -13.3333 )
+
+[node name="frame8LeftSide4" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( -170, 33.3333 )
+
+[node name="frame8RightSide2" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( 112.5, -48.3333 )
+
+[node name="frame8RightSide3" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( 132.5, -15 )
+
+[node name="frame8RightSide4" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( 160, 31.6667 )
+
+[node name="frame0Corner" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( -139.167, -152.5 )
+
+[node name="frame0Corner3" type="Position2D" parent="bigGridController/bigGrid"]
+position = Vector2( 134.167, 121.667 )
+
 [node name="bigGrid3" type="AnimatedSprite" parent="."]
+visible = false
 self_modulate = Color( 1, 1, 1, 0.47451 )
 position = Vector2( 160, 123 )
 frames = SubResource( 114 )
@@ -478,24 +529,14 @@ position = Vector2( -139.167, -152.5 )
 position = Vector2( 134.167, 121.667 )
 
 [node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 157, 109 )
+position = Vector2( 259, 50 )
 scale = Vector2( 2.1, 2.1 )
 
-[node name="BigGridPerspective" type="Sprite" parent="."]
+[node name="Placeholder" type="Sprite" parent="Position2D"]
 visible = false
-self_modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 167, 28 )
-scale = Vector2( 1.464, 0.74 )
-texture = ExtResource( 19 )
-script = ExtResource( 20 )
-
-[node name="enemyGridHighlight" type="Sprite" parent="BigGridPerspective"]
-visible = false
-self_modulate = Color( 1, 1, 1, 0.0745098 )
-position = Vector2( 0, -0.795455 )
-scale = Vector2( 0.497159, 0.490057 )
-texture = ExtResource( 17 )
-script = ExtResource( 18 )
+position = Vector2( 0.475586, 0.476074 )
+scale = Vector2( -0.0144161, 0.00904175 )
+texture = ExtResource( 18 )
 
 [node name="BattleModePlayer" parent="." instance=ExtResource( 1 )]
 position = Vector2( 155.4, 109.6 )
@@ -533,39 +574,13 @@ z_index = 1
 current = true
 script = ExtResource( 13 )
 
-[node name="HP&TJ" type="Label" parent="offenseModeCamera"]
-margin_left = -153.834
-margin_top = -35.0
-margin_right = -113.834
-margin_bottom = -21.0
-rect_scale = Vector2( 0.632878, 0.87013 )
-text = "HP TJ"
-
-[node name="PlayerHPBar" type="ProgressBar" parent="offenseModeCamera"]
-margin_left = -153.834
-margin_top = 46.0
-margin_right = -83.834
-margin_bottom = 60.0
-rect_rotation = -90.1426
-rect_scale = Vector2( 0.955148, 0.51705 )
-custom_colors/font_color = Color( 1, 0.74902, 0, 1 )
-
-[node name="TimeJuiceBar" type="ProgressBar" parent="offenseModeCamera"]
-margin_left = -142.834
-margin_top = 46.0
-margin_right = -77.8336
-margin_bottom = 61.0
-rect_rotation = 270.0
-rect_scale = Vector2( 1.03451, 0.511248 )
-custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
-custom_colors/font_color_shadow = Color( 0.0941176, 0.321569, 0.854902, 1 )
-
 [node name="Grid" type="Sprite" parent="offenseModeCamera"]
 self_modulate = Color( 1, 1, 1, 0.215686 )
 position = Vector2( 0, 11 )
 scale = Vector2( 2.31579, 2.31579 )
 z_as_relative = false
 texture = ExtResource( 7 )
+script = ExtResource( 17 )
 
 [node name="VictoryButton" type="Button" parent="offenseModeCamera"]
 visible = false
@@ -586,6 +601,7 @@ disabled = true
 text = "DEFEAT"
 
 [node name="actionMenu" type="AnimatedSprite" parent="offenseModeCamera"]
+visible = false
 position = Vector2( 141, 3.00005 )
 rotation = 1.57557
 scale = Vector2( 0.400679, 0.529486 )
@@ -634,26 +650,125 @@ frames = SubResource( 104 )
 animation = "empty"
 script = ExtResource( 5 )
 
+[node name="UI" type="CanvasLayer" parent="."]
+script = ExtResource( 23 )
+
+[node name="HP&TJ" type="Label" parent="UI"]
+margin_left = 1.56599
+margin_top = 54.6
+margin_right = 41.566
+margin_bottom = 68.6
+rect_scale = Vector2( 0.632878, 0.87013 )
+text = "HP TJ"
+
+[node name="PlayerHPBar" type="ProgressBar" parent="UI"]
+margin_left = 1.56599
+margin_top = 135.6
+margin_right = 71.566
+margin_bottom = 149.6
+rect_rotation = -90.1426
+rect_scale = Vector2( 0.955148, 0.51705 )
+custom_colors/font_color = Color( 1, 0.74902, 0, 1 )
+
+[node name="TimeJuiceBar" type="ProgressBar" parent="UI"]
+margin_left = 12.566
+margin_top = 135.6
+margin_right = 77.5664
+margin_bottom = 150.6
+rect_rotation = 270.0
+rect_scale = Vector2( 1.03451, 0.511248 )
+custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
+custom_colors/font_color_shadow = Color( 0.0941176, 0.321569, 0.854902, 1 )
+
+[node name="windButton" parent="UI" instance=ExtResource( 8 )]
+position = Vector2( 337, 24 )
+
+[node name="windWatchMiniGame" parent="UI/windButton/blankButton" index="1" instance=ExtResource( 11 )]
+position = Vector2( -2, 0 )
+scale = Vector2( 0.818122, 0.818122 )
+
+[node name="attackButton" parent="UI" instance=ExtResource( 8 )]
+position = Vector2( 337, 67 )
+
+[node name="buttonIcon" parent="UI/attackButton/blankButton" index="0"]
+region_rect = Rect2( 95, 0, 95, 44 )
+
+[node name="comboMiniGame" parent="UI/attackButton/blankButton" index="1" instance=ExtResource( 22 )]
+position = Vector2( -2, 0 )
+scale = Vector2( 0.476667, 0.476667 )
+
+[node name="healButton" parent="UI" instance=ExtResource( 8 )]
+position = Vector2( 337, 110 )
+
+[node name="buttonIcon" parent="UI/healButton/blankButton" index="0"]
+region_rect = Rect2( 190, 0, 95, 44 )
+
+[node name="catchMiniGame" parent="UI/healButton/blankButton" index="1" instance=ExtResource( 21 )]
+position = Vector2( -192, -164 )
+scale = Vector2( 1.3, 1.3 )
+
+[node name="sheildButton" parent="UI" instance=ExtResource( 8 )]
+position = Vector2( 337, 154 )
+
+[node name="buttonIcon" parent="UI/sheildButton/blankButton" index="0"]
+region_rect = Rect2( 285, 0, 95, 44 )
+
+[node name="sheildDeactivateDelay" type="Timer" parent="UI"]
+one_shot = true
+
+[connection signal="enemyAbscondPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAbscondPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAbscondPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyAbscondPhaseStarting"]
+[connection signal="enemyAbscondPhaseStarting" from="." to="offenseModeCamera/Grid" method="_on_BattleMode_enemyAbscondPhaseStarting"]
+[connection signal="enemyAbscondPhaseStarting" from="." to="offenseModeCamera/Arrows" method="_on_BattleMode_enemyAbscondPhaseStarting"]
+[connection signal="enemyAngleChangePhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
 [connection signal="enemyAngleChangePhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseEnding"]
+[connection signal="enemyAngleChangePhaseStarting" from="." to="offenseModeCamera/Grid" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
+[connection signal="enemyAngleChangePhaseStarting" from="." to="offenseModeCamera/Arrows" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
+[connection signal="enemyAngleChangePhaseStarting" from="." to="UI" method="_on_BattleMode_enemyAngleChangePhaseStarting"]
+[connection signal="enemyApproachPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyApproachPhaseStarting"]
 [connection signal="enemyApproachPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyApproachPhaseStarting"]
+[connection signal="enemyApproachPhaseStarting" from="." to="offenseModeCamera/Grid" method="_on_BattleMode_enemyApproachPhaseStarting"]
+[connection signal="enemyApproachPhaseStarting" from="." to="offenseModeCamera/Arrows" method="_on_BattleMode_enemyApproachPhaseStarting"]
+[connection signal="enemyAttackPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAttackPhaseStarting"]
 [connection signal="enemyAttackPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAttackPhaseStarting"]
+[connection signal="enemyAttackPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_enemyAttackPhaseStarting"]
+[connection signal="enemyAttackPhaseStarting" from="." to="offenseModeCamera/Grid" method="_on_BattleMode_enemyAttackPhaseStarting"]
+[connection signal="enemyAttackPhaseStarting" from="." to="offenseModeCamera/Arrows" method="_on_BattleMode_enemyAttackPhaseStarting"]
+[connection signal="enemyAwayPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="enemyAwayPhaseStarting" from="." to="BattleModePlayer" method="_on_BattleMode_offensePhaseStarting"]
+[connection signal="enemyAwayPhaseStarting" from="." to="offenseModeCamera/Grid" method="_on_BattleMode_enemyAwayPhaseStarting"]
+[connection signal="enemyAwayPhaseStarting" from="." to="offenseModeCamera/Arrows" method="_on_BattleMode_enemyAwayPhaseStarting"]
+[connection signal="enemyAwayPhaseStarting" from="." to="UI" method="_on_BattleMode_enemyAwayPhaseStarting"]
 [connection signal="frame_changed" from="bigGrid3" to="bigGrid3" method="_on_bigGrid3_frame_changed"]
 [connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera/Arrows" method="_on_BattleModePlayer_playerMovedOffense"]
-[connection signal="watchWind" from="BattleModePlayer" to="." method="_on_windWatchMiniGame_wind"]
-[connection signal="failedCombo" from="BattleModePlayer/comboMiniGame" to="hitAndMissAnims" method="_on_comboMiniGame_failedCombo"]
-[connection signal="successfulCombo" from="BattleModePlayer/comboMiniGame" to="hitAndMissAnims" method="_on_comboMiniGame_successfulCombo"]
 [connection signal="timeout" from="reverseTimeDuration" to="." method="_on_reverseTimeDuration_timeout"]
 [connection signal="timeout" from="stopTimeDuration" to="." method="_on_stopTimeDuration_timeout"]
 [connection signal="timeout" from="speedTimeDuration" to="." method="_on_speedTimeDuration_timeout"]
 [connection signal="timeout" from="slowTimeDuration" to="." method="_on_slowTimeDuration_timeout"]
 [connection signal="pressed" from="offenseModeCamera/VictoryButton" to="." method="_on_VictoryButton_pressed"]
 [connection signal="pressed" from="offenseModeCamera/DefeatButton" to="." method="_on_DefeatButton_pressed"]
+[connection signal="attacking" from="UI" to="BattleModePlayer" method="_on_UI_attacking"]
+[connection signal="caughtHeal" from="UI" to="BattleModePlayer" method="_on_UI_caughtHeal"]
+[connection signal="healing" from="UI" to="BattleModePlayer" method="_on_UI_healing"]
+[connection signal="minigameActiveUpdate" from="UI" to="BattleModePlayer" method="_on_UI_minigameActiveUpdate"]
+[connection signal="sheildActivated" from="UI" to="BattleModePlayer" method="_on_UI_sheildActivated"]
+[connection signal="sheildDeactivationComplete" from="UI" to="BattleModePlayer" method="_on_UI_sheildDeactivationComplete"]
+[connection signal="watchWind" from="UI" to="." method="_on_windWatchMiniGame_wind"]
+[connection signal="winding" from="UI" to="BattleModePlayer" method="_on_UI_winding"]
+[connection signal="failedWind" from="UI/windButton/blankButton/windWatchMiniGame" to="UI" method="_on_windWatchMiniGame_failedWind"]
+[connection signal="wind" from="UI/windButton/blankButton/windWatchMiniGame" to="UI" method="_on_windWatchMiniGame_wind"]
+[connection signal="successfulCombo" from="UI/attackButton/blankButton/comboMiniGame" to="UI" method="_on_comboMiniGame_successfulCombo"]
+[connection signal="caughtHeal" from="UI/healButton/blankButton/catchMiniGame" to="UI" method="_on_catchMiniGame_caughtHeal"]
+[connection signal="gameEnded" from="UI/healButton/blankButton/catchMiniGame" to="UI" method="_on_catchMiniGame_gameEnded"]
+[connection signal="timeout" from="UI/sheildDeactivateDelay" to="UI" method="_on_sheildDeactivateDelay_timeout"]
 
 [editable path="BattleModePlayer"]
+[editable path="UI/windButton"]
+[editable path="UI/attackButton"]
+[editable path="UI/healButton"]
+[editable path="UI/sheildButton"]

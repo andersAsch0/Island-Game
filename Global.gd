@@ -4,18 +4,18 @@
 
 extends Node
 
-signal timeMultiplierChanged
-signal timeFlowChanged
+signal timeMultiplierChanged(newProduct, duration)
+signal timeFlowChanged(newFlowState, duration)
 
 #TIME CONTROL FOR BATTLEMODE
 var currCombatTimeMultiplier : float = 1 #should NEVER be zero OK???
 var timeIsNotStopped : bool = true
-func set_timeMultiplier(n : float):
+func set_timeMultiplier(n : float, duration : float):
 	currCombatTimeMultiplier *= n
-	emit_signal("timeMultiplierChanged") #only used for sprites and stuff, NOT MOVEMENT
-func set_timeFlow(timeIsNotStoppedBool: bool):
+	emit_signal("timeMultiplierChanged", n, duration) #only used for sprites and stuff, NOT MOVEMENT
+func set_timeFlow(timeIsNotStoppedBool: bool, duration):
 	timeIsNotStopped = timeIsNotStoppedBool
-	emit_signal("timeFlowChanged")
+	emit_signal("timeFlowChanged", timeIsNotStopped, duration)
 
 #BATTLEMODE ENTERING AND EXITING
 #I know these names are awful I KNOW
@@ -53,8 +53,14 @@ func setEnemyGridLocation( newLocation : Vector2):
 	enemyGridLocation = newLocation
 
 func getEnemyCoords():
+	if gridCoords == []: 
+		print("warning: grid coords not set")
+		return Vector2.ZERO
 	return gridCoords[enemyGridLocation.y][enemyGridLocation.x]
 func getPlayerCoords():
+	if gridCoords == []: 
+		print("warning: grid coords not set")
+		return Vector2.ZERO
 	return gridCoords[playerGridLocation.y][playerGridLocation.x]
 func getEnemyDisplacementFromPlayer():
 	return enemyGridLocation - playerGridLocation

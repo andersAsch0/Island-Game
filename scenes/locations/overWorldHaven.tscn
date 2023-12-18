@@ -1,7 +1,6 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://scenes/enemy.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scenes/beeEnemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/map tiles/caveDoor.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/map tiles/smallPalm.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Door.tscn" type="PackedScene" id=5]
@@ -1467,10 +1466,6 @@ destinationPath = "res://scenes/buildingInsidePrototype.tscn"
 
 [node name="smallTree" parent="haven/YSort" instance=ExtResource( 6 )]
 position = Vector2( 93, 9 )
-
-[node name="beeEnemy" parent="haven/YSort" instance=ExtResource( 2 )]
-visible = false
-position = Vector2( 156, 95 )
 
 [node name="enemy" parent="haven/YSort" instance=ExtResource( 1 )]
 position = Vector2( 156, 44 )

@@ -27,7 +27,7 @@ func _process(delta):
 			arrowCurrentlyMoving = false
 			$arrowRotater.rotation_degrees = arrowRotations[currState]
 
-func playGame():
+func playGame(): #toggle
 	visible = not visible
 	set_process_input(visible)
 

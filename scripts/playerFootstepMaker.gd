@@ -11,7 +11,7 @@ func _ready():
 	for tileSet in tileSetNames:
 		tileSetNodes.append(get_node_or_null("../../../"+tileSet))
 
-func _process(delta):
+func _process(_delta):
 	if timer.time_left == 0 and owner.velocity != Vector2.ZERO:
 		$footstepTimer.start()
 		playerSteps()

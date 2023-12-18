@@ -1,6 +1,11 @@
 extends KinematicBody2D
 
-
+##
+#func _physics_process():
+#    if Input.is_action_just_pressed("ui_accept"):
+#        # ... will be true for one frame only
+#    if Input.is_action_pressed("ui_accept"):
+#        # ... will be true for all frames the key is hold
 
 export var smallGridSize = 20
 var currGridSize = 20
@@ -9,10 +14,9 @@ var storagePos = Vector2.ZERO #used as storage during input calculations for jum
 export var maxHP : int = 20
 export var currentHP : int = maxHP
 export var invincible : bool = true #for debugging #only works if you dont move
-enum {
-	DEFENSE
-	IMOBILE # ex. while winding watch
-	MOVINGTILES # moving around the big tiles
+enum { #what kind of movement is allowed
+	DEFENSE #small grid dodging
+	IMOBILE #cant move in any way, ex. while winding watch, anglechangephase, time is paused on defense?
 	IDLE # normal state during offense
 }
 var isShielded = false
@@ -31,7 +35,7 @@ signal PlayerDie
 signal playerMovedOffense(direction, newTile, timeToMoveThere)
 signal playerFinishedMoving(newTile)
 
-# player script mostly deals with movement and animation, all other input is handled by BattleMode.gd
+# player script mostly deals with movement and animation, all other input is handled by BattleMode.gd and actionmenu
 
 
 
@@ -46,7 +50,7 @@ func _ready():
 #		position.y -= currGridSize
 #	if Input.get_action_strength("ui_down") > 0:
 #		position.y += currGridSize
-	storagePos = position
+	storagePos = Global.getPlayerCoords()
 	
 	if invincible:
 		$HurtBox/CollisionShape2D.set_deferred("disabled", true)
@@ -58,42 +62,33 @@ func _process(delta):
 	if $inputTimer.time_left > 0: #if mid jump (defense mode)
 		position.x += (storagePos.x - position.x)/$inputTimer.time_left * delta
 		position.y += (storagePos.y - position.y)/$inputTimer.time_left * delta
+		position.x = clamp(position.x, Global.getPlayerCoords().x - currGridSize, Global.getPlayerCoords().x + currGridSize)
+		position.y = clamp(position.y, Global.getPlayerCoords().y - currGridSize, Global.getPlayerCoords().y + currGridSize)
 		if abs(storagePos.x - position.x) >= abs(storagePos.y - position.y):
-			$Animations.animation = "ball horizontal"
-			$Animations.flip_h = storagePos.x < position.x
+			if storagePos.x - position.x > 0: $Animations.play("jump right")
+			else:$Animations.play("jump left")
 		else:
-			$Animations.animation = "ball vertical"
-			$Animations.flip_v = storagePos.y < position.y
-	elif currState == MOVINGTILES:
+			if storagePos.y - position.y > 0: $Animations.play("jump down")
+			else:$Animations.play("jump up")
+	elif $Animations/moveTilesTimer.time_left > 0:
 		position +=( Global.getPlayerCoords() - prevLocation) / $Animations/moveTilesTimer.wait_time * delta
 
-func _input(event):
-	if(event.is_action_pressed("ui_up")):
-		if currState == DEFENSE:
+func _input(event): #this is movement only. no actions
+	if not (event.is_action_pressed("battleMovement") or event.is_action_released("battleMovement")): return
+	if currState == DEFENSE:
+		if(event.is_action_pressed("ui_up")): 
 			handleInput()
 			storagePos.y -= currGridSize
-		elif currState == IDLE:
-			move(UP)
-	elif(event.is_action_pressed("ui_down")):
-		if currState == DEFENSE:
+		elif(event.is_action_pressed("ui_down")):
 			handleInput()
 			storagePos.y += currGridSize
-		elif currState == IDLE:
-			move(DOWN)
-	elif(event.is_action_pressed("ui_right")):
-		if currState == DEFENSE:
+		elif(event.is_action_pressed("ui_right")):
 			handleInput()
 			storagePos.x += currGridSize
-		elif currState == IDLE:
-			move(RIGHT)
-	elif(event.is_action_pressed("ui_left")):
-		if currState == DEFENSE:
+		elif(event.is_action_pressed("ui_left")):
 			handleInput()
 			storagePos.x -= currGridSize
-		elif currState == IDLE:
-			move(LEFT)
-	elif currState == DEFENSE:
-		if(event.is_action_released("ui_up")):
+		elif(event.is_action_released("ui_up")): #release buttons
 			handleInput()
 			storagePos.y += currGridSize
 		elif(event.is_action_released("ui_down")):
@@ -104,12 +99,22 @@ func _input(event):
 			storagePos.x -= currGridSize
 		elif(event.is_action_released("ui_left")):
 			handleInput()
-			storagePos.x += currGridSize		
-func handleInput():
+			storagePos.x += currGridSize
+	elif currState == IDLE:
+		if(event.is_action_pressed("ui_up")): 
+			move(UP)
+		elif(event.is_action_pressed("ui_down")):
+			move(DOWN)
+		elif(event.is_action_pressed("ui_right")):
+			move(RIGHT)
+		elif(event.is_action_pressed("ui_left")):
+			move(LEFT)
+		
+func handleInput(): #if timer is not already going, start it
 	if $inputTimer.time_left == 0:
 		$HurtBox/CollisionShape2D.disabled = true
 		$HitBox/CollisionShape2D.disabled = true
-		$inputTimer.start()
+		$inputTimer.start($inputTimer.wait_time)
 func _on_inputTimer_timeout():
 	position = storagePos
 	$Animations.flip_v = false
@@ -117,13 +122,16 @@ func _on_inputTimer_timeout():
 	if currState == DEFENSE:
 		$HurtBox/CollisionShape2D.disabled = false
 		$HitBox/CollisionShape2D.disabled = false
+func cutOffInputTimer():
+	$inputTimer.stop()
+	_on_inputTimer_timeout()
 
 # GET HIT 	
 
 func getHit(damage:int):
 	if isShielded: # if sheilded, dont hit
 		isShielded = false
-		$Shield.visible = false
+		$Shield.play("hit")
 		$hitSheildSFX.play(0.05)
 		return
 	
@@ -153,65 +161,68 @@ func die():
 
 # OFFENSE MODE (called by BattleMode.gd)
 
-func _on_BattleMode_enemyApproachPhaseStarting(): #disable movingtiles
+func _on_BattleMode_enemyApproachPhaseStarting(_duration): #disable movingtiles, but should be able to finish current tile movement #1
+	currState = IMOBILE
+	$debugLabel.text = currState as String
 	movingTilesDisabled = true
-func _on_BattleMode_offensePhaseEnding():
-	currState = DEFENSE
-	storagePos = position
-	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
-		storagePos.x += currGridSize
-	if Input.get_action_strength("ui_left") > 0:
-		storagePos.x -= currGridSize
-	if Input.get_action_strength("ui_up") > 0:
-		storagePos.y -= currGridSize
-	if Input.get_action_strength("ui_down") > 0:
-		storagePos.y += currGridSize
-	$catchMiniGame.gameEnd()
-	$windWatchMiniGame.gameEnd()
-	$comboMiniGame.gameEnd()
-	$catchMiniGame.visible = false
+func _on_BattleMode_offensePhaseEnding(_duration): #anglechange phase #2
+	currState = IMOBILE
+	$debugLabel.text = currState as String
+	storagePos = Global.getPlayerCoords()
+#	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
+#		storagePos.x += currGridSize
+#	if Input.get_action_strength("ui_left") > 0:
+#		storagePos.x -= currGridSize
+#	if Input.get_action_strength("ui_up") > 0:
+#		storagePos.y -= currGridSize
+#	if Input.get_action_strength("ui_down") > 0:
+#		storagePos.y += currGridSize
+	if Global.currCombatTimeMultiplier < 0:
+		forcePlayerToMiddle()
+	cutOffInputTimer()
 	$Animations.play("idle")
-func _on_BattleMode_enemyAbscondPhaseStarting():
-	currState = IDLE
+func _on_BattleMode_enemyAttackPhaseStarting(_duration): #3
+	checkForKeyPresses()
+	currState = DEFENSE
+	$HurtBox/CollisionShape2D.disabled = false
+	$HitBox/CollisionShape2D.disabled = false
+	$debugLabel.text = currState as String
+func _on_BattleMode_enemyAbscondPhaseStarting(_duration):
+	currState = IMOBILE
+	$debugLabel.text = currState as String
 	# forces player character to move to the center of the grid as if they jumped there
-	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
-		storagePos.x -= currGridSize
-	if Input.get_action_strength("ui_left") > 0:
-		storagePos.x += currGridSize
-	if Input.get_action_strength("ui_up") > 0:
-		storagePos.y += currGridSize
-	if Input.get_action_strength("ui_down") > 0:
-		storagePos.y -= currGridSize
+#	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
+#		storagePos.x -= currGridSize
+#	if Input.get_action_strength("ui_left") > 0:
+#		storagePos.x += currGridSize
+#	if Input.get_action_strength("ui_up") > 0:
+#		storagePos.y += currGridSize
+#	if Input.get_action_strength("ui_down") > 0:
+#		storagePos.y -= currGridSize
+	cutOffInputTimer()
+	if Global.currCombatTimeMultiplier > 0:
+		forcePlayerToMiddle()
 	$HurtBox/CollisionShape2D.disabled = true 
 	$HitBox/CollisionShape2D.disabled = true
-	$inputTimer.start()
-func _on_BattleMode_offensePhaseStarting():
+func _on_BattleMode_offensePhaseStarting(_duration): #away phase starting #0
 	currState = IDLE
+	$debugLabel.text = currState as String
 	$HurtBox/CollisionShape2D.disabled = false 
 	$HitBox/CollisionShape2D.disabled = false
 	movingTilesDisabled = false
 	position = Global.getPlayerCoords()
-	$catchMiniGame.visible = true
+	
+
 func finishAttack():
 	pass
-func shield():
-	if not isShielded:
-		$equipSheildSFX.play(0.15)
-		$Shield.visible = true
-		isShielded = true
-		$catchMiniGame.gameEnd()
-		$windWatchMiniGame.gameEnd()
-		miniGameActive = false
-		if currState == IDLE:
-			$Animations.play("idle")
-var movingTilesDisabled = false
+var movingTilesDisabled = false #when sheild is active?
 func move(direction):
-	if currState != MOVINGTILES and Global.canMoveTo(Global.playerGridLocation + moveVectors[direction]) and not miniGameActive and not movingTilesDisabled:
+	if $Animations/moveTilesTimer.time_left == 0 and Global.canMoveTo(Global.playerGridLocation + moveVectors[direction]) and not miniGameActive and not isShielded:
 		moveDirection = direction
 		prevLocation = position
 		updateCurrGridSquare()
 		$Animations/moveTilesTimer.start()
-		currState = MOVINGTILES
+		$debugLabel.text = currState as String
 		$Animations.play(moveAnimations[direction])
 		emit_signal("playerMovedOffense", direction, Global.playerGridLocation, $Animations/moveTilesTimer.wait_time)
 func updateCurrGridSquare():
@@ -220,77 +231,54 @@ func _on_moveTilesTimer_timeout():
 	position = Global.getPlayerCoords()
 	emit_signal("playerFinishedMoving", Global.playerGridLocation)
 	$Animations.play("idle")
-	if miniGameActive:
-		$Animations.play("wind watch")
-	if currState == DEFENSE:
-		return
-	currState = IDLE
-	storagePos = position
-	
+	$debugLabel.text = currState as String
+	storagePos = Global.getPlayerCoords()
+func checkForKeyPresses(): # for going from a locked in place phase (angle change or abscond) to enemy attacking
+	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
+		storagePos.x += currGridSize
+	if Input.get_action_strength("ui_left") > 0:
+		storagePos.x -= currGridSize
+	if Input.get_action_strength("ui_up") > 0:
+		storagePos.y -= currGridSize
+	if Input.get_action_strength("ui_down") > 0:
+		storagePos.y += currGridSize
+func forcePlayerToMiddle(): # for going from attacking to a locked in place phase
+	storagePos = Global.getPlayerCoords()
+	handleInput()
 
 # MINIGAMES
-#use catchMiniGame.healFlying and windWatchMiniGame.is_proccessing_input to see curr state of game
 var miniGameActive = false
-func updateMiniGameActive():
-	miniGameActive = $catchMiniGame.healFlying or $windWatchMiniGame.is_processing_input() or $comboMiniGame.is_processing_input()
+func _on_UI_minigameActiveUpdate(active):
+	miniGameActive = active
 
-func windWatchButtonPressed():
-	if isShielded or currState == DEFENSE:
-		return
-	$windWatchMiniGame.playGame()
-	if $windWatchMiniGame.is_processing_input(): #game start
-		miniGameActive = true
-		if currState == IDLE:
-			$Animations.play("wind watch")
+func _on_UI_sheildActivated(activated, _delaySeconds):
+	movingTilesDisabled = true
+	isShielded = activated
+	if activated:
+		$Shield.play("activated")
+		$equipSheildSFX.play(0.15)
 	else:
-		updateMiniGameActive()
-		if currState == IDLE and not miniGameActive:
-			$Animations.play("idle")
-	
-func healButtonPressed():
-	if isShielded or currState == DEFENSE:
-		return
-	$catchMiniGame.playGame()
-	miniGameActive = true
-	if currState == IDLE:
-		$Animations.play("wind watch")
-func _on_catchMiniGame_caughtHeal():
-	currentHP += 1
+		$Shield.play("deactivate")
+		$unequipSheildSFX.play(0.15)
+		$Animations.frame = 0
+		$Animations.play("unsheild")
+func _on_UI_sheildDeactivationComplete():
+	movingTilesDisabled = false
+
+
+func _on_UI_caughtHeal(HPHealed):
+	currentHP += HPHealed
 	if currentHP > maxHP:
 		currentHP = maxHP
 	emit_signal("PlayerHit") #update HP bar in parent node
-	updateMiniGameActive()
-func _on_catchMiniGame_gameEnded():
-	updateMiniGameActive()
-	if currState == IDLE and not miniGameActive:
-		$Animations.play("idle")
 
 
-func attackButtonPressed():
-	if isShielded or currState == DEFENSE:
-		return	
-	$comboMiniGame.playGame()
-	if $comboMiniGame.is_processing_input():
-		miniGameActive = true
-		if currState == IDLE:
-			$Animations.play("wind watch")
-	else:
-		updateMiniGameActive()
-		if currState == IDLE and not miniGameActive:
-			$Animations.play("idle")
-func _on_comboMiniGame_successfulCombo(damage):
-	if abs(Global.getEnemyDisplacementFromPlayer().x) <= 1 and abs(Global.getEnemyDisplacementFromPlayer().y) <= 1:
-		get_tree().call_group("enemies", "getHit", damage)
-		#do enemy damage anim
-	else:
-		pass
-		#do miss anim
-
-
-signal watchWind(timeJuiceChange)
-func _on_windWatchMiniGame_wind():
-	emit_signal("watchWind", 1)
-func _on_windWatchMiniGame_failedWind():
-	emit_signal("watchWind", -1)
+#minigame animations
+func _on_UI_winding(activated):
+	pass # Replace with function body.
+func _on_UI_attacking(activated):
+	pass # Replace with function body.
+func _on_UI_healing(activated):
+	pass # Replace with function body.
 
 

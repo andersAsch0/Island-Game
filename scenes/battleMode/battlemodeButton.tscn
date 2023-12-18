@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/battleMode/battlemodeButton.gd" type="Script" id=1]
+[ext_resource path="res://art/battleModeUI/battlemodeButton.png" type="Texture" id=3]
+
+[node name="battlemodeButton" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="blankButton" type="Sprite" parent="."]
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 380, 0, 95, 44 )
+
+[node name="buttonIcon" type="Sprite" parent="blankButton"]
+position = Vector2( -68, 0 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 95, 44 )
