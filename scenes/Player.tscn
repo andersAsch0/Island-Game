@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://audio/SandFootsteps4.wav" type="AudioStream" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://audio/GrassFootsteps3.wav" type="AudioStream" id=5]
 [ext_resource path="res://audio/SandFootsteps2.wav" type="AudioStream" id=6]
 [ext_resource path="res://scripts/HitBox.gd" type="Script" id=7]
+[ext_resource path="res://audio/splash-6213.mp3" type="AudioStream" id=8]
 
 [sub_resource type="AtlasTexture" id=1]
 region = Rect2( 0, 0, 17, 20 )
@@ -211,7 +212,7 @@ visible = false
 position = Vector2( -0.5, -9 )
 frames = SubResource( 17 )
 animation = "idle"
-frame = 4
+frame = 7
 playing = true
 
 [node name="Animations" type="AnimatedSprite" parent="."]
@@ -245,6 +246,27 @@ volume_db = -5.0
 [node name="footstepTimer" type="Timer" parent="playerFootstepMaker"]
 wait_time = 0.3
 one_shot = true
+autostart = true
+
+[node name="waterFootstep" type="AudioStreamPlayer2D" parent="playerFootstepMaker"]
+stream = ExtResource( 8 )
+volume_db = -10.0
+
+[node name="waterFootstep2" type="AudioStreamPlayer2D" parent="playerFootstepMaker/waterFootstep"]
+stream = ExtResource( 8 )
+volume_db = -10.0
+
+[node name="waterFootstep3" type="AudioStreamPlayer2D" parent="playerFootstepMaker/waterFootstep/waterFootstep2"]
+stream = ExtResource( 8 )
+volume_db = -10.0
+
+[node name="waterFootstep4" type="AudioStreamPlayer2D" parent="playerFootstepMaker/waterFootstep/waterFootstep2/waterFootstep3"]
+stream = ExtResource( 8 )
+volume_db = -10.0
+
+[node name="waterFootstep5" type="AudioStreamPlayer2D" parent="playerFootstepMaker/waterFootstep/waterFootstep2/waterFootstep3/waterFootstep4"]
+stream = ExtResource( 8 )
+volume_db = -10.0
 
 [node name="Listener2D" type="Listener2D" parent="."]
 
