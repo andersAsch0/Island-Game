@@ -50,3 +50,10 @@ func _process(delta):
 
 #func _process(delta):
 #	pass
+
+
+func _on_playerFootstepMaker_currentStepMaterial(tileID):
+	if tileID == 1: # this is the tileID of water
+		$Animations/waterOverFeet.visible = true
+	else:
+		$Animations/waterOverFeet.visible = false

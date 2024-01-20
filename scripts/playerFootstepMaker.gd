@@ -7,6 +7,8 @@ onready var tileSetStepSound = [$grassFootstep, $waterFootstep, $sandFootstep, $
 var tileSetNode 
 #a better way would be to instanciate a new streamplayer each time, and queue free when its done
 
+signal currentStepMaterial(tileID)
+
 func _ready():
 	timer = $footstepTimer
 	tileSetNode = get_tree().get_root().find_node("footstepMap", true, false)
@@ -24,6 +26,7 @@ func playerSteps():
 	currentTile = tileSetNode.get_cell((owner.position.x / (tileSetNode.cell_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.cell_size.y * tileSetNode.scale.y)) as int)
 	if currentTile != -1 and currentTile < tileSetStepSound.size():
 		playFootStep(tileSetStepSound[currentTile])
+		emit_signal("currentStepMaterial", currentTile)
 
 func playFootStep(audioStreamNode):
 	if audioStreamNode.playing:
