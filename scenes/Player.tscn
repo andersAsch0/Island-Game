@@ -240,6 +240,7 @@ animation = "idle down"
 playing = true
 
 [node name="waterOverFeet" type="AnimatedSprite" parent="Animations"]
+visible = false
 position = Vector2( 0, 4 )
 frames = SubResource( 62 )
 playing = true

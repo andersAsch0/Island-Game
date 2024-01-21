@@ -2568,6 +2568,9 @@ tile_data = PoolIntArray( -393188, 2, 0, -393187, 1, 0, -393186, 1, 0, -393185, 
 position = Vector2( 44, -138 )
 polygon = PoolVector2Array( 186, 175, 186, 161, 248, 162, 248, 145, 225, 145, 219, 145, 219, 102, 217, 102, 218, 103, 218, 146, 247, 146, 247, 161, 185, 160, 185, 174, 160, 174 )
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="haven/collisionContainer"]
+polygon = PoolVector2Array( 225, -48, 225, -24, 229, -19, 239, -18, 242, -17, 242, 28, 253, -29 )
+
 [node name="YSort" type="YSort" parent="haven"]
 
 [node name="Player" parent="haven/YSort" instance=ExtResource( 9 )]
