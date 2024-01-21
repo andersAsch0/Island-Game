@@ -2,28 +2,43 @@ extends Node2D
 
 var timer
 
-var tileSetNames = ["wood top",  "wood bottom", "sandAndWaterEdges", "grass"]
-onready var tileSetStepSound = [$woodFootstep, $woodFootstep, $sandFootstep, $grassFootstep]
-var tileSetNodes = [] #index line up with above, in order of priority, contains null if it doesnt exist in the current scene
+var tileSetName = "footstepMap"
+onready var tileSetStepSound = [$grassFootstep, $waterFootstep, $sandFootstep, $woodFootstep]
+var tileSetNode 
+#a better way would be to instanciate a new streamplayer each time, and queue free when its done
+
+signal currentStepMaterial(tileID)
+		
+func getCurrentTileID():
+	return tileSetNode.get_cell((owner.position.x / (tileSetNode.cell_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.cell_size.y * tileSetNode.scale.y)) as int)
 
 func _ready():
 	timer = $footstepTimer
-	for tileSet in tileSetNames:
-		tileSetNodes.append(get_node_or_null("../../../"+tileSet))
+	tileSetNode = get_tree().get_root().find_node("footstepMap", true, false)
+	if tileSetNode == null: set_process(false)
 
 func _process(_delta):
-	if timer.time_left == 0 and owner.velocity != Vector2.ZERO:
+	print(currentTile)
+	if getCurrentTileID() != currentTile: #update current tile every frame 
+		currentTile = getCurrentTileID()
+		emit_signal("currentStepMaterial", currentTile)
+	if timer.time_left == 0 and owner.velocity != Vector2.ZERO: #step only when timer runs down
 		$footstepTimer.start()
 		playerSteps()
 		
-var currentCell = Vector2.ZERO
+var currentTile:int = -1
 func playerSteps():
-	for i in tileSetNodes.size():
-		if tileSetNodes[i] != null:
-			currentCell = Vector2((owner.position.x / (tileSetNodes[i].cell_size.x * tileSetNodes[i].scale.x)) as int, (owner.position.y / (tileSetNodes[i].cell_size.y * tileSetNodes[i].scale.y)) as int)
-			if tileSetNodes[i].get_cell(currentCell.x, currentCell.y) != -1:
-				tileSetStepSound[i].play()
-				return
+	if currentTile != -1 and currentTile < tileSetStepSound.size():
+		playFootStep(tileSetStepSound[currentTile])
+func playFootStep(audioStreamNode):
+	if audioStreamNode.playing:
+		if audioStreamNode.get_children().size() > 0:
+			playFootStep(audioStreamNode.get_child(0)) #recursively go down the tree of children until you find one that isnt playing
+		else: audioStreamNode.play()
+	else: 
+		audioStreamNode.play()
+		
+
 func _on_footstepTimer_timeout():
 	if owner.velocity > Vector2.ZERO:
 		playerSteps()

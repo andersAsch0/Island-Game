@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/walkway vertical.png-60249202691043e790e197ad8d783041.stex"
+path="res://.import/walkway horizontal2.png-44976108d88c183d2dfe772bda683f62.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/map tiles/walkway vertical.png"
-dest_files=[ "res://.import/walkway vertical.png-60249202691043e790e197ad8d783041.stex" ]
+source_file="res://art/map tiles/walkway horizontal2.png"
+dest_files=[ "res://.import/walkway horizontal2.png-44976108d88c183d2dfe772bda683f62.stex" ]
 
 [params]
 
