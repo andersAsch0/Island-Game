@@ -8,6 +8,9 @@ var tileSetNode
 #a better way would be to instanciate a new streamplayer each time, and queue free when its done
 
 signal currentStepMaterial(tileID)
+		
+func getCurrentTileID():
+	return tileSetNode.get_cell((owner.position.x / (tileSetNode.cell_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.cell_size.y * tileSetNode.scale.y)) as int)
 
 func _ready():
 	timer = $footstepTimer
@@ -15,19 +18,18 @@ func _ready():
 	if tileSetNode == null: set_process(false)
 
 func _process(_delta):
-	if timer.time_left == 0 and owner.velocity != Vector2.ZERO:
+	print(currentTile)
+	if getCurrentTileID() != currentTile: #update current tile every frame 
+		currentTile = getCurrentTileID()
+		emit_signal("currentStepMaterial", currentTile)
+	if timer.time_left == 0 and owner.velocity != Vector2.ZERO: #step only when timer runs down
 		$footstepTimer.start()
 		playerSteps()
 		
-#var currentCell = Vector2.ZERO
 var currentTile:int = -1
 func playerSteps():
-#	currentCell = Vector2((owner.position.x / (tileSetNode.cell_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.cell_size.y * tileSetNode.scale.y)) as int)
-	currentTile = tileSetNode.get_cell((owner.position.x / (tileSetNode.cell_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.cell_size.y * tileSetNode.scale.y)) as int)
 	if currentTile != -1 and currentTile < tileSetStepSound.size():
 		playFootStep(tileSetStepSound[currentTile])
-		emit_signal("currentStepMaterial", currentTile)
-
 func playFootStep(audioStreamNode):
 	if audioStreamNode.playing:
 		if audioStreamNode.get_children().size() > 0:
