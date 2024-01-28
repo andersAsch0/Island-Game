@@ -1,7 +1,7 @@
 extends Area2D
 
 
-export var speed : int = 200
+export var speed : int = 150
 export var angle : float = 0 #in radians
 export var warningAnimationTime = 1 #how long does the warning anim play before the bullet shoots (set by musicAttackController)
 export var shakeCamera : bool = false

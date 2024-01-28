@@ -41,7 +41,7 @@ func on_track_2(pitch, timeInAdvance = 0.0): #bullet attack
 		call_deferred("add_child", bullet)
 func on_track_3(pitch, timeInAdvance = 0.0): #laser attack
 	if isDefenseMode and laserEnabled: 
-		var laserNode = bulletSpawnerPackedScene.instance().init(bulletPackedScene, 8, 0.05, timeInAdvance, true)
+		var laserNode = bulletSpawnerPackedScene.instance().init(bulletPackedScene, 8, 0.1, timeInAdvance, true)
 		if pitch / 3 < 1:
 			laserNode.position = Vector2(bulletXLocations[pitch % 3], gridRadius)
 		else:

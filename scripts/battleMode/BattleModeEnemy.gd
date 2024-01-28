@@ -54,10 +54,10 @@ func _physics_process(delta):
 	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int) # only inc if time is moving
 	if stateCounter >= stateWaitTimes[currState]: #need to go to next state
 		goToNextState()
-		print("enemy state : ", getEnemyCurrState())
+#		print("enemy state : ", getEnemyCurrState())
 	elif stateCounter <= 0: #time reversed, need to go to prev state
 		goToPrevState()
-		print("enemy state : ", getEnemyCurrState())
+#		print("enemy state : ", getEnemyCurrState())
 	
 	#frame by frame animation and movement
 	if currState == APPROACHING:

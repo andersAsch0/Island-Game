@@ -293,10 +293,6 @@ volume_db = -10.0
 
 [node name="Listener2D" type="Listener2D" parent="."]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-limit_smoothed = true
-
 [node name="doorHitBox" type="Area2D" parent="."]
 visible = false
 script = ExtResource( 7 )

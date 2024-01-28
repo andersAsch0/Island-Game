@@ -27,7 +27,7 @@ func _process(delta):
 	input.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	input.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
 	input = input.normalized() * max_speed
-	velocity = input * delta
+	velocity = input #* delta
 
 
 	
@@ -45,7 +45,7 @@ func _process(delta):
 	else:
 		$Animations.play(idle_animations[currDirection])
 	
-	move_and_collide(velocity)
+	move_and_slide(velocity)
 
 
 #func _process(delta):
@@ -53,7 +53,7 @@ func _process(delta):
 
 
 func _on_playerFootstepMaker_currentStepMaterial(tileID):
-	print(tileID)
+#	print(tileID)
 	if tileID == 1: # this is the tileID of water
 		$Animations/waterOverFeet.visible = true
 	else:
