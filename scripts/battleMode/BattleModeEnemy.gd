@@ -21,7 +21,7 @@ enum {
 	ABSCONDING
 }
 var currState = APPROACHING
-export var stateWaitTimes = [10.0, 10.0, 1.0, 20, 1.0] # how long in seconds enemy stays in each state 
+export var stateWaitTimes = [10.0, 10.0, 1.0, 300, 1.0] # how long in seconds enemy stays in each state 
 #(approaching one not used, made it big so it never triggers) 
 #APPROACHING / ABSCOND must never be shorter than the players time to move tiles or everything will break
 var approachSpeed = 30

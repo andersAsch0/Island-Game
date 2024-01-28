@@ -21,6 +21,11 @@ signal enemyAbscondPhaseStarting(duration)
 signal enemyAwayPhaseStarting(duration)
 signal enemyApproachPhaseStarting(duration)
 signal enemyAngleChangePhaseStarting(duration)
+
+signal timeHasStopped(duration)
+signal timeHasResumed()
+signal timeFlowHasChanged(duration) #should only be used for functions that must only call once at the beginning of the time change
+# or should those functions just have their own input??
 #
 #signal timeStopped
 #signal timeResumed

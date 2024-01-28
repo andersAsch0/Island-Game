@@ -6,7 +6,7 @@ export(String, FILE, "*.json") var attackPatternFile2 #imported json file
 export(String, FILE, "*.json") var attackPatternFile3 #imported json file
 onready var attackPatternFilesArray = [attackPatternFile, attackPatternFile2, attackPatternFile3] #just the files
 var attackPatternDataArray = [] # the json as strings, can actually be accessed by my code
-var currEighthNote : int = 0
+export var currEighthNote : int = 0
 var JsonLength = 75
 export var bpm = 207
 var subdivisionsPerBeat = 2
@@ -32,6 +32,7 @@ signal track2(pitch, timeInAdvance)
 signal track3(pitch, timeInAdvance)
 var signalStrings = ["track1", "track2", "track3"]
 signal metronome(timeInAdvance)
+signal newMeasure()
 
 
 # Called when the node enters the scene tree for the first time.
@@ -56,6 +57,8 @@ func _process(delta):
 		if (currEighthNote != eighthNoteLastFrame) and (currEighthNote < JsonLength * 8):
 			eighthNoteLastFrame = currEighthNote
 			handleBeat()
+			if (currEighthNote % 8 == 0):
+				emit_signal("newMeasure")
 		
 
 func handleBeat():
@@ -63,7 +66,8 @@ func handleBeat():
 	for i in range( attackPatternDataArray.size()): #go through each array of music data
 		if (attackPatternDataArray[i][currEighthNote / 8]['note'][currEighthNote % 8] as bool): # if it has a note on this beat that needs to be signaled
 				emit_signal(signalStrings[i], (attackPatternDataArray[i][currEighthNote / 8]['pitch'][currEighthNote % 8]) as int, eightNotesInAdvance * secondsPerEigthNote)
-
+				
+					
 func syncPitchWithGlobal(duration : float, startOfDistortion: bool):
 	setAllPitchScales(abs(Global.currCombatTimeMultiplier))
 	if startOfDistortion:
