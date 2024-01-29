@@ -69,3 +69,4 @@ func on_BattleMode_defense_mode(_duration):
 	isDefenseMode = true
 func on_BattleMode_offense_mode(_duration):
 	isDefenseMode = false
+

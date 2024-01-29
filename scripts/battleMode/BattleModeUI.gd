@@ -14,8 +14,13 @@ signal minigameActiveUpdate(active)
 
 var actionsActive : bool = true
 var sheildActive : bool = false
+var enemyIsAway : bool = true
+
+func _ready():
+	Global.connect("timeHasStoppedOrStarted", self, "_on_Global_timeHasStoppedOrStarted")
 
 func _on_BattleMode_enemyAwayPhaseStarting(_duration):
+	enemyIsAway = true
 	actionsActive = true
 	sheildActive = get_node("../BattleModePlayer").isShielded
 	updateMiniGameActive()
@@ -23,13 +28,18 @@ func _on_BattleMode_enemyAwayPhaseStarting(_duration):
 	$sheildButton.activate(sheildActive)
 
 func _on_BattleMode_enemyAngleChangePhaseStarting(_duration):
+	enemyIsAway = false
 	actionsActive = false
 	deactivateButtonsAndGames(false, false, false)
 	enableActionButtons(false, false, false, false)
 
+func _on_Global_timeHasStoppedOrStarted(_duration, _start):
+	if Global.timeIsNotStopped: #if time is flowing
+		_on_BattleMode_enemyAngleChangePhaseStarting(0)
+	elif !enemyIsAway: # if time has stopped
+		_on_BattleMode_enemyAwayPhaseStarting(0)
 
-func on_time_resumed():
-	_on_BattleMode_enemyAngleChangePhaseStarting(0)
+
 		
 
 #this is kind of bad bc the games dont get deactivated. i dont want to change it tho. gotta remember to end games first
@@ -138,10 +148,3 @@ func deactivateButtonsAndGames(windOn : bool, attackOn : bool, healOn : bool):
 		$healButton/blankButton/catchMiniGame.gameEnd()
 	updateMiniGameActive()
 
-
-func _on_BattleMode_timeHasStopped(duration):
-	_on_BattleMode_enemyAwayPhaseStarting(0)
-
-
-func _on_BattleMode_timeHasResumed():
-	pass # Replace with function body.

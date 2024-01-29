@@ -42,6 +42,9 @@ func _ready():
 	for i in range( attackPatternFilesArray.size()):
 		attackPatternDataArray.push_back(getAttackPatternData(i))
 	play(NORMALMUSIC)
+	Global.connect("timeHasChangedSpeed", self, "syncPitchWithGlobal")
+	Global.connect("timeHasReversed", self, "timeHasReversed")
+	Global.connect("timeHasStoppedOrStarted", self, "timeHasStopped")
 #	handleMelodyNote()
 
 var beatCounter : float = 0
@@ -68,7 +71,7 @@ func handleBeat():
 				emit_signal(signalStrings[i], (attackPatternDataArray[i][currEighthNote / 8]['pitch'][currEighthNote % 8]) as int, eightNotesInAdvance * secondsPerEigthNote)
 				
 					
-func syncPitchWithGlobal(duration : float, startOfDistortion: bool):
+func syncPitchWithGlobal(duration : float, startOfDistortion: bool, _type : bool):
 	setAllPitchScales(abs(Global.currCombatTimeMultiplier))
 	if startOfDistortion:
 		if $speedTimeEndFXTimer.time_left == 0:
@@ -76,33 +79,35 @@ func syncPitchWithGlobal(duration : float, startOfDistortion: bool):
 		else:
 			setEndFXTimer(duration, $slowTimeEndFXTimer)
 	
-func timeHasReversed(duration : float):
-	pause(NORMALMUSIC)
-	if Global.timeIsNotStopped: $reverseMusicLoop.stream_paused = false
-	trackProgressions[REVERSEMUSIC] = $reverseMusicLoop.stream.get_length() - trackProgressions[NORMALMUSIC]
-	$reverseMusicLoop.play((1.0 * $reverseMusicLoop.stream.get_length() - trackProgressions[NORMALMUSIC]))
-	trackIsActive[REVERSEMUSIC] = true
-	play(REVERSESTARTFX)
-	play(TICKING)
-	setEndFXTimer(duration, $reverseTimeEndFXTimer)
-func timeHasReversedBack():
-	pause(REVERSEMUSIC)
-	if Global.timeIsNotStopped: $normalMusicLoop.stream_paused = false
-	trackProgressions[NORMALMUSIC] = $normalMusicLoop.stream.get_length() - trackProgressions[REVERSEMUSIC]
-	$normalMusicLoop.play((1.0 * $normalMusicLoop.stream.get_length() - trackProgressions[REVERSEMUSIC]))
-	trackIsActive[NORMALMUSIC] = true
-	if Global.timeIsNotStopped: pause(TICKING)
+func timeHasReversed(duration : float, _start : bool):
+	if Global.currCombatTimeMultiplier < 0:
+		pause(NORMALMUSIC)
+		if Global.timeIsNotStopped: $reverseMusicLoop.stream_paused = false
+		trackProgressions[REVERSEMUSIC] = $reverseMusicLoop.stream.get_length() - trackProgressions[NORMALMUSIC]
+		$reverseMusicLoop.play((1.0 * $reverseMusicLoop.stream.get_length() - trackProgressions[NORMALMUSIC]))
+		trackIsActive[REVERSEMUSIC] = true
+		play(REVERSESTARTFX)
+		play(TICKING)
+		setEndFXTimer(duration, $reverseTimeEndFXTimer)
+	else:
+		pause(REVERSEMUSIC)
+		if Global.timeIsNotStopped: $normalMusicLoop.stream_paused = false
+		trackProgressions[NORMALMUSIC] = $normalMusicLoop.stream.get_length() - trackProgressions[REVERSEMUSIC]
+		$normalMusicLoop.play((1.0 * $normalMusicLoop.stream.get_length() - trackProgressions[REVERSEMUSIC]))
+		trackIsActive[NORMALMUSIC] = true
+		if Global.timeIsNotStopped: pause(TICKING)
 	
-func timeHasStopped(duration: float):
-	for track in range(4):
-		trackNodes[track].stream_paused = true
-	play(TICKING)
-	setEndFXTimer(duration, $stopTimeEndFXTimer)
-func timeHasResumed():
-	for track in range(4):
-		if trackIsActive[track]:
-			play(track)
-	pause(TICKING)
+func timeHasStopped(duration: float, _start : bool):
+	if !Global.timeIsNotStopped: #time IS stopped
+		for track in range(4):
+			trackNodes[track].stream_paused = true
+		play(TICKING)
+		setEndFXTimer(duration, $stopTimeEndFXTimer)
+	else: #time is flowing
+		for track in range(4):
+			if trackIsActive[track]:
+				play(track)
+		pause(TICKING)
 
 func setEndFXTimer(duration : float, timerNode: Timer):
 	if reverseEndFXPracticalLength < duration:
