@@ -27,8 +27,7 @@ func _on_BattleMode_enemyAngleChangePhaseStarting(_duration):
 	deactivateButtonsAndGames(false, false, false)
 	enableActionButtons(false, false, false, false)
 
-func on_time_stopped():
-	_on_BattleMode_enemyAwayPhaseStarting(0)
+
 func on_time_resumed():
 	_on_BattleMode_enemyAngleChangePhaseStarting(0)
 		
@@ -138,3 +137,11 @@ func deactivateButtonsAndGames(windOn : bool, attackOn : bool, healOn : bool):
 		$healButton.activate(false)
 		$healButton/blankButton/catchMiniGame.gameEnd()
 	updateMiniGameActive()
+
+
+func _on_BattleMode_timeHasStopped(duration):
+	_on_BattleMode_enemyAwayPhaseStarting(0)
+
+
+func _on_BattleMode_timeHasResumed():
+	pass # Replace with function body.
