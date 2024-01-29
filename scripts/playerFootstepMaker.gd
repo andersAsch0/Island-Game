@@ -18,7 +18,6 @@ func _ready():
 	if tileSetNode == null: set_process(false)
 
 func _process(_delta):
-	print(currentTile)
 	if getCurrentTileID() != currentTile: #update current tile every frame 
 		currentTile = getCurrentTileID()
 		emit_signal("currentStepMaterial", currentTile)

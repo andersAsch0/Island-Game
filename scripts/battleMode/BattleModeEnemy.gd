@@ -21,7 +21,7 @@ enum {
 	ABSCONDING
 }
 var currState = APPROACHING
-export var stateWaitTimes = [10.0, 10.0, 1.0, 20, 1.0] # how long in seconds enemy stays in each state 
+export var stateWaitTimes = [10.0, 10.0, 1.0, 300, 1.0] # how long in seconds enemy stays in each state 
 #(approaching one not used, made it big so it never triggers) 
 #APPROACHING / ABSCOND must never be shorter than the players time to move tiles or everything will break
 var approachSpeed = 30
@@ -54,10 +54,10 @@ func _physics_process(delta):
 	stateCounter += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int) # only inc if time is moving
 	if stateCounter >= stateWaitTimes[currState]: #need to go to next state
 		goToNextState()
-		print("enemy state : ", getEnemyCurrState())
+#		print("enemy state : ", getEnemyCurrState())
 	elif stateCounter <= 0: #time reversed, need to go to prev state
 		goToPrevState()
-		print("enemy state : ", getEnemyCurrState())
+#		print("enemy state : ", getEnemyCurrState())
 	
 	#frame by frame animation and movement
 	if currState == APPROACHING:

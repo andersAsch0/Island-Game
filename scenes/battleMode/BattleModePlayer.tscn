@@ -492,6 +492,7 @@ stream = ExtResource( 12 )
 volume_db = -30.0
 
 [node name="debugLabel" type="Label" parent="."]
+visible = false
 margin_top = -15.0
 margin_right = 40.0
 margin_bottom = -1.0
@@ -499,6 +500,7 @@ rect_scale = Vector2( 0.416677, 0.39518 )
 text = "0"
 
 [node name="debugLabel2" type="Label" parent="."]
+visible = false
 margin_left = -10.0
 margin_top = -17.0
 margin_right = 61.0

@@ -229,7 +229,7 @@ visible = false
 position = Vector2( -0.5, -9 )
 frames = SubResource( 17 )
 animation = "idle"
-frame = 5
+frame = 2
 playing = true
 
 [node name="Animations" type="AnimatedSprite" parent="."]
@@ -292,10 +292,6 @@ stream = ExtResource( 8 )
 volume_db = -10.0
 
 [node name="Listener2D" type="Listener2D" parent="."]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-limit_smoothed = true
 
 [node name="doorHitBox" type="Area2D" parent="."]
 visible = false

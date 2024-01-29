@@ -4,18 +4,31 @@
 
 extends Node
 
-signal timeMultiplierChanged(newProduct, duration)
-signal timeFlowChanged(newFlowState, duration)
+
+signal timeFlowHasChanged(newTimeFlow, duration, start) #newtimeflow will be 0 if time has stopped
+signal timeHasChangedSpeed(duration, start, distortionTypeIsSpeed) #not emitted when time starts / stops, newTimeFlow will never be 0
+signal timeHasStoppedOrStarted(duration, start) #start is a bool to indicate its the beginning of the distortion
+signal timeHasReversed(duration, start)
 
 #TIME CONTROL FOR BATTLEMODE
 var currCombatTimeMultiplier : float = 1 #should NEVER be zero OK???
 var timeIsNotStopped : bool = true
-func set_timeMultiplier(n : float, duration : float):
-	currCombatTimeMultiplier *= n
-	emit_signal("timeMultiplierChanged", n, duration) #only used for sprites and stuff, NOT MOVEMENT
-func set_timeFlow(timeIsNotStoppedBool: bool, duration):
-	timeIsNotStopped = timeIsNotStoppedBool
-	emit_signal("timeFlowChanged", timeIsNotStopped, duration)
+func changeTimeSpeed(multiplier : float, distortionTypeIsSpeed : bool, duration : float, start : bool):
+	currCombatTimeMultiplier *= multiplier
+	emit_signal("timeFlowHasChanged", currCombatTimeMultiplier * (timeIsNotStopped as int), duration, start)
+	emit_signal("timeHasChangedSpeed", duration, start, true)
+func startOrStopTime(newFlow : bool, duration : float, start : bool): #false is stopped, true is flowing
+	if newFlow != timeIsNotStopped:
+		timeIsNotStopped = newFlow
+		emit_signal("timeFlowHasChanged", currCombatTimeMultiplier * (timeIsNotStopped as int), duration, start)
+		emit_signal("timeHasStoppedOrStarted", duration, start)
+func reverseTime(newTimeDirection : bool, duration, start): #true is reversed, false is normal
+	if newTimeDirection!= (currCombatTimeMultiplier <= 0):
+		currCombatTimeMultiplier *= -1
+		emit_signal("timeFlowHasChanged", currCombatTimeMultiplier * (timeIsNotStopped as int), duration, start)
+		emit_signal("timeHasReversed", duration, start)
+
+
 
 #BATTLEMODE ENTERING AND EXITING
 #I know these names are awful I KNOW

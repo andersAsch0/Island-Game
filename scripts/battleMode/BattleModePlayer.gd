@@ -111,7 +111,7 @@ func _input(event): #this is movement only. no actions
 			move(LEFT)
 		
 func handleInput(): #if timer is not already going, start it
-	if $inputTimer.time_left == 0:
+	if $inputTimer.time_left == 0 and not miniGameActive:
 		$HurtBox/CollisionShape2D.disabled = true
 		$HitBox/CollisionShape2D.disabled = true
 		$inputTimer.start($inputTimer.wait_time)

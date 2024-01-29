@@ -21,6 +21,7 @@ signal enemyAbscondPhaseStarting(duration)
 signal enemyAwayPhaseStarting(duration)
 signal enemyApproachPhaseStarting(duration)
 signal enemyAngleChangePhaseStarting(duration)
+
 #
 #signal timeStopped
 #signal timeResumed
@@ -56,6 +57,10 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	connect("enemyAttackPhaseStarting", musicAttackController, "on_BattleMode_defense_mode")
 	connect("enemyAbscondPhaseStarting", musicAttackController, "on_BattleMode_offense_mode")
 	connect("enemyAngleChangePhaseStarting", musicAttackController, "on_BattleMode_offense_mode")
+#	#TODO: make the music attack controller a child of the enemy
+
+#
+#
 	musicAttackController.position = Vector2(0,10) # this being hard coded is stupid. but idk how to do it better
 	add_child_below_node($offenseModeCamera, enemy)
 	$offenseModeCamera.add_child_below_node($offenseModeCamera/Grid, musicAttackController)
@@ -71,21 +76,17 @@ func _input(event):
 		return
 	if(event.is_action_pressed("reverseTime") and $reverseTimeDuration.time_left == 0):
 		$reverseTimeDuration.start()
-		currTimeJuice -= timeJuiceCost
 #			musicAttackController.get_node("MusicHandler").timeHasReversed($reverseTimeDuration.wait_time)		
 		reverseTime()
 	elif(event.is_action_pressed("stopTime") and $stopTimeDuration.time_left == 0):
 		$stopTimeDuration.start()
-		currTimeJuice -= timeJuiceCost
 		stopTime()
 	elif(event.is_action_pressed("speedUpTime") and $speedTimeDuration.time_left == 0):
 		$speedTimeDuration.start()
-		currTimeJuice -= timeJuiceCost
-		changeTimeScale(timeScalingFactor, $speedTimeDuration.wait_time, true)
+		speedTime()
 	elif(event.is_action_pressed("slowDownTime") and $slowTimeDuration.time_left == 0):
 		$slowTimeDuration.start()
-		currTimeJuice -= timeJuiceCost
-		changeTimeScale(1.0 * 1/timeScalingFactor, $slowTimeDuration.wait_time, true)
+		slowTime()
 	if $UI.actionsActive: #is offense phase or time stopped
 		if(event.is_action_pressed("windWatch")):
 			$UI.windWatchButtonPressed()
@@ -99,33 +100,31 @@ func _input(event):
 
 		
 func reverseTime():
-	Global.set_timeMultiplier(-1, $reverseTimeDuration.wait_time)
+	Global.reverseTime(true, $reverseTimeDuration.wait_time, true)
+	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
 func _on_reverseTimeDuration_timeout():
-	Global.set_timeMultiplier(-1, 0)
-#	musicAttackController.get_node("MusicHandler").timeHasReversedBack()
+	Global.reverseTime(false, $reverseTimeDuration.wait_time, false)
 
 func stopTime():
-#	musicAttackController.get_node("MusicHandler").timeHasStopped($stopTimeDuration.wait_time)
-	Global.set_timeFlow(false, $stopTimeDuration.wait_time)
+	Global.startOrStopTime(false, $stopTimeDuration.wait_time, true)
+	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
-	$UI.on_time_stopped()
 func _on_stopTimeDuration_timeout():
-	resumeTime()
-func resumeTime():
-	Global.set_timeFlow(true, 0)
-	updateTimeJuiceBar()
-	$UI.on_time_resumed()
-#	musicAttackController.get_node("MusicHandler").timeHasResumed()
+	Global.startOrStopTime(true, $stopTimeDuration.wait_time, false)
 	
-func changeTimeScale(timeMultiplier : float, duration : float, startOfDistortion : bool):
-	Global.set_timeMultiplier(timeMultiplier, duration)
+func speedTime():
+	Global.changeTimeSpeed(timeScalingFactor, true, $speedTimeDuration.wait_time, true)
+	currTimeJuice -= timeJuiceCost
 	updateTimeJuiceBar()
-#	musicAttackController.get_node("MusicHandler").syncPitchWithGlobal(duration, startOfDistortion)
 func _on_speedTimeDuration_timeout():
-	changeTimeScale(1.0 * 1/timeScalingFactor, 0, false)
+	Global.changeTimeSpeed(1.0 / timeScalingFactor, true, $speedTimeDuration.wait_time, false)
+func slowTime():
+	Global.changeTimeSpeed(1.0 / timeScalingFactor, false, $speedTimeDuration.wait_time, true)
+	currTimeJuice -= timeJuiceCost
+	updateTimeJuiceBar()
 func _on_slowTimeDuration_timeout():
-	changeTimeScale(timeScalingFactor, 0, false)
+	Global.changeTimeSpeed(timeScalingFactor, false, $speedTimeDuration.wait_time, false)
 
 
 	
