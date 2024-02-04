@@ -14,12 +14,12 @@ var walk_animations = ["walk left", "walk right", "walk up", "walk down"]
 var idle_animations = ["idle left", "idle right", "idle up", "idle down"]
 var currDirection = DOWN
 
-var velocity = Vector2.ZERO
 
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	velocity = Vector2.ZERO
 	$AudioListener2D.make_current()
 
 func _process(delta):

@@ -10,7 +10,7 @@ var tileSetNode
 signal currentStepMaterial(tileID)
 		
 func getCurrentTileID():
-	return tileSetNode.get_cell((owner.position.x / (tileSetNode.cell_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.cell_size.y * tileSetNode.scale.y)) as int)
+	return tileSetNode.get_cell_source_id(0, Vector2((owner.position.x / (tileSetNode.tile_set.tile_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.tile_set.tile_size.y * tileSetNode.scale.y)) as int))
 
 func _ready():
 	timer = $footstepTimer

@@ -1,0 +1,9 @@
+res://default_env.tres
+res://scenes/MainMenu.tscn
+res://scripts/TimeSyncedAnimatedSprite.gd
+res://Global.gd
+res://scripts/Player.gd
+res://scripts/playerFootstepMaker.gd
+res://scripts/battleMode/BattleModePlayer.gd
+res://scenes/battleMode/BattleModeEnemy.tscn
+res://scripts/battleMode/BattleModeEnemy.gd

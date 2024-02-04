@@ -2,7 +2,8 @@ extends CharacterBody2D
 
 @export var bulletScene : PackedScene #packed scene of the bullet this enemy uses
 var bullet = null
-@export var attackPatternFile #imported json file # (String, FILE, "*.json")
+@export var attackPatternFilePath : String #imported json file # (String, FILE, "*.json")
+var attackPatternData
 @export var normalMusic : AudioStreamWAV
 @export var reverseMusic : AudioStreamWAV
 var origScale = 0.9 # starting size of sprite when enemy spawns
@@ -14,12 +15,11 @@ var currAttack = 1 #current line of json file
 var currBullets = 0
 var bulletsStopped = false
 enum {
-	AWAY
-	APPROACHING
-	ANGLECHANGE
-	ATTACKING
-	ABSCONDING
-}
+	AWAY,
+	APPROACHING,
+	ANGLECHANGE,
+	ATTACKING,
+	ABSCONDING }
 var currState = APPROACHING
 @export var stateWaitTimes = [4.0, 1000.0, 1.0, 10, 1.0] # how long in seconds enemy stays in each state 
 #(approaching one not used, made it big so it never triggers) 
@@ -41,6 +41,11 @@ signal enemyMoved
 #SETUP AND APPROACH
 
 func _ready():
+	
+	var json_as_text = FileAccess.get_file_as_string(attackPatternFilePath)
+	attackPatternData = JSON.parse_string(json_as_text)
+	if !json_as_dict:
+		print("ERROR: Attack Data JSON not parsed")
 	animatedSpriteNode.scale.x = origScale
 	animatedSpriteNode.scale.y = origScale
 	$enemyMovement.enemySpeed = enemySpeed

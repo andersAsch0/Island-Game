@@ -9,16 +9,14 @@ extends CharacterBody2D
 
 @export var smallGridSize = 20
 var currGridSize = 20
-var velocity = Vector2.ZERO
 var storagePos = Vector2.ZERO #used as storage during input calculations for jumping
 @export var maxHP : int = 20
 @export var currentHP : int = maxHP
 @export var invincible : bool = true #for debugging #only works if you dont move
 enum { #what kind of movement is allowed
-	DEFENSE #small grid dodging
-	IMOBILE #cant move in any way, ex. while winding watch, anglechangephase, time is paused on defense?
-	IDLE # normal state during offense
-}
+	DEFENSE, #small grid dodging
+	IMOBILE, #cant move in any way, ex. while winding watch, anglechangephase, time is paused on defense?
+	IDLE } # normal state during offense }\
 var isShielded = false
 var currState = DEFENSE
 enum { RIGHT, LEFT, UP, DOWN }
@@ -40,6 +38,7 @@ signal playerFinishedMoving(newTile)
 
 
 func _ready():
+	velocity = Vector2.ZERO
 	$Animations.play("idle")
 	currGridSize = $rightGridLocation.position.x
 #	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key when entering battle mode

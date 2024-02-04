@@ -13,7 +13,7 @@ signal timeHasReversed(duration, start)
 #TIME CONTROL FOR BATTLEMODE
 var currCombatTimeMultiplier : float = 1 #should NEVER be zero OK???
 var timeIsNotStopped : bool = true
-func changeTimeSpeed(multiplier : float, distortionTypeIsSpeed : bool, duration : float, start : bool):
+func changeTimeSpeed(multiplier : float, _distortionTypeIsSpeed : bool, duration : float, start : bool):
 	currCombatTimeMultiplier *= multiplier
 	emit_signal("timeFlowHasChanged", currCombatTimeMultiplier * (timeIsNotStopped as int), duration, start)
 	emit_signal("timeHasChangedSpeed", duration, start, true)
