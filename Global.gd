@@ -106,7 +106,7 @@ func eraseFromDespawnList(despawnListIndex : int, entityPath : String):
 var latestEntryNum : int = 0
 func switchOverworldScene(entryPoint : int, destinationPath : String):
 	latestEntryNum = entryPoint
-	var _PTS = get_tree().change_scene_to_file(destinationPath) # change_scene_to_file takes path, change_scene_to_packed takes PackedScene
+	get_tree().change_scene_to_file(destinationPath) # change_scene_to_file takes path, change_scene_to_packed takes PackedScene
 	
 
 #ENTITY DESPAWNING MASTER LIST (each location has its own index correspondind to an entry in this array

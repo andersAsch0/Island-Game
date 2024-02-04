@@ -13,9 +13,9 @@ func hit():
 func miss():
 	playAnim("miss")
 
-func playAnim(name):
+func playAnim(animName):
 	position = Global.getEnemyCoords()
-	play(name)
+	play(animName)
 	frame = 0
 
 

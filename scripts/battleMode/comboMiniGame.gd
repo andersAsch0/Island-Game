@@ -1,9 +1,9 @@
 extends Node2D
 
 enum{
-	RIGHT
-	LEFT
-	UP
+	RIGHT,
+	LEFT,
+	UP,
 	DOWN
 }
 

@@ -1,179 +1,243 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=31 format=3 uid="uid://cb3gi1cqmaavk"]
 
-[ext_resource path="res://art/butterfly.png" type="Texture2D" id=1]
-[ext_resource path="res://scripts/battleMode/BattleModeEnemy.gd" type="Script" id=2]
-[ext_resource path="res://scenes/battleMode/Bullet.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scripts/HitBox.gd" type="Script" id=4]
-[ext_resource path="res://scripts/HurtBox.gd" type="Script" id=5]
-[ext_resource path="res://scripts/battleMode/enemyMovement.gd" type="Script" id=6]
-[ext_resource path="res://art/big explosion.png" type="Texture2D" id=7]
-[ext_resource path="res://scripts/TimeSyncedAnimatedSprite.gd" type="Script" id=8]
-[ext_resource path="res://audio/IslandFight.wav" type="AudioStream" id=9]
-[ext_resource path="res://audio/IslandFightReverse.wav" type="AudioStream" id=10]
+[ext_resource type="Texture2D" uid="uid://bn24p76gu5oke" path="res://art/butterfly.png" id="1"]
+[ext_resource type="Script" path="res://scripts/battleMode/BattleModeEnemy.gd" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/battleMode/Bullet.tscn" id="3"]
+[ext_resource type="Script" path="res://scripts/HitBox.gd" id="4"]
+[ext_resource type="Script" path="res://scripts/HurtBox.gd" id="5"]
+[ext_resource type="Script" path="res://scripts/battleMode/enemyMovement.gd" id="6"]
+[ext_resource type="Texture2D" uid="uid://d3ubk2xalp0be" path="res://art/big explosion.png" id="7"]
+[ext_resource type="Script" path="res://scripts/TimeSyncedAnimatedSprite.gd" id="8"]
 
-[sub_resource type="CircleShape2D" id=14]
+[sub_resource type="CircleShape2D" id="14"]
 radius = 16.0
 
-[sub_resource type="Curve2D" id=17]
+[sub_resource type="Curve2D" id="17"]
 _data = {
-"points": PackedVector2Array( 0.138227, 1.33396, -0.138227, -1.33396, 1, -10.0821, -2.3326, -0.967376, 2.3326, 0.967376, 73, -7.05747, 2.23452, -0.0447647, -2.23452, 0.0447647, 4, -7.05747, 1.84453, -0.0218382, -1.84453, 0.0218382, -2, -7.05747, -1.85936, 1.2873, 1.85936, -1.2873, -69, -7.05747, -0.00144701, 0.898732, 0.00144701, -0.898732, 1, -10.0821 )
+"points": PackedVector2Array(0.138227, 1.33396, -0.138227, -1.33396, 1, -10.0821, -2.3326, -0.967376, 2.3326, 0.967376, 73, -7.05747, 2.23452, -0.0447647, -2.23452, 0.0447647, 4, -7.05747, 1.84453, -0.0218382, -1.84453, 0.0218382, -2, -7.05747, -1.85936, 1.2873, 1.85936, -1.2873, -69, -7.05747, -0.00144701, 0.898732, 0.00144701, -0.898732, 1, -10.0821)
 }
+point_count = 6
 
-[sub_resource type="CircleShape2D" id=15]
+[sub_resource type="CircleShape2D" id="15"]
 radius = 16.0312
 
-[sub_resource type="CircleShape2D" id=16]
+[sub_resource type="CircleShape2D" id="16"]
 radius = 16.0312
 
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 7 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="18"]
+atlas = ExtResource("7")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 7 )
-region = Rect2( 32, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="19"]
+atlas = ExtResource("7")
+region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 7 )
-region = Rect2( 64, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="20"]
+atlas = ExtResource("7")
+region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=21]
-atlas = ExtResource( 7 )
-region = Rect2( 96, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="21"]
+atlas = ExtResource("7")
+region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=22]
-atlas = ExtResource( 7 )
-region = Rect2( 128, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="22"]
+atlas = ExtResource("7")
+region = Rect2(128, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="1"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 1 )
-region = Rect2( 32, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="2"]
+atlas = ExtResource("1")
+region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 1 )
-region = Rect2( 64, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="3"]
+atlas = ExtResource("1")
+region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 1 )
-region = Rect2( 96, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="4"]
+atlas = ExtResource("1")
+region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="5"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 1 )
-region = Rect2( 32, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="6"]
+atlas = ExtResource("1")
+region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 1 )
-region = Rect2( 64, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="7"]
+atlas = ExtResource("1")
+region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 1 )
-region = Rect2( 96, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="8"]
+atlas = ExtResource("1")
+region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 32, 32, 32 )
+[sub_resource type="AtlasTexture" id="9"]
+atlas = ExtResource("1")
+region = Rect2(0, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 1 )
-region = Rect2( 32, 32, 32, 32 )
+[sub_resource type="AtlasTexture" id="10"]
+atlas = ExtResource("1")
+region = Rect2(32, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 1 )
-region = Rect2( 64, 32, 32, 32 )
+[sub_resource type="AtlasTexture" id="11"]
+atlas = ExtResource("1")
+region = Rect2(64, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 1 )
-region = Rect2( 96, 32, 32, 32 )
+[sub_resource type="AtlasTexture" id="12"]
+atlas = ExtResource("1")
+region = Rect2(96, 32, 32, 32)
 
-[sub_resource type="SpriteFrames" id=24]
-animations = [ {
-"frames": [ SubResource( 18 ), SubResource( 19 ), SubResource( 20 ), SubResource( 20 ), SubResource( 21 ), SubResource( 21 ), SubResource( 22 ), SubResource( 22 ), SubResource( 22 ), SubResource( 22 ), SubResource( 22 ) ],
+[sub_resource type="SpriteFrames" id="24"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("18")
+}, {
+"duration": 1.0,
+"texture": SubResource("19")
+}, {
+"duration": 1.0,
+"texture": SubResource("20")
+}, {
+"duration": 1.0,
+"texture": SubResource("20")
+}, {
+"duration": 1.0,
+"texture": SubResource("21")
+}, {
+"duration": 1.0,
+"texture": SubResource("21")
+}, {
+"duration": 1.0,
+"texture": SubResource("22")
+}, {
+"duration": 1.0,
+"texture": SubResource("22")
+}, {
+"duration": 1.0,
+"texture": SubResource("22")
+}, {
+"duration": 1.0,
+"texture": SubResource("22")
+}, {
+"duration": 1.0,
+"texture": SubResource("22")
+}],
 "loop": false,
-"name": "die",
+"name": &"die",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("1")
+}, {
+"duration": 1.0,
+"texture": SubResource("2")
+}, {
+"duration": 1.0,
+"texture": SubResource("3")
+}, {
+"duration": 1.0,
+"texture": SubResource("4")
+}],
 "loop": true,
-"name": "idle",
+"name": &"idle",
 "speed": 3.0
 }, {
-"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("5")
+}, {
+"duration": 1.0,
+"texture": SubResource("6")
+}, {
+"duration": 1.0,
+"texture": SubResource("7")
+}, {
+"duration": 1.0,
+"texture": SubResource("8")
+}, {
+"duration": 1.0,
+"texture": SubResource("9")
+}, {
+"duration": 1.0,
+"texture": SubResource("10")
+}, {
+"duration": 1.0,
+"texture": SubResource("11")
+}, {
+"duration": 1.0,
+"texture": SubResource("12")
+}],
 "loop": true,
-"name": "moving",
+"name": &"moving",
 "speed": 5.0
-} ]
+}]
 
 [node name="BattleModeEnemy" type="CharacterBody2D" groups=["enemies"]]
-position = Vector2( 85, 55 )
-script = ExtResource( 2 )
-bulletScene = ExtResource( 3 )
-attackPatternFile = "res://scripts/attackPatternJsonData/butterflyAttack.json"
-normalMusic = ExtResource( 9 )
-reverseMusic = ExtResource( 10 )
+position = Vector2(85, 55)
+script = ExtResource("2")
+bulletScene = ExtResource("3")
 
 [node name="DeathTimer" type="Timer" parent="."]
 wait_time = 2.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-shape = SubResource( 14 )
+shape = SubResource("14")
 
 [node name="bulletSpawnLocationY" type="Marker2D" parent="."]
-position = Vector2( 0, 35 )
+position = Vector2(0, 35)
 
 [node name="enemyMovement" type="Path2D" parent="."]
-position = Vector2( 0, -6 )
-scale = Vector2( 1, 0.991857 )
-curve = SubResource( 17 )
-script = ExtResource( 6 )
+position = Vector2(0, -6)
+scale = Vector2(1, 0.991857)
+curve = SubResource("17")
+script = ExtResource("6")
 enemySpeed = 10
 
 [node name="PathFollow2D" type="PathFollow2D" parent="enemyMovement"]
-position = Vector2( 1, -10.0821 )
-rotate = false
+position = Vector2(1, -10.0821)
+rotation = -1.67405
 
 [node name="HPBar" type="ProgressBar" parent="enemyMovement/PathFollow2D"]
 offset_left = -14.0
 offset_top = -19.0
 offset_right = 66.0
 offset_bottom = -5.0
-scale = Vector2( 0.343495, 0.356986 )
-theme_override_colors/font_color = Color( 1, 0, 0, 1 )
+scale = Vector2(0.343495, 0.356986)
+theme_override_colors/font_color = Color(1, 0, 0, 1)
 
 [node name="HurtBox" type="Area2D" parent="enemyMovement/PathFollow2D"]
 visible = false
-position = Vector2( 3.8147e-06, 0 )
+position = Vector2(3.8147e-06, 0)
 collision_layer = 0
 collision_mask = 64
-script = ExtResource( 5 )
+script = ExtResource("5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemyMovement/PathFollow2D/HurtBox"]
-shape = SubResource( 15 )
+shape = SubResource("15")
 
 [node name="HitBox" type="Area2D" parent="enemyMovement/PathFollow2D"]
 visible = false
-position = Vector2( 3.8147e-06, 0 )
+position = Vector2(3.8147e-06, 0)
 collision_layer = 16
 collision_mask = 0
-script = ExtResource( 4 )
+script = ExtResource("4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="enemyMovement/PathFollow2D/HitBox"]
-shape = SubResource( 16 )
+shape = SubResource("16")
 
 [node name="TimeSyncedAnimatedSprite" type="AnimatedSprite2D" parent="enemyMovement/PathFollow2D"]
-frames = SubResource( 24 )
-animation = "idle"
+sprite_frames = SubResource("24")
+animation = &"idle"
 frame = 2
-playing = true
-script = ExtResource( 8 )
+script = ExtResource("8")
 
 [node name="PlayerHPBar2" type="ProgressBar" parent="."]
 visible = false
@@ -182,8 +246,8 @@ offset_top = -2.0
 offset_right = 42.0
 offset_bottom = 12.0
 rotation = -90.1426
-scale = Vector2( 0.316833, 0.422195 )
-theme_override_colors/font_color = Color( 1, 0.74902, 0, 1 )
+scale = Vector2(0.316833, 0.422195)
+theme_override_colors/font_color = Color(1, 0.74902, 0, 1)
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -191,7 +255,7 @@ offset_left = -57.0
 offset_top = -29.0
 offset_right = 46.0
 offset_bottom = 53.0
-scale = Vector2( 0.258753, 0.301935 )
+scale = Vector2(0.258753, 0.301935)
 text = "0 : away
 1 : approaching
 2 : angle change
@@ -199,6 +263,7 @@ text = "0 : away
 4 : absconding"
 
 [node name="Label" type="Label" parent="Label"]
+layout_mode = 0
 offset_left = 108.211
 offset_top = -6.62395
 offset_right = 148.211

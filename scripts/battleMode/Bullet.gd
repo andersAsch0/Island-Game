@@ -13,8 +13,8 @@ var velocity = Vector2.DOWN
 # the bullets will not have despawned too early
 # maybe this can be adjusted by the player script when the player has little time reversal left, in order to optimize
 enum {
-	WARNING
-	MOVING
+	WARNING,
+	MOVING,
 	DYING
 }
 var currState

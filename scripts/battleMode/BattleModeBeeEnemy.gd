@@ -15,11 +15,10 @@ var currBullets = 0
 var bulletsStopped = false
 var bulletSpawnTimeCounter : float = 0 #using this instead of a timer node because I need it to be effected by the time shenanigans
 enum {
-	AWAY
-	APPROACHING
-	ATTACKING
-	ABSCONDING
-}
+	AWAY,
+	APPROACHING,
+	ATTACKING,
+	ABSCONDING }
 var currState = AWAY
 @export var stateWaitTimes = [10, 100, 20, 2] # how long in seconds enemy stays in each state (approaching one not used, made it big so it never triggers)
 var approachSpeed = 30

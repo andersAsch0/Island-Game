@@ -6,7 +6,7 @@ func _ready():
 	play("notVisible")
 
 func attack(warningTime):
-	frames.set_animation_speed("warning", 1.0 / warningTime * 8) # * no of frames
+	sprite_frames.set_animation_speed("warning", 1.0 / warningTime * 8) # * no of frames
 	play("warning")
 	
 

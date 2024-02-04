@@ -4,9 +4,9 @@ extends Node2D
 # Declare member variables here. Examples:
 # var a = 2
 enum {
-	HANDUP
-	HANDRIGHT
-	HANDDOWN
+	HANDUP,
+	HANDRIGHT,
+	HANDDOWN,
 	HANDLEFT
 }
 var arrowRotations = [0, 90, 180, 270]

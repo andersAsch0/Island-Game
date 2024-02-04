@@ -22,7 +22,7 @@ func _ready():
 	velocity = Vector2.ZERO
 	$AudioListener2D.make_current()
 
-func _process(delta):
+func _process(_delta):
 	var input = Vector2.ZERO
 	input.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	input.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")

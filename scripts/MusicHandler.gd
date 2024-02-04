@@ -1,10 +1,11 @@
 extends Node2D
 
 
-@export var attackPatternFile #imported json file # (String, FILE, "*.json")
-@export var attackPatternFile2 #imported json file # (String, FILE, "*.json")
-@export var attackPatternFile3 #imported json file # (String, FILE, "*.json")
-@onready var attackPatternFilesArray = [attackPatternFile, attackPatternFile2, attackPatternFile3] #just the files
+
+#@export_file("*.json") var attackPatternJSON 
+
+
+@export var attackPatternFilePathsArray :  = [] #just the file paths
 var attackPatternDataArray = [] # the json as strings, can actually be accessed by my code
 @export var currEighthNote : int = 0
 var JsonLength = 75
@@ -18,13 +19,13 @@ var reverseEndFXPracticalLength = 2.84
 var trackIsActive = [true, false, false, false, false, false, false, false] #does NOT change when time is stopped
 var trackProgressions = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 enum {
-	NORMALMUSIC
-	REVERSEMUSIC
-	TICKING
-	REVERSESTARTFX
-	REVERSEENDFX
-	STOPENDFX
-	SPEEDENDFX
+	NORMALMUSIC,
+	REVERSEMUSIC,
+	TICKING,
+	REVERSESTARTFX,
+	REVERSEENDFX,
+	STOPENDFX,
+	SPEEDENDFX,
 	SLOWENDFX
 }
 signal track1(pitch, timeInAdvance) #each corresponds to a note from one of the tracks above
@@ -39,8 +40,8 @@ signal newMeasure()
 func _ready():
 	secondsPerEigthNote = (1 / (1.0 * bpm / 60)) / subdivisionsPerBeat
 	secondsPerMeasure = 1.0 * bpm / 60 * 4
-	for i in range( attackPatternFilesArray.size()):
-		attackPatternDataArray.push_back(getAttackPatternData(i))
+	for i in range( attackPatternFilePathsArray.size()):
+		attackPatternDataArray.push_back(getAttackPatternData(attackPatternFilePathsArray[i]))
 	play(NORMALMUSIC)
 	Global.connect("timeHasChangedSpeed", Callable(self, "syncPitchWithGlobal"))
 	Global.connect("timeHasReversed", Callable(self, "timeHasReversed"))
@@ -151,13 +152,23 @@ func trackHasStopped(trackEnum : int):
 	trackProgressions[trackEnum] = 0
 	trackIsActive[trackEnum] = false
 	
-func getAttackPatternData(fileIndex):
-	var attackPatternData = File.new() 
-	if attackPatternData.file_exists(attackPatternFilesArray[fileIndex]): #get the attack pattern json file from the enemy node
-		attackPatternData.open(attackPatternFilesArray[fileIndex], attackPatternData.READ)
-		var test_json_conv = JSON.new()
-		test_json_conv.parse(attackPatternData.get_as_text())
-		return test_json_conv.get_data()
+func getAttackPatternData(filePath : String):
+	
+	var json_as_text = FileAccess.get_file_as_string(filePath)
+	var json_as_dict = JSON.parse_string(json_as_text)
+	if !json_as_dict:
+		print("ERROR: JSON file not read")
+		set_process(false)
+		return null #this is probably bad but i dont understand this json stuff
+	else:
+		return json_as_dict
+	
+	#var attackPatternData = File.new() 
+	#if attackPatternData.file_exists(attackPatternFilesArray[fileIndex]): #get the attack pattern json file from the enemy node
+		#attackPatternData.open(attackPatternFilesArray[fileIndex], attackPatternData.READ)
+		#var test_json_conv = JSON.new()
+		#test_json_conv.parse(attackPatternData.get_as_text())
+		#return test_json_conv.get_data()
 
 
 

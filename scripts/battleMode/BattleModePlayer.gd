@@ -162,11 +162,11 @@ func die():
 
 func _on_BattleMode_enemyApproachPhaseStarting(_duration): #disable movingtiles, but should be able to finish current tile movement #1
 	currState = IMOBILE
-	$debugLabel.text = currState as String
+	#$debugLabel.text = currState as String
 	movingTilesDisabled = true
 func _on_BattleMode_offensePhaseEnding(_duration): #anglechange phase #2
 	currState = IMOBILE
-	$debugLabel.text = currState as String
+	#$debugLabel.text = currState as String
 	storagePos = Global.getPlayerCoords()
 #	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
 #		storagePos.x += currGridSize
@@ -185,10 +185,10 @@ func _on_BattleMode_enemyAttackPhaseStarting(_duration): #3
 	currState = DEFENSE
 	$HurtBox/CollisionShape2D.disabled = false
 	$HitBox/CollisionShape2D.disabled = false
-	$debugLabel.text = currState as String
+	#$debugLabel.text = currState as String
 func _on_BattleMode_enemyAbscondPhaseStarting(_duration):
 	currState = IMOBILE
-	$debugLabel.text = currState as String
+	#$debugLabel.text = currState as String
 	# forces player character to move to the center of the grid as if they jumped there
 #	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key
 #		storagePos.x -= currGridSize
@@ -205,7 +205,7 @@ func _on_BattleMode_enemyAbscondPhaseStarting(_duration):
 	$HitBox/CollisionShape2D.disabled = true
 func _on_BattleMode_offensePhaseStarting(_duration): #away phase starting #0
 	currState = IDLE
-	$debugLabel.text = currState as String
+	#$debugLabel.text = currState as String #broken
 	$HurtBox/CollisionShape2D.disabled = false 
 	$HitBox/CollisionShape2D.disabled = false
 	movingTilesDisabled = false
@@ -221,7 +221,7 @@ func move(direction):
 		prevLocation = position
 		updateCurrGridSquare()
 		$Animations/moveTilesTimer.start()
-		$debugLabel.text = currState as String
+		#$debugLabel.text = currState as String
 		$Animations.play(moveAnimations[direction])
 		emit_signal("playerMovedOffense", direction, Global.playerGridLocation, $Animations/moveTilesTimer.wait_time)
 func updateCurrGridSquare():
@@ -230,7 +230,7 @@ func _on_moveTilesTimer_timeout():
 	position = Global.getPlayerCoords()
 	emit_signal("playerFinishedMoving", Global.playerGridLocation)
 	$Animations.play("idle")
-	$debugLabel.text = currState as String
+	#$debugLabel.text = currState as String
 	storagePos = Global.getPlayerCoords()
 func checkForKeyPresses(): # for going from a locked in place phase (angle change or abscond) to enemy attacking
 	if Input.get_action_strength("ui_right") > 0: # fixes things if the player is holding down a key

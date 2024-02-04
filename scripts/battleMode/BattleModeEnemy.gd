@@ -2,10 +2,6 @@ extends CharacterBody2D
 
 @export var bulletScene : PackedScene #packed scene of the bullet this enemy uses
 var bullet = null
-@export var attackPatternFilePath : String #imported json file # (String, FILE, "*.json")
-var attackPatternData
-@export var normalMusic : AudioStreamWAV
-@export var reverseMusic : AudioStreamWAV
 var origScale = 0.9 # starting size of sprite when enemy spawns
 @export var finalScale = 1 #final size of the sprite once it has approached
 @export var enemySpeed = 30 #speed at which the enemy wanders around
@@ -42,10 +38,6 @@ signal enemyMoved
 
 func _ready():
 	
-	var json_as_text = FileAccess.get_file_as_string(attackPatternFilePath)
-	attackPatternData = JSON.parse_string(json_as_text)
-	if !json_as_dict:
-		print("ERROR: Attack Data JSON not parsed")
 	animatedSpriteNode.scale.x = origScale
 	animatedSpriteNode.scale.y = origScale
 	$enemyMovement.enemySpeed = enemySpeed
@@ -128,7 +120,7 @@ func goToNextState():
 		startLeavePhase()
 	else: #currstate == absconding
 		startAwayPhase()
-	$Label/Label.text = (currState as String)
+	#$Label/Label.text = (currState as String) #broken???
 
 func goToPrevState():
 	if currState == AWAY:
@@ -142,7 +134,7 @@ func goToPrevState():
 	else: # currstate == absconding
 		startAttackPhase()
 	stateCounter = stateWaitTimes[currState]
-	$Label/Label.text = (currState as String)
+	#$Label/Label.text = (currState as String)
 
 func introduction():
 	pass

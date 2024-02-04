@@ -62,8 +62,9 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 #
 #
 	musicAttackController.position = Vector2(0,10) # this being hard coded is stupid. but idk how to do it better
-	add_sibling($offenseModeCamera, enemy)
-	$offenseModeCamera.add_sibling($offenseModeCamera/Grid, musicAttackController)
+	
+	$offenseModeCamera.add_sibling(enemy, false)
+	$offenseModeCamera/Grid.add_sibling(musicAttackController)
 	on_away_phase_starting(0) #hope this doesnt break something in hte future!!! hahaha!!!!
 	
 	

@@ -1,23 +1,23 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=6 format=3 uid="uid://ky2kvqb084yk"]
 
-[ext_resource path="res://scripts/battleMode/musicAttackController.gd" type="Script" id=1]
-[ext_resource path="res://scenes/battleMode/MusicHandler.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/battleMode/Bullet.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/battleMode/gridAttack.tscn" type="PackedScene" id=4]
-[ext_resource path="res://scenes/battleMode/bulletSpawner.tscn" type="PackedScene" id=5]
+[ext_resource type="Script" path="res://scripts/battleMode/musicAttackController.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/battleMode/MusicHandler.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/battleMode/Bullet.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/battleMode/gridAttack.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/battleMode/bulletSpawner.tscn" id="5"]
 
 [node name="musicAttackController" type="Node2D"]
-scale = Vector2( 0.8, 0.8 )
-script = ExtResource( 1 )
-bulletPackedScene = ExtResource( 3 )
-bulletSpawnerPackedScene = ExtResource( 5 )
+scale = Vector2(0.8, 0.8)
+script = ExtResource("1")
+bulletPackedScene = ExtResource("3")
+bulletSpawnerPackedScene = ExtResource("5")
 gridAttackEnabled = false
 
-[node name="MusicHandler" parent="." instance=ExtResource( 2 )]
+[node name="MusicHandler" parent="." instance=ExtResource("2")]
 visible = false
 
-[node name="gridAttack" parent="." instance=ExtResource( 4 )]
-position = Vector2( 1.52588e-05, 7.62939e-06 )
+[node name="gridAttack" parent="." instance=ExtResource("4")]
+position = Vector2(1.52588e-05, 7.62939e-06)
 
 [connection signal="metronome" from="MusicHandler" to="." method="_on_MusicHandler_metronome"]
 [connection signal="track1" from="MusicHandler" to="." method="on_track_1"]

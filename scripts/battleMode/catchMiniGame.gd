@@ -44,8 +44,8 @@ func _process(delta):
 
 
 func _on_HurtBox_hurtBoxHit(_damage):
-	caughtHeal()
-func caughtHeal():
+	HealCaught()
+func HealCaught():
 	$catcher.play("caughtHeal")
 	$CanvasLayer/Heart.position = healStartPos
 	healFlying = false

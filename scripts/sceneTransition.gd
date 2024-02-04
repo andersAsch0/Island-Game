@@ -13,7 +13,7 @@ func _on_area_entered(hitbox: HitBox): #passes in null if not hitbox
 	if hitbox: #only proceed if it is a hitbox
 		emit_signal("transitionTaken")
 		if destinationPath != "":
-			Global.switchOverworldScene(entryPointNum, destinationPath)
+			Global.call_deferred("switchOverworldScene", entryPointNum, destinationPath)
 
 func setCollisionLayer(layer:int):
 	collision_layer = layer
