@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 #state nachine time
 enum { #states
 	IDLE,
@@ -7,7 +7,7 @@ enum { #states
 	#TALK or whatever
 }
 const speed = 20
-export var bounds = 5
+@export var bounds = 5
 var curr_state = IDLE
 var directions = [ Vector2.RIGHT, Vector2.LEFT, Vector2.UP, Vector2.DOWN]
 var animations = ["right", "left", "up", "down"]
@@ -19,7 +19,7 @@ func _process(delta):
 	# print("Curr state =", curr_state)
 	match curr_state: # do stuff according to whatever state its in
 		IDLE:
-			$AnimatedSprite.play(idle_animations[choice])
+			$AnimatedSprite2D.play(idle_animations[choice])
 		PICK_DIRECTION:
 			choice = choose([0,1,2,3])
 		MOVE:
@@ -33,10 +33,10 @@ func move(delta):
 	if (abs((position + directions[choice]*speed*delta).x - start_pos.x) > bounds) || (abs((position + directions[choice]*speed*delta).y - start_pos.y) > bounds):
 		#check if next step will take npc out of bounds, if so stop moving and idle
 		curr_state = IDLE
-		$AnimatedSprite.play(idle_animations[choice])
+		$AnimatedSprite2D.play(idle_animations[choice])
 	else:
 		position += directions[choice] * speed * delta
-		$AnimatedSprite.play(animations[choice])
+		$AnimatedSprite2D.play(animations[choice])
 
 
 func choose(array): #choose random from array

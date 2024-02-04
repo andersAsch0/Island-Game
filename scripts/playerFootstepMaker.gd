@@ -3,7 +3,7 @@ extends Node2D
 var timer
 
 var tileSetName = "footstepMap"
-onready var tileSetStepSound = [$grassFootstep, $waterFootstep, $sandFootstep, $woodFootstep]
+@onready var tileSetStepSound = [$grassFootstep, $waterFootstep, $sandFootstep, $woodFootstep]
 var tileSetNode 
 #a better way would be to instanciate a new streamplayer each time, and queue free when its done
 
@@ -14,7 +14,7 @@ func getCurrentTileID():
 
 func _ready():
 	timer = $footstepTimer
-	tileSetNode = get_tree().get_root().find_node("footstepMap", true, false)
+	tileSetNode = get_tree().get_root().find_child("footstepMap", true, false)
 	if tileSetNode == null: set_process(false)
 
 func _process(_delta):

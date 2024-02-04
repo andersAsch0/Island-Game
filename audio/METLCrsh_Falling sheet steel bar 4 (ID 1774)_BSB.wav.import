@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/METLCrsh_Falling sheet steel bar 4 (ID 1774)_BSB.wav-fb112544227123e3095dbc6779b6e759.sample"
+type="AudioStreamWAV"
+uid="uid://cfe06ohyuhpnc"
+path="res://.godot/imported/METLCrsh_Falling sheet steel bar 4 (ID 1774)_BSB.wav-fb112544227123e3095dbc6779b6e759.sample"
 
 [deps]
 
 source_file="res://audio/METLCrsh_Falling sheet steel bar 4 (ID 1774)_BSB.wav"
-dest_files=[ "res://.import/METLCrsh_Falling sheet steel bar 4 (ID 1774)_BSB.wav-fb112544227123e3095dbc6779b6e759.sample" ]
+dest_files=["res://.godot/imported/METLCrsh_Falling sheet steel bar 4 (ID 1774)_BSB.wav-fb112544227123e3095dbc6779b6e759.sample"]
 
 [params]
 

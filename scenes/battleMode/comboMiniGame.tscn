@@ -1,9 +1,9 @@
 [gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://scripts/battleMode/comboMiniGame.gd" type="Script" id=3]
-[ext_resource path="res://art/battleModeUI/redArrows.png" type="Texture" id=4]
-[ext_resource path="res://art/battleModeUI/arrow.png" type="Texture" id=5]
-[ext_resource path="res://art/battleModeUI/comboAnims.png" type="Texture" id=6]
+[ext_resource path="res://art/battleModeUI/redArrows.png" type="Texture2D" id=4]
+[ext_resource path="res://art/battleModeUI/arrow.png" type="Texture2D" id=5]
+[ext_resource path="res://art/battleModeUI/comboAnims.png" type="Texture2D" id=6]
 
 [sub_resource type="AtlasTexture" id=113]
 atlas = ExtResource( 5 )
@@ -148,28 +148,28 @@ self_modulate = Color( 1, 1, 1, 0.176471 )
 scale = Vector2( 1.13086, 1.13792 )
 z_index = 1
 
-[node name="downArrow" type="AnimatedSprite" parent="Arrows"]
+[node name="downArrow" type="AnimatedSprite2D" parent="Arrows"]
 self_modulate = Color( 1, 1, 1, 0.647059 )
 position = Vector2( 0, 29.0003 )
 scale = Vector2( 0.7, 1.2 )
 frames = SubResource( 114 )
 playing = true
 
-[node name="upArrow" type="AnimatedSprite" parent="Arrows"]
+[node name="upArrow" type="AnimatedSprite2D" parent="Arrows"]
 self_modulate = Color( 1, 1, 1, 0.647059 )
 position = Vector2( 0, -30.7579 )
 scale = Vector2( 0.7, 1.2 )
 frames = SubResource( 116 )
 playing = true
 
-[node name="rightArrow" type="AnimatedSprite" parent="Arrows"]
+[node name="rightArrow" type="AnimatedSprite2D" parent="Arrows"]
 self_modulate = Color( 1, 1, 1, 0.647059 )
 position = Vector2( 30.7579, 0 )
 scale = Vector2( 1.2, 0.7 )
 frames = SubResource( 118 )
 playing = true
 
-[node name="leftArrow" type="AnimatedSprite" parent="Arrows"]
+[node name="leftArrow" type="AnimatedSprite2D" parent="Arrows"]
 self_modulate = Color( 1, 1, 1, 0.647059 )
 position = Vector2( -30.7579, -1.19209e-07 )
 scale = Vector2( 1.2, 0.7 )
@@ -181,14 +181,14 @@ wait_time = 0.4
 one_shot = true
 
 [node name="inputTimeLeft" type="ProgressBar" parent="."]
-margin_left = -11.0
-margin_top = 1.0
-margin_right = 29.0
-margin_bottom = 15.0
-rect_scale = Vector2( 0.549671, 0.567602 )
+offset_left = -11.0
+offset_top = 1.0
+offset_right = 29.0
+offset_bottom = 15.0
+scale = Vector2( 0.549671, 0.567602 )
 percent_visible = false
 
-[node name="comboAnims" type="AnimatedSprite" parent="."]
+[node name="comboAnims" type="AnimatedSprite2D" parent="."]
 position = Vector2( 1, -4 )
 frames = SubResource( 112 )
 animation = "blank"

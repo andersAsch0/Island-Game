@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/IslandFight.wav-8412ba2649746d5db50066a3e764073c.sample"
+type="AudioStreamWAV"
+uid="uid://duns6e54edl5w"
+path="res://.godot/imported/IslandFight.wav-8412ba2649746d5db50066a3e764073c.sample"
 
 [deps]
 
 source_file="res://audio/IslandFight.wav"
-dest_files=[ "res://.import/IslandFight.wav-8412ba2649746d5db50066a3e764073c.sample" ]
+dest_files=["res://.godot/imported/IslandFight.wav-8412ba2649746d5db50066a3e764073c.sample"]
 
 [params]
 

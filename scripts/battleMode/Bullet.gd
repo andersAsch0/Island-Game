@@ -1,10 +1,10 @@
 extends Area2D
 
 
-export var speed : int = 120
-export var angle : float = 0 #in radians
-export var warningAnimationTime = 1 #how long does the warning anim play before the bullet shoots (set by musicAttackController)
-export var shakeCamera : bool = false
+@export var speed : int = 120
+@export var angle : float = 0 #in radians
+@export var warningAnimationTime = 1 #how long does the warning anim play before the bullet shoots (set by musicAttackController)
+@export var shakeCamera : bool = false
 var battleModeCameraPath = "/root/BattleMode/offenseModeCamera"
 var cameraNode = null
 var warningCount = 0
@@ -85,7 +85,7 @@ func die(): #called by enemy when it dies
 	#$HitBox.queue_free() # dont hit player during explosion animation
 	set_process(false)
 	$DeathTimer.start() # give time for explosion to play
-	$Particles2D.restart()
+	$GPUParticles2D.restart()
 func _on_DeathTimer_timeout():
 	queue_free()
 

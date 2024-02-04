@@ -1,7 +1,7 @@
 extends CanvasLayer
 
 
-export(String, FILE, "*.json") var dialouge_file
+@export var dialouge_file # (String, FILE, "*.json")
 var currentDialougeID
 var dialouge = []
 var isActive = false
@@ -26,7 +26,9 @@ func load_dialouge():
 	var file = File.new()
 	if file.file_exists(dialouge_file):
 		file.open(dialouge_file, file.READ)
-		return parse_json(file.get_as_text())
+		var test_json_conv = JSON.new()
+		test_json_conv.parse(file.get_as_text())
+		return test_json_conv.get_data()
 		
 func _input(event):
 	if not isActive: #dont change ID if enter pressed while not active

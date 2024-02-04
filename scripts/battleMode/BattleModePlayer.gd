@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 ##
 #func _physics_process():
@@ -7,13 +7,13 @@ extends KinematicBody2D
 #    if Input.is_action_pressed("ui_accept"):
 #        # ... will be true for all frames the key is hold
 
-export var smallGridSize = 20
+@export var smallGridSize = 20
 var currGridSize = 20
 var velocity = Vector2.ZERO
 var storagePos = Vector2.ZERO #used as storage during input calculations for jumping
-export var maxHP : int = 20
-export var currentHP : int = maxHP
-export var invincible : bool = true #for debugging #only works if you dont move
+@export var maxHP : int = 20
+@export var currentHP : int = maxHP
+@export var invincible : bool = true #for debugging #only works if you dont move
 enum { #what kind of movement is allowed
 	DEFENSE #small grid dodging
 	IMOBILE #cant move in any way, ex. while winding watch, anglechangephase, time is paused on defense?
@@ -23,7 +23,7 @@ var isShielded = false
 var currState = DEFENSE
 enum { RIGHT, LEFT, UP, DOWN }
 var moveDirection = RIGHT
-var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
+var moveVectors : PackedVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
 var moveAnimations = ["move right", "move left", "move up", "move down"]
 var tileMoveSpeed = 50
 var bigGridLocationsx = [18, 90, 160, 230, 300 ]

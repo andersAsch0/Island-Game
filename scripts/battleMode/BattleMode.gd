@@ -1,6 +1,6 @@
 extends Node2D
 
-export var enemyScene : PackedScene
+@export var enemyScene : PackedScene
 var enemy # reference to the node in the scene tree
 var controllerScene : PackedScene
 var musicAttackController # reference to the node 
@@ -43,27 +43,27 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	
 	enemyScene = load(Global.battleModeEnemyPath)
 	controllerScene = load(Global.musicAttackControllerPath)
-	enemy = enemyScene.instance()
+	enemy = enemyScene.instantiate()
 	enemy.position = $enemySpawnLocation.position
 	enemy.visible = false #node's func, where to, where to's func
-	enemy.connect("attackPhaseStarting", self, "on_attack_phase_starting")
-	enemy.connect("abscondPhaseStarting", self, "on_abscond_phase_starting")
-	enemy.connect("awayPhaseStarting", self, "on_away_phase_starting")
-	enemy.connect("approachPhaseStarting", self, "on_approach_phase_starting")
-	enemy.connect("angleChangePhaseStarting", self, "on_angle_change_phase_starting")
-	enemy.connect("enemyMoved", $offenseModeCamera/Arrows, "on_enemyMoved")
-	enemy.connect("enemyDead", self, "on_enemyDead")
-	musicAttackController = controllerScene.instance()
-	connect("enemyAttackPhaseStarting", musicAttackController, "on_BattleMode_defense_mode")
-	connect("enemyAbscondPhaseStarting", musicAttackController, "on_BattleMode_offense_mode")
-	connect("enemyAngleChangePhaseStarting", musicAttackController, "on_BattleMode_offense_mode")
+	enemy.connect("attackPhaseStarting", Callable(self, "on_attack_phase_starting"))
+	enemy.connect("abscondPhaseStarting", Callable(self, "on_abscond_phase_starting"))
+	enemy.connect("awayPhaseStarting", Callable(self, "on_away_phase_starting"))
+	enemy.connect("approachPhaseStarting", Callable(self, "on_approach_phase_starting"))
+	enemy.connect("angleChangePhaseStarting", Callable(self, "on_angle_change_phase_starting"))
+	enemy.connect("enemyMoved", Callable($offenseModeCamera/Arrows, "on_enemyMoved"))
+	enemy.connect("enemyDead", Callable(self, "on_enemyDead"))
+	musicAttackController = controllerScene.instantiate()
+	connect("enemyAttackPhaseStarting", Callable(musicAttackController, "on_BattleMode_defense_mode"))
+	connect("enemyAbscondPhaseStarting", Callable(musicAttackController, "on_BattleMode_offense_mode"))
+	connect("enemyAngleChangePhaseStarting", Callable(musicAttackController, "on_BattleMode_offense_mode"))
 #	#TODO: make the music attack controller a child of the enemy
 
 #
 #
 	musicAttackController.position = Vector2(0,10) # this being hard coded is stupid. but idk how to do it better
-	add_child_below_node($offenseModeCamera, enemy)
-	$offenseModeCamera.add_child_below_node($offenseModeCamera/Grid, musicAttackController)
+	add_sibling($offenseModeCamera, enemy)
+	$offenseModeCamera.add_sibling($offenseModeCamera/Grid, musicAttackController)
 	on_away_phase_starting(0) #hope this doesnt break something in hte future!!! hahaha!!!!
 	
 	
@@ -130,7 +130,7 @@ func _on_slowTimeDuration_timeout():
 	
 
 #SIGNALS FROM ENEMY (controlling current state of battleMode)
-export var overWorldPath = "res://scenes/World.tscn"
+@export var overWorldPath = "res://scenes/World.tscn"
 func on_attack_phase_starting(duration):
 	musicAttackController.rotateWithEnemy()
 	emit_signal("enemyAttackPhaseStarting", duration)
@@ -184,7 +184,7 @@ func showActionMenu(showAttack : bool, showHeal : bool, showWind : bool, showShe
 	$UI/windButton.showButton(showWind)
 	$UI/sheildButton.showButton(showSheild)
 enum { RIGHT, LEFT, UP, DOWN }
-var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
+var moveVectors : PackedVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
 
 func updateTimeJuiceBar():
 	$UI/TimeJuiceBar.value = 1.0 * currTimeJuice/maxTimeJuiceSeconds * 100

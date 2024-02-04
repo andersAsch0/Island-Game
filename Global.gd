@@ -42,10 +42,10 @@ func enterBattleMode(overWorldFileSystemPath : String, respawnPos : Vector2, Oen
 	leaveOverworld(respawnPos, battleModePath)
 func leaveOverworld(respawnPos : Vector2, newScene : String):
 	overWorldLocation = respawnPos # location where player will respawn in when they leave battlemode and go back to the overworld
-	var _PTS = get_tree().change_scene(newScene) # change_scene takes path, change_scene_to takes PackedScene
+	var _PTS = get_tree().change_scene_to_file(newScene) # change_scene_to_file takes path, change_scene_to_packed takes PackedScene
 var overWorldPath = "res://scenes/overworldPrototype.tscn"
 func reEnterOverworld():
-	var _PTS = get_tree().change_scene(overWorldPath) # change_scene takes path, change_scene_to takes PackedScene
+	var _PTS = get_tree().change_scene_to_file(overWorldPath) # change_scene_to_file takes path, change_scene_to_packed takes PackedScene
 	spawnPlayerAtPrevOverworldCoords = true
 func getPrevOverworldPlayerCoords():
 	spawnPlayerAtPrevOverworldCoords = false
@@ -106,7 +106,7 @@ func eraseFromDespawnList(despawnListIndex : int, entityPath : String):
 var latestEntryNum : int = 0
 func switchOverworldScene(entryPoint : int, destinationPath : String):
 	latestEntryNum = entryPoint
-	var _PTS = get_tree().change_scene(destinationPath) # change_scene takes path, change_scene_to takes PackedScene
+	var _PTS = get_tree().change_scene_to_file(destinationPath) # change_scene_to_file takes path, change_scene_to_packed takes PackedScene
 	
 
 #ENTITY DESPAWNING MASTER LIST (each location has its own index correspondind to an entry in this array

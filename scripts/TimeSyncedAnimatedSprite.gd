@@ -1,12 +1,12 @@
 class_name TimeSyncedAnimatedSprite
 
-extends AnimatedSprite
+extends AnimatedSprite2D
 
 
 var secondsPerFrame : float = 0.0
 var frameCountMultiplier : int = 1
 var indexOfLastFrame : int = 0
-export var isPlaying : bool = true #do not turn on animatedsprites playing
+@export var isPlaying : bool = true #do not turn on animatedsprites playing
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	playing = false

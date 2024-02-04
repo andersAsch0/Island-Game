@@ -17,7 +17,7 @@ var sheildActive : bool = false
 var enemyIsAway : bool = true
 
 func _ready():
-	Global.connect("timeHasStoppedOrStarted", self, "_on_Global_timeHasStoppedOrStarted")
+	Global.connect("timeHasStoppedOrStarted", Callable(self, "_on_Global_timeHasStoppedOrStarted"))
 
 func _on_BattleMode_enemyAwayPhaseStarting(_duration):
 	enemyIsAway = true

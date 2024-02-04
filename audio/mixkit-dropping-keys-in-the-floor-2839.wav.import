@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/mixkit-dropping-keys-in-the-floor-2839.wav-40636a837080bb1f33d92b917f886883.sample"
+type="AudioStreamWAV"
+uid="uid://btq0ei0jev828"
+path="res://.godot/imported/mixkit-dropping-keys-in-the-floor-2839.wav-40636a837080bb1f33d92b917f886883.sample"
 
 [deps]
 
 source_file="res://audio/mixkit-dropping-keys-in-the-floor-2839.wav"
-dest_files=[ "res://.import/mixkit-dropping-keys-in-the-floor-2839.wav-40636a837080bb1f33d92b917f886883.sample" ]
+dest_files=["res://.godot/imported/mixkit-dropping-keys-in-the-floor-2839.wav-40636a837080bb1f33d92b917f886883.sample"]
 
 [params]
 

@@ -19,7 +19,7 @@ func playGame():
 	if not healFlying:
 		set_process(true)
 		$catcher.play("default")
-		$CanvasLayer/AnimatedSprite.frame = 0
+		$CanvasLayer/AnimatedSprite2D.frame = 0
 #		if not $catcher.visible:
 #			$catcher.position = catcherStartPos
 #			$catcher.visible = true

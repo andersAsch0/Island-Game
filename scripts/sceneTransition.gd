@@ -2,12 +2,12 @@ class_name SceneTransition
 
 extends Area2D
 
-export var destinationPath = ""
-export var entryPointNum = 0
+@export var destinationPath = ""
+@export var entryPointNum = 0
 signal transitionTaken
 
 func _ready():
-	connect("area_entered", self, "_on_area_entered")
+	connect("area_entered", Callable(self, "_on_area_entered"))
 	
 func _on_area_entered(hitbox: HitBox): #passes in null if not hitbox
 	if hitbox: #only proceed if it is a hitbox
@@ -20,5 +20,5 @@ func setCollisionLayer(layer:int):
 
 func playClosingAnim(backward : bool = false):
 	$openAndCloseFX.play(0.0)
-	$AnimatedSprite.frame = 0
-	$AnimatedSprite.play("default", backward)
+	$AnimatedSprite2D.frame = 0
+	$AnimatedSprite2D.play("default", backward)

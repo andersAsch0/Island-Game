@@ -1,7 +1,7 @@
 extends Node2D
 
-export var bulletSpawner : PackedScene
-export var bulletScene : PackedScene
+@export var bulletSpawner : PackedScene
+@export var bulletScene : PackedScene
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -19,5 +19,5 @@ func _input(event):
 
 var bullet
 func spawnBullet():
-	bullet = bulletSpawner.instance().init(bulletScene, 5, 0.1, 1, false)
+	bullet = bulletSpawner.instantiate().init(bulletScene, 5, 0.1, 1, false)
 	add_child(bullet)

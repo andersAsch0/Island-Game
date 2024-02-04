@@ -1,6 +1,6 @@
 extends Node2D
 
-export var bullet : PackedScene
+@export var bullet : PackedScene
 var instancedBullet
 var eigthNotesInAdvance = 8.0
 
@@ -9,7 +9,7 @@ func _ready():
 	#set up musicHandlers bpm and eightnotes in advance
 
 func attack(pitch, timeInAdvance = 0.0):
-	instancedBullet = bullet.instance()
+	instancedBullet = bullet.instantiate()
 	instancedBullet.position = Vector2(100 + pitch * 20, 50)
 	instancedBullet.warningAnimationTime = eigthNotesInAdvance * $MusicHandler.secondsPerEigthNote
 	call_deferred("add_child", instancedBullet)

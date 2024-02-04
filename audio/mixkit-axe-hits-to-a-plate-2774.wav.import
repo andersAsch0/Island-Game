@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/mixkit-axe-hits-to-a-plate-2774.wav-71800444325ae3d1048534662977f903.sample"
+type="AudioStreamWAV"
+uid="uid://bkwvsole3oslw"
+path="res://.godot/imported/mixkit-axe-hits-to-a-plate-2774.wav-71800444325ae3d1048534662977f903.sample"
 
 [deps]
 
 source_file="res://audio/mixkit-axe-hits-to-a-plate-2774.wav"
-dest_files=[ "res://.import/mixkit-axe-hits-to-a-plate-2774.wav-71800444325ae3d1048534662977f903.sample" ]
+dest_files=["res://.godot/imported/mixkit-axe-hits-to-a-plate-2774.wav-71800444325ae3d1048534662977f903.sample"]
 
 [params]
 

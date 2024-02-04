@@ -1,10 +1,10 @@
-extends KinematicBody2D
+extends CharacterBody2D
  
 var battleModeVersionScenePath : String = "res://scenes/battleMode/BattleModeEnemy.tscn"
 var musicAttackControllerPath : String = "res://scenes/battleMode/musicAttackController.tscn"
 # also, you must change the kinematicbody2d node's name to something unique so the game knows which enemy to despawn
 func _ready():
-	$AnimatedSprite.play("idle")
+	$AnimatedSprite2D.play("idle")
 	
 func die():
 	queue_free()

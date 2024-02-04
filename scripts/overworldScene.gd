@@ -9,9 +9,9 @@ extends Node
 
 # MAKE SURE TO SET THE EXPORT VARIABLES BELOW!!
 
-export var despawnListIndex : int = 0
-export var fileSystemPath : String
-export var entryPointCoords = []
+@export var despawnListIndex : int = 0
+@export var fileSystemPath : String
+@export var entryPointCoords = []
 
 signal playerEntered(entryPoint, despawnListIndex, entryCoords) #entrypoint will be -1 if entering from battlemode (not a door or edge)
 
@@ -36,6 +36,6 @@ func removeFromDespawnList(entityPath : String):
 	Global.despawnList[despawnListIndex].erase(entityPath)
 
 func playerEnter(coords : Vector2):
-	find_node("Player").position = coords
+	find_child("Player").position = coords
 	for deadEntityPath in getDespawnList():
 		get_node(deadEntityPath).queue_free()

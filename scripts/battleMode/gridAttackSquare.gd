@@ -1,7 +1,7 @@
-extends AnimatedSprite
+extends AnimatedSprite2D
 
 func _ready():
-	connect("animation_finished", self, "animationFinished")
+	connect("animation_finished", Callable(self, "animationFinished"))
 	$HitBox/CollisionShape2D.set_deferred("disabled", true)
 	play("notVisible")
 

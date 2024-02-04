@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://scripts/overworldClock.gd" type="Script" id=1]
-[ext_resource path="res://art/clock with hand.png" type="Texture" id=2]
+[ext_resource path="res://art/clock with hand.png" type="Texture2D" id=2]
 [ext_resource path="res://audio/TickingClockFXLooped.wav" type="AudioStream" id=3]
 [ext_resource path="res://audio/WatchWindfx1.wav" type="AudioStream" id=4]
 [ext_resource path="res://audio/WatchWindfx3.wav" type="AudioStream" id=5]
@@ -78,7 +78,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="overworldClock" type="AnimatedSprite"]
+[node name="overworldClock" type="AnimatedSprite2D"]
 frames = SubResource( 17 )
 script = ExtResource( 1 )
 
@@ -89,10 +89,10 @@ autostart = true
 [node name="ColorRect" type="ColorRect" parent="."]
 self_modulate = Color( 0, 0, 0, 0.423529 )
 show_behind_parent = true
-margin_left = -131.0
-margin_top = -81.0
-margin_right = 118.0
-margin_bottom = 74.0
+offset_left = -131.0
+offset_top = -81.0
+offset_right = 118.0
+offset_bottom = 74.0
 
 [node name="takeOutFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )

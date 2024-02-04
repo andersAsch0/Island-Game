@@ -1,9 +1,9 @@
-extends AnimatedSprite
+extends AnimatedSprite2D
 
 func _ready():
 	play()
 
-var moveVectors : PoolVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
+var moveVectors : PackedVector2Array = [Vector2(1, 0), Vector2(-1, 0), Vector2(0, -1), Vector2(0, 1)]
 
 
 func updateSelf(myDirection):

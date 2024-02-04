@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/Healfx1.wav-ada7c66592d132479b85750d664b0a52.sample"
+type="AudioStreamWAV"
+uid="uid://6ptkvigytlgi"
+path="res://.godot/imported/Healfx1.wav-ada7c66592d132479b85750d664b0a52.sample"
 
 [deps]
 
 source_file="res://audio/Healfx1.wav"
-dest_files=[ "res://.import/Healfx1.wav-ada7c66592d132479b85750d664b0a52.sample" ]
+dest_files=["res://.godot/imported/Healfx1.wav-ada7c66592d132479b85750d664b0a52.sample"]
 
 [params]
 

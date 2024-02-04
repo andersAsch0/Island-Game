@@ -1,9 +1,9 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
-export var battleModeVersionScenePath : String = "res://scenes/battleMode/BattleModeBeeEnemy.tscn"
+@export var battleModeVersionScenePath : String = "res://scenes/battleMode/BattleModeBeeEnemy.tscn"
 # also, you must change the kinematicbody2d node's name to something unique so the game knows which enemy to despawn
 func _ready():
-	$AnimatedSprite.play("idle")
+	$AnimatedSprite2D.play("idle")
 	
 func die():
 	queue_free()

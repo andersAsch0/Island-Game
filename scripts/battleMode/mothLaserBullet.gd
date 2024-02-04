@@ -1,4 +1,4 @@
-extends AnimatedSprite
+extends AnimatedSprite2D
 
 var velocity = Vector2.DOWN
 var speed = 100

@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 
 const acc  = 25
@@ -20,7 +20,7 @@ var velocity = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Listener2D.make_current()
+	$AudioListener2D.make_current()
 
 func _process(delta):
 	var input = Vector2.ZERO
@@ -45,7 +45,8 @@ func _process(delta):
 	else:
 		$Animations.play(idle_animations[currDirection])
 	
-	move_and_slide(velocity)
+	set_velocity(velocity)
+	move_and_slide()
 
 
 #func _process(delta):

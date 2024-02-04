@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/DOORGate_Grinding metal barrier closure 2 (ID 2359)_BSB.wav-c5c527fa3fe385a4cdc2c84532686419.sample"
+type="AudioStreamWAV"
+uid="uid://d2ujld4p7nmvj"
+path="res://.godot/imported/DOORGate_Grinding metal barrier closure 2 (ID 2359)_BSB.wav-c5c527fa3fe385a4cdc2c84532686419.sample"
 
 [deps]
 
 source_file="res://audio/DOORGate_Grinding metal barrier closure 2 (ID 2359)_BSB.wav"
-dest_files=[ "res://.import/DOORGate_Grinding metal barrier closure 2 (ID 2359)_BSB.wav-c5c527fa3fe385a4cdc2c84532686419.sample" ]
+dest_files=["res://.godot/imported/DOORGate_Grinding metal barrier closure 2 (ID 2359)_BSB.wav-c5c527fa3fe385a4cdc2c84532686419.sample"]
 
 [params]
 

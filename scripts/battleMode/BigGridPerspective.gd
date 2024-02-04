@@ -1,4 +1,4 @@
-extends Sprite
+extends Sprite2D
 
 # on defense mode starting, do zoomy thing
 

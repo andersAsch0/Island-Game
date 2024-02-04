@@ -1,6 +1,6 @@
 [gd_scene load_steps=31 format=2]
 
-[ext_resource path="res://art/butterfly.png" type="Texture" id=1]
+[ext_resource path="res://art/butterfly.png" type="Texture2D" id=1]
 [ext_resource path="res://scripts/fightArea.gd" type="Script" id=2]
 [ext_resource path="res://scripts/enemy.gd" type="Script" id=3]
 
@@ -129,13 +129,13 @@ radius = 3.0
 [sub_resource type="CircleShape2D" id=15]
 radius = 28.6356
 
-[node name="enemy" type="KinematicBody2D"]
+[node name="enemy" type="CharacterBody2D"]
 scale = Vector2( 0.5, 0.5 )
 collision_layer = 8
 collision_mask = 2
 script = ExtResource( 3 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2( 0, -22 )
 frames = SubResource( 13 )
 animation = "idle"

@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/TickingClockFXLooped.wav-51259969960ccea40e1d621fb79d5f7d.sample"
+type="AudioStreamWAV"
+uid="uid://006jmisebuj1"
+path="res://.godot/imported/TickingClockFXLooped.wav-51259969960ccea40e1d621fb79d5f7d.sample"
 
 [deps]
 
 source_file="res://audio/TickingClockFXLooped.wav"
-dest_files=[ "res://.import/TickingClockFXLooped.wav-51259969960ccea40e1d621fb79d5f7d.sample" ]
+dest_files=["res://.godot/imported/TickingClockFXLooped.wav-51259969960ccea40e1d621fb79d5f7d.sample"]
 
 [params]
 

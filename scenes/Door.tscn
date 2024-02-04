@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://art/map tiles/door opening.png" type="Texture" id=1]
+[ext_resource path="res://art/map tiles/door opening.png" type="Texture2D" id=1]
 [ext_resource path="res://scripts/sceneTransition.gd" type="Script" id=2]
 [ext_resource path="res://audio/mixkit-automatic-door-shut-204.wav" type="AudioStream" id=3]
 
@@ -41,12 +41,12 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 5.5, 1.5 )
+size = Vector2( 5.5, 1.5 )
 
 [node name="Door" type="Area2D"]
 script = ExtResource( 2 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2( 0, -16 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 10 )

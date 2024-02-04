@@ -11,7 +11,7 @@ var waitTimeReal
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	waitTimeReal = wait_time
-	connect("timeout", self, "on_timeout")
+	connect("timeout", Callable(self, "on_timeout"))
 	process_mode = TIMER_PROCESS_PHYSICS
 
 

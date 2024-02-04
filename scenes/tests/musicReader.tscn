@@ -10,9 +10,9 @@ script = ExtResource( 2 )
 position = Vector2( 17, 18 )
 
 [node name="Label" type="Label" parent="."]
-margin_left = 34.0
-margin_top = 22.0
-margin_right = 74.0
-margin_bottom = 36.0
+offset_left = 34.0
+offset_top = 22.0
+offset_right = 74.0
+offset_bottom = 36.0
 
 [connection signal="newMeasure" from="MusicHandler" to="." method="_on_MusicHandler_newMeasure"]

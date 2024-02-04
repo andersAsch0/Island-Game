@@ -3,21 +3,21 @@
 [ext_resource path="res://scenes/battleMode/BattleModePlayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/battleMode/BattleMode.gd" type="Script" id=2]
 [ext_resource path="res://scenes/battleMode/BattleModeEnemy.tscn" type="PackedScene" id=3]
-[ext_resource path="res://art/battleModeUI/clock.png" type="Texture" id=4]
+[ext_resource path="res://art/battleModeUI/clock.png" type="Texture2D" id=4]
 [ext_resource path="res://scripts/hitAndMissAnims.gd" type="Script" id=5]
-[ext_resource path="res://art/battleModeUI/comboAnims.png" type="Texture" id=6]
-[ext_resource path="res://art/battlegrid.png" type="Texture" id=7]
+[ext_resource path="res://art/battleModeUI/comboAnims.png" type="Texture2D" id=6]
+[ext_resource path="res://art/battlegrid.png" type="Texture2D" id=7]
 [ext_resource path="res://scenes/battleMode/battlemodeButton.tscn" type="PackedScene" id=8]
 [ext_resource path="res://scripts/gridCenter.gd" type="Script" id=9]
-[ext_resource path="res://art/gridAnim.png" type="Texture" id=10]
+[ext_resource path="res://art/gridAnim.png" type="Texture2D" id=10]
 [ext_resource path="res://scenes/battleMode/windWatchMinigame.tscn" type="PackedScene" id=11]
-[ext_resource path="res://art/battleModeUI/action menu horiz.png" type="Texture" id=12]
+[ext_resource path="res://art/battleModeUI/action menu horiz.png" type="Texture2D" id=12]
 [ext_resource path="res://scripts/offenseModeCamera.gd" type="Script" id=13]
-[ext_resource path="res://art/battleModeUI/arrow.png" type="Texture" id=14]
+[ext_resource path="res://art/battleModeUI/arrow.png" type="Texture2D" id=14]
 [ext_resource path="res://scripts/downArrowButton.gd" type="Script" id=15]
 [ext_resource path="res://scripts/battleMode/Arrows.gd" type="Script" id=16]
 [ext_resource path="res://scenes/battleMode/Grid.gd" type="Script" id=17]
-[ext_resource path="res://art/placeholder.jpg" type="Texture" id=18]
+[ext_resource path="res://art/placeholder.jpg" type="Texture2D" id=18]
 [ext_resource path="res://scenes/battleMode/catchMiniGame.tscn" type="PackedScene" id=21]
 [ext_resource path="res://scenes/battleMode/comboMiniGame.tscn" type="PackedScene" id=22]
 [ext_resource path="res://scripts/battleMode/BattleModeUI.gd" type="Script" id=23]
@@ -443,96 +443,96 @@ enemyScene = ExtResource( 3 )
 [node name="bigGridController" type="Node2D" parent="."]
 script = ExtResource( 25 )
 
-[node name="bigGrid" type="AnimatedSprite" parent="bigGridController"]
+[node name="bigGrid" type="AnimatedSprite2D" parent="bigGridController"]
 position = Vector2( 160, 123 )
 frames = SubResource( 114 )
 script = ExtResource( 24 )
 isPlaying = false
 
-[node name="frame8Corner" type="Position2D" parent="bigGridController/bigGrid"]
+[node name="frame8Corner" type="Marker2D" parent="bigGridController/bigGrid"]
 position = Vector2( -109.167, -72.5 )
 
-[node name="frame8Corner2" type="Position2D" parent="bigGridController/bigGrid"]
+[node name="frame8Corner2" type="Marker2D" parent="bigGridController/bigGrid"]
 position = Vector2( 99.1667, -74.1667 )
 
-[node name="frame8Corner3" type="Position2D" parent="bigGridController/bigGrid"]
+[node name="frame8Corner3" type="Marker2D" parent="bigGridController/bigGrid"]
 position = Vector2( 198.333, 104.167 )
 
-[node name="frame8Corner4" type="Position2D" parent="bigGridController/bigGrid"]
+[node name="frame8Corner4" type="Marker2D" parent="bigGridController/bigGrid"]
 position = Vector2( -206.667, 105.833 )
 
-[node name="frame8LeftSide2" type="Position2D" parent="bigGridController/bigGrid"]
+[node name="frame8LeftSide2" type="Marker2D" parent="bigGridController/bigGrid"]
 position = Vector2( -122.5, -48.3333 )
 
-[node name="frame8LeftSide3" type="Position2D" parent="bigGridController/bigGrid"]
+[node name="frame8LeftSide3" type="Marker2D" parent="bigGridController/bigGrid"]
 position = Vector2( -141.667, -13.3333 )
 
-[node name="frame8LeftSide4" type="Position2D" parent="bigGridController/bigGrid"]
+[node name="frame8LeftSide4" type="Marker2D" parent="bigGridController/bigGrid"]
 position = Vector2( -170, 33.3333 )
 
-[node name="frame8RightSide2" type="Position2D" parent="bigGridController/bigGrid"]
+[node name="frame8RightSide2" type="Marker2D" parent="bigGridController/bigGrid"]
 position = Vector2( 112.5, -48.3333 )
 
-[node name="frame8RightSide3" type="Position2D" parent="bigGridController/bigGrid"]
+[node name="frame8RightSide3" type="Marker2D" parent="bigGridController/bigGrid"]
 position = Vector2( 132.5, -15 )
 
-[node name="frame8RightSide4" type="Position2D" parent="bigGridController/bigGrid"]
+[node name="frame8RightSide4" type="Marker2D" parent="bigGridController/bigGrid"]
 position = Vector2( 160, 31.6667 )
 
-[node name="frame0Corner" type="Position2D" parent="bigGridController/bigGrid"]
+[node name="frame0Corner" type="Marker2D" parent="bigGridController/bigGrid"]
 position = Vector2( -139.167, -152.5 )
 
-[node name="frame0Corner3" type="Position2D" parent="bigGridController/bigGrid"]
+[node name="frame0Corner3" type="Marker2D" parent="bigGridController/bigGrid"]
 position = Vector2( 134.167, 121.667 )
 
-[node name="bigGrid3" type="AnimatedSprite" parent="."]
+[node name="bigGrid3" type="AnimatedSprite2D" parent="."]
 visible = false
 self_modulate = Color( 1, 1, 1, 0.47451 )
 position = Vector2( 160, 123 )
 frames = SubResource( 114 )
 script = ExtResource( 9 )
 
-[node name="frame8Corner" type="Position2D" parent="bigGrid3"]
+[node name="frame8Corner" type="Marker2D" parent="bigGrid3"]
 position = Vector2( -109.167, -72.5 )
 
-[node name="frame8Corner2" type="Position2D" parent="bigGrid3"]
+[node name="frame8Corner2" type="Marker2D" parent="bigGrid3"]
 position = Vector2( 99.1667, -74.1667 )
 
-[node name="frame8Corner3" type="Position2D" parent="bigGrid3"]
+[node name="frame8Corner3" type="Marker2D" parent="bigGrid3"]
 position = Vector2( 198.333, 104.167 )
 
-[node name="frame8Corner4" type="Position2D" parent="bigGrid3"]
+[node name="frame8Corner4" type="Marker2D" parent="bigGrid3"]
 position = Vector2( -206.667, 105.833 )
 
-[node name="frame8LeftSide2" type="Position2D" parent="bigGrid3"]
+[node name="frame8LeftSide2" type="Marker2D" parent="bigGrid3"]
 position = Vector2( -122.5, -48.3333 )
 
-[node name="frame8LeftSide3" type="Position2D" parent="bigGrid3"]
+[node name="frame8LeftSide3" type="Marker2D" parent="bigGrid3"]
 position = Vector2( -141.667, -13.3333 )
 
-[node name="frame8LeftSide4" type="Position2D" parent="bigGrid3"]
+[node name="frame8LeftSide4" type="Marker2D" parent="bigGrid3"]
 position = Vector2( -170, 33.3333 )
 
-[node name="frame8RightSide2" type="Position2D" parent="bigGrid3"]
+[node name="frame8RightSide2" type="Marker2D" parent="bigGrid3"]
 position = Vector2( 112.5, -48.3333 )
 
-[node name="frame8RightSide3" type="Position2D" parent="bigGrid3"]
+[node name="frame8RightSide3" type="Marker2D" parent="bigGrid3"]
 position = Vector2( 132.5, -15 )
 
-[node name="frame8RightSide4" type="Position2D" parent="bigGrid3"]
+[node name="frame8RightSide4" type="Marker2D" parent="bigGrid3"]
 position = Vector2( 160, 31.6667 )
 
-[node name="frame0Corner" type="Position2D" parent="bigGrid3"]
+[node name="frame0Corner" type="Marker2D" parent="bigGrid3"]
 position = Vector2( -139.167, -152.5 )
 
-[node name="frame0Corner3" type="Position2D" parent="bigGrid3"]
+[node name="frame0Corner3" type="Marker2D" parent="bigGrid3"]
 position = Vector2( 134.167, 121.667 )
 
-[node name="Position2D" type="Position2D" parent="."]
+[node name="Marker2D" type="Marker2D" parent="."]
 position = Vector2( 259, 50 )
 scale = Vector2( 2.1, 2.1 )
 
-[node name="Placeholder" type="Sprite" parent="Position2D"]
+[node name="Placeholder" type="Sprite2D" parent="Marker2D"]
 visible = false
 position = Vector2( 0.475586, 0.476074 )
 scale = Vector2( -0.0144161, 0.00904175 )
@@ -545,7 +545,7 @@ scale = Vector2( 1.3795, 1.3795 )
 [node name="Animations" parent="BattleModePlayer" index="2"]
 frame = 0
 
-[node name="enemySpawnLocation" type="Position2D" parent="."]
+[node name="enemySpawnLocation" type="Marker2D" parent="."]
 position = Vector2( 156, 74 )
 
 [node name="reverseTimeDuration" type="Timer" parent="."]
@@ -564,7 +564,7 @@ one_shot = true
 wait_time = 5.0
 one_shot = true
 
-[node name="Clock" type="AnimatedSprite" parent="."]
+[node name="Clock" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2( 41, 75 )
 scale = Vector2( 2, 2 )
@@ -577,7 +577,7 @@ z_index = 1
 current = true
 script = ExtResource( 13 )
 
-[node name="Grid" type="Sprite" parent="offenseModeCamera"]
+[node name="Grid" type="Sprite2D" parent="offenseModeCamera"]
 self_modulate = Color( 1, 1, 1, 0.215686 )
 position = Vector2( 0, 11 )
 scale = Vector2( 2.31579, 2.31579 )
@@ -587,23 +587,23 @@ script = ExtResource( 17 )
 
 [node name="VictoryButton" type="Button" parent="offenseModeCamera"]
 visible = false
-margin_left = -33.0
-margin_top = -55.0
-margin_right = 33.0
-margin_bottom = -35.0
+offset_left = -33.0
+offset_top = -55.0
+offset_right = 33.0
+offset_bottom = -35.0
 disabled = true
 text = "VICTORY"
 
 [node name="DefeatButton" type="Button" parent="offenseModeCamera"]
 visible = false
-margin_left = -33.0
-margin_top = -54.0
-margin_right = 33.0
-margin_bottom = -34.0
+offset_left = -33.0
+offset_top = -54.0
+offset_right = 33.0
+offset_bottom = -34.0
 disabled = true
 text = "DEFEAT"
 
-[node name="actionMenu" type="AnimatedSprite" parent="offenseModeCamera"]
+[node name="actionMenu" type="AnimatedSprite2D" parent="offenseModeCamera"]
 visible = false
 position = Vector2( 141, 3.00005 )
 rotation = 1.57557
@@ -620,35 +620,35 @@ scale = Vector2( 1.13792, 1.13792 )
 z_index = 1
 script = ExtResource( 16 )
 
-[node name="downArrow" type="AnimatedSprite" parent="offenseModeCamera/Arrows"]
+[node name="downArrow" type="AnimatedSprite2D" parent="offenseModeCamera/Arrows"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 position = Vector2( 1.7576, 39.5458 )
 scale = Vector2( 0.7, 1.2 )
 frames = SubResource( 65 )
 script = ExtResource( 15 )
 
-[node name="upArrow" type="AnimatedSprite" parent="offenseModeCamera/Arrows"]
+[node name="upArrow" type="AnimatedSprite2D" parent="offenseModeCamera/Arrows"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 position = Vector2( 1.7576, -40.4245 )
 scale = Vector2( 0.7, 1.2 )
 frames = SubResource( 76 )
 script = ExtResource( 15 )
 
-[node name="rightArrow" type="AnimatedSprite" parent="offenseModeCamera/Arrows"]
+[node name="rightArrow" type="AnimatedSprite2D" parent="offenseModeCamera/Arrows"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 position = Vector2( 43.0609, 3.8147e-06 )
 scale = Vector2( 1.2, 0.7 )
 frames = SubResource( 87 )
 script = ExtResource( 15 )
 
-[node name="leftArrow" type="AnimatedSprite" parent="offenseModeCamera/Arrows"]
+[node name="leftArrow" type="AnimatedSprite2D" parent="offenseModeCamera/Arrows"]
 self_modulate = Color( 1, 1, 1, 0.392157 )
 position = Vector2( -40.4245, 1.75758 )
 scale = Vector2( 1.2, 0.7 )
 frames = SubResource( 98 )
 script = ExtResource( 15 )
 
-[node name="hitAndMissAnims" type="AnimatedSprite" parent="."]
+[node name="hitAndMissAnims" type="AnimatedSprite2D" parent="."]
 frames = SubResource( 104 )
 animation = "empty"
 script = ExtResource( 5 )
@@ -657,31 +657,31 @@ script = ExtResource( 5 )
 script = ExtResource( 23 )
 
 [node name="HP&TJ" type="Label" parent="UI"]
-margin_left = 1.56599
-margin_top = 54.6
-margin_right = 41.566
-margin_bottom = 68.6
-rect_scale = Vector2( 0.632878, 0.87013 )
+offset_left = 1.56599
+offset_top = 54.6
+offset_right = 41.566
+offset_bottom = 68.6
+scale = Vector2( 0.632878, 0.87013 )
 text = "HP TJ"
 
 [node name="PlayerHPBar" type="ProgressBar" parent="UI"]
-margin_left = 1.56599
-margin_top = 135.6
-margin_right = 71.566
-margin_bottom = 149.6
-rect_rotation = -90.1426
-rect_scale = Vector2( 0.955148, 0.51705 )
-custom_colors/font_color = Color( 1, 0.74902, 0, 1 )
+offset_left = 1.56599
+offset_top = 135.6
+offset_right = 71.566
+offset_bottom = 149.6
+rotation = -90.1426
+scale = Vector2( 0.955148, 0.51705 )
+theme_override_colors/font_color = Color( 1, 0.74902, 0, 1 )
 
 [node name="TimeJuiceBar" type="ProgressBar" parent="UI"]
-margin_left = 12.566
-margin_top = 135.6
-margin_right = 77.5664
-margin_bottom = 150.6
-rect_rotation = 270.0
-rect_scale = Vector2( 1.03451, 0.511248 )
-custom_colors/font_color = Color( 0.0313726, 1, 0, 1 )
-custom_colors/font_color_shadow = Color( 0.0941176, 0.321569, 0.854902, 1 )
+offset_left = 12.566
+offset_top = 135.6
+offset_right = 77.5664
+offset_bottom = 150.6
+rotation = 270.0
+scale = Vector2( 1.03451, 0.511248 )
+theme_override_colors/font_color = Color( 0.0313726, 1, 0, 1 )
+theme_override_colors/font_shadow_color = Color( 0.0941176, 0.321569, 0.854902, 1 )
 
 [node name="windButton" parent="UI" instance=ExtResource( 8 )]
 position = Vector2( 337, 24 )

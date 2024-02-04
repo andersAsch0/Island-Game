@@ -1,14 +1,14 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
-export var bulletScene : PackedScene #packed scene of the bullet this enemy uses
+@export var bulletScene : PackedScene #packed scene of the bullet this enemy uses
 var bullet = null
-export(String, FILE, "*.json") var attackPatternFile #imported json file
-export var normalMusic : AudioStreamSample
-export var reverseMusic : AudioStreamSample
+@export var attackPatternFile #imported json file # (String, FILE, "*.json")
+@export var normalMusic : AudioStreamWAV
+@export var reverseMusic : AudioStreamWAV
 var origScale = 0.9 # starting size of sprite when enemy spawns
-export var finalScale = 1 #final size of the sprite once it has approached
-export var enemySpeed = 30 #speed at which the enemy wanders around
-export var maxHP = 5
+@export var finalScale = 1 #final size of the sprite once it has approached
+@export var enemySpeed = 30 #speed at which the enemy wanders around
+@export var maxHP = 5
 var currentHP = maxHP
 var currAttack = 1 #current line of json file
 var currBullets = 0
@@ -21,13 +21,13 @@ enum {
 	ABSCONDING
 }
 var currState = APPROACHING
-export var stateWaitTimes = [4.0, 1000.0, 1.0, 10, 1.0] # how long in seconds enemy stays in each state 
+@export var stateWaitTimes = [4.0, 1000.0, 1.0, 10, 1.0] # how long in seconds enemy stays in each state 
 #(approaching one not used, made it big so it never triggers) 
 #APPROACHING / ABSCOND must never be shorter than the players time to move tiles or everything will break
 var approachSpeed = 30
 var approachVector = Vector2.ZERO
 var stateCounter = 0 #used to count for a state according to above times and know when to switch
-onready var animatedSpriteNode = $enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite
+@onready var animatedSpriteNode = $enemyMovement/PathFollow2D/TimeSyncedAnimatedSprite
 signal awayPhaseStarting(duration)
 signal approachPhaseStarting(duration)
 signal angleChangePhaseStarting(duration)

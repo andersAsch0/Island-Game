@@ -13,8 +13,8 @@ func _ready():
 # Called when the node enters the scene tree for the first time.
 func spawnBullet(unitOffsetPerc, angle):
 	#spawn bullet, place in proper position w proper speed 
-	bullet = bulletScene.instance() 
-	unit_offset = 1.0 * unitOffsetPerc / 100
+	bullet = bulletScene.instantiate() 
+	progress_ratio = 1.0 * unitOffsetPerc / 100
 	bullet.position = position
 	bullet.angle = angle
 	add_child(bullet)

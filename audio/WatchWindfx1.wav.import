@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/WatchWindfx1.wav-682290de6a740dbf798ef1c230f50eff.sample"
+type="AudioStreamWAV"
+uid="uid://bno2p1liy5krw"
+path="res://.godot/imported/WatchWindfx1.wav-682290de6a740dbf798ef1c230f50eff.sample"
 
 [deps]
 
 source_file="res://audio/WatchWindfx1.wav"
-dest_files=[ "res://.import/WatchWindfx1.wav-682290de6a740dbf798ef1c230f50eff.sample" ]
+dest_files=["res://.godot/imported/WatchWindfx1.wav-682290de6a740dbf798ef1c230f50eff.sample"]
 
 [params]
 

@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/SandFootsteps2.wav-9e0169f7f80e29d321c6126197789cda.sample"
+type="AudioStreamWAV"
+uid="uid://b3nk0uxu5biin"
+path="res://.godot/imported/SandFootsteps2.wav-9e0169f7f80e29d321c6126197789cda.sample"
 
 [deps]
 
 source_file="res://audio/SandFootsteps2.wav"
-dest_files=[ "res://.import/SandFootsteps2.wav-9e0169f7f80e29d321c6126197789cda.sample" ]
+dest_files=["res://.godot/imported/SandFootsteps2.wav-9e0169f7f80e29d321c6126197789cda.sample"]
 
 [params]
 

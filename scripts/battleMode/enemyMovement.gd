@@ -1,6 +1,6 @@
 extends Path2D
 
-export var enemySpeed : int
+@export var enemySpeed : int
 #used for all enemeyMovements
 var lastTickOffset : float
 func _ready():

@@ -1,21 +1,21 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://art/map tiles/small house spritesheet.png" type="Texture" id=1]
+[ext_resource path="res://art/map tiles/small house spritesheet.png" type="Texture2D" id=1]
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 14, 3.5 )
+size = Vector2( 14, 3.5 )
 
 [node name="smallHouse" type="StaticBody2D" groups=["scenery"]]
 collision_mask = 7
 
-[node name="variant" type="Sprite" parent="."]
+[node name="variant" type="Sprite2D" parent="."]
 position = Vector2( 0, -16 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 64, 64 )
 
-[node name="variant2" type="Sprite" parent="."]
+[node name="variant2" type="Sprite2D" parent="."]
 visible = false
 position = Vector2( 0, -16 )
 scale = Vector2( 0.5, 0.5 )
@@ -23,7 +23,7 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 384, 0, 64, 64 )
 
-[node name="variant3" type="Sprite" parent="."]
+[node name="variant3" type="Sprite2D" parent="."]
 visible = false
 position = Vector2( 0, -16 )
 scale = Vector2( 0.5, 0.5 )
@@ -31,7 +31,7 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 320, 0, 64, 64 )
 
-[node name="variant4" type="Sprite" parent="."]
+[node name="variant4" type="Sprite2D" parent="."]
 visible = false
 position = Vector2( 0, -16 )
 scale = Vector2( 0.5, 0.5 )
@@ -39,7 +39,7 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 256, 0, 64, 64 )
 
-[node name="variant5" type="Sprite" parent="."]
+[node name="variant5" type="Sprite2D" parent="."]
 visible = false
 position = Vector2( 0, -16 )
 scale = Vector2( 0.5, 0.5 )
@@ -47,7 +47,7 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 192, 0, 64, 64 )
 
-[node name="variant6" type="Sprite" parent="."]
+[node name="variant6" type="Sprite2D" parent="."]
 visible = false
 position = Vector2( 0, -16 )
 scale = Vector2( 0.5, 0.5 )
@@ -55,7 +55,7 @@ texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 128, 0, 64, 64 )
 
-[node name="variant7" type="Sprite" parent="."]
+[node name="variant7" type="Sprite2D" parent="."]
 visible = false
 position = Vector2( 0, -16 )
 scale = Vector2( 0.5, 0.5 )

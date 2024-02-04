@@ -1,20 +1,20 @@
 extends Node2D
 
 
-export(String, FILE, "*.json") var attackPatternFile #imported json file
-export(String, FILE, "*.json") var attackPatternFile2 #imported json file
-export(String, FILE, "*.json") var attackPatternFile3 #imported json file
-onready var attackPatternFilesArray = [attackPatternFile, attackPatternFile2, attackPatternFile3] #just the files
+@export var attackPatternFile #imported json file # (String, FILE, "*.json")
+@export var attackPatternFile2 #imported json file # (String, FILE, "*.json")
+@export var attackPatternFile3 #imported json file # (String, FILE, "*.json")
+@onready var attackPatternFilesArray = [attackPatternFile, attackPatternFile2, attackPatternFile3] #just the files
 var attackPatternDataArray = [] # the json as strings, can actually be accessed by my code
-export var currEighthNote : int = 0
+@export var currEighthNote : int = 0
 var JsonLength = 75
-export var bpm = 207
+@export var bpm = 207
 var subdivisionsPerBeat = 2
 var secondsPerEigthNote : float
 var secondsPerMeasure : float
 var eightNotesInAdvance = 0
 var reverseEndFXPracticalLength = 2.84
-onready var trackNodes = [$normalMusicLoop, $reverseMusicLoop, $tickingClockFX, $reverseStartFX, $reverseEndFX, $stopEndFX, $speedEndFX, $slowEndFX]
+@onready var trackNodes = [$normalMusicLoop, $reverseMusicLoop, $tickingClockFX, $reverseStartFX, $reverseEndFX, $stopEndFX, $speedEndFX, $slowEndFX]
 var trackIsActive = [true, false, false, false, false, false, false, false] #does NOT change when time is stopped
 var trackProgressions = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 enum {
@@ -42,9 +42,9 @@ func _ready():
 	for i in range( attackPatternFilesArray.size()):
 		attackPatternDataArray.push_back(getAttackPatternData(i))
 	play(NORMALMUSIC)
-	Global.connect("timeHasChangedSpeed", self, "syncPitchWithGlobal")
-	Global.connect("timeHasReversed", self, "timeHasReversed")
-	Global.connect("timeHasStoppedOrStarted", self, "timeHasStopped")
+	Global.connect("timeHasChangedSpeed", Callable(self, "syncPitchWithGlobal"))
+	Global.connect("timeHasReversed", Callable(self, "timeHasReversed"))
+	Global.connect("timeHasStoppedOrStarted", Callable(self, "timeHasStopped"))
 #	handleMelodyNote()
 
 var beatCounter : float = 0
@@ -155,7 +155,9 @@ func getAttackPatternData(fileIndex):
 	var attackPatternData = File.new() 
 	if attackPatternData.file_exists(attackPatternFilesArray[fileIndex]): #get the attack pattern json file from the enemy node
 		attackPatternData.open(attackPatternFilesArray[fileIndex], attackPatternData.READ)
-		return parse_json(attackPatternData.get_as_text())
+		var test_json_conv = JSON.new()
+		test_json_conv.parse(attackPatternData.get_as_text())
+		return test_json_conv.get_data()
 
 
 

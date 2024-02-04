@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/Begin_Rewind_FX.wav-ea1f64271286201dc7a43561c35ecc89.sample"
+type="AudioStreamWAV"
+uid="uid://c7a8doit8tsgj"
+path="res://.godot/imported/Begin_Rewind_FX.wav-ea1f64271286201dc7a43561c35ecc89.sample"
 
 [deps]
 
 source_file="res://audio/Begin_Rewind_FX.wav"
-dest_files=[ "res://.import/Begin_Rewind_FX.wav-ea1f64271286201dc7a43561c35ecc89.sample" ]
+dest_files=["res://.godot/imported/Begin_Rewind_FX.wav-ea1f64271286201dc7a43561c35ecc89.sample"]
 
 [params]
 

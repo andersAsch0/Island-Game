@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/mixkit-automatic-door-shut-204.wav-32c34fa2ca7a1d7b56d75b8b8179f587.sample"
+type="AudioStreamWAV"
+uid="uid://vbnuuw8r8vo2"
+path="res://.godot/imported/mixkit-automatic-door-shut-204.wav-32c34fa2ca7a1d7b56d75b8b8179f587.sample"
 
 [deps]
 
 source_file="res://audio/mixkit-automatic-door-shut-204.wav"
-dest_files=[ "res://.import/mixkit-automatic-door-shut-204.wav-32c34fa2ca7a1d7b56d75b8b8179f587.sample" ]
+dest_files=["res://.godot/imported/mixkit-automatic-door-shut-204.wav-32c34fa2ca7a1d7b56d75b8b8179f587.sample"]
 
 [params]
 

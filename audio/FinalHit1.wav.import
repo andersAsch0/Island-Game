@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/FinalHit1.wav-49fd9ce10f62f413de22d7c090c6dd08.sample"
+type="AudioStreamWAV"
+uid="uid://oh3m7fv4bk80"
+path="res://.godot/imported/FinalHit1.wav-49fd9ce10f62f413de22d7c090c6dd08.sample"
 
 [deps]
 
 source_file="res://audio/FinalHit1.wav"
-dest_files=[ "res://.import/FinalHit1.wav-49fd9ce10f62f413de22d7c090c6dd08.sample" ]
+dest_files=["res://.godot/imported/FinalHit1.wav-49fd9ce10f62f413de22d7c090c6dd08.sample"]
 
 [params]
 

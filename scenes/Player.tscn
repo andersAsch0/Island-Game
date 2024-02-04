@@ -2,13 +2,13 @@
 
 [ext_resource path="res://scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://audio/SandFootsteps4.wav" type="AudioStream" id=2]
-[ext_resource path="res://art/amadeus walk spritesheet.png" type="Texture" id=3]
+[ext_resource path="res://art/amadeus walk spritesheet.png" type="Texture2D" id=3]
 [ext_resource path="res://scripts/playerFootstepMaker.gd" type="Script" id=4]
 [ext_resource path="res://audio/GrassFootsteps3.wav" type="AudioStream" id=5]
 [ext_resource path="res://audio/SandFootsteps2.wav" type="AudioStream" id=6]
 [ext_resource path="res://scripts/HitBox.gd" type="Script" id=7]
 [ext_resource path="res://audio/splash-6213.mp3" type="AudioStream" id=8]
-[ext_resource path="res://art/waterOverFeet.png" type="Texture" id=9]
+[ext_resource path="res://art/waterOverFeet.png" type="Texture2D" id=9]
 
 [sub_resource type="AtlasTexture" id=1]
 region = Rect2( 0, 0, 17, 20 )
@@ -219,12 +219,12 @@ animations = [ {
 radius = 0.994715
 height = 5.0079
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 7
 script = ExtResource( 1 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 visible = false
 position = Vector2( -0.5, -9 )
 frames = SubResource( 17 )
@@ -232,14 +232,14 @@ animation = "idle"
 frame = 2
 playing = true
 
-[node name="Animations" type="AnimatedSprite" parent="."]
+[node name="Animations" type="AnimatedSprite2D" parent="."]
 position = Vector2( -1, -7 )
 scale = Vector2( 0.5, 0.5 )
 frames = SubResource( 39 )
 animation = "idle down"
 playing = true
 
-[node name="waterOverFeet" type="AnimatedSprite" parent="Animations"]
+[node name="waterOverFeet" type="AnimatedSprite2D" parent="Animations"]
 visible = false
 position = Vector2( 0, 4 )
 frames = SubResource( 62 )
@@ -291,7 +291,7 @@ volume_db = -10.0
 stream = ExtResource( 8 )
 volume_db = -10.0
 
-[node name="Listener2D" type="Listener2D" parent="."]
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
 
 [node name="doorHitBox" type="Area2D" parent="."]
 visible = false

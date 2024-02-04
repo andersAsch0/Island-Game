@@ -1,4 +1,4 @@
-extends AnimatedSprite
+extends AnimatedSprite2D
 
 var animTime = 0.8 # should be the same as the battlemode enemys angle change state
 var isPlayerOffensePhase = true

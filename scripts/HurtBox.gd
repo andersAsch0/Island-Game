@@ -9,7 +9,7 @@ extends Area2D
 signal hurtBoxHit(damage)
 
 func _ready():
-	connect("area_entered", self, "_on_area_entered")
+	connect("area_entered", Callable(self, "_on_area_entered"))
 	
 func _on_area_entered(hitbox: HitBox): #passes in null if not hitbox
 	if hitbox: #only proceed if it is a hitbox

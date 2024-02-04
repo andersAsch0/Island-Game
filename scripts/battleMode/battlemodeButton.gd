@@ -2,7 +2,7 @@ extends Node2D
 
 var active = false #button is pressed and extended to show minigame ui
 var enabled = false
-export var activePos = Vector2(-60, 0)
+@export var activePos = Vector2(-60, 0)
 var hiddenPos = Vector2(32, 0)
 var enabledPos = Vector2.ZERO
 

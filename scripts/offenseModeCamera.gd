@@ -3,8 +3,8 @@ extends Camera2D
 
 
 var battleModePlayerNode
-onready var grid = get_node("../bigGridController")
-onready var globalGridPos = grid.position # since grid child is at 0,0
+@onready var grid = get_node("../bigGridController")
+@onready var globalGridPos = grid.position # since grid child is at 0,0
 var shouldFollow = true
 var vec = Vector2(0, -20)
 var shaking: bool = false
@@ -17,8 +17,8 @@ func _ready():
 	
 func _process(delta):
 	if shaking:
-		offset_h = rand_range(-1.0, 1.0) * 0.02
-		offset_v = rand_range(-1.0, 1.0) * 0.02
+		drag_horizontal_offset = randf_range(-1.0, 1.0) * 0.02
+		drag_vertical_offset = randf_range(-1.0, 1.0) * 0.02
 		shakeDuration -= delta
 		if shakeDuration <=0:
 			shaking = false

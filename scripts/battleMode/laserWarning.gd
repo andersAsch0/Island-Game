@@ -37,15 +37,15 @@ func init(bulletPacked : PackedScene, bulletNum : int, bulletInterval : float, w
 	return self
 
 var intervalCount : float = 0.0
-onready var bulletCount = numberOfBullets
+@onready var bulletCount = numberOfBullets
 func _process(delta):
 	intervalCount += delta
 	if bulletCount <= 0:
-		if latestBulletSpawned != null : latestBulletSpawned.connect("despawned", self, "despawn") #despawn when last bullet is gone
+		if latestBulletSpawned != null : latestBulletSpawned.connect("despawned", Callable(self, "despawn")) #despawn when last bullet is gone
 		else: despawn() #if there are no bullets spawned
 		set_process(false)
 	elif intervalCount >= bulletFireIntervalSeconds:
-		latestBulletSpawned = bulletPackedScene.instance().init(lengthOfWarningSeconds)
+		latestBulletSpawned = bulletPackedScene.instantiate().init(lengthOfWarningSeconds)
 		add_child(latestBulletSpawned)
 		bulletCount -= 1
 		intervalCount = 0

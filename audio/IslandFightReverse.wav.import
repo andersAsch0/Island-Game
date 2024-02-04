@@ -1,13 +1,14 @@
 [remap]
 
 importer="wav"
-type="AudioStreamSample"
-path="res://.import/IslandFightReverse.wav-e2ea3b85d95b6d5a5d49c9f7d3617c99.sample"
+type="AudioStreamWAV"
+uid="uid://cjylluoxyv621"
+path="res://.godot/imported/IslandFightReverse.wav-e2ea3b85d95b6d5a5d49c9f7d3617c99.sample"
 
 [deps]
 
 source_file="res://audio/IslandFightReverse.wav"
-dest_files=[ "res://.import/IslandFightReverse.wav-e2ea3b85d95b6d5a5d49c9f7d3617c99.sample" ]
+dest_files=["res://.godot/imported/IslandFightReverse.wav-e2ea3b85d95b6d5a5d49c9f7d3617c99.sample"]
 
 [params]
 
