@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1707007377
+::res://::1707007999
 default_env.tres::Environment::-1::1707007343::0::1::::<><>::
 Global.gd::GDScript::-1::1707007343::0::1::::<>Node<>::
 gridRenderer.gd::GDScript::-1::1707007343::0::1::::<>Node3D<>::
@@ -14,7 +14,7 @@ THIRDPARTY.md::TextFile::-1::1688165133::0::1::::<><>::
 ::res://addons/godot-git-plugin/linux/::1688165133
 ::res://addons/godot-git-plugin/osx/::1688165133
 ::res://addons/godot-git-plugin/win64/::1688165133
-::res://art/::1705811720
+::res://art/::1707007381
 amadeus shove.png::CompressedTexture2D::6906332517193969626::1697328578::1707007379::1::::<><>::
 amadeus walk spritesheet.png::CompressedTexture2D::5146494492427925519::1692744919::1707007380::1::::<><>::
 battle player roll version 2.png::CompressedTexture2D::2820903440762650730::1696793569::1707007380::1::::<><>::
@@ -44,7 +44,7 @@ sprite base spritesheet.png::CompressedTexture2D::1105192034015925842::168875877
 the entity.jpg::CompressedTexture2D::5972847063644192647::1689220077::1707007380::1::::<><>::
 villager.png::CompressedTexture2D::320453194915828250::1688654895::1707007380::1::::<><>::
 waterOverFeet.png::CompressedTexture2D::5201626664416781567::1705811719::1707007380::1::::<><>::
-::res://art/battleModeUI/::1696799640
+::res://art/battleModeUI/::1707007380
 action menu horiz.png::CompressedTexture2D::4176502675288337978::1692738322::1707007380::1::::<><>::
 action menu.png::CompressedTexture2D::652212381785663312::1692738322::1707007380::1::::<><>::
 arrow.png::CompressedTexture2D::1979608021316755212::1692738322::1707007380::1::::<><>::
@@ -60,7 +60,7 @@ enemy circle highlight.png::CompressedTexture2D::3658379401677953436::1692738322
 heart.png::CompressedTexture2D::2956987321423653383::1692738322::1707007380::1::::<><>::
 redArrows.png::CompressedTexture2D::4043427958033118507::1693882953::1707007380::1::::<><>::
 u.png::CompressedTexture2D::5046531247693481644::1692738322::1707007380::1::::<><>::
-::res://art/map tiles/::1705292535
+::res://art/map tiles/::1707007380
 building inside tiles.png::CompressedTexture2D::6806800661445757073::1694808087::1707007380::1::::<><>::
 dirt n sane.png::CompressedTexture2D::4277515933581293839::1704060904::1707007380::1::::<><>::
 docks and water no water.png::CompressedTexture2D::6332818426335738717::1693882953::1707007380::1::::<><>::
@@ -86,7 +86,7 @@ water and docks.png::CompressedTexture2D::1472018540867195601::1690302926::17070
 water and sane.png::CompressedTexture2D::8705081591912235691::1688758998::1707007380::1::::<><>::
 waterMovement.png::CompressedTexture2D::1638856477166547156::1692653052::1707007380::1::::<><>::
 wide house spritesheet.png::CompressedTexture2D::4938889411624128765::1690302926::1707007380::1::::<><>::
-::res://art/map tiles/waterMovement/::1706416896
+::res://art/map tiles/waterMovement/::1707007380
 animated sprites spritesheet1.png::CompressedTexture2D::7720713915142350254::1704060495::1707007380::1::::<><>::
 animated sprites spritesheet2.png::CompressedTexture2D::4232158596836930752::1704060495::1707007380::1::::<><>::
 AnimatedDocks1.png::CompressedTexture2D::2609362101108405304::1693882953::1707007380::1::::<><>::
@@ -137,7 +137,7 @@ waterMovement30.png::CompressedTexture2D::4824093418770696852::1705211145::17070
 waterMovement31.png::CompressedTexture2D::1468390008483463488::1705211145::1707007380::1::::<><>::
 waterMovement32.png::CompressedTexture2D::7724300336007746500::1705211145::1707007380::1::::<><>::
 waterMovement.tres::AnimatedTexture::-1::1707007345::0::1::::<><>::res://art/map tiles/waterMovement/waterMovement18.png<>res://art/map tiles/waterMovement/waterMovement15.png<>res://art/map tiles/waterMovement/waterMovement19.png<>res://art/map tiles/waterMovement/waterMovement22.png<>res://art/map tiles/waterMovement/waterMovement17.png<>res://art/map tiles/waterMovement/waterMovement2.png<>res://art/map tiles/waterMovement/waterMovement4.png<>res://art/map tiles/waterMovement/waterMovement1.png<>res://art/map tiles/waterMovement/waterMovement21.png<>res://art/map tiles/waterMovement/waterMovement27.png<>res://art/map tiles/waterMovement/waterMovement12.png<>res://art/map tiles/waterMovement/waterMovement31.png<>res://art/map tiles/waterMovement/waterMovement32.png<>res://art/map tiles/waterMovement/waterMovement7.png<>res://art/map tiles/waterMovement/waterMovement10.png<>res://art/map tiles/waterMovement/waterMovement5.png<>res://art/map tiles/waterMovement/waterMovement8.png<>res://art/map tiles/waterMovement/waterMovement16.png<>res://art/map tiles/waterMovement/waterMovement20.png<>res://art/map tiles/waterMovement/waterMovement25.png<>res://art/map tiles/waterMovement/waterMovement26.png<>res://art/map tiles/waterMovement/waterMovement28.png<>res://art/map tiles/waterMovement/waterMovement29.png<>res://art/map tiles/waterMovement/waterMovement3.png<>res://art/map tiles/waterMovement/waterMovement6.png<>res://art/map tiles/waterMovement/waterMovement9.png<>res://art/map tiles/waterMovement/waterMovement11.png<>res://art/map tiles/waterMovement/waterMovement13.png<>res://art/map tiles/waterMovement/waterMovement14.png<>res://art/map tiles/waterMovement/waterMovement24.png<>res://art/map tiles/waterMovement/waterMovement23.png<>res://art/map tiles/waterMovement/waterMovement30.png
-::res://audio/::1704674626
+::res://audio/::1707007382
 Begin_Rewind_FX.wav::AudioStreamWAV::7020894130539723685::1690494675::1707007381::1::::<><>::
 DOORGate_Grinding metal barrier closure 2 (ID 2359)_BSB.wav::AudioStreamWAV::9096214684149423243::1693882953::1707007381::1::::<><>::
 Ending_Rewind_FX.wav::AudioStreamWAV::2412055937107276772::1690494658::1707007381::1::::<><>::
