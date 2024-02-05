@@ -1,25 +1,11 @@
 res://default_env.tres
-res://scenes/MainMenu.tscn
-res://scripts/TimeSyncedAnimatedSprite.gd
-res://Global.gd
-res://scripts/Player.gd
-res://scripts/playerFootstepMaker.gd
-res://scripts/battleMode/BattleModePlayer.gd
-res://scenes/battleMode/BattleModeEnemy.tscn
-res://scripts/battleMode/BattleModeEnemy.gd
-res://scenes/battleMode/musicAttackController.tscn
-res://scripts/MusicHandler.gd
-res://scenes/battleMode/BattleMode.tscn
-res://scripts/battleMode/Bullet.gd
-res://scripts/battleMode/windWatchMinigame.gd
-res://scripts/battleMode/catchMiniGame.gd
-res://scripts/battleMode/comboMiniGame.gd
-res://scripts/battleMode/gridAttackSquare.gd
-res://scenes/Door.tscn
 res://scenes/locations/overWorldHaven.tscn
-res://scripts/sceneTransition.gd
-res://scripts/enemy.gd
+res://scenes/MainMenu.tscn
+res://scenes/battleMode/BattleMode.tscn
+res://scenes/battleMode/BattleModeEnemy.tscn
+res://scenes/battleMode/musicAttackController.tscn
+res://scenes/Door.tscn
 res://scenes/enemy.tscn
-res://scripts/battleMode/BattleModeBeeEnemy.gd
-res://scripts/hitAndMissAnims.gd
-res://scripts/battleMode/BattleMode.gd
+res://scenes/Player.tscn
+res://art/map tiles/waterMovement/animatedDocksAndWater.tres
+res://art/map tiles/waterMovement/test.tres

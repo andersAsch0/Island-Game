@@ -1,11 +1,10 @@
-[gd_resource type="AnimatedTexture" load_steps=3 format=2]
+[gd_resource type="AnimatedTexture" load_steps=3 format=3 uid="uid://b7g3pheo6tbwx"]
 
-[ext_resource path="res://art/map tiles/waterMovement/AnimatedDocks1.png" type="Texture2D" id=1]
-[ext_resource path="res://art/map tiles/waterMovement/AnimatedDocks2.png" type="Texture2D" id=2]
+[ext_resource type="Texture2D" uid="uid://bdf82vlmekpi3" path="res://art/map tiles/waterMovement/AnimatedDocks1.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://wtxa438jjkrn" path="res://art/map tiles/waterMovement/AnimatedDocks2.png" id="2"]
 
 [resource]
 frames = 2
-fps = 1.0
-frame_0/texture = ExtResource( 1 )
-frame_1/texture = ExtResource( 2 )
-frame_1/delay_sec = 0.0
+frame_0/texture = ExtResource("1")
+frame_1/texture = ExtResource("2")
+frame_1/duration = 1.0

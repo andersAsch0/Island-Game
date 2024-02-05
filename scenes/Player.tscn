@@ -1,269 +1,381 @@
-[gd_scene load_steps=52 format=2]
+[gd_scene load_steps=52 format=3 uid="uid://dkr0v6d1norli"]
 
-[ext_resource path="res://scripts/Player.gd" type="Script" id=1]
-[ext_resource path="res://audio/SandFootsteps4.wav" type="AudioStream" id=2]
-[ext_resource path="res://art/amadeus walk spritesheet.png" type="Texture2D" id=3]
-[ext_resource path="res://scripts/playerFootstepMaker.gd" type="Script" id=4]
-[ext_resource path="res://audio/GrassFootsteps3.wav" type="AudioStream" id=5]
-[ext_resource path="res://audio/SandFootsteps2.wav" type="AudioStream" id=6]
-[ext_resource path="res://scripts/HitBox.gd" type="Script" id=7]
-[ext_resource path="res://audio/splash-6213.mp3" type="AudioStream" id=8]
-[ext_resource path="res://art/waterOverFeet.png" type="Texture2D" id=9]
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1"]
+[ext_resource type="AudioStream" uid="uid://fbk0rxewn281" path="res://audio/SandFootsteps4.wav" id="2"]
+[ext_resource type="Texture2D" uid="uid://cflaaokrhfecd" path="res://art/amadeus walk spritesheet.png" id="3"]
+[ext_resource type="Script" path="res://scripts/playerFootstepMaker.gd" id="4"]
+[ext_resource type="AudioStream" uid="uid://bf5ic2k7io1im" path="res://audio/GrassFootsteps3.wav" id="5"]
+[ext_resource type="AudioStream" uid="uid://b3nk0uxu5biin" path="res://audio/SandFootsteps2.wav" id="6"]
+[ext_resource type="Script" path="res://scripts/HitBox.gd" id="7"]
+[ext_resource type="AudioStream" uid="uid://ccj4vdfe8b2ra" path="res://audio/splash-6213.mp3" id="8"]
+[ext_resource type="Texture2D" uid="uid://cgdybccebngwd" path="res://art/waterOverFeet.png" id="9"]
 
-[sub_resource type="AtlasTexture" id=1]
-region = Rect2( 0, 0, 17, 20 )
+[sub_resource type="AtlasTexture" id="1"]
+region = Rect2(0, 0, 17, 20)
 
-[sub_resource type="AtlasTexture" id=2]
-region = Rect2( 17, 0, 17, 20 )
+[sub_resource type="AtlasTexture" id="2"]
+region = Rect2(17, 0, 17, 20)
 
-[sub_resource type="AtlasTexture" id=3]
-region = Rect2( 34, 0, 17, 20 )
+[sub_resource type="AtlasTexture" id="3"]
+region = Rect2(34, 0, 17, 20)
 
-[sub_resource type="AtlasTexture" id=4]
-region = Rect2( 51, 0, 17, 20 )
+[sub_resource type="AtlasTexture" id="4"]
+region = Rect2(51, 0, 17, 20)
 
-[sub_resource type="AtlasTexture" id=5]
-region = Rect2( 0, 20, 17, 20 )
+[sub_resource type="AtlasTexture" id="5"]
+region = Rect2(0, 20, 17, 20)
 
-[sub_resource type="AtlasTexture" id=6]
-region = Rect2( 17, 20, 17, 20 )
+[sub_resource type="AtlasTexture" id="6"]
+region = Rect2(17, 20, 17, 20)
 
-[sub_resource type="AtlasTexture" id=7]
-region = Rect2( 34, 20, 17, 20 )
+[sub_resource type="AtlasTexture" id="7"]
+region = Rect2(34, 20, 17, 20)
 
-[sub_resource type="AtlasTexture" id=8]
-region = Rect2( 51, 20, 17, 20 )
+[sub_resource type="AtlasTexture" id="8"]
+region = Rect2(51, 20, 17, 20)
 
-[sub_resource type="AtlasTexture" id=9]
-region = Rect2( 0, 40, 17, 20 )
+[sub_resource type="AtlasTexture" id="9"]
+region = Rect2(0, 40, 17, 20)
 
-[sub_resource type="AtlasTexture" id=10]
-region = Rect2( 17, 40, 17, 20 )
+[sub_resource type="AtlasTexture" id="10"]
+region = Rect2(17, 40, 17, 20)
 
-[sub_resource type="AtlasTexture" id=11]
-region = Rect2( 34, 40, 17, 20 )
+[sub_resource type="AtlasTexture" id="11"]
+region = Rect2(34, 40, 17, 20)
 
-[sub_resource type="AtlasTexture" id=12]
-region = Rect2( 51, 40, 17, 20 )
+[sub_resource type="AtlasTexture" id="12"]
+region = Rect2(51, 40, 17, 20)
 
-[sub_resource type="AtlasTexture" id=13]
-region = Rect2( 0, 40, 17, 20 )
+[sub_resource type="AtlasTexture" id="13"]
+region = Rect2(0, 40, 17, 20)
 
-[sub_resource type="AtlasTexture" id=14]
-region = Rect2( 17, 40, 17, 20 )
+[sub_resource type="AtlasTexture" id="14"]
+region = Rect2(17, 40, 17, 20)
 
-[sub_resource type="AtlasTexture" id=15]
-region = Rect2( 34, 40, 17, 20 )
+[sub_resource type="AtlasTexture" id="15"]
+region = Rect2(34, 40, 17, 20)
 
-[sub_resource type="AtlasTexture" id=16]
-region = Rect2( 51, 40, 17, 20 )
+[sub_resource type="AtlasTexture" id="16"]
+region = Rect2(51, 40, 17, 20)
 
-[sub_resource type="SpriteFrames" id=17]
-animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+[sub_resource type="SpriteFrames" id="17"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("1")
+}, {
+"duration": 1.0,
+"texture": SubResource("2")
+}, {
+"duration": 1.0,
+"texture": SubResource("3")
+}, {
+"duration": 1.0,
+"texture": SubResource("4")
+}, {
+"duration": 1.0,
+"texture": SubResource("5")
+}, {
+"duration": 1.0,
+"texture": SubResource("6")
+}, {
+"duration": 1.0,
+"texture": SubResource("7")
+}, {
+"duration": 1.0,
+"texture": SubResource("8")
+}],
 "loop": true,
-"name": "idle",
+"name": &"idle",
 "speed": 6.0
 }, {
-"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("9")
+}, {
+"duration": 1.0,
+"texture": SubResource("10")
+}, {
+"duration": 1.0,
+"texture": SubResource("11")
+}, {
+"duration": 1.0,
+"texture": SubResource("12")
+}],
 "loop": true,
-"name": "run",
+"name": &"run",
 "speed": 8.0
 }, {
-"frames": [ SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("13")
+}, {
+"duration": 1.0,
+"texture": SubResource("14")
+}, {
+"duration": 1.0,
+"texture": SubResource("15")
+}, {
+"duration": 1.0,
+"texture": SubResource("16")
+}],
 "loop": true,
-"name": "walk",
+"name": &"walk",
 "speed": 4.0
-} ]
+}]
 
-[sub_resource type="AtlasTexture" id=41]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 96, 32, 32 )
+[sub_resource type="AtlasTexture" id="41"]
+atlas = ExtResource("3")
+region = Rect2(0, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id=42]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="42"]
+atlas = ExtResource("3")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=43]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 32, 32, 32 )
+[sub_resource type="AtlasTexture" id="43"]
+atlas = ExtResource("3")
+region = Rect2(0, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id=44]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 64, 32, 32 )
+[sub_resource type="AtlasTexture" id="44"]
+atlas = ExtResource("3")
+region = Rect2(0, 64, 32, 32)
 
-[sub_resource type="AtlasTexture" id=45]
-atlas = ExtResource( 3 )
-region = Rect2( 32, 96, 32, 32 )
+[sub_resource type="AtlasTexture" id="45"]
+atlas = ExtResource("3")
+region = Rect2(32, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id=46]
-atlas = ExtResource( 3 )
-region = Rect2( 64, 96, 32, 32 )
+[sub_resource type="AtlasTexture" id="46"]
+atlas = ExtResource("3")
+region = Rect2(64, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id=47]
-atlas = ExtResource( 3 )
-region = Rect2( 96, 96, 32, 32 )
+[sub_resource type="AtlasTexture" id="47"]
+atlas = ExtResource("3")
+region = Rect2(96, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id=48]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 96, 32, 32 )
+[sub_resource type="AtlasTexture" id="48"]
+atlas = ExtResource("3")
+region = Rect2(0, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id=49]
-atlas = ExtResource( 3 )
-region = Rect2( 96, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="49"]
+atlas = ExtResource("3")
+region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=50]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="50"]
+atlas = ExtResource("3")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=51]
-atlas = ExtResource( 3 )
-region = Rect2( 32, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="51"]
+atlas = ExtResource("3")
+region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=52]
-atlas = ExtResource( 3 )
-region = Rect2( 64, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="52"]
+atlas = ExtResource("3")
+region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=53]
-atlas = ExtResource( 3 )
-region = Rect2( 96, 32, 32, 32 )
+[sub_resource type="AtlasTexture" id="53"]
+atlas = ExtResource("3")
+region = Rect2(96, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id=54]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 32, 32, 32 )
+[sub_resource type="AtlasTexture" id="54"]
+atlas = ExtResource("3")
+region = Rect2(0, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id=55]
-atlas = ExtResource( 3 )
-region = Rect2( 32, 32, 32, 32 )
+[sub_resource type="AtlasTexture" id="55"]
+atlas = ExtResource("3")
+region = Rect2(32, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id=56]
-atlas = ExtResource( 3 )
-region = Rect2( 64, 32, 32, 32 )
+[sub_resource type="AtlasTexture" id="56"]
+atlas = ExtResource("3")
+region = Rect2(64, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id=57]
-atlas = ExtResource( 3 )
-region = Rect2( 32, 64, 32, 32 )
+[sub_resource type="AtlasTexture" id="57"]
+atlas = ExtResource("3")
+region = Rect2(32, 64, 32, 32)
 
-[sub_resource type="AtlasTexture" id=58]
-atlas = ExtResource( 3 )
-region = Rect2( 64, 64, 32, 32 )
+[sub_resource type="AtlasTexture" id="58"]
+atlas = ExtResource("3")
+region = Rect2(64, 64, 32, 32)
 
-[sub_resource type="AtlasTexture" id=59]
-atlas = ExtResource( 3 )
-region = Rect2( 96, 64, 32, 32 )
+[sub_resource type="AtlasTexture" id="59"]
+atlas = ExtResource("3")
+region = Rect2(96, 64, 32, 32)
 
-[sub_resource type="AtlasTexture" id=60]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 64, 32, 32 )
+[sub_resource type="AtlasTexture" id="60"]
+atlas = ExtResource("3")
+region = Rect2(0, 64, 32, 32)
 
-[sub_resource type="SpriteFrames" id=39]
-animations = [ {
-"frames": [ SubResource( 41 ) ],
+[sub_resource type="SpriteFrames" id="39"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("41")
+}],
 "loop": false,
-"name": "idle down",
+"name": &"idle down",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 42 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("42")
+}],
 "loop": false,
-"name": "idle left",
+"name": &"idle left",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 43 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("43")
+}],
 "loop": false,
-"name": "idle right",
+"name": &"idle right",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 44 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("44")
+}],
 "loop": false,
-"name": "idle up",
+"name": &"idle up",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 45 ), SubResource( 46 ), SubResource( 47 ), SubResource( 48 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("45")
+}, {
+"duration": 1.0,
+"texture": SubResource("46")
+}, {
+"duration": 1.0,
+"texture": SubResource("47")
+}, {
+"duration": 1.0,
+"texture": SubResource("48")
+}],
 "loop": true,
-"name": "walk down",
+"name": &"walk down",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("49")
+}, {
+"duration": 1.0,
+"texture": SubResource("50")
+}, {
+"duration": 1.0,
+"texture": SubResource("51")
+}, {
+"duration": 1.0,
+"texture": SubResource("52")
+}],
 "loop": true,
-"name": "walk left",
+"name": &"walk left",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 53 ), SubResource( 54 ), SubResource( 55 ), SubResource( 56 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("53")
+}, {
+"duration": 1.0,
+"texture": SubResource("54")
+}, {
+"duration": 1.0,
+"texture": SubResource("55")
+}, {
+"duration": 1.0,
+"texture": SubResource("56")
+}],
 "loop": true,
-"name": "walk right",
+"name": &"walk right",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 57 ), SubResource( 58 ), SubResource( 59 ), SubResource( 60 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("57")
+}, {
+"duration": 1.0,
+"texture": SubResource("58")
+}, {
+"duration": 1.0,
+"texture": SubResource("59")
+}, {
+"duration": 1.0,
+"texture": SubResource("60")
+}],
 "loop": true,
-"name": "walk up",
+"name": &"walk up",
 "speed": 5.0
-} ]
+}]
 
-[sub_resource type="AtlasTexture" id=63]
-atlas = ExtResource( 9 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="63"]
+atlas = ExtResource("9")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=64]
-atlas = ExtResource( 9 )
-region = Rect2( 32, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="64"]
+atlas = ExtResource("9")
+region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id=62]
-animations = [ {
-"frames": [ SubResource( 63 ), SubResource( 64 ) ],
+[sub_resource type="SpriteFrames" id="62"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("63")
+}, {
+"duration": 1.0,
+"texture": SubResource("64")
+}],
 "loop": true,
-"name": "default",
+"name": &"default",
 "speed": 3.0
-} ]
+}]
 
-[sub_resource type="CapsuleShape2D" id=40]
+[sub_resource type="CapsuleShape2D" id="40"]
 radius = 0.994715
 height = 5.0079
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 7
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 visible = false
-position = Vector2( -0.5, -9 )
-frames = SubResource( 17 )
-animation = "idle"
+position = Vector2(-0.5, -9)
+sprite_frames = SubResource("17")
+animation = &"idle"
 frame = 2
-playing = true
 
 [node name="Animations" type="AnimatedSprite2D" parent="."]
-position = Vector2( -1, -7 )
-scale = Vector2( 0.5, 0.5 )
-frames = SubResource( 39 )
-animation = "idle down"
-playing = true
+texture_filter = 1
+position = Vector2(-1, -7)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("39")
+animation = &"idle down"
 
 [node name="waterOverFeet" type="AnimatedSprite2D" parent="Animations"]
 visible = false
-position = Vector2( 0, 4 )
-frames = SubResource( 62 )
-playing = true
+position = Vector2(0, 4)
+sprite_frames = SubResource("62")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
-position = Vector2( -1, -1 )
+position = Vector2(-1, -1)
 rotation = 1.57344
-shape = SubResource( 40 )
+shape = SubResource("40")
 
 [node name="playerFootstepMaker" type="Node2D" parent="."]
-script = ExtResource( 4 )
+script = ExtResource("4")
 
 [node name="sandFootstep" type="AudioStreamPlayer2D" parent="playerFootstepMaker"]
-stream = ExtResource( 2 )
+stream = ExtResource("2")
 volume_db = -10.0
 
 [node name="woodFootstep" type="AudioStreamPlayer2D" parent="playerFootstepMaker"]
-stream = ExtResource( 6 )
+stream = ExtResource("6")
 volume_db = -20.0
 
 [node name="grassFootstep" type="AudioStreamPlayer2D" parent="playerFootstepMaker"]
-stream = ExtResource( 5 )
+stream = ExtResource("5")
 volume_db = -5.0
 
 [node name="footstepTimer" type="Timer" parent="playerFootstepMaker"]
@@ -272,35 +384,35 @@ one_shot = true
 autostart = true
 
 [node name="waterFootstep" type="AudioStreamPlayer2D" parent="playerFootstepMaker"]
-stream = ExtResource( 8 )
+stream = ExtResource("8")
 volume_db = -10.0
 
 [node name="waterFootstep2" type="AudioStreamPlayer2D" parent="playerFootstepMaker/waterFootstep"]
-stream = ExtResource( 8 )
+stream = ExtResource("8")
 volume_db = -10.0
 
 [node name="waterFootstep3" type="AudioStreamPlayer2D" parent="playerFootstepMaker/waterFootstep/waterFootstep2"]
-stream = ExtResource( 8 )
+stream = ExtResource("8")
 volume_db = -10.0
 
 [node name="waterFootstep4" type="AudioStreamPlayer2D" parent="playerFootstepMaker/waterFootstep/waterFootstep2/waterFootstep3"]
-stream = ExtResource( 8 )
+stream = ExtResource("8")
 volume_db = -10.0
 
 [node name="waterFootstep5" type="AudioStreamPlayer2D" parent="playerFootstepMaker/waterFootstep/waterFootstep2/waterFootstep3/waterFootstep4"]
-stream = ExtResource( 8 )
+stream = ExtResource("8")
 volume_db = -10.0
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 
 [node name="doorHitBox" type="Area2D" parent="."]
 visible = false
-script = ExtResource( 7 )
+script = ExtResource("7")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="doorHitBox"]
-position = Vector2( -1, -1 )
+position = Vector2(-1, -1)
 rotation = 1.57344
-shape = SubResource( 40 )
+shape = SubResource("40")
 
 [connection signal="currentStepMaterial" from="playerFootstepMaker" to="." method="_on_playerFootstepMaker_currentStepMaterial"]
 [connection signal="timeout" from="playerFootstepMaker/footstepTimer" to="playerFootstepMaker" method="_on_footstepTimer_timeout"]

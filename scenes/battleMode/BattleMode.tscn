@@ -1415,6 +1415,7 @@ scale = Vector2(1.3795, 1.3795)
 [node name="Shield" parent="BattleModePlayer" index="0"]
 sprite_frames = SubResource("SpriteFrames_pm202")
 animation = &"hit"
+frame = 0
 
 [node name="Animations" parent="BattleModePlayer" index="2"]
 sprite_frames = SubResource("10")

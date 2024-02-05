@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cwhwug7hrvkxp"
-path="res://.godot/imported/docks and water no water.png-cecdf3d0735a708ff1aced6b4184fa7e.ctex"
+uid="uid://cy2ni2ix6u6at"
+path="res://.godot/imported/AnimatedPondWaterEdges.png-353ef9cf0711c946b700866edecdc738.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/map tiles/docks and water no water.png"
-dest_files=["res://.godot/imported/docks and water no water.png-cecdf3d0735a708ff1aced6b4184fa7e.ctex"]
+source_file="res://art/map tiles/NewWaterMovementSprites/AnimatedPondWaterEdges.png"
+dest_files=["res://.godot/imported/AnimatedPondWaterEdges.png-353ef9cf0711c946b700866edecdc738.ctex"]
 
 [params]
 
@@ -31,4 +31,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=0
+detect_3d/compress_to=1
