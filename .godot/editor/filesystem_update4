@@ -5,7 +5,6 @@ res://scenes/battleMode/BattleMode.tscn
 res://scenes/battleMode/BattleModeEnemy.tscn
 res://scenes/battleMode/musicAttackController.tscn
 res://scenes/Door.tscn
-res://scenes/enemy.tscn
 res://scenes/Player.tscn
-res://art/map tiles/waterMovement/animatedDocksAndWater.tres
-res://art/map tiles/waterMovement/test.tres
+res://scripts/Player.gd
+res://scripts/playerFootstepMaker.gd

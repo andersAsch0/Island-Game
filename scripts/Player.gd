@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 
 const acc  = 25
-const max_speed = 50
+const max_speed = 100
 const friction = 400
 enum {
 	LEFT, 

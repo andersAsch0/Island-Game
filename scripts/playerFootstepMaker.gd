@@ -10,6 +10,8 @@ var tileSetNode
 signal currentStepMaterial(tileID)
 		
 func getCurrentTileID():
+	print( Vector2((owner.position.x / (tileSetNode.tile_set.tile_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.tile_set.tile_size.y * tileSetNode.scale.y)) as int))
+	print(tileSetNode.get_cell_source_id(0, Vector2((owner.position.x / (tileSetNode.tile_set.tile_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.tile_set.tile_size.y * tileSetNode.scale.y)) as int)))
 	return tileSetNode.get_cell_source_id(0, Vector2((owner.position.x / (tileSetNode.tile_set.tile_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.tile_set.tile_size.y * tileSetNode.scale.y)) as int))
 
 func _ready():
@@ -20,6 +22,7 @@ func _ready():
 func _process(_delta):
 	if getCurrentTileID() != currentTile: #update current tile every frame 
 		currentTile = getCurrentTileID()
+		print(currentTile)
 		emit_signal("currentStepMaterial", currentTile)
 	if timer.time_left == 0 and owner.velocity != Vector2.ZERO: #step only when timer runs down
 		$footstepTimer.start()

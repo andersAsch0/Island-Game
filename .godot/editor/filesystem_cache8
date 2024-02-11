@@ -1,6 +1,6 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1707098991
-default_env.tres::Environment::2213900767289574753::1707098991::0::1::::<><>::
+::res://::1707608272
+default_env.tres::Environment::2213900767289574753::1707106966::0::1::::<><>::
 Global.gd::GDScript::-1::1707025173::0::1::::<>Node<>::
 gridRenderer.gd::GDScript::-1::1707007343::0::1::::<>Node3D<>::
 MACTester.gd::GDScript::-1::1707007343::0::1::::<>Node2D<>::
@@ -86,7 +86,7 @@ water and docks.png::CompressedTexture2D::1472018540867195601::1690302926::17070
 water and sane.png::CompressedTexture2D::8705081591912235691::1688758998::1707007380::1::::<><>::
 waterMovement.png::CompressedTexture2D::1638856477166547156::1692653052::1707007380::1::::<><>::
 wide house spritesheet.png::CompressedTexture2D::4938889411624128765::1690302926::1707007380::1::::<><>::
-::res://art/map tiles/NewWaterMovementSprites/::1707105845
+::res://art/map tiles/NewWaterMovementSprites/::1707105846
 AnimatedDockPosts.png::CompressedTexture2D::3545309382861370409::1707098975::1707098975::1::::<><>::
 AnimatedPondWaterEdges.png::CompressedTexture2D::6513916852891948799::1707098951::1707098951::1::::<><>::
 AnimatedSeaAndPondWaterEdges.png::CompressedTexture2D::8867887519695494658::1707103712::1707103713::1::::<><>::
@@ -199,8 +199,8 @@ mothLaserBullet.tscn::PackedScene::-1::1707007345::0::1::::<><>::res://scripts/H
 musicAttackController.tscn::PackedScene::753091847008900838::1707094152::0::1::::<><>::res://scripts/battleMode/musicAttackController.gd<>res://scenes/battleMode/MusicHandler.tscn<>res://scenes/battleMode/Bullet.tscn<>res://scenes/battleMode/gridAttack.tscn<>res://scenes/battleMode/bulletSpawner.tscn
 MusicHandler.tscn::PackedScene::-1::1707007345::0::1::::<><>::res://audio/IslandFightReverse.wav<>res://audio/TickingClockFX.wav<>res://audio/Begin_Rewind_FX.wav<>res://audio/IslandFight.wav<>res://audio/Ending_Rewind_FX.wav<>res://scripts/MusicHandler.gd<>res://art/placeholder.jpg
 windWatchMinigame.tscn::PackedScene::-1::1707007345::0::1::::<><>::res://scripts/battleMode/windWatchMinigame.gd<>res://art/battleModeUI/arrow.png<>res://art/battleModeUI/clock.png<>res://art/battleModeUI/u.png<>res://audio/WatchWindfx1.wav
-::res://scenes/locations/::1707098991
-overWorldHaven.tscn::PackedScene::4608318409339424713::1707098991::0::1::::<><>::uid://os3aei5tggaa::::res://scenes/enemy.tscn<>res://scenes/map tiles/caveDoor.tscn<>res://scenes/map tiles/smallPalm.tscn<>uid://bdf82vlmekpi3::::res://art/map tiles/waterMovement/AnimatedDocks1.png<>uid://mi6odr5otxan::::res://scenes/Door.tscn<>res://scenes/map tiles/smallTree.tscn<>res://scenes/map tiles/smallHouse.tscn<>res://scenes/map tiles/noncollidingScenery.tscn<>uid://dkr0v6d1norli::::res://scenes/Player.tscn<>res://scenes/overworldClock.tscn<>res://scripts/overworldScene.gd<>uid://d34uaj37f1drg::::res://art/map tiles/docks and water.png<>uid://b17ccehpfvv6f::::res://art/map tiles/dirt n sane.png<>uid://cwhwug7hrvkxp::::res://art/map tiles/docks and water no water.png<>uid://el6yp72j0pm3::::res://art/map tiles/grass n dirt.png<>uid://u8b6vowbf08t::::res://art/map tiles/water and docks.png<>uid://d4iuo6o7kytl2::::res://art/map tiles/nature sprite sheet.png<>res://art/map tiles/waterMovement/waterMovement.tres<>res://art/map tiles/waterMovement/waterEdgeAnimatedTiles.tres<>res://scripts/World.gd<>res://art/map tiles/waterMovement/animatedNatureSpritesheet.tres<>uid://b3qm1o1itl3gu::::res://art/map tiles/nature sprite sheet 2.png<>uid://d2de85rf8kcfj::::res://art/map tiles/soundMappingTiles.png<>res://scenes/map tiles/seaRocks.tscn<>res://scenes/map tiles/rock.tscn<>uid://du1uigdvflum7::::res://art/clock with hand.png
+::res://scenes/locations/::1707106966
+overWorldHaven.tscn::PackedScene::4608318409339424713::1707106966::0::1::::<><>::res://scenes/map tiles/caveDoor.tscn<>uid://dkr0v6d1norli::::res://scenes/Player.tscn<>res://scenes/overworldClock.tscn<>uid://bqrmy0caalv1j::::res://art/map tiles/NewWaterMovementSprites/AnimatedDockPosts.png<>res://scripts/overworldScene.gd<>uid://dylw2uqmcrt11::::res://art/map tiles/NewWaterMovementSprites/AnimatedSeaAndPondWaterEdges.png<>uid://bwlu5yldwwfj4::::res://art/map tiles/NewWaterMovementSprites/AnimatedSeaWater.png<>uid://b17ccehpfvv6f::::res://art/map tiles/dirt n sane.png<>uid://b18yjssffj465::::res://art/map tiles/NewWaterMovementSprites/pond water movement.png<>uid://dyjpap7krqy7v::::res://art/map tiles/walkway vertical1.png<>uid://cwhwug7hrvkxp::::res://art/map tiles/docks and water no water.png<>uid://el6yp72j0pm3::::res://art/map tiles/grass n dirt.png<>uid://botq18b56rvce::::res://art/map tiles/palm trees spritesheet.png<>uid://onk550856qjs::::res://art/map tiles/walkway horizontal2.png<>uid://d4iuo6o7kytl2::::res://art/map tiles/nature sprite sheet.png<>res://scripts/World.gd<>uid://b3qm1o1itl3gu::::res://art/map tiles/nature sprite sheet 2.png<>uid://d2de85rf8kcfj::::res://art/map tiles/soundMappingTiles.png<>uid://c4b77bd1ofgs4::::res://art/map tiles/walkway horizontal1.png<>uid://wpveul1qh0xg::::res://art/map tiles/walkway vertical2.png<>uid://du1uigdvflum7::::res://art/clock with hand.png
 ::res://scenes/map tiles/::1706506372
 Cave.tscn::PackedScene::-1::1707007344::0::1::::<><>::res://art/map tiles/Forest-Tileset.png<>res://scenes/Player.tscn<>res://scenes/map tiles/caveDoor.tscn<>res://scenes/NPC.tscn
 caveDoor.tscn::PackedScene::-1::1707007344::0::1::::<><>::res://scripts/caveDoor.gd
