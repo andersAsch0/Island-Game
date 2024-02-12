@@ -1,4 +1,7 @@
+Area2D
+Camera2D
+TileMap
+SceneTransition
 CollisionPolygon2D
 CollisionShape2D
 Sprite2D
-TileMap

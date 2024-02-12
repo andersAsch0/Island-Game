@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://mi6odr5otxan"]
+[gd_scene load_steps=14 format=3 uid="uid://mi6odr5otxan"]
 
 [ext_resource type="Texture2D" uid="uid://cul3sjai5a7ut" path="res://art/map tiles/door opening.png" id="1"]
 [ext_resource type="Script" path="res://scripts/sceneTransition.gd" id="2"]
 [ext_resource type="AudioStream" uid="uid://vbnuuw8r8vo2" path="res://audio/mixkit-automatic-door-shut-204.wav" id="3"]
+[ext_resource type="Script" path="res://scripts/Door.gd" id="3_x28sd"]
 
 [sub_resource type="AtlasTexture" id="7"]
 atlas = ExtResource("1")
@@ -65,6 +66,14 @@ animations = [{
 "loop": false,
 "name": &"default",
 "speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("8")
+}],
+"loop": true,
+"name": &"loadIn",
+"speed": 5.0
 }]
 
 [sub_resource type="RectangleShape2D" id="9"]
@@ -74,15 +83,19 @@ size = Vector2(5.5, 1.5)
 script = ExtResource("2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(0, -16)
-scale = Vector2(0.5, 0.5)
+texture_filter = 1
+position = Vector2(0, -32)
 sprite_frames = SubResource("10")
-frame = 8
+animation = &"loadIn"
+script = ExtResource("3_x28sd")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -2)
-shape = SubResource("9")
-
-[node name="openAndCloseFX" type="AudioStreamPlayer2D" parent="."]
+[node name="openAndCloseFX" type="AudioStreamPlayer2D" parent="AnimatedSprite2D"]
+position = Vector2(0, 32)
 stream = ExtResource("3")
 volume_db = -7.123
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3.43852, -0.759342)
+shape = SubResource("9")
+
+[connection signal="enteredThrough" from="." to="AnimatedSprite2D" method="playClosingAnim"]

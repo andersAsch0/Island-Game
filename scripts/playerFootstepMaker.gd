@@ -5,14 +5,18 @@ var timer
 var tileSetName = "footstepMap"
 @onready var tileSetStepSound = [$grassFootstep, $waterFootstep, $sandFootstep, $woodFootstep]
 var tileSetNode 
+
 #a better way would be to instanciate a new streamplayer each time, and queue free when its done
 
 signal currentStepMaterial(tileID)
 		
-func getCurrentTileID():
-	print( Vector2((owner.position.x / (tileSetNode.tile_set.tile_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.tile_set.tile_size.y * tileSetNode.scale.y)) as int))
-	print(tileSetNode.get_cell_source_id(0, Vector2((owner.position.x / (tileSetNode.tile_set.tile_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.tile_set.tile_size.y * tileSetNode.scale.y)) as int)))
-	return tileSetNode.get_cell_source_id(0, Vector2((owner.position.x / (tileSetNode.tile_set.tile_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.tile_set.tile_size.y * tileSetNode.scale.y)) as int))
+var currentTileAtlasCoords = Vector2.ZERO
+func getCurrentTile(): #meaning get the x coord in the atlas, since all tiles should be in a single row
+	currentTileAtlasCoords = tileSetNode.get_cell_atlas_coords(0, Vector2((owner.position.x / (tileSetNode.tile_set.tile_size.x * tileSetNode.scale.x)) as int, (owner.position.y / (tileSetNode.tile_set.tile_size.y * tileSetNode.scale.y)) as int))
+	if currentTileAtlasCoords == null:
+		return -1
+	else:
+		return currentTileAtlasCoords.x 
 
 func _ready():
 	timer = $footstepTimer
@@ -20,9 +24,8 @@ func _ready():
 	if tileSetNode == null: set_process(false)
 
 func _process(_delta):
-	if getCurrentTileID() != currentTile: #update current tile every frame 
-		currentTile = getCurrentTileID()
-		print(currentTile)
+	if getCurrentTile() != currentTile: #update current tile every frame 
+		currentTile = getCurrentTile()
 		emit_signal("currentStepMaterial", currentTile)
 	if timer.time_left == 0 and owner.velocity != Vector2.ZERO: #step only when timer runs down
 		$footstepTimer.start()

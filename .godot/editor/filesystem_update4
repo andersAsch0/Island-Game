@@ -1,10 +1,14 @@
 res://default_env.tres
-res://scenes/locations/overWorldHaven.tscn
 res://scenes/MainMenu.tscn
+res://scripts/playerFootstepMaker.gd
 res://scenes/battleMode/BattleMode.tscn
 res://scenes/battleMode/BattleModeEnemy.tscn
 res://scenes/battleMode/musicAttackController.tscn
 res://scenes/Door.tscn
+res://scenes/locations/overWorldHaven.tscn
 res://scenes/Player.tscn
-res://scripts/Player.gd
-res://scripts/playerFootstepMaker.gd
+res://scenes/locations/buildingInsidePrototype.tscn
+res://scripts/mapAreas/buildingInside.gd
+res://scripts/World.gd
+res://scripts/Door.gd
+res://scripts/sceneTransition.gd

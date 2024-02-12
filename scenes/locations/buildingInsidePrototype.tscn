@@ -1,0 +1,75 @@
+[gd_scene load_steps=8 format=3 uid="uid://co5b4i54w5lqg"]
+
+[ext_resource type="Script" path="res://scripts/overworldScene.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://c38jaolxiiga0" path="res://art/map tiles/building inside tiles.png" id="2"]
+[ext_resource type="Script" path="res://scripts/mapAreas/buildingInside.gd" id="3"]
+[ext_resource type="PackedScene" uid="uid://mi6odr5otxan" path="res://scenes/Door.tscn" id="4"]
+[ext_resource type="PackedScene" uid="uid://dkr0v6d1norli" path="res://scenes/Player.tscn" id="5"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v5um0"]
+texture = ExtResource("2")
+texture_region_size = Vector2i(32, 32)
+0:10/0 = 0
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+0:6/0 = 0
+0:7/0 = 0
+0:8/0 = 0
+1:6/0 = 0
+1:7/0 = 0
+1:8/0 = 0
+2:6/0 = 0
+2:7/0 = 0
+2:8/0 = 0
+1:10/0 = 0
+2:10/0 = 0
+0:2/0 = 0
+0:3/0 = 0
+0:4/0 = 0
+0:5/0 = 0
+1:2/0 = 0
+1:3/0 = 0
+1:4/0 = 0
+1:5/0 = 0
+2:1/0 = 0
+2:2/0 = 0
+2:3/0 = 0
+2:4/0 = 0
+2:5/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_gvdnc"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_v5um0")
+
+[node name="overworldScene" type="Node"]
+script = ExtResource("1")
+despawnListIndex = 1
+fileSystemPath = "res://scenes/buildingInsidePrototype.tscn"
+entryPointCoords = [Vector2(1, 5)]
+
+[node name="buildingInside" type="Node2D" parent="."]
+script = ExtResource("3")
+
+[node name="TileMap" type="TileMap" parent="buildingInside"]
+texture_filter = 1
+tile_set = SubResource("TileSet_gvdnc")
+format = 2
+layer_0/name = "floorAndWalls"
+layer_0/tile_data = PackedInt32Array(65535, 65536, 7, 0, 65536, 7, 131071, 65536, 7, 65536, 65536, 7, 65539, 65536, 7, 3, 65536, 7, 4, 65536, 7, -65532, 65536, 7, -65533, 65536, 7, -131069, 65536, 7, -131070, 65536, 7, -65534, 65536, 7, 2, 65536, 7, 1, 65536, 7, 65537, 65536, 7, 65538, 65536, 7, -131068, 65536, 7, 65540, 65536, 7, -1, 65536, 3, -65536, 65536, 3, -65535, 131072, 3, -196604, 131072, 3, -196605, 65536, 5, -196606, 0, 3, -131067, 65536, 268435466, -65531, 65536, 268435466, 5, 65536, 268435466, 65541, 65536, 268435466, 131076, 65536, 1879048202, 131075, 65536, 1879048202, 131074, 65536, 1879048202, 131073, 65536, 1879048202, 131072, 65536, 1879048202, 196607, 65536, 1879048202, 131070, 65536, 536870922, 65534, 65536, 536870922, -131071, 65536, 10, 196606, 131072, 1342177290, 131077, 131072, 1073741834, -2, 0, 268435461, -65538, 0, 268435460, -262143, 0, 268435460, -262139, 0, 4, -65537, 65536, 4, -131072, 65536, 4, -262142, 0, 2, -262141, 65536, 4, -262140, 131072, 2, -196603, 0, 5, -196607, 0, 268435461)
+layer_1/name = "wallDetails"
+layer_1/tile_data = PackedInt32Array(-131070, 0, 4, -65534, 131072, 268435461, -131071, 65536, 4)
+
+[node name="Door" parent="buildingInside" instance=ExtResource("4")]
+destinationPath = "res://scenes/locations/overWorldHaven.tscn"
+entryPointNum = 1
+
+[node name="Player" parent="buildingInside" instance=ExtResource("5")]
+y_sort_enabled = true
+position = Vector2(1, 5)
+
+[node name="Camera2D" type="Camera2D" parent="buildingInside/Player"]
+zoom = Vector2(3.5, 3.5)
+
+[connection signal="playerEntered" from="." to="buildingInside" method="_on_overworldScene_playerEntered"]

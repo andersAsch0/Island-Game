@@ -7,5 +7,5 @@ extends Node2D
 #
 func _on_overworldScene_playerEntered(entryPoint, despawnList, entryCoords):
 	if entryPoint == 1:
-		$Node2D/Door.playClosingAnim()
+		$Door.playerEnteredSceneThrough()
 
