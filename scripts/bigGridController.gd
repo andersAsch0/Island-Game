@@ -28,7 +28,7 @@ func _on_BattleMode_enemyApproachPhaseStarting(duration):
 	set_process(false)
 func _on_BattleMode_enemyAngleChangePhaseStarting(duration):
 	animTime3Dto2D = duration
-	$bigGrid.set_anim_duration("default", duration)
+	$bigGrid.set_anim_duration(duration, "default")
 	startAngleChangeTo2D()
 func startAngleChangeTo2D(): #called by the camera which sets its position, so it doesnt start moving until it has the correct position
 	isPlayerOffensePhase = true # (on anglechange phase starting)
@@ -40,7 +40,7 @@ func _on_BattleMode_enemyAttackPhaseStarting(_duration): #end change to 2d
 #	position = baselinePosition3D
 func _on_BattleMode_enemyAbscondPhaseStarting(duration): #change to 3d
 	animTime2Dto3D = duration
-	$bigGrid.set_anim_duration("default", duration)
+	$bigGrid.set_anim_duration(duration, "default")
 	isPlayerOffensePhase = false
 	set_process(true)
 	$bigGrid.play("default", true)

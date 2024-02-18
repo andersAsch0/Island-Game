@@ -72,4 +72,14 @@ position = Vector2(1, 5)
 [node name="Camera2D" type="Camera2D" parent="buildingInside/Player"]
 zoom = Vector2(3.5, 3.5)
 
+[node name="collisionContainer" type="StaticBody2D" parent="buildingInside"]
+z_index = 1
+position = Vector2(-439, -108)
+scale = Vector2(2, 2)
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="buildingInside/collisionContainer"]
+position = Vector2(219.5, 54)
+scale = Vector2(0.5, 0.5)
+polygon = PackedVector2Array(-34, -1, 64, -1, 64, -65, 160, -64, 160, 64, -32, 64, -32, 0, -35, 0, -39, 98, 179, 93, 174, -92, -54, -70)
+
 [connection signal="playerEntered" from="." to="buildingInside" method="_on_overworldScene_playerEntered"]

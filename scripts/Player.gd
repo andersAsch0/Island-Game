@@ -21,6 +21,7 @@ var currDirection = DOWN
 func _ready():
 	velocity = Vector2.ZERO
 	$AudioListener2D.make_current()
+	$Animations/waterOverFeet.play("default")
 
 func _process(_delta):
 	var input = Vector2.ZERO

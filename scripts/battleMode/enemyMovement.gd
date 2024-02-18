@@ -9,7 +9,7 @@ func _ready():
 
 #silly
 func _process(delta):
-	$PathFollow2D.set_offset($PathFollow2D.get_offset() + wanderSpeed * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int))
+	$PathFollow2D.progress = ($PathFollow2D.progress + wanderSpeed * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int))
 
 var wanderSpeed
 func wander(duration : float):
@@ -17,7 +17,7 @@ func wander(duration : float):
 	set_process(true)
 func stopWander(_duration):
 	set_process(false)
-	$PathFollow2D.offset = 0
+	$PathFollow2D.progress = 0
 
 func calculateWanderSpeed(duration : float)-> float:
 #find value closest to enemySpeed that also gives a whole number of rotations

@@ -1,7 +1,10 @@
-Area2D
+Marker2D
 Camera2D
+CollisionPolygon2D
+Polygon2D
+Area2D
+Node2D
 TileMap
 SceneTransition
-CollisionPolygon2D
 CollisionShape2D
 Sprite2D

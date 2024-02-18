@@ -1,6 +1,6 @@
-[gd_scene load_steps=191 format=3 uid="uid://5gus5xen1t7y"]
+[gd_scene load_steps=190 format=3 uid="uid://5gus5xen1t7y"]
 
-[ext_resource type="PackedScene" path="res://scenes/battleMode/BattleModePlayer.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://bh81j3007qbo4" path="res://scenes/battleMode/BattleModePlayer.tscn" id="1"]
 [ext_resource type="Script" path="res://scripts/battleMode/BattleMode.gd" id="2"]
 [ext_resource type="PackedScene" uid="uid://cb3gi1cqmaavk" path="res://scenes/battleMode/BattleModeEnemy.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://b1o6adbq8fk5k" path="res://art/battleModeUI/clock.png" id="4"]
@@ -22,7 +22,6 @@
 [ext_resource type="Script" path="res://scripts/downArrowButton.gd" id="15"]
 [ext_resource type="Script" path="res://scripts/battleMode/Arrows.gd" id="16"]
 [ext_resource type="Script" path="res://scenes/battleMode/Grid.gd" id="17"]
-[ext_resource type="Texture2D" uid="uid://cvroauv6cgwf7" path="res://art/placeholder.jpg" id="18"]
 [ext_resource type="PackedScene" path="res://scenes/battleMode/catchMiniGame.tscn" id="21"]
 [ext_resource type="PackedScene" path="res://scenes/battleMode/comboMiniGame.tscn" id="22"]
 [ext_resource type="Script" path="res://scripts/battleMode/BattleModeUI.gd" id="23"]
@@ -1314,6 +1313,7 @@ enemyScene = ExtResource("3")
 script = ExtResource("25")
 
 [node name="bigGrid" type="AnimatedSprite2D" parent="bigGridController"]
+texture_filter = 1
 position = Vector2(160, 123)
 sprite_frames = SubResource("114")
 script = ExtResource("24")
@@ -1398,28 +1398,16 @@ position = Vector2(-139.167, -152.5)
 [node name="frame0Corner3" type="Marker2D" parent="bigGrid3"]
 position = Vector2(134.167, 121.667)
 
-[node name="Marker2D" type="Marker2D" parent="."]
-position = Vector2(259, 50)
-scale = Vector2(2.1, 2.1)
-
-[node name="Placeholder" type="Sprite2D" parent="Marker2D"]
-visible = false
-position = Vector2(0.475586, 0.476074)
-scale = Vector2(-0.0144161, 0.00904175)
-texture = ExtResource("18")
-
 [node name="BattleModePlayer" parent="." instance=ExtResource("1")]
 position = Vector2(155.4, 109.6)
 scale = Vector2(1.3795, 1.3795)
 
 [node name="Shield" parent="BattleModePlayer" index="0"]
 sprite_frames = SubResource("SpriteFrames_pm202")
-animation = &"hit"
 frame = 0
 
 [node name="Animations" parent="BattleModePlayer" index="2"]
 sprite_frames = SubResource("10")
-animation = &"jump left"
 frame = 0
 
 [node name="enemySpawnLocation" type="Marker2D" parent="."]
@@ -1451,6 +1439,7 @@ animation = &"forward"
 [node name="offenseModeCamera" type="Camera2D" parent="."]
 z_index = 1
 position = Vector2(155.4, 89.6)
+enabled = false
 script = ExtResource("13")
 
 [node name="Grid" type="Sprite2D" parent="offenseModeCamera"]
@@ -1541,20 +1530,20 @@ scale = Vector2(0.632878, 0.87013)
 text = "HP TJ"
 
 [node name="PlayerHPBar" type="ProgressBar" parent="UI"]
-offset_left = 1.56599
-offset_top = 135.6
-offset_right = 71.566
-offset_bottom = 149.6
-rotation = -90.1426
+offset_left = 2.0
+offset_top = 140.0
+offset_right = 72.0
+offset_bottom = 167.0
+rotation = -1.5708
 scale = Vector2(0.955148, 0.51705)
 theme_override_colors/font_color = Color(1, 0.74902, 0, 1)
 
 [node name="TimeJuiceBar" type="ProgressBar" parent="UI"]
-offset_left = 12.566
-offset_top = 135.6
-offset_right = 77.5664
-offset_bottom = 150.6
-rotation = 270.0
+offset_left = 18.0
+offset_top = 140.0
+offset_right = 83.0004
+offset_bottom = 167.0
+rotation = -1.5708
 scale = Vector2(1.03451, 0.511248)
 theme_override_colors/font_color = Color(0.0313726, 1, 0, 1)
 

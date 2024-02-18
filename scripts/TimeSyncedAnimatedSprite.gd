@@ -29,6 +29,9 @@ func playTimeSynced(anim : String = "default") -> void:
 	# if time is nortmal and backwards F, frame = first
 	# if time is normal and backwards T, frame = last
 
+func set_anim_duration(duration : float, anim : String = "") -> void:
+	if anim == "": anim = animation
+	sprite_frames.set_animation_speed(anim, sprite_frames.get_frame_count(anim) / duration)
 #func switchAnim(anim : String):
 	#if not sprite_frames.has_animation(anim): 
 		#print("ERROR: animatedSprite has no animation ", anim)

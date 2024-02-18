@@ -202,8 +202,9 @@ script = ExtResource("6")
 enemySpeed = 10
 
 [node name="PathFollow2D" type="PathFollow2D" parent="enemyMovement"]
+texture_filter = 1
 position = Vector2(1, -10.0821)
-rotation = -1.67405
+rotates = false
 
 [node name="HPBar" type="ProgressBar" parent="enemyMovement/PathFollow2D"]
 offset_left = -14.0

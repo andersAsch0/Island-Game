@@ -236,7 +236,7 @@ offset = Vector2(0, -14)
 
 [node name="waterOverFeet" type="AnimatedSprite2D" parent="Animations"]
 visible = false
-position = Vector2(0, 4)
+position = Vector2(0, -10)
 sprite_frames = SubResource("62")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -258,7 +258,7 @@ volume_db = -20.0
 
 [node name="grassFootstep" type="AudioStreamPlayer2D" parent="playerFootstepMaker"]
 stream = ExtResource("5")
-volume_db = -5.0
+volume_db = -10.0
 
 [node name="footstepTimer" type="Timer" parent="playerFootstepMaker"]
 wait_time = 0.3
