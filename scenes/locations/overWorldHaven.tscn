@@ -758,6 +758,7 @@ layer_2/z_index = -1
 layer_2/tile_data = PackedInt32Array(-917471, 0, 0, -1048557, 0, 0, -589827, 0, 0, -458751, 0, 0, -851944, 0, 0, -393208, 0, 0, 65549, 0, 0, -262116, 131072, 1, 393232, 131072, 1, -458727, 131072, 1, -327661, 131072, 1, -983027, 0, 0, -589811, 0, 0)
 
 [node name="footstepMap" type="TileMap" parent="haven"]
+visible = false
 self_modulate = Color(1, 1, 1, 0.462745)
 tile_set = SubResource("6")
 rendering_quadrant_size = 8
@@ -777,6 +778,8 @@ y_sort_enabled = true
 position = Vector2(198, 46)
 
 [node name="Camera2D" type="Camera2D" parent="haven/Player"]
+position = Vector2(-1, -6.5)
+zoom = Vector2(1.805, 1.805)
 
 [node name="collisionContainer" type="StaticBody2D" parent="haven"]
 visible = false
@@ -795,6 +798,7 @@ polygon = PackedVector2Array(208, 48, 231, 48, 231, 55, 265.5, 55, 307.5, 55.5, 
 polygon = PackedVector2Array(359, -8.5, 360, 22, 392.5, 24, 392, 168, 308, 167, 423.5, 207.5, 429.5, -9)
 
 [node name="HUD" type="CanvasLayer" parent="haven"]
+follow_viewport_enabled = true
 
 [node name="overworldClock" parent="haven/HUD" instance=ExtResource("10")]
 visible = false

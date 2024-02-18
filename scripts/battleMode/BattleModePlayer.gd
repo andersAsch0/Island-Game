@@ -281,3 +281,7 @@ func _on_UI_healing(activated):
 	pass # Replace with function body.
 
 
+
+
+func _on_windWatchMiniGame_wind(timeJuiceChange):
+	pass # Replace with function body.

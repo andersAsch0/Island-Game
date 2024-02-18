@@ -1,15 +1,9 @@
 res://default_env.tres
+res://scenes/locations/overWorldHaven.tscn
 res://scenes/MainMenu.tscn
 res://scenes/battleMode/BattleMode.tscn
 res://scenes/Door.tscn
-res://scenes/locations/overWorldHaven.tscn
-res://scenes/locations/buildingInsidePrototype.tscn
-res://scenes/Player.tscn
-res://scripts/Player.gd
-res://scenes/locations/mapLocationTemplate.tscn
-res://scripts/battleMode/enemyMovement.gd
 res://scenes/battleMode/BattleModeEnemy.tscn
 res://scenes/enemy.tscn
-res://scripts/bigGridController.gd
-res://scripts/TimeSyncedAnimatedSprite.gd
 res://scenes/battleMode/BattleModePlayer.tscn
+res://scripts/battleMode/BattleModePlayer.gd

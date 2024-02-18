@@ -1437,41 +1437,40 @@ sprite_frames = SubResource("SpriteFrames_o0aj2")
 animation = &"forward"
 
 [node name="offenseModeCamera" type="Camera2D" parent="."]
-z_index = 1
-position = Vector2(155.4, 89.6)
-enabled = false
+position = Vector2(156, 101)
+zoom = Vector2(2.105, 2.105)
 script = ExtResource("13")
 
 [node name="Grid" type="Sprite2D" parent="offenseModeCamera"]
 self_modulate = Color(1, 1, 1, 0.215686)
 z_as_relative = false
-position = Vector2(0, 11)
+position = Vector2(-0.600006, -0.400002)
 scale = Vector2(2.31579, 2.31579)
 texture = ExtResource("7")
 script = ExtResource("17")
 
 [node name="VictoryButton" type="Button" parent="offenseModeCamera"]
 visible = false
-offset_left = -33.0
-offset_top = -55.0
-offset_right = 33.0
-offset_bottom = -35.0
+offset_left = -33.6
+offset_top = -66.4
+offset_right = 41.4
+offset_bottom = -35.4
 disabled = true
 text = "VICTORY"
 
 [node name="DefeatButton" type="Button" parent="offenseModeCamera"]
 visible = false
-offset_left = -33.0
-offset_top = -54.0
-offset_right = 33.0
-offset_bottom = -34.0
+offset_left = -33.6
+offset_top = -65.4
+offset_right = 32.4
+offset_bottom = -34.4
 disabled = true
 text = "DEFEAT"
 
 [node name="actionMenu" type="AnimatedSprite2D" parent="offenseModeCamera"]
 visible = false
 z_index = 1
-position = Vector2(141, 3.00005)
+position = Vector2(140.4, -8.39995)
 rotation = 1.57557
 scale = Vector2(0.400679, 0.529486)
 sprite_frames = SubResource("54")
@@ -1481,7 +1480,7 @@ animation = &"showing"
 visible = false
 self_modulate = Color(1, 1, 1, 0)
 z_index = 1
-position = Vector2(0, 19)
+position = Vector2(-0.600006, 7.6)
 scale = Vector2(1.13792, 1.13792)
 script = ExtResource("16")
 
@@ -1519,15 +1518,17 @@ animation = &"empty"
 script = ExtResource("5")
 
 [node name="UI" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
 script = ExtResource("23")
 
 [node name="HP&TJ" type="Label" parent="UI"]
 offset_left = 1.56599
 offset_top = 54.6
 offset_right = 41.566
-offset_bottom = 68.6
+offset_bottom = 77.6
 scale = Vector2(0.632878, 0.87013)
 text = "HP TJ"
+metadata/_edit_use_anchors_ = true
 
 [node name="PlayerHPBar" type="ProgressBar" parent="UI"]
 offset_left = 2.0
@@ -1537,6 +1538,7 @@ offset_bottom = 167.0
 rotation = -1.5708
 scale = Vector2(0.955148, 0.51705)
 theme_override_colors/font_color = Color(1, 0.74902, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="TimeJuiceBar" type="ProgressBar" parent="UI"]
 offset_left = 18.0
@@ -1546,6 +1548,7 @@ offset_bottom = 167.0
 rotation = -1.5708
 scale = Vector2(1.03451, 0.511248)
 theme_override_colors/font_color = Color(0.0313726, 1, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="windButton" parent="UI" instance=ExtResource("8")]
 position = Vector2(337, 24)
@@ -1611,7 +1614,6 @@ one_shot = true
 [connection signal="frame_changed" from="bigGrid3" to="bigGrid3" method="_on_bigGrid3_frame_changed"]
 [connection signal="PlayerDie" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerDie"]
 [connection signal="PlayerHit" from="BattleModePlayer" to="." method="_on_BattleModePlayer_PlayerHit"]
-[connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="playerMovedOffense" from="BattleModePlayer" to="offenseModeCamera/Arrows" method="_on_BattleModePlayer_playerMovedOffense"]
 [connection signal="timeout" from="reverseTimeDuration" to="." method="_on_reverseTimeDuration_timeout"]
 [connection signal="timeout" from="stopTimeDuration" to="." method="_on_stopTimeDuration_timeout"]
