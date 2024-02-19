@@ -1,46 +1,48 @@
 class_name TimeSyncedTimer
-extends Timer
+extends Node
 
+@export var wait_time : float = 1
+@export var time_left : float = -1
+@export var one_shot : bool = false
+@export var autostart : bool = false
+var paused : bool = false
+var running : bool = false
+signal timeout()
+##if time reverses back to before the timer was started
+signal timerStartUndone() 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-var waitTimeReal
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	waitTimeReal = wait_time
-	connect("timeout", Callable(self, "on_timeout"))
-	process_mode = TIMER_PROCESS_PHYSICS
-
-
-#
-func _physics_process(delta):#abosutley abusing this poor timer
+	if time_left < 0: time_left = wait_time #if it hasnt been edited to smth else
+	connect("tree_entered", Callable(self, "on_tree_entered"))
 	
-	if not is_stopped() and time_left + (delta - delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)) > 0: 
-		start(time_left + (delta - delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)))
-#		print(time_left)
-		if wait_time > waitTimeReal and Global.currCombatTimeMultiplier < 0:
-			if one_shot: stop()
-			else: start(delta)
+func on_tree_entered():
+	if autostart: start()
+
+func start():
+	time_left = wait_time
+	running = true
+func stop():
+	running = false
+##continue running without resetting the time left
+func resume(): 
+	running = true
+
+func _physics_process(delta):
+	if running and not paused:
+		time_left -= delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+	if time_left <= 0: 
+		time_left = 0
+		running = false
+		emit_signal("timeout")
+		if not one_shot: start()
+	elif  time_left >= wait_time:
+		time_left = 0
+		running = false
+		emit_signal("timerStartUndone")
+		if not one_shot: #assuming that if it is a repeating timer, desired behavior is a signal at a specific interval
+			emit_signal("timeout")
+			running = true
+
+func is_stopped():
+	return running
 	
-func setWaitTime(waittime : float):
-	waitTimeReal = waittime
-
-func on_timeout():
-	print("timeout")
-	if not one_shot: start(waitTimeReal)
-#if time is stopped, add delta
-#if time is fast, minus (delta * spedUpAmt) - delta
-# if time is slow, add delta - (delta * slowness)
-# if time is reversed, add delta * 2 (and if it hits wait_time, stop unless looping)
-
-#generalized:
-
-# - ((delta * multiplier) - delta)
-# delta - (delta * multiplier)
-# delta + delta
-# delta - (delta * timeIsflowing as int)
-
-# add delta - (delta * multiplier * timeisFlowing as int)

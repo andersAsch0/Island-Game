@@ -85,7 +85,7 @@ func die(): #called by enemy when it dies
 	#$HitBox.queue_free() # dont hit player during explosion animation
 	set_process(false)
 	$DeathTimer.start() # give time for explosion to play
-	setGPUParticlesVelocity(Global.currCombatTimeMultiplier * speed)
+	syncGPUParticlesWithGlobalTime()
 	$GPUParticles2D.emitting = true
 func _on_DeathTimer_timeout():
 	queue_free()
@@ -95,7 +95,8 @@ func _on_Bullet_child_exiting_tree(_node : Node): # please stop
 	$DespawnTimer.paused = true
 	emit_signal("despawned")
 
-func setGPUParticlesVelocity(velocity:float):
-	$GPUParticles2D.process_material.initial_velocity_max = velocity
-	$GPUParticles2D.process_material.initial_velocity_min = velocity
+func syncGPUParticlesWithGlobalTime():
+	$GPUParticles2D.process_material.initial_velocity_max = Global.currCombatTimeMultiplier * speed
+	$GPUParticles2D.process_material.initial_velocity_min = Global.currCombatTimeMultiplier * speed
+	$GPUParticles2D.lifetime = $GPUParticles2D.lifetime * abs(Global.currCombatTimeMultiplier)
 	

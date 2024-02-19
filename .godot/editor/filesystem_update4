@@ -10,3 +10,4 @@ res://scenes/battleMode/Bullet.tscn
 res://scripts/offenseModeCamera.gd
 res://scripts/battleMode/laserWarning.gd
 res://scenes/battleMode/bulletSpawner.tscn
+res://scripts/TimeSyncedTimer.gd
