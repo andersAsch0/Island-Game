@@ -10,10 +10,12 @@ var vec = Vector2(0, -20)
 var shaking: bool = false
 var shakeDuration: float = 0.0 #also counts down to 0
 var pulseDuration: float = 0.0 # ''
+var normalZoom : Vector2
 
 func _ready():
 	battleModePlayerNode = get_node("../BattleModePlayer")
 	set_physics_process(false)
+	normalZoom = zoom
 	
 func _process(delta):
 	if shaking:
@@ -29,11 +31,11 @@ func _process(delta):
 func _physics_process(delta):
 	pulseDuration -= delta
 	if pulseDuration <= 0:
-		zoom = Vector2(1,1)
+		zoom = normalZoom
 		set_physics_process(false)
 		return
-	zoom.x -= (zoom.x - 1) / pulseDuration * delta
-	zoom.y -= (zoom.y - 1) / pulseDuration * delta
+	zoom.x -= (zoom.x - normalZoom.x) / pulseDuration * delta
+	zoom.y -= (zoom.y - normalZoom.y) / pulseDuration * delta
 
 func setFollow(enable : bool):
 	shouldFollow = enable

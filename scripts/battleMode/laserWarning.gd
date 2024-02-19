@@ -23,8 +23,8 @@ func _ready():
 	intervalCount = bulletFireIntervalSeconds #so bullet spawns right away, and warnings are synced
 	if not showWarningLineAnim: return
 	var nodes = get_children()
-	for sprite in nodes:
-		sprite.frames.set_animation_speed("default", 1.0 * sprite.frames.get_frame_count("default") / lengthOfWarningSeconds)
+	for sprite : AnimatedSprite2D in nodes:
+		sprite.sprite_frames.set_animation_speed("default", 1.0 * sprite.sprite_frames.get_frame_count("default") / lengthOfWarningSeconds)
 		sprite.play("default")
 		sprite.visible = true
 		

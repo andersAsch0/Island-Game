@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bn24p76gu5oke" path="res://art/butterfly.png" id="1"]
 [ext_resource type="Script" path="res://scripts/battleMode/BattleModeEnemy.gd" id="2"]
-[ext_resource type="PackedScene" path="res://scenes/battleMode/Bullet.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://cn6eqvqtddyfp" path="res://scenes/battleMode/Bullet.tscn" id="3"]
 [ext_resource type="Script" path="res://scripts/HitBox.gd" id="4"]
 [ext_resource type="Script" path="res://scripts/HurtBox.gd" id="5"]
 [ext_resource type="Script" path="res://scripts/battleMode/enemyMovement.gd" id="6"]
@@ -276,7 +276,7 @@ scale = Vector2(2.02, 2.02)
 transform = Transform2D(2.02, 0, 0, 2.02, 0, 0)
 
 [node name="musicAttackController" parent="AttackLayer" instance=ExtResource("9_nayau")]
-position = Vector2(159.406, 89.1089)
+position = Vector2(159.406, 100.99)
 
 [node name="MusicHandler" parent="AttackLayer/musicAttackController" index="0"]
 attackPatternFilePathsArray = ["res://scripts/attackPatternJsonData/butterflyMusicData.json", "res://scripts/attackPatternJsonData/butterflyMusicData2.json", "res://scripts/attackPatternJsonData/butterflyMusicData3.json"]

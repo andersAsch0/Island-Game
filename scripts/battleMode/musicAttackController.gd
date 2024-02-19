@@ -49,7 +49,7 @@ func on_track_3(pitch, timeInAdvance = 0.0): #laser attack
 			laserNode.rotation_degrees = -90
 		add_child(laserNode)	
 		
-func rotateWithEnemy():
+func rotateWithEnemy(_duration):
 	var enemyDisplacement = Global.getEnemyDisplacementFromPlayer()
 	if enemyDisplacement.y == 0: # on same y row
 		self.rotation_degrees = 90 * enemyDisplacement.x

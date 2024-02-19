@@ -1,146 +1,188 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=32 format=3 uid="uid://cn6eqvqtddyfp"]
 
-[ext_resource path="res://art/flower.png" type="Texture2D" id=1]
-[ext_resource path="res://scripts/battleMode/Bullet.gd" type="Script" id=2]
-[ext_resource path="res://scripts/HitBox.gd" type="Script" id=3]
-[ext_resource path="res://scripts/HurtBox.gd" type="Script" id=4]
-[ext_resource path="res://art/small explosion.png" type="Texture2D" id=5]
-[ext_resource path="res://scripts/TimeSyncedAnimatedSprite.gd" type="Script" id=6]
-[ext_resource path="res://art/bulletWarning.png" type="Texture2D" id=7]
-[ext_resource path="res://art/bulletFire.png" type="Texture2D" id=8]
+[ext_resource type="Texture2D" uid="uid://b568urjaro7tx" path="res://art/flower.png" id="1"]
+[ext_resource type="Script" path="res://scripts/battleMode/Bullet.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/HitBox.gd" id="3"]
+[ext_resource type="Script" path="res://scripts/HurtBox.gd" id="4"]
+[ext_resource type="Texture2D" uid="uid://bvdva5ppsivk4" path="res://art/small explosion.png" id="5"]
+[ext_resource type="Script" path="res://scripts/TimeSyncedAnimatedSprite.gd" id="6"]
+[ext_resource type="Texture2D" uid="uid://dd7k4r05idj" path="res://art/bulletWarning.png" id="7"]
+[ext_resource type="Texture2D" uid="uid://ombm5agxdebt" path="res://art/bulletFire.png" id="8"]
 
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="8"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 5 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="4"]
+atlas = ExtResource("5")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 5 )
-region = Rect2( 32, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="5"]
+atlas = ExtResource("5")
+region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 5 )
-region = Rect2( 64, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="6"]
+atlas = ExtResource("5")
+region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 5 )
-region = Rect2( 96, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="7"]
+atlas = ExtResource("5")
+region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 7 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="9"]
+atlas = ExtResource("7")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="SpriteFrames" id=1]
-animations = [ {
-"frames": [ SubResource( 8 ) ],
+[sub_resource type="SpriteFrames" id="1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("8")
+}],
 "loop": true,
-"name": "default",
+"name": &"default",
 "speed": 5.0
 }, {
-"frames": [ SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("4")
+}, {
+"duration": 1.0,
+"texture": SubResource("5")
+}, {
+"duration": 1.0,
+"texture": SubResource("6")
+}, {
+"duration": 1.0,
+"texture": SubResource("7")
+}],
 "loop": false,
-"name": "die",
+"name": &"die",
 "speed": 12.0
 }, {
-"frames": [ SubResource( 9 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("9")
+}],
 "loop": true,
-"name": "warning",
+"name": &"warning",
 "speed": 5.0
-} ]
+}]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id="2"]
 radius = 8.0
 
-[sub_resource type="CircleShape2D" id=3]
+[sub_resource type="CircleShape2D" id="3"]
 radius = 8.0
 
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 8 )
-region = Rect2( 0, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="10"]
+atlas = ExtResource("8")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 8 )
-region = Rect2( 32, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="11"]
+atlas = ExtResource("8")
+region = Rect2(32, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 8 )
-region = Rect2( 64, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="12"]
+atlas = ExtResource("8")
+region = Rect2(64, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 8 )
-region = Rect2( 96, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="13"]
+atlas = ExtResource("8")
+region = Rect2(96, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 8 )
-region = Rect2( 128, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="14"]
+atlas = ExtResource("8")
+region = Rect2(128, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 8 )
-region = Rect2( 160, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="15"]
+atlas = ExtResource("8")
+region = Rect2(160, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 8 )
-region = Rect2( 192, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="16"]
+atlas = ExtResource("8")
+region = Rect2(192, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 8 )
-region = Rect2( 224, 0, 32, 32 )
+[sub_resource type="AtlasTexture" id="17"]
+atlas = ExtResource("8")
+region = Rect2(224, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 8 )
-region = Rect2( 0, 32, 32, 32 )
+[sub_resource type="AtlasTexture" id="19"]
+atlas = ExtResource("8")
+region = Rect2(0, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id=20]
-atlas = ExtResource( 8 )
-region = Rect2( 32, 32, 32, 32 )
+[sub_resource type="AtlasTexture" id="20"]
+atlas = ExtResource("8")
+region = Rect2(32, 32, 32, 32)
 
-[sub_resource type="SpriteFrames" id=18]
-animations = [ {
-"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 19 ), SubResource( 20 ) ],
+[sub_resource type="SpriteFrames" id="18"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("10")
+}, {
+"duration": 1.0,
+"texture": SubResource("11")
+}, {
+"duration": 1.0,
+"texture": SubResource("12")
+}, {
+"duration": 1.0,
+"texture": SubResource("13")
+}, {
+"duration": 1.0,
+"texture": SubResource("14")
+}, {
+"duration": 1.0,
+"texture": SubResource("15")
+}, {
+"duration": 1.0,
+"texture": SubResource("16")
+}, {
+"duration": 1.0,
+"texture": SubResource("17")
+}, {
+"duration": 1.0,
+"texture": SubResource("19")
+}, {
+"duration": 1.0,
+"texture": SubResource("20")
+}],
 "loop": true,
-"name": "default",
+"name": &"default",
 "speed": 30.0
-} ]
+}]
 
-[sub_resource type="Gradient" id=22]
-offsets = PackedFloat32Array( 0, 0.622271, 0.820961 )
-colors = PackedColorArray( 1, 0.990234, 0, 1, 1, 0.0235294, 0.0235294, 0.560784, 0.54902, 0.00784314, 0.00784314, 0 )
+[sub_resource type="Gradient" id="22"]
+offsets = PackedFloat32Array(0, 0.622271, 0.820961)
+colors = PackedColorArray(1, 0.990234, 0, 1, 1, 0.0235294, 0.0235294, 0.560784, 0.54902, 0.00784314, 0.00784314, 0)
 
-[sub_resource type="GradientTexture2D" id=23]
-gradient = SubResource( 22 )
+[sub_resource type="GradientTexture2D" id="23"]
+gradient = SubResource("22")
 
-[sub_resource type="ParticleProcessMaterial" id=21]
+[sub_resource type="ParticleProcessMaterial" id="21"]
 emission_shape = 2
-emission_box_extents = Vector3( 1, 1, 1 )
-flag_disable_z = true
-direction = Vector3( 0, 1, 0 )
+emission_sphere_radius = 0.01
+angle_max = 37.7
+inherit_velocity_ratio = 1.0
+direction = Vector3(0, 1, 0)
 spread = 52.15
-gravity = Vector3( 0, 0, 0 )
-initial_velocity = 40.0
-initial_velocity_random = 0.3
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-linear_accel = -7.0
-scale = 2.0
-color = Color( 1, 0.992157, 0, 1 )
-color_ramp = SubResource( 23 )
-hue_variation = 0.1
-hue_variation_random = 0.69
+gravity = Vector3(0, 0, 0)
+color = Color(1, 0.992157, 0, 1)
+color_ramp = SubResource("23")
 
 [node name="Bullet" type="Area2D" groups=["bulletTypes"]]
-scale = Vector2( 0.1, 0.1 )
+scale = Vector2(0.1, 0.1)
 collision_layer = 8
 collision_mask = 2
-script = ExtResource( 2 )
+script = ExtResource("2")
 shakeCamera = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 visible = false
-scale = Vector2( 2, 2 )
-frames = SubResource( 1 )
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("1")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
@@ -156,41 +198,40 @@ one_shot = true
 [node name="HitBox" type="Area2D" parent="."]
 collision_layer = 64
 collision_mask = 0
-script = ExtResource( 3 )
+script = ExtResource("3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
-shape = SubResource( 2 )
+shape = SubResource("2")
 
 [node name="HurtBox" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 48
-script = ExtResource( 4 )
+script = ExtResource("4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-shape = SubResource( 3 )
+shape = SubResource("3")
 
 [node name="bulletTrail" type="AnimatedSprite2D" parent="."]
 visible = false
-position = Vector2( 0, -10 )
-scale = Vector2( 0.778516, 0.860275 )
-frames = SubResource( 18 )
+texture_filter = 1
+position = Vector2(0, -10)
+scale = Vector2(0.778516, 0.860275)
+sprite_frames = SubResource("18")
 frame = 6
-playing = true
-script = ExtResource( 6 )
+script = ExtResource("6")
 
 [node name="TimeSyncedAnimatedSprite" type="AnimatedSprite2D" parent="."]
-frames = SubResource( 1 )
-script = ExtResource( 6 )
+texture_filter = 1
+sprite_frames = SubResource("1")
+script = ExtResource("6")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 30
+process_material = SubResource("21")
 lifetime = 4.0
-one_shot = true
-speed_scale = 6.0
 explosiveness = 1.0
 randomness = 0.1
-process_material = SubResource( 21 )
 
 [connection signal="child_exiting_tree" from="." to="." method="_on_Bullet_child_exiting_tree"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
