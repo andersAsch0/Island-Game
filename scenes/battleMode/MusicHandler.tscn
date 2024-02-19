@@ -1,55 +1,50 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=8 format=3 uid="uid://btxve5nqpfjpu"]
 
-[ext_resource path="res://audio/IslandFightReverse.wav" type="AudioStream" id=1]
-[ext_resource path="res://audio/TickingClockFX.wav" type="AudioStream" id=2]
-[ext_resource path="res://audio/Begin_Rewind_FX.wav" type="AudioStream" id=3]
-[ext_resource path="res://audio/IslandFight.wav" type="AudioStream" id=4]
-[ext_resource path="res://audio/Ending_Rewind_FX.wav" type="AudioStream" id=5]
-[ext_resource path="res://scripts/MusicHandler.gd" type="Script" id=6]
-[ext_resource path="res://art/placeholder.jpg" type="Texture2D" id=7]
+[ext_resource type="AudioStream" uid="uid://cjylluoxyv621" path="res://audio/IslandFightReverse.wav" id="1"]
+[ext_resource type="AudioStream" uid="uid://dd6idsba0npkr" path="res://audio/TickingClockFX.wav" id="2"]
+[ext_resource type="AudioStream" uid="uid://c7a8doit8tsgj" path="res://audio/Begin_Rewind_FX.wav" id="3"]
+[ext_resource type="AudioStream" uid="uid://duns6e54edl5w" path="res://audio/IslandFight.wav" id="4"]
+[ext_resource type="AudioStream" uid="uid://bamohdp0xqxfo" path="res://audio/Ending_Rewind_FX.wav" id="5"]
+[ext_resource type="Script" path="res://scripts/MusicHandler.gd" id="6"]
+[ext_resource type="Texture2D" uid="uid://cvroauv6cgwf7" path="res://art/placeholder.jpg" id="7"]
 
 [node name="MusicHandler" type="Node2D"]
-script = ExtResource( 6 )
-attackPatternFile = "res://scripts/attackPatternJsonData/butterflyMusicData.json"
-attackPatternFile2 = "res://scripts/attackPatternJsonData/butterflyMusicData2.json"
-attackPatternFile3 = "res://scripts/attackPatternJsonData/butterflyMusicData3.json"
+script = ExtResource("6")
 
 [node name="normalMusicLoop" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
+stream = ExtResource("4")
 volume_db = -10.0
 
 [node name="reverseMusicLoop" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 1 )
+stream = ExtResource("1")
 volume_db = -10.0
-stream_paused = true
 
 [node name="tickingClockFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 2 )
-stream_paused = true
+stream = ExtResource("2")
 
 [node name="reverseStartFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 3 )
+stream = ExtResource("3")
 volume_db = -15.0
 
 [node name="reverseEndFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
+stream = ExtResource("5")
 volume_db = -15.0
 
 [node name="stopEndFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
+stream = ExtResource("5")
 volume_db = -15.0
 
 [node name="speedEndFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
+stream = ExtResource("5")
 volume_db = -15.0
 
 [node name="slowEndFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
+stream = ExtResource("5")
 volume_db = -15.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2( 0.05, 0.05 )
-texture = ExtResource( 7 )
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("7")
 
 [node name="stopTimeEndFXTimer" type="Timer" parent="."]
 one_shot = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://cb3gi1cqmaavk"]
+[gd_scene load_steps=32 format=3 uid="uid://cb3gi1cqmaavk"]
 
 [ext_resource type="Texture2D" uid="uid://bn24p76gu5oke" path="res://art/butterfly.png" id="1"]
 [ext_resource type="Script" path="res://scripts/battleMode/BattleModeEnemy.gd" id="2"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/battleMode/enemyMovement.gd" id="6"]
 [ext_resource type="Texture2D" uid="uid://d3ubk2xalp0be" path="res://art/big explosion.png" id="7"]
 [ext_resource type="Script" path="res://scripts/TimeSyncedAnimatedSprite.gd" id="8"]
+[ext_resource type="PackedScene" uid="uid://ky2kvqb084yk" path="res://scenes/battleMode/musicAttackController.tscn" id="9_nayau"]
 
 [sub_resource type="CircleShape2D" id="14"]
 radius = 16.0
@@ -270,7 +271,27 @@ offset_top = -6.62395
 offset_right = 148.211
 offset_bottom = 7.37605
 
+[node name="AttackLayer" type="CanvasLayer" parent="."]
+scale = Vector2(2.02, 2.02)
+transform = Transform2D(2.02, 0, 0, 2.02, 0, 0)
+
+[node name="musicAttackController" parent="AttackLayer" instance=ExtResource("9_nayau")]
+position = Vector2(159.406, 89.1089)
+
+[node name="MusicHandler" parent="AttackLayer/musicAttackController" index="0"]
+attackPatternFilePathsArray = ["res://scripts/attackPatternJsonData/butterflyMusicData.json", "res://scripts/attackPatternJsonData/butterflyMusicData2.json", "res://scripts/attackPatternJsonData/butterflyMusicData3.json"]
+
+[node name="Marker2D" type="Marker2D" parent="AttackLayer"]
+position = Vector2(321, 181)
+scale = Vector2(0.8, 0.8)
+
 [connection signal="abscondPhaseStarting" from="." to="enemyMovement" method="stopWander"]
+[connection signal="abscondPhaseStarting" from="." to="AttackLayer/musicAttackController" method="on_BattleMode_offense_mode"]
 [connection signal="angleChangePhaseStarting" from="." to="enemyMovement" method="stopWander"]
+[connection signal="angleChangePhaseStarting" from="." to="AttackLayer/musicAttackController" method="on_BattleMode_offense_mode"]
 [connection signal="attackPhaseStarting" from="." to="enemyMovement" method="wander"]
+[connection signal="attackPhaseStarting" from="." to="AttackLayer/musicAttackController" method="rotateWithEnemy"]
+[connection signal="attackPhaseStarting" from="." to="AttackLayer/musicAttackController" method="on_BattleMode_defense_mode"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
+
+[editable path="AttackLayer/musicAttackController"]

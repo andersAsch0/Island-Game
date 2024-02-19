@@ -7,7 +7,7 @@
 [ext_resource type="Script" path="res://scripts/hitAndMissAnims.gd" id="5"]
 [ext_resource type="Texture2D" uid="uid://cb853kvqtlunw" path="res://art/battleModeUI/comboAnims.png" id="6"]
 [ext_resource type="Texture2D" uid="uid://cvgnfmdd0t23c" path="res://art/battlegrid.png" id="7"]
-[ext_resource type="PackedScene" path="res://scenes/battleMode/battlemodeButton.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://dwtx17bsk83ih" path="res://scenes/battleMode/battlemodeButton.tscn" id="8"]
 [ext_resource type="Script" path="res://scripts/gridCenter.gd" id="9"]
 [ext_resource type="Texture2D" uid="uid://bky4fnspi7y7k" path="res://art/sheild.png" id="9_geaf2"]
 [ext_resource type="Texture2D" uid="uid://bq78ahd6pqg3d" path="res://art/gridAnim.png" id="10"]
@@ -22,7 +22,7 @@
 [ext_resource type="Script" path="res://scripts/downArrowButton.gd" id="15"]
 [ext_resource type="Script" path="res://scripts/battleMode/Arrows.gd" id="16"]
 [ext_resource type="Script" path="res://scenes/battleMode/Grid.gd" id="17"]
-[ext_resource type="PackedScene" path="res://scenes/battleMode/catchMiniGame.tscn" id="21"]
+[ext_resource type="PackedScene" uid="uid://dvrfnvctn7t3c" path="res://scenes/battleMode/catchMiniGame.tscn" id="21"]
 [ext_resource type="PackedScene" path="res://scenes/battleMode/comboMiniGame.tscn" id="22"]
 [ext_resource type="Script" path="res://scripts/battleMode/BattleModeUI.gd" id="23"]
 [ext_resource type="Script" path="res://scripts/TimeSyncedAnimatedSprite.gd" id="24"]
@@ -1408,7 +1408,6 @@ frame = 0
 
 [node name="Animations" parent="BattleModePlayer" index="2"]
 sprite_frames = SubResource("10")
-frame = 0
 
 [node name="enemySpawnLocation" type="Marker2D" parent="."]
 position = Vector2(156, 74)
@@ -1438,12 +1437,13 @@ animation = &"forward"
 
 [node name="offenseModeCamera" type="Camera2D" parent="."]
 position = Vector2(156, 101)
-zoom = Vector2(2.105, 2.105)
+zoom = Vector2(1.985, 1.985)
 script = ExtResource("13")
 
 [node name="Grid" type="Sprite2D" parent="offenseModeCamera"]
 self_modulate = Color(1, 1, 1, 0.215686)
 z_as_relative = false
+texture_filter = 1
 position = Vector2(-0.600006, -0.400002)
 scale = Vector2(2.31579, 2.31579)
 texture = ExtResource("7")
@@ -1486,6 +1486,7 @@ script = ExtResource("16")
 
 [node name="downArrow" type="AnimatedSprite2D" parent="offenseModeCamera/Arrows"]
 self_modulate = Color(1, 1, 1, 0.392157)
+texture_filter = 1
 position = Vector2(1.7576, 39.5458)
 scale = Vector2(0.7, 1.2)
 sprite_frames = SubResource("65")
@@ -1493,6 +1494,7 @@ script = ExtResource("15")
 
 [node name="upArrow" type="AnimatedSprite2D" parent="offenseModeCamera/Arrows"]
 self_modulate = Color(1, 1, 1, 0.392157)
+texture_filter = 1
 position = Vector2(1.7576, -40.4245)
 scale = Vector2(0.7, 1.2)
 sprite_frames = SubResource("76")
@@ -1500,6 +1502,7 @@ script = ExtResource("15")
 
 [node name="rightArrow" type="AnimatedSprite2D" parent="offenseModeCamera/Arrows"]
 self_modulate = Color(1, 1, 1, 0.392157)
+texture_filter = 1
 position = Vector2(43.0609, 3.8147e-06)
 scale = Vector2(1.2, 0.7)
 sprite_frames = SubResource("SpriteFrames_sfn7p")
@@ -1507,6 +1510,7 @@ script = ExtResource("15")
 
 [node name="leftArrow" type="AnimatedSprite2D" parent="offenseModeCamera/Arrows"]
 self_modulate = Color(1, 1, 1, 0.392157)
+texture_filter = 1
 position = Vector2(-40.4245, 1.75758)
 scale = Vector2(1.2, 0.7)
 sprite_frames = SubResource("SpriteFrames_mvvnf")
@@ -1518,47 +1522,48 @@ animation = &"empty"
 script = ExtResource("5")
 
 [node name="UI" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
+scale = Vector2(2.02, 2.02)
+transform = Transform2D(2.02, 0, 0, 2.02, 0, 0)
 script = ExtResource("23")
 
 [node name="HP&TJ" type="Label" parent="UI"]
-offset_left = 1.56599
-offset_top = 54.6
-offset_right = 41.566
-offset_bottom = 77.6
+offset_left = 1.9802
+offset_top = 43.3624
+offset_right = 41.9802
+offset_bottom = 66.3624
 scale = Vector2(0.632878, 0.87013)
 text = "HP TJ"
 metadata/_edit_use_anchors_ = true
 
 [node name="PlayerHPBar" type="ProgressBar" parent="UI"]
-offset_left = 2.0
-offset_top = 140.0
-offset_right = 72.0
-offset_bottom = 167.0
+offset_left = 2.41421
+offset_top = 128.762
+offset_right = 72.4142
+offset_bottom = 155.762
 rotation = -1.5708
 scale = Vector2(0.955148, 0.51705)
 theme_override_colors/font_color = Color(1, 0.74902, 0, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="TimeJuiceBar" type="ProgressBar" parent="UI"]
-offset_left = 18.0
-offset_top = 140.0
-offset_right = 83.0004
-offset_bottom = 167.0
+offset_left = 18.4142
+offset_top = 128.762
+offset_right = 83.4146
+offset_bottom = 155.762
 rotation = -1.5708
 scale = Vector2(1.03451, 0.511248)
 theme_override_colors/font_color = Color(0.0313726, 1, 0, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="windButton" parent="UI" instance=ExtResource("8")]
-position = Vector2(337, 24)
+position = Vector2(337.414, 23.7624)
 
 [node name="windWatchMiniGame" parent="UI/windButton/blankButton" index="1" instance=ExtResource("11")]
 position = Vector2(-2, 0)
 scale = Vector2(0.818122, 0.818122)
 
 [node name="attackButton" parent="UI" instance=ExtResource("8")]
-position = Vector2(337, 67)
+position = Vector2(337.414, 66.7624)
 
 [node name="buttonIcon" parent="UI/attackButton/blankButton" index="0"]
 region_rect = Rect2(95, 0, 95, 44)
@@ -1568,7 +1573,7 @@ position = Vector2(-2, 0)
 scale = Vector2(0.476667, 0.476667)
 
 [node name="healButton" parent="UI" instance=ExtResource("8")]
-position = Vector2(337, 110)
+position = Vector2(337.414, 109.762)
 
 [node name="buttonIcon" parent="UI/healButton/blankButton" index="0"]
 region_rect = Rect2(190, 0, 95, 44)
@@ -1578,7 +1583,7 @@ position = Vector2(-192, -164)
 scale = Vector2(1.3, 1.3)
 
 [node name="sheildButton" parent="UI" instance=ExtResource("8")]
-position = Vector2(337, 154)
+position = Vector2(337.414, 153.762)
 
 [node name="buttonIcon" parent="UI/sheildButton/blankButton" index="0"]
 region_rect = Rect2(285, 0, 95, 44)

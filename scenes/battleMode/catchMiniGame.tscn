@@ -1,154 +1,209 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=30 format=3 uid="uid://dvrfnvctn7t3c"]
 
-[ext_resource path="res://art/battleModeUI/heart.png" type="Texture2D" id=1]
-[ext_resource path="res://art/battleModeUI/catch!.png" type="Texture2D" id=2]
-[ext_resource path="res://art/battleModeUI/catcher.png" type="Texture2D" id=3]
-[ext_resource path="res://scripts/battleMode/catchMiniGame.gd" type="Script" id=4]
-[ext_resource path="res://scripts/HurtBox.gd" type="Script" id=5]
-[ext_resource path="res://scripts/HitBox.gd" type="Script" id=6]
-[ext_resource path="res://audio/Healfx1.wav" type="AudioStream" id=7]
+[ext_resource type="Texture2D" uid="uid://bienfcoxlwvdn" path="res://art/battleModeUI/heart.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://dcvj5i1a4pw25" path="res://art/battleModeUI/catch!.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://cq20x7xa74ufa" path="res://art/battleModeUI/catcher.png" id="3"]
+[ext_resource type="Script" path="res://scripts/battleMode/catchMiniGame.gd" id="4"]
+[ext_resource type="Script" path="res://scripts/HurtBox.gd" id="5"]
+[ext_resource type="Script" path="res://scripts/HitBox.gd" id="6"]
+[ext_resource type="AudioStream" uid="uid://6ptkvigytlgi" path="res://audio/Healfx1.wav" id="7"]
 
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 16, 16 )
+[sub_resource type="AtlasTexture" id="10"]
+atlas = ExtResource("3")
+region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id=11]
-atlas = ExtResource( 3 )
-region = Rect2( 16, 0, 16, 16 )
+[sub_resource type="AtlasTexture" id="11"]
+atlas = ExtResource("3")
+region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id=12]
-atlas = ExtResource( 3 )
-region = Rect2( 32, 0, 16, 16 )
+[sub_resource type="AtlasTexture" id="12"]
+atlas = ExtResource("3")
+region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id=13]
-atlas = ExtResource( 3 )
-region = Rect2( 48, 0, 16, 16 )
+[sub_resource type="AtlasTexture" id="13"]
+atlas = ExtResource("3")
+region = Rect2(48, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id=14]
-atlas = ExtResource( 3 )
-region = Rect2( 64, 0, 16, 16 )
+[sub_resource type="AtlasTexture" id="14"]
+atlas = ExtResource("3")
+region = Rect2(64, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id=15]
-atlas = ExtResource( 3 )
-region = Rect2( 80, 0, 16, 16 )
+[sub_resource type="AtlasTexture" id="15"]
+atlas = ExtResource("3")
+region = Rect2(80, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id=16]
-atlas = ExtResource( 3 )
-region = Rect2( 96, 0, 16, 16 )
+[sub_resource type="AtlasTexture" id="16"]
+atlas = ExtResource("3")
+region = Rect2(96, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id=17]
-atlas = ExtResource( 3 )
-region = Rect2( 112, 0, 16, 16 )
+[sub_resource type="AtlasTexture" id="17"]
+atlas = ExtResource("3")
+region = Rect2(112, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id=18]
-atlas = ExtResource( 3 )
-region = Rect2( 128, 0, 16, 16 )
+[sub_resource type="AtlasTexture" id="18"]
+atlas = ExtResource("3")
+region = Rect2(128, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id=19]
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 16, 16 )
+[sub_resource type="AtlasTexture" id="19"]
+atlas = ExtResource("3")
+region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="SpriteFrames" id=20]
-animations = [ {
-"frames": [ SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+[sub_resource type="SpriteFrames" id="20"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("10")
+}, {
+"duration": 1.0,
+"texture": SubResource("11")
+}, {
+"duration": 1.0,
+"texture": SubResource("12")
+}, {
+"duration": 1.0,
+"texture": SubResource("13")
+}, {
+"duration": 1.0,
+"texture": SubResource("14")
+}, {
+"duration": 1.0,
+"texture": SubResource("15")
+}, {
+"duration": 1.0,
+"texture": SubResource("16")
+}, {
+"duration": 1.0,
+"texture": SubResource("17")
+}, {
+"duration": 1.0,
+"texture": SubResource("18")
+}],
 "loop": false,
-"name": "caughtHeal",
+"name": &"caughtHeal",
 "speed": 8.0
 }, {
-"frames": [ SubResource( 19 ) ],
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("19")
+}],
 "loop": false,
-"name": "default",
+"name": &"default",
 "speed": 8.0
-} ]
+}]
 
-[sub_resource type="RectangleShape2D" id=22]
-size = Vector2( 8, 2 )
+[sub_resource type="RectangleShape2D" id="22"]
+size = Vector2(8, 2)
 
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 96, 32 )
+[sub_resource type="AtlasTexture" id="1"]
+atlas = ExtResource("2")
+region = Rect2(0, 0, 96, 32)
 
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 2 )
-region = Rect2( 96, 0, 96, 32 )
+[sub_resource type="AtlasTexture" id="2"]
+atlas = ExtResource("2")
+region = Rect2(96, 0, 96, 32)
 
-[sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 2 )
-region = Rect2( 192, 0, 96, 32 )
+[sub_resource type="AtlasTexture" id="3"]
+atlas = ExtResource("2")
+region = Rect2(192, 0, 96, 32)
 
-[sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 2 )
-region = Rect2( 288, 0, 96, 32 )
+[sub_resource type="AtlasTexture" id="4"]
+atlas = ExtResource("2")
+region = Rect2(288, 0, 96, 32)
 
-[sub_resource type="AtlasTexture" id=5]
-atlas = ExtResource( 2 )
-region = Rect2( 384, 0, 96, 32 )
+[sub_resource type="AtlasTexture" id="5"]
+atlas = ExtResource("2")
+region = Rect2(384, 0, 96, 32)
 
-[sub_resource type="AtlasTexture" id=6]
-atlas = ExtResource( 2 )
-region = Rect2( 480, 0, 96, 32 )
+[sub_resource type="AtlasTexture" id="6"]
+atlas = ExtResource("2")
+region = Rect2(480, 0, 96, 32)
 
-[sub_resource type="AtlasTexture" id=7]
-atlas = ExtResource( 2 )
-region = Rect2( 576, 0, 96, 32 )
+[sub_resource type="AtlasTexture" id="7"]
+atlas = ExtResource("2")
+region = Rect2(576, 0, 96, 32)
 
-[sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 2 )
-region = Rect2( 672, 0, 96, 32 )
+[sub_resource type="AtlasTexture" id="8"]
+atlas = ExtResource("2")
+region = Rect2(672, 0, 96, 32)
 
-[sub_resource type="SpriteFrames" id=9]
-animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+[sub_resource type="SpriteFrames" id="9"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("1")
+}, {
+"duration": 1.0,
+"texture": SubResource("2")
+}, {
+"duration": 1.0,
+"texture": SubResource("3")
+}, {
+"duration": 1.0,
+"texture": SubResource("4")
+}, {
+"duration": 1.0,
+"texture": SubResource("5")
+}, {
+"duration": 1.0,
+"texture": SubResource("6")
+}, {
+"duration": 1.0,
+"texture": SubResource("7")
+}, {
+"duration": 1.0,
+"texture": SubResource("8")
+}],
 "loop": false,
-"name": "default",
+"name": &"default",
 "speed": 8.0
-} ]
+}]
 
-[sub_resource type="CircleShape2D" id=21]
+[sub_resource type="CircleShape2D" id="21"]
 radius = 8.0
 
 [node name="catchMiniGame" type="Node2D"]
-script = ExtResource( 4 )
+script = ExtResource("4")
 
 [node name="catcher" type="AnimatedSprite2D" parent="."]
-position = Vector2( 147, 123 )
-frames = SubResource( 20 )
-animation = "caughtHeal"
+position = Vector2(147, 123)
+sprite_frames = SubResource("20")
+animation = &"caughtHeal"
 
 [node name="HitBox" type="Area2D" parent="catcher"]
 collision_layer = 256
 collision_mask = 0
-script = ExtResource( 6 )
+script = ExtResource("6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="catcher/HitBox"]
-position = Vector2( 0, 6 )
-shape = SubResource( 22 )
+position = Vector2(0, 6)
+shape = SubResource("22")
 
 [node name="healSFX" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
+stream = ExtResource("7")
 volume_db = -10.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = 2
+scale = Vector2(2.02, 2.02)
+transform = Transform2D(2.02, 0, 0, 2.02, 0, 0)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CanvasLayer"]
 visible = false
-position = Vector2( 147, 94 )
-frames = SubResource( 9 )
+position = Vector2(147, 94)
+sprite_frames = SubResource("9")
 frame = 7
-playing = true
 
 [node name="Heart" type="Sprite2D" parent="CanvasLayer"]
-position = Vector2( -16, 133 )
-texture = ExtResource( 1 )
+position = Vector2(-16, 133)
+texture = ExtResource("1")
 
 [node name="HurtBox" type="Area2D" parent="CanvasLayer/Heart"]
 collision_layer = 0
 collision_mask = 256
-script = ExtResource( 5 )
+script = ExtResource("5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanvasLayer/Heart/HurtBox"]
-position = Vector2( 0, 1 )
-shape = SubResource( 21 )
+position = Vector2(0, 1)
+shape = SubResource("21")
 
 [connection signal="hurtBoxHit" from="CanvasLayer/Heart/HurtBox" to="." method="_on_HurtBox_hurtBoxHit"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://ky2kvqb084yk"]
 
 [ext_resource type="Script" path="res://scripts/battleMode/musicAttackController.gd" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/battleMode/MusicHandler.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://btxve5nqpfjpu" path="res://scenes/battleMode/MusicHandler.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/battleMode/Bullet.tscn" id="3"]
 [ext_resource type="PackedScene" path="res://scenes/battleMode/gridAttack.tscn" id="4"]
 [ext_resource type="PackedScene" path="res://scenes/battleMode/bulletSpawner.tscn" id="5"]

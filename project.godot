@@ -25,7 +25,8 @@ window/size/viewport_height=360
 window/size/resizable=false
 window/size/window_width_override=2000
 window/size/window_height_override=800
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
 
 [editor]
 

@@ -1,6 +1,6 @@
-CanvasLayer
-Camera2D
 Marker2D
+Camera2D
+CanvasLayer
 CollisionPolygon2D
 Polygon2D
 Area2D
