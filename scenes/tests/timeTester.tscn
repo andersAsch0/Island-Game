@@ -1,10 +1,39 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://b0u3llxcx4ptk"]
 
-[ext_resource path="res://scenes/battleMode/BattleModeEnemy.tscn" type="PackedScene" id=1]
-[ext_resource path="res://scripts/tests/timeTester.gd" type="Script" id=2]
+[ext_resource type="PackedScene" uid="uid://cb3gi1cqmaavk" path="res://scenes/battleMode/BattleModeEnemy.tscn" id="1"]
+[ext_resource type="Script" path="res://scripts/tests/timeTester.gd" id="2"]
+[ext_resource type="Script" path="res://scripts/TimeSyncedTimer.gd" id="3_mw3m6"]
 
 [node name="timeTester" type="Node2D"]
-script = ExtResource( 2 )
+script = ExtResource("2")
 
-[node name="BattleModeEnemy" parent="." instance=ExtResource( 1 )]
-position = Vector2( 84, 56 )
+[node name="BattleModeEnemy" parent="." instance=ExtResource("1")]
+position = Vector2(84, 56)
+
+[node name="TimeSyncedTimer" type="Node" parent="."]
+script = ExtResource("3_mw3m6")
+wait_time = 3.105
+one_shot = true
+autostart = true
+
+[node name="ProgressBar" type="ProgressBar" parent="TimeSyncedTimer"]
+offset_left = 41.0
+offset_top = 65.0
+offset_right = 45.0
+offset_bottom = 92.0
+
+[node name="Label" type="Label" parent="."]
+offset_left = 112.0
+offset_top = 68.0
+offset_right = 152.0
+offset_bottom = 91.0
+scale = Vector2(0.846682, 0.801922)
+text = "E = stop time
+R = reverse time
+T = speed stime
+Y = slow time
+space = start() timer"
+
+[connection signal="timeout" from="TimeSyncedTimer" to="." method="_on_time_synced_timer_timeout"]
+[connection signal="timerStartUndone" from="TimeSyncedTimer" to="." method="_on_time_synced_timer_timer_start_undone"]
+[connection signal="tree_entered" from="TimeSyncedTimer" to="." method="_on_time_synced_timer_tree_entered"]

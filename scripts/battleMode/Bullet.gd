@@ -20,6 +20,10 @@ enum {
 var currState
 
 
+func init(warningTime): #this is called before ready
+	warningAnimationTime = max(warningTime, 0)
+	$WarningTimer.wait_time = warningAnimationTime
+	return self
 func _ready():
 	currState = WARNING
 	$TimeSyncedAnimatedSprite.play("warning")
@@ -33,29 +37,31 @@ func _ready():
 #	else:
 #		cameraNode = get_node(battleModeCameraPath)
 
-func init(warningTime):
-	warningAnimationTime = max(warningTime, 0)
-	return self
 
 func _process(delta):
 	if currState == WARNING:
-		warningCount += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+		#warningCount += delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		scale.x += 2.0 / warningAnimationTime * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		scale.y += 2.0 / warningAnimationTime * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		$TimeSyncedAnimatedSprite.self_modulate.a += 1.0 / warningAnimationTime * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 		rotate(2*PI / warningAnimationTime * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int))
-		if warningCount < 0:
-			queue_free()
-		elif warningCount >= warningAnimationTime:
-			scale.x = 1
-			scale.y = 1
-			$TimeSyncedAnimatedSprite.play("default")
-			rotation = 0
-			$bulletTrail.visible = true
-			currState = MOVING
-			if shakeCamera: cameraNode.cameraPulse(0.3)
 	else: 
 		position += velocity.rotated(angle) * speed * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
+
+
+##time reversed to before bullet was spawned
+func _on_warning_timer_timer_start_undone():
+	queue_free()
+##bullet entering normal state
+func _on_warning_timer_timeout():
+	scale.x = 1
+	scale.y = 1
+	$TimeSyncedAnimatedSprite.play("default")
+	rotation = 0
+	$bulletTrail.visible = true
+	currState = MOVING
+	if shakeCamera: cameraNode.cameraPulse(0.3)
+
 func reverseTime():
 	pass
 func speedUpTime(_multiplier : float = 1): #can pass in number, if no number default is 1 (no change)
@@ -77,9 +83,12 @@ func _on_VisibilityNotifier2D_screen_exited():
 func _on_VisibilityNotifier2D_screen_entered():
 	if not $DespawnTimer.paused:
 		$DespawnTimer.stop() #dont despawn on screen
+##despawning after leaving the screen
 func _on_DespawnTimer_timeout():
 	queue_free()
-func die(): #called by enemy when it dies
+
+##called by enemy when it dies, bullets should go away
+func die(): 
 	$TimeSyncedAnimatedSprite.play("die")
 	$bulletTrail.visible = false
 	#$HitBox.queue_free() # dont hit player during explosion animation
@@ -87,6 +96,8 @@ func die(): #called by enemy when it dies
 	$DeathTimer.start() # give time for explosion to play
 	syncGPUParticlesWithGlobalTime()
 	$GPUParticles2D.emitting = true
+
+
 func _on_DeathTimer_timeout():
 	queue_free()
 	
@@ -100,3 +111,5 @@ func syncGPUParticlesWithGlobalTime():
 	$GPUParticles2D.process_material.initial_velocity_min = Global.currCombatTimeMultiplier * speed
 	$GPUParticles2D.lifetime = $GPUParticles2D.lifetime * abs(Global.currCombatTimeMultiplier)
 	
+
+

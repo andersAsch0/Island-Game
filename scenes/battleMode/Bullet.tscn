@@ -1,10 +1,11 @@
-[gd_scene load_steps=32 format=3 uid="uid://cn6eqvqtddyfp"]
+[gd_scene load_steps=33 format=3 uid="uid://cn6eqvqtddyfp"]
 
 [ext_resource type="Texture2D" uid="uid://b568urjaro7tx" path="res://art/flower.png" id="1"]
 [ext_resource type="Script" path="res://scripts/battleMode/Bullet.gd" id="2"]
 [ext_resource type="Script" path="res://scripts/HitBox.gd" id="3"]
 [ext_resource type="Script" path="res://scripts/HurtBox.gd" id="4"]
 [ext_resource type="Texture2D" uid="uid://bvdva5ppsivk4" path="res://art/small explosion.png" id="5"]
+[ext_resource type="Script" path="res://scripts/TimeSyncedTimer.gd" id="5_rm6k4"]
 [ext_resource type="Script" path="res://scripts/TimeSyncedAnimatedSprite.gd" id="6"]
 [ext_resource type="Texture2D" uid="uid://dd7k4r05idj" path="res://art/bulletWarning.png" id="7"]
 [ext_resource type="Texture2D" uid="uid://ombm5agxdebt" path="res://art/bulletFire.png" id="8"]
@@ -186,14 +187,18 @@ sprite_frames = SubResource("1")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
-[node name="DeathTimer" type="Timer" parent="."]
+[node name="DeathTimer" type="Node" parent="."]
+script = ExtResource("5_rm6k4")
 wait_time = 0.5
 
-[node name="DespawnTimer" type="Timer" parent="."]
+[node name="DespawnTimer" type="Node" parent="."]
+script = ExtResource("5_rm6k4")
 wait_time = 5.0
 
-[node name="WarningTimer" type="Timer" parent="."]
+[node name="WarningTimer" type="Node" parent="."]
+script = ExtResource("5_rm6k4")
 one_shot = true
+autostart = true
 
 [node name="HitBox" type="Area2D" parent="."]
 collision_layer = 64
@@ -238,4 +243,5 @@ randomness = 0.1
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
 [connection signal="timeout" from="DespawnTimer" to="." method="_on_DespawnTimer_timeout"]
-[connection signal="timeout" from="WarningTimer" to="." method="_on_WarningTimer_timeout"]
+[connection signal="timeout" from="WarningTimer" to="." method="_on_warning_timer_timeout"]
+[connection signal="timerStartUndone" from="WarningTimer" to="." method="_on_warning_timer_timer_start_undone"]

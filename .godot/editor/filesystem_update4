@@ -1,13 +1,12 @@
 res://default_env.tres
+res://scenes/tests/timeTester.tscn
+res://scripts/tests/timeTester.gd
 res://scenes/battleMode/BattleMode.tscn
-res://scripts/battleMode/Bullet.gd
 res://scenes/battleMode/BattleModeEnemy.tscn
-res://scenes/locations/overWorldHaven.tscn
 res://scenes/battleMode/BattleModePlayer.tscn
 res://scenes/battleMode/musicAttackController.tscn
-res://scenes/battleMode/MusicHandler.tscn
 res://scenes/battleMode/Bullet.tscn
-res://scripts/offenseModeCamera.gd
-res://scripts/battleMode/laserWarning.gd
 res://scenes/battleMode/bulletSpawner.tscn
+res://Global.gd
 res://scripts/TimeSyncedTimer.gd
+res://scripts/battleMode/Bullet.gd

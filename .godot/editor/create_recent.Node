@@ -1,3 +1,6 @@
+TimeSyncedTimer
+Label
+ProgressBar
 GPUParticles2D
 Marker2D
 Camera2D
@@ -9,4 +12,3 @@ Node2D
 TileMap
 SceneTransition
 CollisionShape2D
-Sprite2D

@@ -10,10 +10,18 @@ signal timeHasChangedSpeed(duration, start, distortionTypeIsSpeed) #not emitted 
 signal timeHasStoppedOrStarted(duration, start) #start is a bool to indicate its the beginning of the distortion
 signal timeHasReversed(duration, start)
 
+func _enter_tree():
+	if gridCoords == []:
+		print("warning: grid coords not set")		
+
 #TIME CONTROL FOR BATTLEMODE
 var currCombatTimeMultiplier : float = 1 #should NEVER be zero OK???
 var timeIsNotStopped : bool = true
 func changeTimeSpeed(multiplier : float, _distortionTypeIsSpeed : bool, duration : float, start : bool):
+	if multiplier==0:
+		push_error("warning: changetimespeed() in global was called with 0. startOrStopTime() used instead")
+		startOrStopTime(false, duration, start)
+		return
 	currCombatTimeMultiplier *= multiplier
 	emit_signal("timeFlowHasChanged", currCombatTimeMultiplier * (timeIsNotStopped as int), duration, start)
 	emit_signal("timeHasChangedSpeed", duration, start, true)
@@ -67,12 +75,10 @@ func setEnemyGridLocation( newLocation : Vector2):
 
 func getEnemyCoords():
 	if gridCoords == []: 
-		print("warning: grid coords not set")
 		return Vector2.ZERO
 	return gridCoords[enemyGridLocation.y][enemyGridLocation.x]
 func getPlayerCoords():
 	if gridCoords == []: 
-		print("warning: grid coords not set")
 		return Vector2.ZERO
 	return gridCoords[playerGridLocation.y][playerGridLocation.x]
 func getEnemyDisplacementFromPlayer():
