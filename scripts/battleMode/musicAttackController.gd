@@ -18,7 +18,6 @@ func _ready():
 	$MusicHandler.bpm = bpm
 	$MusicHandler.JsonLength = totalMeasuresInSong - 1
 	$MusicHandler.eightNotesInAdvance = eigthNotesInAdvance
-
 var count : int = eigthNotesInAdvance
 var gridAttackPattern = [[Vector2(1,1)], [], [], [], [Vector2(1,1)], [], [], [], [Vector2(0, 2)], [], [Vector2(0,0)], [], [Vector2(2, 0)], [], [Vector2(2, 2)], []]
 func _on_MusicHandler_metronome(timeInAdvance): # grid attack

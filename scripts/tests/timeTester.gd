@@ -56,6 +56,3 @@ func _on_time_synced_timer_timeout():
 func _on_time_synced_timer_timer_start_undone():
 	print("TIMEIN")
 
-
-func _on_time_synced_timer_tree_entered():
-	print("tree entered signal")
