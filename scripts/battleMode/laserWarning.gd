@@ -10,6 +10,7 @@ var bulletFireIntervalSeconds = 0.1
 var latestBulletSpawned = null
 var numberOfBullets = 1
 var showWarningLineAnim : bool = false
+@onready var startingChildrenNumber : int  = get_child_count() #this is used to check if there are any extra children (bullets)
 #a bullet must have:
 #"despawned" signal
 #ADD warning length
@@ -40,11 +41,10 @@ var intervalCount : float = 0.0
 @onready var bulletCount = numberOfBullets
 func _process(delta):
 	intervalCount += delta
-	if bulletCount <= 0:
-		if latestBulletSpawned != null : latestBulletSpawned.connect("despawned", Callable(self, "despawn")) #despawn when last bullet is gone
-		else: despawn() #if there are no bullets spawned
+	if get_child_count() <= startingChildrenNumber && bulletCount <= 0:
 		set_process(false)
-	elif intervalCount >= bulletFireIntervalSeconds:
+		despawn() #if there are no bullets left AND its bc theyve all been spawned
+	elif intervalCount >= bulletFireIntervalSeconds && bulletCount > 0:
 		latestBulletSpawned = bulletPackedScene.instantiate().init(lengthOfWarningSeconds)
 		add_child(latestBulletSpawned)
 		bulletCount -= 1

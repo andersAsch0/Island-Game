@@ -37,3 +37,6 @@ space = start() timer"
 [connection signal="timeout" from="TimeSyncedTimer" to="." method="_on_time_synced_timer_timeout"]
 [connection signal="timerStartUndone" from="TimeSyncedTimer" to="." method="_on_time_synced_timer_timer_start_undone"]
 [connection signal="tree_entered" from="TimeSyncedTimer" to="." method="_on_time_synced_timer_tree_entered"]
+
+[editable path="BattleModeEnemy"]
+[editable path="BattleModeEnemy/AttackLayer/musicAttackController"]

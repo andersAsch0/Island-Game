@@ -7,5 +7,3 @@ res://scenes/battleMode/Bullet.tscn
 res://scenes/battleMode/bulletSpawner.tscn
 res://scenes/tests/timeTester.tscn
 res://scripts/battleMode/laserWarning.gd
-res://scripts/battleMode/musicAttackController.gd
-res://scripts/battleMode/Bullet.gd
