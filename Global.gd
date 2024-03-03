@@ -40,18 +40,17 @@ func reverseTime(newTimeDirection : bool, duration, start): #true is reversed, f
 
 #BATTLEMODE ENTERING AND EXITING
 #I know these names are awful I KNOW
+var overWorldPath = "res://scenes/overworldHaven.tscn"
 var battleModePath = "res://scenes/battleMode/BattleMode.tscn" # path of (empty) battlemode in filesystem
 var spawnPlayerAtPrevOverworldCoords = false #this will be true when returning to overworld from battlemode, and so the overworldScene will spawn the player accordingly
-func enterBattleMode(overWorldFileSystemPath : String, respawnPos : Vector2, OenemyPath : String, BMenemyPath : String, controllerPath : String):
+func enterBattleMode(overWorldFileSystemPath : String, respawnPos : Vector2, OenemyPath : String, BMenemyPath : String):
 	overWorldPath = overWorldFileSystemPath # path of the scene of the whole overworld in the filesystem
 	overWorldEnemyPath = OenemyPath # path of the overworld enemy in the filesystem
 	battleModeEnemyPath = BMenemyPath # path of the battlemode version in the filsystem
-	musicAttackControllerPath = controllerPath # ditto
 	leaveOverworld(respawnPos, battleModePath)
 func leaveOverworld(respawnPos : Vector2, newScene : String):
 	overWorldLocation = respawnPos # location where player will respawn in when they leave battlemode and go back to the overworld
 	var _PTS = get_tree().change_scene_to_file(newScene) # change_scene_to_file takes path, change_scene_to_packed takes PackedScene
-var overWorldPath = "res://scenes/overworldPrototype.tscn"
 func reEnterOverworld():
 	var _PTS = get_tree().change_scene_to_file(overWorldPath) # change_scene_to_file takes path, change_scene_to_packed takes PackedScene
 	spawnPlayerAtPrevOverworldCoords = true

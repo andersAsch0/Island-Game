@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://b6wklisn0a6xp"]
+[gd_scene load_steps=73 format=3 uid="uid://b6wklisn0a6xp"]
 
 [ext_resource type="Texture2D" uid="uid://dhhl777q53vvi" path="res://art/map tiles/walkway shadows.png" id="4_skj5q"]
 [ext_resource type="PackedScene" uid="uid://dkr0v6d1norli" path="res://scenes/Player.tscn" id="9"]
@@ -20,8 +20,10 @@
 [ext_resource type="Texture2D" uid="uid://css3mt3hs43of" path="res://art/map tiles/soundMappingTiles.png" id="20_h21rl"]
 [ext_resource type="Script" path="res://scripts/World.gd" id="24"]
 [ext_resource type="PackedScene" uid="uid://mi6odr5otxan" path="res://scenes/Door.tscn" id="25_5wujl"]
-[ext_resource type="PackedScene" uid="uid://os3aei5tggaa" path="res://scenes/enemy.tscn" id="25_fe3me"]
+[ext_resource type="Script" path="res://scripts/overworldNPCs/overworldEnemyBase.gd" id="25_37l0p"]
+[ext_resource type="Script" path="res://scripts/fightArea.gd" id="26_48c6l"]
 [ext_resource type="Texture2D" uid="uid://ds3b5gttlj5it" path="res://art/map tiles/nature sprite sheet 2.png" id="27"]
+[ext_resource type="Texture2D" uid="uid://bn24p76gu5oke" path="res://art/butterfly.png" id="27_xx67r"]
 [ext_resource type="Texture2D" uid="uid://c4b77bd1ofgs4" path="res://art/map tiles/walkway horizontal1.png" id="29"]
 [ext_resource type="Texture2D" uid="uid://wpveul1qh0xg" path="res://art/map tiles/walkway vertical2.png" id="30"]
 [ext_resource type="Texture2D" uid="uid://du1uigdvflum7" path="res://art/clock with hand.png" id="33_khlhd"]
@@ -710,6 +712,47 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_26ltt"]
+radius = 6.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j6sc3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpv4h"]
+atlas = ExtResource("27_xx67r")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qt3py"]
+atlas = ExtResource("27_xx67r")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mx2l4"]
+atlas = ExtResource("27_xx67r")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1l285"]
+atlas = ExtResource("27_xx67r")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kyw8j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cpv4h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qt3py")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mx2l4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1l285")
+}],
+"loop": true,
+"name": &"default",
+"speed": 3.0
+}]
+
 [node name="overworldScene" type="Node"]
 script = ExtResource("11")
 fileSystemPath = "res://scenes/locations/overWorldHaven.tscn"
@@ -801,9 +844,6 @@ polygon = PackedVector2Array(359, -8.5, 360, 22, 392.5, 24, 392, 168, 308, 167, 
 position = Vector2(909, 83)
 destinationPath = "res://scenes/locations/buildingInsidePrototype.tscn"
 
-[node name="enemy" parent="haven" instance=ExtResource("25_fe3me")]
-position = Vector2(214, 151)
-
 [node name="HUD" type="CanvasLayer" parent="haven"]
 
 [node name="overworldClock" parent="haven/HUD" instance=ExtResource("10")]
@@ -812,5 +852,30 @@ texture_filter = 1
 position = Vector2(420, 166)
 scale = Vector2(6.51272, 6.51272)
 sprite_frames = SubResource("17")
+
+[node name="overworldEnemyBase" type="AnimatableBody2D" parent="haven"]
+y_sort_enabled = true
+position = Vector2(343, 100)
+script = ExtResource("25_37l0p")
+battleModeVersionScenePath = "res://scenes/battleMode/BattleModeEnemy.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="haven/overworldEnemyBase"]
+position = Vector2(0, -2)
+shape = SubResource("CircleShape2D_26ltt")
+
+[node name="overworldEnemyFightTriggerArea" type="Area2D" parent="haven/overworldEnemyBase"]
+position = Vector2(0, -18)
+script = ExtResource("26_48c6l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="haven/overworldEnemyBase/overworldEnemyFightTriggerArea"]
+scale = Vector2(3.25, 3.38708)
+shape = SubResource("CircleShape2D_j6sc3")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="haven/overworldEnemyBase"]
+texture_filter = 1
+position = Vector2(0, -1)
+sprite_frames = SubResource("SpriteFrames_kyw8j")
+autoplay = "default"
+offset = Vector2(0, -25)
 
 [connection signal="playerEntered" from="." to="haven" method="_on_overworldScene_playerEntered"]

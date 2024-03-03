@@ -7,6 +7,7 @@ extends Node
 @export var bulletsEnabled = true
 @export var laserEnabled = true
 @export var gridAttackEnabled = true
+@export var attackPackedScenes : Array #
 var isDefenseMode = false
 #variables that may be different for dfferent battles or tracks, must be set up and passed to musicHandler
 var bpm = 207

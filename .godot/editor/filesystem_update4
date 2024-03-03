@@ -7,3 +7,10 @@ res://scenes/battleMode/Bullet.tscn
 res://scenes/battleMode/bulletSpawner.tscn
 res://scenes/tests/timeTester.tscn
 res://scripts/battleMode/laserWarning.gd
+res://scripts/battleMode/musicAttackController.gd
+res://scenes/locations/overWorldHaven.tscn
+res://scripts/fightArea.gd
+res://scripts/NPCs/overworldEnemyBase.gd
+res://Global.gd
+res://scenes/enemy.tscn
+res://scripts/battleMode/BattleMode.gd

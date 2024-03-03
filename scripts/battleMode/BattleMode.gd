@@ -42,7 +42,6 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	updateTimeJuiceBar()
 	
 	enemyScene = load(Global.battleModeEnemyPath)
-	controllerScene = load(Global.musicAttackControllerPath)
 	enemy = enemyScene.instantiate()
 	enemy.position = $enemySpawnLocation.position
 	enemy.visible = false #node's func, where to, where to's func
