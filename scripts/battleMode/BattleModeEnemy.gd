@@ -7,9 +7,6 @@ var origScale = 0.9 # starting size of sprite when enemy spawns
 @export var enemySpeed = 30 #speed at which the enemy wanders around
 @export var maxHP = 5
 var currentHP = maxHP
-var currAttack = 1 #current line of json file
-var currBullets = 0
-var bulletsStopped = false
 enum {
 	AWAY,
 	APPROACHING,
@@ -143,9 +140,7 @@ func introduction():
 
 #FIGHT AND BULLET SPAWNING
 
-var gridSizeByBulletPathPerc = 17
 func playerDie():
-	bulletsStopped = true
 	set_physics_process(false)
 	
 
@@ -199,7 +194,7 @@ func calculateTileDistance(playerAdjacentTile : Vector2):
 func getEnemyCurrState()-> String:
 	if currState == AWAY: return "away"
 	elif currState == APPROACHING: return "approaching"
-	elif currState == ANGLECHANGE: return "angle change 3d to 2d"
+	elif currState == ANGLECHANGE: return "angle change (3d to 2d)"
 	elif currState == ATTACKING: return "attacking"	
 	elif currState == ABSCONDING: return "absconding (2d to 3d)"
 	else: return "error state"

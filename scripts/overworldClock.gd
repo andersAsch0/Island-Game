@@ -20,3 +20,4 @@ func _on_sixteenthDayTimer_timeout():
 	frame += 1
 	if frame == 16:
 		frame = 0
+

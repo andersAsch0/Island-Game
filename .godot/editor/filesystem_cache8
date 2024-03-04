@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1709446518
+::res://::1709521974
 default_env.tres::Environment::2213900767289574753::1709447420::0::1::::<><>::
 Global.gd::GDScript::-1::1709444109::0::1::::<>Node<>::
 gridRenderer.gd::GDScript::-1::1707007343::0::1::::<>Node3D<>::
@@ -196,10 +196,10 @@ mothLaserBullet.tscn::PackedScene::-1::1707007345::0::1::::<><>::res://scripts/H
 musicAttackController.tscn::PackedScene::753091847008900838::1709441933::0::1::::<><>::res://scripts/battleMode/musicAttackController.gd<>uid://btxve5nqpfjpu::::res://scenes/battleMode/MusicHandler.tscn<>uid://cn6eqvqtddyfp::::res://scenes/battleMode/Bullet.tscn<>res://scenes/battleMode/gridAttack.tscn<>uid://bemkent065m3p::::res://scenes/battleMode/bulletSpawner.tscn
 MusicHandler.tscn::PackedScene::3768773197712987534::1708317515::0::1::::<><>::uid://cjylluoxyv621::::res://audio/IslandFightReverse.wav<>uid://dd6idsba0npkr::::res://audio/TickingClockFX.wav<>uid://c7a8doit8tsgj::::res://audio/Begin_Rewind_FX.wav<>uid://duns6e54edl5w::::res://audio/IslandFight.wav<>uid://bamohdp0xqxfo::::res://audio/Ending_Rewind_FX.wav<>res://scripts/MusicHandler.gd<>uid://cvroauv6cgwf7::::res://art/placeholder.jpg
 windWatchMinigame.tscn::PackedScene::-1::1707007345::0::1::::<><>::res://scripts/battleMode/windWatchMinigame.gd<>res://art/battleModeUI/arrow.png<>res://art/battleModeUI/clock.png<>res://art/battleModeUI/u.png<>res://audio/WatchWindfx1.wav
-::res://scenes/locations/::1709446518
+::res://scenes/locations/::1709447420
 buildingInsidePrototype.tscn::PackedScene::5817529483835609922::1708215333::0::1::::<><>::res://scripts/overworldScene.gd<>uid://c38jaolxiiga0::::res://art/map tiles/building inside tiles.png<>res://scripts/mapAreas/buildingInside.gd<>uid://mi6odr5otxan::::res://scenes/Door.tscn<>uid://dkr0v6d1norli::::res://scenes/Player.tscn
 mapLocationTemplate.tscn::PackedScene::6917270910437421144::1708215333::0::1::::<><>::res://scripts/overworldScene.gd<>uid://cwhwug7hrvkxp::::res://art/map tiles/docks and water no water.png<>uid://dhhl777q53vvi::::res://art/map tiles/walkway shadows.png<>uid://el6yp72j0pm3::::res://art/map tiles/grass n dirt.png<>uid://b17ccehpfvv6f::::res://art/map tiles/dirt n sane.png<>uid://dyjpap7krqy7v::::res://art/map tiles/walkway vertical1.png<>uid://wpveul1qh0xg::::res://art/map tiles/walkway vertical2.png<>uid://c4b77bd1ofgs4::::res://art/map tiles/walkway horizontal1.png<>uid://onk550856qjs::::res://art/map tiles/walkway horizontal2.png<>uid://bqrmy0caalv1j::::res://art/map tiles/NewWaterMovementSprites/AnimatedDockPosts.png<>uid://dylw2uqmcrt11::::res://art/map tiles/NewWaterMovementSprites/AnimatedSeaAndPondWaterEdges.png<>uid://bwlu5yldwwfj4::::res://art/map tiles/NewWaterMovementSprites/AnimatedSeaWater.png<>uid://b18yjssffj465::::res://art/map tiles/NewWaterMovementSprites/pond water movement.png<>uid://ds3b5gttlj5it::::res://art/map tiles/nature sprite sheet 2.png<>uid://d4iuo6o7kytl2::::res://art/map tiles/nature sprite sheet.png<>uid://botq18b56rvce::::res://art/map tiles/palm trees spritesheet.png<>uid://xka5odnjujfp::::res://art/map tiles/NewWaterMovementSprites/AnimatedWaterRockSpikes.png<>uid://dpphswf44c1oy::::res://art/map tiles/small house spritesheet.png<>uid://css3mt3hs43of::::res://art/map tiles/soundMappingTiles.png<>uid://dkr0v6d1norli::::res://scenes/Player.tscn<>res://scenes/overworldClock.tscn<>uid://du1uigdvflum7::::res://art/clock with hand.png
-overWorldHaven.tscn::PackedScene::4608318409339424713::1709447420::0::1::::<><>::uid://dhhl777q53vvi::::res://art/map tiles/walkway shadows.png<>uid://dkr0v6d1norli::::res://scenes/Player.tscn<>res://scenes/overworldClock.tscn<>uid://bqrmy0caalv1j::::res://art/map tiles/NewWaterMovementSprites/AnimatedDockPosts.png<>res://scripts/overworldScene.gd<>uid://dylw2uqmcrt11::::res://art/map tiles/NewWaterMovementSprites/AnimatedSeaAndPondWaterEdges.png<>uid://bwlu5yldwwfj4::::res://art/map tiles/NewWaterMovementSprites/AnimatedSeaWater.png<>uid://b17ccehpfvv6f::::res://art/map tiles/dirt n sane.png<>uid://b18yjssffj465::::res://art/map tiles/NewWaterMovementSprites/pond water movement.png<>uid://dyjpap7krqy7v::::res://art/map tiles/walkway vertical1.png<>uid://cwhwug7hrvkxp::::res://art/map tiles/docks and water no water.png<>uid://el6yp72j0pm3::::res://art/map tiles/grass n dirt.png<>uid://botq18b56rvce::::res://art/map tiles/palm trees spritesheet.png<>uid://onk550856qjs::::res://art/map tiles/walkway horizontal2.png<>uid://xka5odnjujfp::::res://art/map tiles/NewWaterMovementSprites/AnimatedWaterRockSpikes.png<>uid://dpphswf44c1oy::::res://art/map tiles/small house spritesheet.png<>uid://d4iuo6o7kytl2::::res://art/map tiles/nature sprite sheet.png<>uid://css3mt3hs43of::::res://art/map tiles/soundMappingTiles.png<>res://scripts/World.gd<>uid://mi6odr5otxan::::res://scenes/Door.tscn<>res://scripts/NPCs/overworldEnemyBase.gd<>res://scripts/fightArea.gd<>uid://ds3b5gttlj5it::::res://art/map tiles/nature sprite sheet 2.png<>uid://bn24p76gu5oke::::res://art/butterfly.png<>uid://c4b77bd1ofgs4::::res://art/map tiles/walkway horizontal1.png<>uid://wpveul1qh0xg::::res://art/map tiles/walkway vertical2.png<>uid://du1uigdvflum7::::res://art/clock with hand.png
+overWorldHaven.tscn::PackedScene::4608318409339424713::1709447420::0::1::::<><>::uid://dhhl777q53vvi::::res://art/map tiles/walkway shadows.png<>uid://dkr0v6d1norli::::res://scenes/Player.tscn<>res://scenes/overworldClock.tscn<>uid://bqrmy0caalv1j::::res://art/map tiles/NewWaterMovementSprites/AnimatedDockPosts.png<>res://scripts/overworldScene.gd<>uid://dylw2uqmcrt11::::res://art/map tiles/NewWaterMovementSprites/AnimatedSeaAndPondWaterEdges.png<>uid://bwlu5yldwwfj4::::res://art/map tiles/NewWaterMovementSprites/AnimatedSeaWater.png<>uid://b17ccehpfvv6f::::res://art/map tiles/dirt n sane.png<>uid://b18yjssffj465::::res://art/map tiles/NewWaterMovementSprites/pond water movement.png<>uid://dyjpap7krqy7v::::res://art/map tiles/walkway vertical1.png<>uid://cwhwug7hrvkxp::::res://art/map tiles/docks and water no water.png<>uid://el6yp72j0pm3::::res://art/map tiles/grass n dirt.png<>uid://botq18b56rvce::::res://art/map tiles/palm trees spritesheet.png<>uid://onk550856qjs::::res://art/map tiles/walkway horizontal2.png<>uid://xka5odnjujfp::::res://art/map tiles/NewWaterMovementSprites/AnimatedWaterRockSpikes.png<>uid://dpphswf44c1oy::::res://art/map tiles/small house spritesheet.png<>uid://d4iuo6o7kytl2::::res://art/map tiles/nature sprite sheet.png<>uid://css3mt3hs43of::::res://art/map tiles/soundMappingTiles.png<>res://scripts/World.gd<>uid://mi6odr5otxan::::res://scenes/Door.tscn<>res://scripts/overworldNPCs/overworldEnemyBase.gd<>res://scripts/fightArea.gd<>uid://ds3b5gttlj5it::::res://art/map tiles/nature sprite sheet 2.png<>uid://bn24p76gu5oke::::res://art/butterfly.png<>uid://c4b77bd1ofgs4::::res://art/map tiles/walkway horizontal1.png<>uid://wpveul1qh0xg::::res://art/map tiles/walkway vertical2.png<>uid://du1uigdvflum7::::res://art/clock with hand.png
 ::res://scenes/map tiles/::1706506372
 Cave.tscn::PackedScene::-1::1707007344::0::1::::<><>::res://art/map tiles/Forest-Tileset.png<>res://scenes/Player.tscn<>res://scenes/map tiles/caveDoor.tscn<>res://scenes/NPC.tscn
 caveDoor.tscn::PackedScene::-1::1707007344::0::1::::<><>::res://scripts/caveDoor.gd
@@ -215,7 +215,7 @@ catchTester.tscn::PackedScene::-1::1707007344::0::1::::<><>::res://scenes/battle
 musicReader.tscn::PackedScene::-1::1707007344::0::1::::<><>::res://scenes/battleMode/MusicHandler.tscn<>res://musicReader.gd
 tileMapTesting.tscn::PackedScene::-1::1707007344::0::1::::<><>::
 timeTester.tscn::PackedScene::4184149662665638564::1709441015::0::1::::<><>::uid://cb3gi1cqmaavk::::res://scenes/battleMode/BattleModeEnemy.tscn<>res://scripts/tests/timeTester.gd<>res://scripts/TimeSyncedTimer.gd
-::res://scripts/::1709446517
+::res://scripts/::1709447420
 bigGridController.gd::GDScript::-1::1708216816::0::1::::<>Node2D<>::
 caveDoor.gd::GDScript::-1::1707007343::0::1::::<>Node<>::
 Door.gd::GDScript::-1::1707714868::0::1::::<>AnimatedSprite2D<>::
@@ -244,11 +244,12 @@ World.gd::GDScript::-1::1707713548::0::1::::<>Node2D<>::
 butterflyMusicData2.json::JSON::-1::1706506372::0::1::::<><>::
 butterflyMusicData3.json::JSON::-1::1706506372::0::1::::<><>::
 butterflyMusicData.json::JSON::-1::1694019874::0::1::::<><>::
-::res://scripts/battleMode/::1709442729
+::res://scripts/battleMode/::1709511632
 Arrows.gd::GDScript::-1::1707007344::0::1::::<>Node2D<>::
 BattleMode.gd::GDScript::-1::1709447420::0::1::::<>Node2D<>::
 battlemodeButton.gd::GDScript::-1::1707007344::0::1::::<>Node2D<>::
-BattleModeEnemy.gd::GDScript::-1::1707025591::0::1::::<>CharacterBody2D<>::
+BattleModeEnemy.gd::GDScript::-1::1709511632::0::1::::<>CharacterBody2D<>::
+battleModeEnemyBase.gd::GDScript::-1::1709511632::0::1::::battleModeEnemyBase<>Area2D<>::
 BattleModePlayer.gd::GDScript::-1::1708236104::0::1::::<>CharacterBody2D<>::
 battleModePlayerAnimation.gd::GDScript::-1::1707007344::0::1::::<>AnimatedSprite2D<>::
 BattleModeUI.gd::GDScript::-1::1707007344::0::1::::<>CanvasLayer<>::
@@ -272,9 +273,8 @@ upArrow.gd::GDScript::-1::1707007344::0::1::::<>AnimatedSprite2D<>::
 windWatchMinigame.gd::GDScript::-1::1707022700::0::1::::<>Node2D<>::
 ::res://scripts/mapAreas/::1707713548
 buildingInside.gd::GDScript::-1::1707713548::0::1::::<>Node2D<>::
-::res://scripts/NPCs/::1709444734
+::res://scripts/overworldNPCs/::1709444734
 overworldEnemyBase.gd::GDScript::-1::1709444734::0::1::::overworldEnemyBase<>AnimatableBody2D<>::
-::res://scripts/overworldNPCs/::0
 ::res://scripts/tests/::1708392742
 bulletTester.gd::GDScript::-1::1707007344::0::1::::<>Node2D<>::
 catchTester.gd::GDScript::-1::1707007344::0::1::::<>Node2D<>::

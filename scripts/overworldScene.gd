@@ -29,7 +29,7 @@ func _ready():
 func getDespawnList():
 	return Global.despawnList[despawnListIndex]
 
-func addToDepsawnList(entityPath : String):
+func addToDespawnList(entityPath : String):
 	Global.despawnList[despawnListIndex].append(entityPath)
 
 func removeFromDespawnList(entityPath : String):

@@ -20,6 +20,8 @@ func _on_Global_Time_Flow_Has_Changed(newFlow : float, _duration, _start):
 	play(animation, newFlow)
 	pass
 
+func playTimeSyncedWithUnusedArgument(_arg: Variant, anim : String = "default"):
+	playTimeSynced(anim)
 
 func playTimeSynced(anim : String = "default") -> void:
 	animation = anim #switch anim

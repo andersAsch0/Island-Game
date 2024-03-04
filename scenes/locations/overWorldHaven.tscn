@@ -710,6 +710,14 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("14")
+}],
+"loop": true,
+"name": &"test",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_26ltt"]
@@ -857,7 +865,7 @@ sprite_frames = SubResource("17")
 y_sort_enabled = true
 position = Vector2(343, 100)
 script = ExtResource("25_37l0p")
-battleModeVersionScenePath = "res://scenes/battleMode/BattleModeEnemy.tscn"
+battleModeVersionScenePath = "res://scenes/battleMode/BattleModeButterflyEnemy.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="haven/overworldEnemyBase"]
 position = Vector2(0, -2)
