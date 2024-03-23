@@ -2,10 +2,8 @@ class_name HurtBox
 
 extends Area2D
 
-#func _init():
-#	collision_layer = 0 
-#	collision_mask = 16 #default layer 6 = I detect enemy hitboxes
-#
+#should have no collision layer (can collide with other things) and a collision mask of what it is detecting
+
 signal hurtBoxHit(damage)
 
 func _ready():

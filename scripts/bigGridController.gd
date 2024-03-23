@@ -24,7 +24,7 @@ func _process(delta):
 	else: # going from 2d to 3d (squash)
 		position -= (offsetFrom2DTo3D(Global.playerGridLocation.x, Global.playerGridLocation.y) / animTime2Dto3D) * delta * Global.currCombatTimeMultiplier * (Global.timeIsNotStopped as int)
 
-func _on_BattleMode_enemyApproachPhaseStarting(duration):
+func _on_BattleMode_enemyApproachPhaseStarting(_duration):
 	set_process(false)
 func _on_BattleMode_enemyAngleChangePhaseStarting(duration):
 	animTime3Dto2D = duration

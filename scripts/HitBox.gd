@@ -4,9 +4,7 @@ extends Area2D
 
 @export var damage = 1
 
-#func _init():
-#	collision_layer = 16 #default = layer 5: I am a enemy hitbox
-#	collision_mask = 0
+#should have no collision mask (isnt detecting anything) and collision layer of what it is (ex. enemies have layer Enemyhitbox)
 
 func setCollisionLayer(layer:int):
 	collision_layer = layer

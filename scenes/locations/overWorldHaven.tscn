@@ -865,7 +865,7 @@ sprite_frames = SubResource("17")
 y_sort_enabled = true
 position = Vector2(343, 100)
 script = ExtResource("25_37l0p")
-battleModeVersionScenePath = "res://scenes/battleMode/BattleModeButterflyEnemy.tscn"
+battleModeVersionScenePath = "res://scenes/battleMode/battleModeButterflyEnemy.tscn"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="haven/overworldEnemyBase"]
 position = Vector2(0, -2)

@@ -34,7 +34,7 @@ func gameEnd():
 	set_process(false)
 	
 var currCombo = []
-func _process(delta):
+func _process(_delta):
 	$inputTimeLeft.value = $Timer.time_left / $Timer.wait_time * 100
 func _input(event):
 	if event.is_action_pressed("ui_right"):

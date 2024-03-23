@@ -283,5 +283,5 @@ func _on_UI_healing(activated):
 
 
 
-func _on_windWatchMiniGame_wind(timeJuiceChange):
+func _on_windWatchMiniGame_wind(_timeJuiceChange):
 	pass # Replace with function body.

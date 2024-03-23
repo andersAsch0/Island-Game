@@ -175,6 +175,8 @@ animation = &"idle"
 script = ExtResource("4_fhshv")
 
 [node name="HurtBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 64
 script = ExtResource("5_3k0xx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
@@ -183,6 +185,8 @@ scale = Vector2(1.24214, 1.15599)
 shape = SubResource("CircleShape2D_564ua")
 
 [node name="HitBox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
 script = ExtResource("6_kkdh8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
