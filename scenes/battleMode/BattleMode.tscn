@@ -1,4 +1,4 @@
-[gd_scene load_steps=190 format=3 uid="uid://5gus5xen1t7y"]
+[gd_scene load_steps=191 format=3 uid="uid://5gus5xen1t7y"]
 
 [ext_resource type="PackedScene" uid="uid://bh81j3007qbo4" path="res://scenes/battleMode/BattleModePlayer.tscn" id="1"]
 [ext_resource type="Script" path="res://scripts/battleMode/BattleMode.gd" id="2"]
@@ -27,6 +27,7 @@
 [ext_resource type="Script" path="res://scripts/battleMode/BattleModeUI.gd" id="23"]
 [ext_resource type="Script" path="res://scripts/TimeSyncedAnimatedSprite.gd" id="24"]
 [ext_resource type="Script" path="res://scripts/bigGridController.gd" id="25"]
+[ext_resource type="PackedScene" uid="uid://bd7gkfe8r1nc" path="res://scenes/battleMode/3DGrid.tscn" id="28_j2r0m"]
 
 [sub_resource type="AtlasTexture" id="115"]
 atlas = ExtResource("10")
@@ -1590,6 +1591,10 @@ region_rect = Rect2(285, 0, 95, 44)
 
 [node name="sheildDeactivateDelay" type="Timer" parent="UI"]
 one_shot = true
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="Node3D" parent="SubViewport" instance=ExtResource("28_j2r0m")]
 
 [connection signal="enemyAbscondPhaseStarting" from="." to="bigGridController" method="_on_BattleMode_enemyAbscondPhaseStarting"]
 [connection signal="enemyAbscondPhaseStarting" from="." to="bigGrid3" method="_on_BattleMode_enemyAbscondPhaseStarting"]

@@ -41,17 +41,18 @@ func _ready(): #this script sets up enemy, approach() function will handle the r
 	_on_BattleModePlayer_PlayerHit()
 	updateTimeJuiceBar()
 	
-	enemyScene = load(Global.battleModeEnemyPath)
-	enemy = enemyScene.instantiate()
-	enemy.position = $enemySpawnLocation.position
-	enemy.visible = false #node's func, where to, where to's func
-	enemy.connect("attackPhaseStarting", Callable(self, "on_attack_phase_starting"))
-	enemy.connect("abscondPhaseStarting", Callable(self, "on_abscond_phase_starting"))
-	enemy.connect("awayPhaseStarting", Callable(self, "on_away_phase_starting"))
-	enemy.connect("approachPhaseStarting", Callable(self, "on_approach_phase_starting"))
-	enemy.connect("angleChangePhaseStarting", Callable(self, "on_angle_change_phase_starting"))
-	enemy.connect("enemyMoved", Callable($offenseModeCamera/Arrows, "on_enemyMoved"))
-	enemy.connect("enemyDead", Callable(self, "on_enemyDead"))
+	if(Global.battleModeEnemyPath != ""):	
+		enemyScene = load(Global.battleModeEnemyPath)
+		enemy = enemyScene.instantiate()
+		enemy.position = $enemySpawnLocation.position
+		enemy.visible = false #node's func, where to, where to's func
+		enemy.connect("attackPhaseStarting", Callable(self, "on_attack_phase_starting"))
+		enemy.connect("abscondPhaseStarting", Callable(self, "on_abscond_phase_starting"))
+		enemy.connect("awayPhaseStarting", Callable(self, "on_away_phase_starting"))
+		enemy.connect("approachPhaseStarting", Callable(self, "on_approach_phase_starting"))
+		enemy.connect("angleChangePhaseStarting", Callable(self, "on_angle_change_phase_starting"))
+		enemy.connect("enemyMoved", Callable($offenseModeCamera/Arrows, "on_enemyMoved"))
+		enemy.connect("enemyDead", Callable(self, "on_enemyDead"))
 	#musicAttackController = controllerScene.instantiate()
 	#connect("enemyAttackPhaseStarting", Callable(musicAttackController, "on_BattleMode_defense_mode"))
 	#connect("enemyAbscondPhaseStarting", Callable(musicAttackController, "on_BattleMode_offense_mode"))

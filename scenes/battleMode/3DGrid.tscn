@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bd7gkfe8r1nc"]
+
+[ext_resource type="Texture2D" uid="uid://5q753a62ykx4" path="res://art/bigGridFlat.png" id="1_3673w"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+texture_filter = 0
+texture = ExtResource("1_3673w")
+
+[node name="Marker3D" type="Marker3D" parent="Sprite3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.683031, -0.685945, -2.99836e-08)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.54342, 0)

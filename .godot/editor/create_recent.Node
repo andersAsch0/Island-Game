@@ -1,3 +1,9 @@
+SubViewportContainer
+Camera3D
+SubViewport
+Marker3D
+Sprite3D
+ColorRect
 HPBar
 ProgressBar
 HitBox
@@ -7,9 +13,3 @@ TimeSyncedAnimatedSprite
 battleModeEnemyBase
 AnimatedSprite2D
 overworldEnemyFightTriggerArea
-overworldEnemyBase
-TimeSyncedTimer
-Label
-GPUParticles2D
-Marker2D
-Camera2D

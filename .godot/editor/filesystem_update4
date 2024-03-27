@@ -1,12 +1,8 @@
 res://default_env.tres
-res://scenes/battleMode/battleModeButterflyEnemy.tscn
 res://scenes/battleMode/BattleMode.tscn
 res://scenes/enemy.tscn
 res://scenes/locations/overWorldHaven.tscn
 res://scenes/battleMode/BattleModeEnemy.tscn
-res://scripts/battleMode/BattleModePlayer.gd
-res://scripts/bigGridController.gd
-res://scripts/battleMode/comboMiniGame.gd
-res://scripts/Door.gd
-res://scripts/HitBox.gd
-res://scripts/HurtBox.gd
+res://scenes/battleMode/battleModeButterflyEnemy.tscn
+res://scripts/battleMode/BattleMode.gd
+res://scenes/battleMode/3DGrid.tscn
